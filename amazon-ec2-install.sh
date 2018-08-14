@@ -1,14 +1,14 @@
 #!/bin/bash
 
 USER="ec2-user"
-sudo yum update
+yum update -y
 
 $PACKAGE_LIST="curl git vim docker zsh"
 
-for item in $PACKAGE_LIST
-	echo "installing #$item"
-	sudo yum install -y $item
-end
+for item in $PACKAGE_LIST; do
+	echo "installing $item"
+	yum install -y $item
+done
 
 # install oh-my-zsh
 echo 'installing ohmyzsh'
@@ -17,7 +17,7 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 # set default shell to zsh
 
 echo 'setting default shell to zsh'
-sudo chsh -s /usr/bin/zsh $USER
+chsh -s /usr/bin/zsh $USER
 
 # install rvm - ruby version manager w/ rails
 
