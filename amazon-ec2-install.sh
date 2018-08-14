@@ -31,16 +31,16 @@ echo 'reloading rvm'
 source /home/ec2-user/.rvm/scripts/rvm
 
 # install furacode for powerlevel9k theme
-
-echo 'installing firacode'
+# needs to be fixed to use nerdfonts
+#echo 'installing firacode'
 # clone
-git clone https://github.com/powerline/fonts.git --depth=1
+#git clone https://github.com/powerline/fonts.git --depth=1
 # install
-cd fonts
-./install.sh FiraMono
+#cd fonts
+#./install.sh FiraMono
 # clean-up a bit
-cd ..
-rm -rf fonts
+#cd ..
+#rm -rf fonts
 
 # install powerlevel9k
 
@@ -48,17 +48,6 @@ echo 'installing powerlevel9k"
 
 # downloading powerlevel 9k
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-
-
-# updating zsh
-
-echo "POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir vcs newline status)" >> ~/.zshrc
-echo "POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()" >> ~/.zshrc
-echo "POWERLEVEL9K_PROMPT_ADD_NEWLINE=true" >> ~/.zshrc
-
-# adding an alias for ls -G
-
-echo "alias ls='ls -G'" >> ~/.zshrc
 
 # installing colorls gem
 
