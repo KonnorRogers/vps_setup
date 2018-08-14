@@ -52,9 +52,9 @@ git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/theme
 
 # updating zsh
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir vcs newline status)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+echo "POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir vcs newline status)" >> ~/.zshrc
+echo "POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()" >> ~/.zshrc
+echo "POWERLEVEL9K_PROMPT_ADD_NEWLINE=true" >> ~/.zshrc
 
 # adding an alias for ls -G
 
