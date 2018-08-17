@@ -3,7 +3,7 @@
 USER="ec2-user"
 yum update -y
 
-PACKAGE_LIST="curl git vim docker zsh"
+PACKAGE_LIST="curl git vim docker zsh gcc"
 
 for item in $PACKAGE_LIST; do
 	echo "installing $item"
@@ -23,7 +23,7 @@ chsh -s /usr/bin/zsh $USER
 
 echo 'installing rvm'
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-\curl -sSL https://get.rvm.io | bash -s stable --rails
+\curl -sSL https://get.rvm.io | bash -s stable
 
 # reload the the shell to use rvm
 
@@ -53,9 +53,9 @@ git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/theme
 
 
 # updating zsh
-git clone https://github.com/ParamagicDev/dotfiles.git ~/ec2-user
+# git clone https://github.com/ParamagicDev/dotfiles.git ~/ec2-user
 rm ~/.zshrc
-mv ~/ec2-user/.zshrc ~/.zshrc
+mv ~/ec2-user/dotfiles/.zshrc ~/.zshrc
 source ~/.zshrc
 
 # installing colorls gem
