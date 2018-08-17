@@ -19,17 +19,12 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 echo 'setting default shell to zsh'
 chsh -s /usr/bin/zsh $USER
 
-# install rvm - ruby version manager w/ rails
 
-echo 'installing rvm'
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-\curl -sSL https://get.rvm.io | bash
+wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+tar -xzvf chruby-0.3.9.tar.gz
+cd chruby-0.3.9/
+sudo make install
 
-
-# reload the the shell to use rvm
-
-# echo 'reloading rvm'
-# source /home/ec2-user/.rvm/scripts/rvm
 
 # install droid sans mono for powerlevel9k theme
 # needs to be fixed to use nerdfonts
