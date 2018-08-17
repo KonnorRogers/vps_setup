@@ -48,7 +48,7 @@ rm -rf fonts
 echo 'installing powerlevel9k"
 
 # downloading powerlevel 9k
-git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/
+git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 # set zsh to 256 color
 
