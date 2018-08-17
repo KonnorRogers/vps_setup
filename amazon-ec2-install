@@ -3,7 +3,7 @@
 USER="ec2-user"
 yum update -y
 
-PACKAGE_LIST="curl git vim docker zsh gedit"
+PACKAGE_LIST="curl git vim docker zsh"
 
 for item in $PACKAGE_LIST; do
 	echo "installing $item"
@@ -30,17 +30,17 @@ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB8
 echo 'reloading rvm'
 source /home/ec2-user/.rvm/scripts/rvm
 
-# install furacode for powerlevel9k theme
+# install droid sans mono for powerlevel9k theme
 # needs to be fixed to use nerdfonts
-#echo 'installing firacode'
+#echo 'installing droid sans mono'
 # clone
-#git clone https://github.com/powerline/fonts.git --depth=1
+ git clone https://github.com/powerline/fonts.git --depth=1
 # install
-#cd fonts
-#./install.sh FiraMono
-# clean-up a bit
-#cd ..
-#rm -rf fonts
+  cd fonts
+  ./install.sh FiraMono
+ # clean-up a bit
+cd ..
+rm -rf fonts
 
 # install powerlevel9k
 
