@@ -1,6 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-  # POWERLEVEL9K_MODE='nerdfont-complete'
+  POWERLEVEL9K_MODE='nerdfont-complete'
   source ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
   POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs newline status)
   POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
