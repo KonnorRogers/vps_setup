@@ -37,7 +37,7 @@ source /home/ec2-user/.rvm/scripts/rvm
  git clone https://github.com/powerline/fonts.git --depth=1
 # install
   cd fonts
-  ./install.sh FiraMono
+  ./install.sh DroidSansMono
  # clean-up a bit
 cd ..
 rm -rf fonts
