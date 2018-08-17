@@ -55,8 +55,8 @@ git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/theme
 
 # updating zsh
 # git clone https://github.com/ParamagicDev/dotfiles.git ~/ec2-user
-rm ~/.zshrc
-mv ~/ec2-user/dotfiles/.zshrc ~/.zshrc
+# rm ~/.zshrc
+mv /home/ec2-user/dotfiles/.zshrc ~/.zshrc
 source ~/.zshrc
 
 # installing colorls gem
