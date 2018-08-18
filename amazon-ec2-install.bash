@@ -42,13 +42,13 @@ git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/theme
 # updating zsh
 # git clone https://github.com/ParamagicDev/dotfiles.git ~/ec2-user
 # rm ~/.zshrc
-mv ~/dotfiles/.zshrc ~/.zshrc
-source ~/.zshrc
+# mv ~/dotfiles/.zshrc ~/.zshrc
+# source ~/.zshrc
 
 # installing colorls gem
 
-gem install colorls
-echo "alias cls='colorls'" >> ~/.zshrc
+# gem install colorls
+# echo "alias cls='colorls'" >> ~/.zshrc
 
 # syntax highlight and auto suggestion
 
