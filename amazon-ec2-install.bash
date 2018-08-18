@@ -26,17 +26,8 @@ cd chruby-0.3.9/
 sudo make install
 
 
-# install droid sans mono for powerlevel9k theme
-# needs to be fixed to use nerdfonts
-#echo 'installing droid sans mono'
-# clone
- git clone https://github.com/powerline/fonts.git --depth=1
-# install
-  cd fonts
-  ./install.sh DroidSansMono
- # clean-up a bit
-cd ..
-rm -rf fonts
+mkdir -p ~/.local/share/fonts
+cd ~/.local/share/fonts && curl -fLo "Literation Mono for Powerline Nerd Font Complete.ttf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/LiberationMono/complete/Literation%20Mono%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf
 
 # install powerlevel9k
 
