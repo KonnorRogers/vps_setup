@@ -15,7 +15,7 @@ cd ~
 wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
 tar -xzvf chruby-0.3.9.tar.gz
 cd chruby-0.3.9/
-sudo make install
+sudo ./scripts/setup.sh
 
 # install oh-my-zsh
 echo 'installing ohmyzsh'
@@ -24,5 +24,4 @@ echo 'installing ohmyzsh'
 cd ~
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
-chsh -s /bin/zsh
 
