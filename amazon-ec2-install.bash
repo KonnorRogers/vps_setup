@@ -3,7 +3,7 @@
 USER="ec2-user"
 yum update -y
 
-PACKAGE_LIST="curl git vim docker-ce zsh gcc"
+PACKAGE_LIST="curl git vim docker zsh gcc"
 
 for item in $PACKAGE_LIST; do
 	echo "installing $item"
