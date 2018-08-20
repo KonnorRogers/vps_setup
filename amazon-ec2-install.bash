@@ -17,9 +17,7 @@ cd mosh
 ./autogen.sh |
 ./configure |
 make |
-make install
-
-&
+make install |
 
 # install oh-my-zsh
 echo 'installing ohmyzsh'
@@ -31,10 +29,10 @@ cp ~/.zshrc ~/.zshrc.orig |
 cp ~/ec2setup/.zshrc ~/.zshrc
 
 cd ~
-wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-tar -xzvf chruby-0.3.9.tar.gz
-cd chruby-0.3.9/
-./scripts/setup.sh
+wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz |
+tar -xzvf chruby-0.3.9.tar.gz |
+cd chruby-0.3.9/ |
+./scripts/setup.sh |
 exec zsh
 
 # install color ls
