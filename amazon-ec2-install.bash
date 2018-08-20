@@ -39,8 +39,11 @@ cd ~
 git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 cp ~/powerlevel9k ~/.oh-my-zsh/themes/
-cp ~/ec2setup/.zshrc ~/.zshrc
+cd ~/ec2setup
+cp .zshrc ~/.zshrc
 
+
+cd ~
 # RVM
 # install ruby 2.4 sudo amazon-linux-extras install ruby2.4
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
