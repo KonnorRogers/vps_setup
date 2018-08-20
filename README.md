@@ -20,5 +20,5 @@
 
     sudo yum install git -y
     git clone https://github.com/ParamagicDev/ec2setup.git
-    sudo bash ~/.amazon-ec2-install.bash
+    sudo bash ~/ec2-setup/.amazon-ec2-install.bash
   
