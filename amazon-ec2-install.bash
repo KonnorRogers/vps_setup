@@ -40,19 +40,19 @@ git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 mkdir ~/.oh-my-zsh/themes/powerlevel9k
 cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/powerlevel9k
-cp /home/ec2-user/ec2setup/.zshrc ~/.zshrc
+cp ~/ec2setup/.zshrc ~/.zshrc
+cp /home/ec2setp/.zshrc ~/.zshrc
 
-
-cd ~
+#install ruby 2.4 
+sudo amazon-linux-extras install ruby2.4
 # RVM
-# install ruby 2.4 sudo amazon-linux-extras install ruby2.4
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-\curl -sSL https://get.rvm.io | bash
-source /etc/profile
-rvm user gemsets
-source ~/.rvm/scripts/rvm
-rvm install 2.5
-rvm use 2.5
+#gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+#\curl -sSL https://get.rvm.io | bash
+#source /etc/profile
+#rvm user gemsets
+#source ~/.rvm/scripts/rvm
+#rvm install 2.5
+#rvm use 2.5
 
 exec zsh
 
