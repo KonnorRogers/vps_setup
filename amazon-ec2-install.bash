@@ -24,7 +24,7 @@ echo 'installing ohmyzsh'
 
 cd ~
 git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k |
-git clone "https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh" |
+git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh |
 cp ~/.zshrc ~/.zshrc.orig |
 cp ~/ec2setup/.zshrc ~/.zshrc
 
