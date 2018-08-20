@@ -13,9 +13,9 @@ done
 cd ~
 git clone https://github.com/keithw/mosh
 cd mosh
-./autogen.sh 
-./configure
-make
+./autogen.sh |
+./configure |
+make |
 make install
 
 &
