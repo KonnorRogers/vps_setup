@@ -38,6 +38,7 @@ echo 'installing ohmyzsh'
 cd ~
 git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+mkdir ~/.oh-my-zsh/themes/powerlevel9k
 cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/powerlevel9k
 cp /home/ec2-user/ec2setup/.zshrc ~/.zshrc
 
