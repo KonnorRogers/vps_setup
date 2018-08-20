@@ -3,7 +3,7 @@
 USER="ec2-user"
 yum update -y
 
-PACKAGE_LIST="curl tmux git vim docker zsh gcc protobuf-devel boost-devel libutempter-devel ncurses-devel zlib-devel perl-CPAN cpp make automake gcc-c++ protoconf-devel openssl-devel"
+PACKAGE_LIST="curl tmux git vim docker zsh gcc protobuf-devel boost-devel libutempter-devel ncurses-devel zlib-devel perl-CPAN cpp make automake gcc-c++ protoconf-devel openssl-devel libtool bison build-essential libreadline zlib1g libyaml libc6 libgdbm ncurses"
 
 for item in $PACKAGE_LIST; do
 	echo "installing $item"
@@ -28,11 +28,14 @@ git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/
 cp ~/ec2setup/.zshrc ~/.zshrc
 
-cd ~
-wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-tar -xzvf chruby-0.3.9.tar.gz
-cd chruby-0.3.9/
-sudo ./scripts/setup.sh 
+# RVM
+# install ruby 2.4 sudo amazon-linux-extras install ruby2.4
+source /etc/profile
+rvm user gemsets
+source ~/.rvm/scripts/rvm
+rvm install 2.5
+rvm use 2.5
+
 exec zsh
 
 # install color ls
