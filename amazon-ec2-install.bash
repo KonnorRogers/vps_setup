@@ -18,12 +18,15 @@ cd mosh
 make
 make install
 
+&
+
 # install oh-my-zsh
 echo 'installing ohmyzsh'
 # sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 cd ~
-git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+git clone "https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh"
+cp ~/.zshrc ~/.zshrc.orig
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 
 cd ~
