@@ -14,26 +14,26 @@ cd ~
 cp ~/ec2setup/.gitconfig ~/.gitconfig
 git clone https://github.com/keithw/mosh
 cd mosh
-./autogen.sh |
-./configure |
-make |
-make install |
+./autogen.sh
+./configure
+make
+make install
 
 # install oh-my-zsh
 echo 'installing ohmyzsh'
 
 cd ~
-git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k |
-git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh |
-cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/ |
+git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
+git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/
 cp ~/ec2setup/.zshrc ~/.zshrc
 
 cd ~
-wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz |
-tar -xzvf chruby-0.3.9.tar.gz |
-cd chruby-0.3.9/ |
-sudo ./scripts/setup.sh |
-exec zsh |
+wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+tar -xzvf chruby-0.3.9.tar.gz
+cd chruby-0.3.9/
+sudo ./scripts/setup.sh 
+exec zsh
 
 # install color ls
 gem install colorls 
