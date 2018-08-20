@@ -24,7 +24,7 @@ systemctl restart docker.service
 
 # Install mosh
 cd ~
-cp ~/ec2setup/.gitconfig ~/.gitconfig
+cp /home/ec2-user/ec2setup/.gitconfig ~/.gitconfig
 git clone https://github.com/keithw/mosh
 cd mosh
 ./autogen.sh
@@ -35,12 +35,9 @@ make install
 # install oh-my-zsh
 echo 'installing ohmyzsh'
 
-cd ~
-git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
-git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-mkdir ~/.oh-my-zsh/themes/powerlevel9k
-cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/powerlevel9k
-cp ~/ec2setup/.zshrc ~/.zshrc
+git clone https://github.com/bhilburn/powerlevel9k.git /home/ec2-user/powerlevel9k
+git clone https://github.com/robbyrussell/oh-my-zsh.git /home/ec2-user/.oh-my-zsh
+mkdir /home/ec2-user/.oh-my-zsh/themes/powerlevel9k
 cp /home/ec2-user/ec2setup/.zshrc ~/.zshrc
 
 #install ruby 2.4 
