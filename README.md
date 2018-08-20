@@ -4,7 +4,7 @@
 
     clone the repo
     cd ~/path/to/dotfiles
-    sudo chmod +x ./amazon-ec2-install.sh
+    sudo chmod +x ./amazon-ec2-install.bash
     sudo ./amazon-ec2-install.bash
     
     or 
@@ -15,3 +15,11 @@
     update .tmuxrc
     update .vimrc
     possibly fix zsh? works fine at this point
+    
+# Updating amazon ec2 instance as text
+
+    sudo yum install git -y
+    git clone https://github.com/ParamagicDev/ec2setup.git
+    sudo chmod +x ~/.amazon-ec2-install.bash
+    sudo ~/.amazon-ec2-install.bash
+  
