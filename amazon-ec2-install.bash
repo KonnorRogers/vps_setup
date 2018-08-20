@@ -35,10 +35,8 @@ make install
 echo 'installing ohmyzsh'
 
 git clone https://github.com/robbyrussell/oh-my-zsh.git /home/ec2-user/.oh-my-zsh
-mkdir /home/ec2-user/.oh-my-zsh/themes/powerlevel9k
 
-git clone https://github.com/bhilburn/powerlevel9k.git /home/ec2-user/powerlevel9k
-cp /home/ec2-user/powerlevel9k/powerlevel9k.zsh-theme /home/ec2-user/.oh-my-zsh/themes/powerlevel9k
+git clone https://github.com/bhilburn/powerlevel9k.git /home/ec2-user/.oh-my-zsh/themes/
 cp /home/ec2-user/ec2setup/.zshrc ~/.zshrc
 
 #install ruby 2.4 
