@@ -37,3 +37,5 @@ cd chruby-0.3.9/
 ./scripts/setup.sh
 exec zsh
 
+# install color ls
+gem install colorls
