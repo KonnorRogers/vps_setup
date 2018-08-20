@@ -4,16 +4,22 @@ USER="ec2-user"
 yum update -y
 
 # Install dependencies
-PACKAGE_LIST="curl tmux git vim docker zsh gcc protobuf-devel boost-devel libutempter-devel ncurses-devel zlib-devel perl-CPAN cpp make automake gcc-c++ protoconf-devel openssl-devel libtool bison build-essential libreadline zlib1g libyaml libc6 libgdbm ncurses"
+PACKAGE_LIST="curl tmux git vim docker zsh gcc protobuf-devel boost-devel libutempter-devel ncurses-devel zlib-devel perl-CPAN cpp make automake gcc-c++ protoconf-devel openssl-devel libtool bison build-essential libreadline zlib1g libyaml libc6 libgdbm ncurses python3"
 
 for item in $PACKAGE_LIST; do
 	echo "installing $item"
 	yum install -y $item
 done
 
+# install pip
+curl -O https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py --user
+
 # Configure docker
 groupadd docker
 usermod -aG docker $USER
+systemctl enable docker
+chkconfig docker on
 systemctl restart docker.service
 
 # Install mosh
