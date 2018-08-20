@@ -3,6 +3,7 @@
 USER="ec2-user"
 yum update -y
 
+# Install dependencies
 PACKAGE_LIST="curl tmux git vim docker zsh gcc protobuf-devel boost-devel libutempter-devel ncurses-devel zlib-devel perl-CPAN cpp make automake gcc-c++ protoconf-devel openssl-devel libtool bison build-essential libreadline zlib1g libyaml libc6 libgdbm ncurses"
 
 for item in $PACKAGE_LIST; do
@@ -10,6 +11,7 @@ for item in $PACKAGE_LIST; do
 	yum install -y $item
 done
 
+# Install mosh
 cd ~
 cp ~/ec2setup/.gitconfig ~/.gitconfig
 git clone https://github.com/keithw/mosh
@@ -39,5 +41,4 @@ rvm use 2.5
 exec zsh
 
 # install color ls
-gem install colorls 
-
+gem install colorls
