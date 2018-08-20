@@ -25,9 +25,10 @@ echo 'installing ohmyzsh'
 # sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 cd ~
+git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k |
 git clone "https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh" |
 cp ~/.zshrc ~/.zshrc.orig |
-cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+cp ~/ec2setup/.zshrc ~/.zshrc
 
 cd ~
 wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
@@ -35,3 +36,4 @@ tar -xzvf chruby-0.3.9.tar.gz
 cd chruby-0.3.9/
 ./scripts/setup.sh
 exec zsh
+
