@@ -11,6 +11,11 @@ for item in $PACKAGE_LIST; do
 	yum install -y $item
 done
 
+# Configure docker
+groupadd docker
+usermod -aG docker $USER
+systemctl restart docker.service
+
 # Install mosh
 cd ~
 cp ~/ec2setup/.gitconfig ~/.gitconfig
