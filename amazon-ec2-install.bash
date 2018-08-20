@@ -33,9 +33,8 @@ wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.
 tar -xzvf chruby-0.3.9.tar.gz |
 cd chruby-0.3.9/ |
 sudo ./scripts/setup.sh |
-
+exec zsh |
 
 # install color ls
-gem install colorls |
+gem install colorls 
 
-exec zsh
