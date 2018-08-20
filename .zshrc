@@ -1,10 +1,10 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-# source /usr/local/share/chruby/chruby.sh
+export TERM="xterm-256color"
 
 POWERLEVEL9K_MODE='nerdfont-complete'
 source ~/powerlevel9k/powerlevel9k.zsh-theme
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir vcs newline status)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir vcs rvm newline status)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
