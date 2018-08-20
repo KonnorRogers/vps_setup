@@ -41,7 +41,7 @@ git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 mkdir ~/.oh-my-zsh/themes/powerlevel9k
 cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/powerlevel9k
 cp ~/ec2setup/.zshrc ~/.zshrc
-cp /home/ec2setp/.zshrc ~/.zshrc
+cp /home/ec2setup/.zshrc ~/.zshrc
 
 #install ruby 2.4 
 sudo amazon-linux-extras install ruby2.4 -y
