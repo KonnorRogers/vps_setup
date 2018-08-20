@@ -1,7 +1,5 @@
 #!/bin/bash
 
-aws configure --profile konnor
-
 USER="ec2-user"
 yum update -y
 
