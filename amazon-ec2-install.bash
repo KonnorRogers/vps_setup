@@ -11,6 +11,7 @@ for item in $PACKAGE_LIST; do
 done
 
 cd ~
+cp ~/ec2setup/.gitconfig ~/.gitconfig
 git clone https://github.com/keithw/mosh
 cd mosh
 ./autogen.sh |
@@ -22,7 +23,6 @@ make install
 
 # install oh-my-zsh
 echo 'installing ohmyzsh'
-# sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 cd ~
 git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k |
