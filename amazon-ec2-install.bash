@@ -38,7 +38,7 @@ echo 'installing ohmyzsh'
 cd ~
 git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/
+cp ~/powerlevel9k ~/.oh-my-zsh/themes/
 cp ~/ec2setup/.zshrc ~/.zshrc
 
 # RVM
