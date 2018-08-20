@@ -3,7 +3,7 @@
 USER="ec2-user"
 yum update -y
 
-PACKAGE_LIST="curl git vim docker zsh gcc protobuf-devel boost-devel libutempter-devel ncurses-devel zlib-devel perl-CPAN cpp make automake gcc-c++ protoconf-devel openssl-devel"
+PACKAGE_LIST="curl tmux git vim docker zsh gcc protobuf-devel boost-devel libutempter-devel ncurses-devel zlib-devel perl-CPAN cpp make automake gcc-c++ protoconf-devel openssl-devel"
 
 for item in $PACKAGE_LIST; do
 	echo "installing $item"
