@@ -23,7 +23,6 @@ chkconfig docker on
 systemctl restart docker.service
 
 # Install mosh
-cd ~
 cp /home/ec2-user/ec2setup/.gitconfig ~/.gitconfig
 git clone https://github.com/keithw/mosh
 cd mosh
