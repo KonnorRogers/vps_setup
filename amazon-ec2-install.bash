@@ -25,8 +25,9 @@ echo 'installing ohmyzsh'
 cd ~
 git clone https://github.com/bhilburn/powerlevel9k.git ~/powerlevel9k |
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh |
-cp ~/.zshrc ~/.zshrc.orig |
+cp ~/powerlevel9k/powerlevel9k.zsh-theme ~/.oh-my-zsh/themes/ |
 cp ~/ec2setup/.zshrc ~/.zshrc
+cp ~/
 
 cd ~
 wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz |
