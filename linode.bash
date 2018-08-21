@@ -15,7 +15,7 @@ PACKAGE_LIST="curl tmux git vim docker zsh rvm gnupg2 sqlite3 postgresql less mo
 
 for item in $PACKAGE_LIST; do
   sudo apt install $item -y
-fi
+done
 
 # Configure docker
 groupadd docker
