@@ -71,6 +71,11 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 plugins=(
   git
   rails
+  mosh
+  rvm
+  tmux
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
