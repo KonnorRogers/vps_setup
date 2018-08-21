@@ -5,15 +5,11 @@ add user -aG $username
 sudo apt update
 sudo apt upgrade -y
 
-PACKAGE_LIST="curl tmux git vim docker zsh rvm gnupg2 sqlite3 postgresql less mosh"
+PACKAGE_LIST="curl tmux git vim docker zsh rvm gnupg2 sqlite3 postgresql less mosh python3 python-pip"
 
 for item in $PACKAGE_LIST; do
   sudo apt install $item -y
 fi
-
-# install pip
-curl -O https://bootstrap.pypa.io/get-pip.py
-python3 get-pip.py --user
 
 # Configure docker
 groupadd docker
