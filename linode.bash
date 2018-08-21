@@ -1,4 +1,4 @@
-username="paramagicdev"
+username="paramagician"
 adduser $username
 adduser $username sudo
 
