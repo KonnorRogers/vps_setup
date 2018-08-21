@@ -1,20 +1,9 @@
 # dotfiles
 
-# Usage
-
-    clone the repo
-    cd ~/path/to/dotfiles
-    sudo chmod +x ./amazon-ec2-install.bash
-    sudo ./amazon-ec2-install.bash
-    
-    or 
-    
-    cd ~/path/to/dotfiles
-    sudo bash amazon-ec2-install.bash
-# updates
-    update .tmuxrc
-    update .vimrc
-    possibly fix zsh? works fine at this point
+# Warnings
+    if intending to use rvm, DO NOT run this script as a root user. 
+    It will cause RVM to not install locally and instead install to root causing other issues as described
+    in the RVM installation process
     
 # Updating amazon ec2 instance as text
 
@@ -27,3 +16,10 @@
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git
     sudo bash ~/vps-setup/linode.bash
+
+
+# updates for the future?
+    update .tmuxrc
+    update .vimrc
+    add other various devops related things
+    use docker more?
