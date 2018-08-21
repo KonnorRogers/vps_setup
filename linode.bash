@@ -90,13 +90,6 @@ less nodejs.sh
 cat /tmp/nodejs.sh | sudo -E bash -
 sudo apt install -y nodejs
 
-# enabling traffic
-sudo systemctl start ufw
-sudo systemctl enable ufw
-sudo ufw allow ssh
-sudo ufw allow 80/tcp
-sudo ufw allow http/tcp
-
 # install ohmyzsh
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
