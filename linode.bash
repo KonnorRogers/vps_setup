@@ -5,7 +5,7 @@ add user -aG $username
 sudo apt update
 sudo apt upgrade -y
 
-PACKAGE_LIST="curl tmux git vim docker zsh rvm gnupg2 sqlite3 postgresql less"
+PACKAGE_LIST="curl tmux git vim docker zsh rvm gnupg2 sqlite3 postgresql less mosh"
 
 for item in $PACKAGE_LIST; do
   sudo apt install $item -y
@@ -22,14 +22,6 @@ usermod -aG docker $username
 systemctl enable docker
 chkconfig docker on
 systemctl restart docker.service
-
-# install mosh
-git clone https://github.com/keithw/mosh
-cd mosh
-./autogen.sh
-./configure
-make
-make install
 
 # install rvm
 gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
