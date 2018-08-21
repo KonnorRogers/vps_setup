@@ -19,6 +19,11 @@
 # Updating amazon ec2 instance as text
 
     sudo yum install git -y
-    git clone https://github.com/ParamagicDev/ec2setup.git
+    git clone https://github.com/ParamagicDev/vps-setup.git
     sudo bash ~/ec2setup/amazon-ec2-install.bash
   
+# Updating linode instance
+
+    sudo apt install git
+    git clone https://github.com/ParamagicDev/vps-setup.git
+    sudo bash ~/vps-setup/linode.bash
