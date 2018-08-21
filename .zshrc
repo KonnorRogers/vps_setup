@@ -3,7 +3,7 @@
 export TERM="xterm-256color"
 
 POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir rvm vcs newline status)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir m vcs newline status)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
@@ -69,10 +69,10 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  rails
-  mosh
-  rvm
-  tmux
+  # rails
+  # mosh
+  # rvm
+  # tmux
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
@@ -108,6 +108,6 @@ fi
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
-alias lsc="colorls
+alias lsc="colorls"
 alias ls='ls -G'
 
