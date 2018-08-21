@@ -23,6 +23,9 @@ sudo add-apt-repository ppa:keithw/mosh
 sudo apt-get update
 sudo apt-get install mosh
 
+# configure server to accept mosh connections
+
+
 # Configure docker
 groupadd docker
 usermod -aG docker $USER
@@ -77,5 +80,6 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 
+cd ~
 source ~/.zshrc
 
