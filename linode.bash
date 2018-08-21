@@ -1,6 +1,6 @@
 username="paramagicdev"
-add user $username
-add user -aG $username
+adduser $username -y
+adduser $username sudo
 
 sudo apt update
 sudo apt upgrade -y
