@@ -55,7 +55,8 @@ source ~/.rvm/scripts/rvm
 
 # install nodejs for rails pipeline
 cd /tmp
-\curl -sSL https://deb.nodesource.com/setup_10.x -o nodejs.sh
+# installs nodejs as root. Important note, will not properly install if not root
+\curl -sSL https://deb.nodesource.com/setup_10.x -o nodejs.sh | bash -
 less nodejs.sh
 cat /tmp/nodejs.sh | sudo -E bash -
 sudo apt install -y nodejs
