@@ -1,6 +1,12 @@
 username="paramagician"
-adduser $username
-adduser $username sudo
+
+if getent passwd $1 > /dev/null 2>&1; then
+    echo "$username is already being used!"
+else
+    echo "$username is not taken!"
+    adduser $username
+    adduser $username sudo
+fi
 
 sudo apt update
 sudo apt upgrade -y
