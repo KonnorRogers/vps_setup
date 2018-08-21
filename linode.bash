@@ -27,7 +27,7 @@ sudo apt-get install mosh
 # configure server to accept mosh connections
 
 # install docker
-sudo snap install docker
+snap install docker
 
 # Configure docker
 groupadd docker
