@@ -11,11 +11,17 @@ fi
 sudo apt update
 sudo apt upgrade -y
 
-PACKAGE_LIST="curl tmux git vim docker zsh gnupg2 sqlite3 postgresql less mosh python3 python-pip ufw"
+PACKAGE_LIST="curl tmux git vim docker zsh gnupg2 sqlite3 postgresql less python3 python-pip ufw"
 
 for item in $PACKAGE_LIST; do
   sudo apt install $item -y
 done
+
+# install mosh
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:keithw/mosh
+sudo apt-get update
+sudo apt-get install mosh
 
 # Configure docker
 groupadd docker
@@ -53,6 +59,13 @@ gem install colorls
 
 # install bundler
 gem install bundler
+
+# enabling traffic
+sudo systemctl start ufw
+sudo systemctl enable ufw
+sudo ufw allow ssh
+sudo ufw allow 80/tcp
+sudo ufw allow http/tcp
 
 # install ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
