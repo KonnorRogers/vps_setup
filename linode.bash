@@ -11,7 +11,7 @@ fi
 sudo apt update
 sudo apt upgrade -y
 
-PACKAGE_LIST="curl tmux git vim docker zsh gnupg2 sqlite3 postgresql less mosh python3 python-pip"
+PACKAGE_LIST="curl tmux git vim docker zsh gnupg2 sqlite3 postgresql less mosh python3 python-pip ufw"
 
 for item in $PACKAGE_LIST; do
   sudo apt install $item -y
