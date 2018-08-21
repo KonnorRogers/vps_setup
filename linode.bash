@@ -8,6 +8,9 @@ else
     adduser $username sudo
 fi
 
+# change to user
+su - paramagician
+
 sudo apt update
 sudo apt upgrade -y
 
