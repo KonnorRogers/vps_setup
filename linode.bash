@@ -24,7 +24,18 @@ sudo add-apt-repository ppa:keithw/mosh
 sudo apt-get update
 sudo apt-get install mosh
 
+## enabling traffic
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw allow ssh
+sudo ufw allow 80/tcp
+sudo ufw allow http/tcp
+
 # configure server to accept mosh connections
+sudo ufw allow port 60000:61000 proto udp
+
+# enable firewall
+sudo ufw enable
 
 # install docker
 snap install docker
@@ -42,16 +53,24 @@ gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB
 cd /tmp
 curl -sSL https://get.rvm.io -o rvm.sh
 cat /tmp/rvm.sh | bash -s stable --rails
-source ~/.rvm/scripts/rvm
+source /usr/local/rvm/scripts/rvm
 
 # install ruby
 rvm install ruby-2.5.1
-rvm use ruby-2.5.1
 
+# set gemsets
+rvm gemset create dev
+rvm use 2.5.1@dev
+
+
+# install gems
+gem install bundler
 gem install rails -v 5.2.0
-rvm gemset create $username
-rvm 2.5.1@"$username" --create
-source ~/.rvm/scripts/rvm
+gem install colorls
+
+
+# reload rvm
+source /usr/local/rvm/scripts/rvm
 
 # install nodejs for rails pipeline
 cd /tmp
@@ -61,12 +80,6 @@ less nodejs.sh
 cat /tmp/nodejs.sh | sudo -E bash -
 sudo apt install -y nodejs
 
-# install colorls
-gem install colorls
-
-# install bundler
-gem install bundler
-
 # enabling traffic
 sudo systemctl start ufw
 sudo systemctl enable ufw
@@ -75,8 +88,11 @@ sudo ufw allow 80/tcp
 sudo ufw allow http/tcp
 
 # install ohmyzsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+cp ~/.zshrc ~/.zshrc.orig
 cp ~/vps-setup/.zshrc ~/.zshrc
+chsh -s /bin/zsh
 
 ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
