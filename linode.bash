@@ -1,5 +1,5 @@
 username="paramagicdev"
-adduser $username -y
+adduser $username
 adduser $username sudo
 
 sudo apt update
