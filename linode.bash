@@ -33,6 +33,7 @@ rvm use ruby-2.5.1
 gem install rails -v 5.2.0
 rvm gemset create $username
 rvm 2.5.1@"$username" --create
+source ~/.rvm/scripts/rvm
 
 # install nodejs for rails pipeline
 cd /tmp
@@ -44,6 +45,9 @@ sudo apt install -y nodejs
 # install colorls
 gem install colorls
 
+# install bundler
+gem install bundler
+
 # install ohmyzsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 cp ~/vps-setup/.zshrc ~/.zshrc
@@ -52,6 +56,7 @@ ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/zsh-syntax-highlighting
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+
 
 source ~/.zshrc
 
