@@ -1,5 +1,3 @@
-# dotfiles
-
 # Purpose
     To be able to spin up multiple development environments without
     having to reconfigure all the time
