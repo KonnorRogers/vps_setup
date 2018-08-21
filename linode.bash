@@ -1,4 +1,6 @@
-username="paramagician"
+username="paramagicdev"
+email="konnor5456@gmail.com"
+
 
 if getent passwd $1 > /dev/null 2>&1; then
     echo "$username is already being used!"
@@ -20,6 +22,11 @@ PACKAGE_LIST="curl tmux git vim zsh gnupg2 sqlite3 postgresql less python3 pytho
 for item in $PACKAGE_LIST; do
   sudo apt install $item -y
 done
+
+# setup git
+git.config --global user.name $username
+git.config --global user.email $email
+
 
 # install mosh
 sudo apt-get install python-software-properties
