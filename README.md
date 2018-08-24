@@ -5,7 +5,8 @@
     Note: this is a fragile process and currently is OS dependent. Currenly only testing and working with
     Amazon 2 AMI instance
     Ubuntu 18.04 LTS on Linode
-    
+    SSH key testing
+
 
 # Warnings
     if intending to use rvm, DO NOT run this script as a root user. 
