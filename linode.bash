@@ -16,7 +16,7 @@ su - paramagician
 sudo apt update
 sudo apt upgrade -y
 
-PACKAGE_LIST="curl tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python-pip ufw neovim pry"
+PACKAGE_LIST="curl tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip ufw neovim pry ack-grep libfuse2 fuse"
 
 
 for item in $PACKAGE_LIST; do
