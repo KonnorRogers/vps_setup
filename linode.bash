@@ -1,4 +1,4 @@
-username="paramagicdev"
+username="paramagician"
 email="konnor5456@gmail.com"
 
 
