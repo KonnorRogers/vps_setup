@@ -24,9 +24,20 @@ for item in $PACKAGE_LIST; do
 done
 
 # setup git
-git.config --global user.name $username
+git.config --global user.name paramagicdev 
 git.config --global user.email $email
 
+# install nvim
+wget --quiet https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage --output-document nvim
+
+chmod +x nvim
+sudo chown root:root nvim
+sudo mv nvim /usr/bin
+cd ~
+mkdir -p .config/nvim
+
+# install nvim plugin manager
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # install mosh
 sudo apt-get install python-software-properties
