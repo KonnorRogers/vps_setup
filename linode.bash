@@ -111,7 +111,7 @@ npm install -g neovim
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 cp ~/.zshrc ~/.zshrc.orig
-cp ~/vps-setup/.zshrc ~/.zshrc
+cp ~/vps-setup/zshrc ~/.zshrc
 chsh -s /bin/zsh
 
 ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
