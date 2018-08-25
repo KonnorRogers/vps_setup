@@ -39,8 +39,8 @@ sudo update-alternatives --config vim
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 sudo update-alternatives --config editor
 # update python3 & python2 - neovim
-sudo pip2 install neovim
-sudo pip3 install neovim
+sudo pip2 --user install neovim
+sudo pip3 --user install neovim
 
 # install nvim plugin manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
