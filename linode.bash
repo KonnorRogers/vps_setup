@@ -16,7 +16,7 @@ su - paramagician
 sudo apt update
 sudo apt upgrade -y
 
-PACKAGE_LIST="curl tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip ufw neovim pry ack-grep libfuse2 fuse"
+PACKAGE_LIST="curl tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip ufw neovim pry ack-grep libfuse2 fuse python3-neovim"
 
 
 for item in $PACKAGE_LIST; do
@@ -88,7 +88,7 @@ rvm use 2.5.1@dev
 gem install bundler
 gem install rails -v 5.2.0
 gem install colorls
-
+gem install neovim
 
 # reload rvm
 source /usr/local/rvm/scripts/rvm
@@ -100,7 +100,7 @@ cd /tmp
 less nodejs.sh
 cat /tmp/nodejs.sh | sudo -E bash -
 sudo apt install -y nodejs
-
+npm install -g neovim
 # install ohmyzsh
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
