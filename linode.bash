@@ -45,7 +45,7 @@ sudo pip3 --user install neovim
 # install nvim plugin manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Source the vimrc file to init.vim
-ln -s ~/.vimrc ~/.config/nvim/init.vim
+cp ~/.vimrc ~/.config/nvim/init.vim
 
 # install mosh
 sudo apt-get install python-software-properties
