@@ -3,7 +3,6 @@
     having to reconfigure all the time
      
     Note: this is a fragile process and currently is OS dependent. Currenly only testing and working with
-    Amazon 2 AMI instance
     Ubuntu 18.04 LTS on Linode
     SSH key testing
 
@@ -28,6 +27,6 @@
 
 # updates for the future?
     update .tmuxrc
-    update .vimrc
+    update neovim/init.vim with ruby / rails related plugins
     add other various devops related things
     use docker more?
