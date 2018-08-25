@@ -15,7 +15,7 @@ su - paramagician
 
 sudo apt update
 sudo apt upgrade -y
-
+sudo apt autoremove -y
 PACKAGE_LIST="curl tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip ufw neovim pry ack-grep libfuse2 fuse python3-neovim"
 
 
