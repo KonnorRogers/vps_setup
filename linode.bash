@@ -16,7 +16,7 @@ su - paramagician
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
-PACKAGE_LIST="curl tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip ufw neovim pry ack-grep libfuse2 fuse python3-neovim"
+PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim "
 
 
 for item in $PACKAGE_LIST; do
@@ -28,13 +28,19 @@ git.config --global user.name paramagicdev
 git.config --global user.email $email
 
 # install nvim
-wget --quiet https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage --output-document nvim
-
-chmod +x nvim
-sudo chown root:root nvim
-sudo mv nvim /usr/bin
-cd ~
-mkdir -p .config/nvim
+sudo apt-add-repository ppa:neovim-ppa/stable
+sudo apt-get update
+sudo apt-get install neovim
+# update editor
+sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+sudo update-alternatives --config vi
+sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+sudo update-alternatives --config vim
+sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+sudo update-alternatives --config editor
+# update python3 & python2 - neovim
+pip2 install --user neovim
+pip3 install --user neovim
 
 # install nvim plugin manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
