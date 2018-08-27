@@ -27,6 +27,9 @@ done
 git.config --global user.name paramagicdev 
 git.config --global user.email $email
 
+# set tmux
+cp ~/vps-setup ~/.tmux.conf
+
 # install nvim
 sudo apt-add-repository ppa:neovim-ppa/stable
 sudo apt-get update
