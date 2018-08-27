@@ -11,7 +11,7 @@ email="konnor5456@gmail.com"
 # fi
 
 # change to user
-su - paramagician
+# su - paramagician
 
 sudo apt update
 sudo apt upgrade -y
@@ -45,7 +45,7 @@ sudo pip3 --user install neovim
 # install nvim plugin manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Recursively copies nvim setup
-cp -r ~/vps-setup/nvim ~/.config/nvim
+cp ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
 
 # Copy vimrc should neovim have issues
 cp ~/vps-setup/vimrc ~/.vimrc
