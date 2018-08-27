@@ -39,7 +39,7 @@ autocmd BufWritePre *.html :%s/\s\+$//e
 "    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 "endif
 
-call plug#begin()
+call plug#begin(~/.vim/plugged)
     Plug 'arcticicestudio/nord-vim'
     "Fugitive Vim Github Wrapper
     Plug 'tpope/vim-fugitive'
