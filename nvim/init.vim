@@ -46,11 +46,14 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin("~/.config/nvim/plugged")
-Plug 'roxma/nvim-completion-manager'
+"multiple snippets from different languages
 Plug 'SirVer/ultisnips'
+"vim snippets
 Plug 'honza/vim-snippets'
 Plug 'brooth/far.vim'
+"Neomake allows faster make runs
 Plug 'neomake/neomake'
+" All part of ncm
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 " NOTE: you need to install completion sources to get completions. Check
@@ -58,6 +61,9 @@ Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
+"nord color theme
 Plug 'arcticicestudio/nord-vim'
+"Fugitive Vim Github Wrapper
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
