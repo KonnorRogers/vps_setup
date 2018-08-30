@@ -96,8 +96,7 @@ source /usr/local/rvm/scripts/rvm
 rvm install ruby-2.5.1
 
 # set gemsets
-rvm gemset create dev
-rvm use 2.5.1@dev
+rvm use 2.5.1@dev --create --default
 
 
 # install gems

@@ -65,6 +65,16 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'arcticicestudio/nord-vim'
     "Fugitive Vim Github Wrapper
     Plug 'tpope/vim-fugitive'
+    "Bundler wrapper
+    Plug 'tpope/vim-bundler'
+    "Rapid file search
+    Plug 'skalnik/vim-vroom'
+    "Tab complete ends
+    Plug 'tpope/vim-endwise'
+    "nerdtree file explorer
+    Plug 'scrooloose/nerdtree'
+    "vim ruby
+    Plug 'vim-ruby/vim-ruby'
 call plug#end()
 
 colorscheme nord    "set colorscheme
