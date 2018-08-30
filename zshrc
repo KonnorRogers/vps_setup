@@ -110,5 +110,5 @@ fi
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 
-alias lsc="colorls"
+alias lsc='colorls'
 alias ls='ls -G'
