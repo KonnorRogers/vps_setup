@@ -11,7 +11,7 @@ email="konnor5456@gmail.com"
 # fi
 
 # change to user
-# su - paramagician
+su - paramagician
 
 sudo apt update
 sudo apt upgrade -y
