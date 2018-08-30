@@ -112,4 +112,3 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 
 alias lsc="colorls"
 alias ls='ls -G'
-
