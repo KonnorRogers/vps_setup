@@ -2,13 +2,13 @@ username="paramagician"
 email="konnor5456@gmail.com"
 
 
-# if getent passwd $1 > /dev/null 2>&1; then
+if !'getent passwd $1 > /dev/null 2>&1'; then
 #    echo "$username is already being used!"
 # else
-#    echo "$username is not taken!"
-#    adduser $username
-#    adduser $username sudo
-# fi
+   echo "$username is not taken!"
+   adduser $username
+   adduser $username sudo
+fi
 
 # change to user
 su - paramagician
@@ -86,11 +86,11 @@ chkconfig docker on
 systemctl restart docker.service
 
 # install rvm
-gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-cd /tmp
-curl -sSL https://get.rvm.io -o rvm.sh
-cat /tmp/rvm.sh | bash -s stable --rails
-source /usr/local/rvm/scripts/rvm
+sudo -u $username | gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB |
+cd /tmp |
+curl -sSL https://get.rvm.io -o rvm.sh |
+cat /tmp/rvm.sh | bash -s stable --rails |
+source /home/paramagician/.rvm/scripts/rvm
 
 # install ruby
 rvm install ruby-2.5.1
@@ -107,7 +107,7 @@ gem install colorls
 gem install neovim
 
 # reload rvm
-source /usr/local/rvm/scripts/rvm
+source /home/$username/.rvm/scripts/rvm
 
 # install nodejs for rails pipeline
 cd /tmp
