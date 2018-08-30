@@ -113,3 +113,6 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 
 alias lsc='colorls'
 alias ls='ls -G'
+
+# must source rvm to make it rememver suff
+source $HOME/.rvm/scripts/rvm
