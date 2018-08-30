@@ -25,7 +25,7 @@ git.config --global user.name paramagicdev
 git.config --global user.email $email
 
 # set tmux
-ln -s ~/vps-setup/tmux.conf ~/.tmux.conf
+ln -f -s ~/vps-setup/tmux.conf ~/.tmux.conf
 # add tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
@@ -47,10 +47,10 @@ sudo pip3 --user install neovim
 # install nvim plugin manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Recursively copies nvim setup
-ln -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
+ln -f -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
 
 # Copy vimrc should neovim have issues
-ln -s ~/vps-setup/vimrc ~/.vimrc
+ln -f -s ~/vps-setup/vimrc ~/.vimrc
 
 # install mosh
 sudo apt-get install python-software-properties
@@ -117,7 +117,7 @@ npm install -g neovim
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 cp ~/.zshrc ~/.zshrc.orig
-ln -s ~/vps-setup/zshrc ~/.zshrc
+ln -f -s ~/vps-setup/zshrc ~/.zshrc
 chsh -s /bin/zsh
 
 ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
