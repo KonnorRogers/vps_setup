@@ -121,8 +121,12 @@ ln -f -s ~/vps-setup/zshrc ~/.zshrc
 chsh -s /bin/zsh
 
 ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
+rm -f $ZSH_PLUGINS/zsh-autosuggestions
+rm -f $ZSH_PLUGINS/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/zsh-syntax-highlighting
+
+
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 
