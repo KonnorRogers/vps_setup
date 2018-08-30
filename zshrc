@@ -95,7 +95,7 @@ else
   export EDITOR='vim'
 fi
 
-# source rvm use 2.5.1@dev
+# source rvm gemset use dev
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
