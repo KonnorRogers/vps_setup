@@ -10,9 +10,6 @@ if !'getent passwd $1 > /dev/null 2>&1'; then
    adduser $username sudo
 fi
 
-# change to user
-su - paramagician
-
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
@@ -79,18 +76,17 @@ snap install docker
 
 # Configure docker
 groupadd docker
-usermod -aG docker $USER
 usermod -aG docker $username
 systemctl enable docker
 chkconfig docker on
 systemctl restart docker.service
 
 # install rvm
-sudo -u $username | gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB |
+su $username -c | gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB |
 cd /tmp |
 curl -sSL https://get.rvm.io -o rvm.sh |
 cat /tmp/rvm.sh | bash -s stable --rails |
-source /home/paramagician/.rvm/scripts/rvm
+source /home/$username/.rvm/scripts/rvm
 
 # install ruby
 rvm install ruby-2.5.1
