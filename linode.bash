@@ -81,18 +81,12 @@ systemctl enable docker
 systemctl restart docker.service
 
 # install rvm
-su $username -c | gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB |
-cd /tmp |
-curl -sSL https://get.rvm.io -o rvm.sh |
-cat /tmp/rvm.sh | bash -s stable --rails |
-source /home/$username/.rvm/scripts/rvm
+sudo apt-add-repository -y ppa:rael-gc/rvm
+sudo apt-get update
+sudo apt-get install rvm
 
 # install ruby
-rvm install ruby-2.5.1
-
-# set gemsets
-rvm gemset create dev
-rvm use 2.5.1@dev --default
+rvm install 2.5.1
 
 
 # install gems
@@ -102,7 +96,7 @@ gem install colorls
 gem install neovim
 
 # reload rvm
-source /home/$username/.rvm/scripts/rvm
+source /usr/share/rvm/scripts/rvm
 
 # install nodejs for rails pipeline
 cd /tmp
