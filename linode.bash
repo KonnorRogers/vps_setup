@@ -29,6 +29,8 @@ git.config --global user.email $email
 
 # set tmux
 ln -s ~/vps-setup/tmux.conf ~/.tmux.conf
+# add tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # install nvim
 sudo apt-add-repository ppa:neovim-ppa/stable
