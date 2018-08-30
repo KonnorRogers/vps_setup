@@ -78,7 +78,6 @@ snap install docker
 groupadd docker
 usermod -aG docker $username
 systemctl enable docker
-chkconfig docker on
 systemctl restart docker.service
 
 # install rvm
@@ -126,7 +125,7 @@ rm -f $ZSH_PLUGINS/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/zsh-syntax-highlighting
 
-
+rm -f ~/.oh-my-zsh/custom/themes/powerlevel9k
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 
