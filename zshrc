@@ -1,11 +1,16 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export TERM="xterm-256color"
+PATH=$PATH:$HOME/.rvm/bin
 
 POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh dir rvm vcs newline status)
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rvm vcs newline status)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+POWERLEVEL9K_RVM_ALWAYS=true
+POWERLEVEL9K_RVM_PROMPT_ALWAYS_SHOW=true
+POWERLEVEL9K_RVM_SHOW_VERSION=true
 POWERLEVEL9K_RVM_BACKGROUND="red"
 POWERLEVEL9K_RVM_FOREGROUND="black"
 POWERLEVEL9K_RVM_VISUAL_IDENTIFIER_COLOR="black"
@@ -70,11 +75,11 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
-  rails
-  mosh
-  rvm
-  tmux
+ #git
+ # rails
+ # mosh
+ #  rvm
+ # tmux
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
@@ -110,6 +115,7 @@ fi
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
-
+alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
 alias ls='ls -G'
+source /usr/share/rvm/scripts/rvm 
