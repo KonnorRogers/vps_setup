@@ -2,16 +2,13 @@ username="paramagician"
 email="konnor5456@gmail.com"
 
 
-# if getent passwd $1 > /dev/null 2>&1; then
-#    echo "$username is already being used!"
-# else
-#    echo "$username is not taken!"
-#    adduser $username
-#    adduser $username sudo
-# fi
-
-# change to user
-su - paramagician
+if 'getent passwd $1 > /dev/null 2>&1'; then
+    echo "$username is already being used!" || true
+else
+   echo "$username is not taken!"
+   adduser $username
+   adduser $username sudo
+fi
 
 sudo apt update
 sudo apt upgrade -y
@@ -28,7 +25,7 @@ git.config --global user.name paramagicdev
 git.config --global user.email $email
 
 # set tmux
-ln -s ~/vps-setup/tmux.conf ~/.tmux.conf
+ln -f -s ~/vps-setup/tmux.conf ~/.tmux.conf
 # add tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
@@ -50,10 +47,10 @@ sudo pip3 --user install neovim
 # install nvim plugin manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Recursively copies nvim setup
-ln -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
+ln -f -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
 
 # Copy vimrc should neovim have issues
-ln -s ~/vps-setup/vimrc ~/.vimrc
+ln -f -s ~/vps-setup/vimrc ~/.vimrc
 
 # install mosh
 sudo apt-get install python-software-properties
@@ -79,25 +76,17 @@ snap install docker
 
 # Configure docker
 groupadd docker
-usermod -aG docker $USER
 usermod -aG docker $username
 systemctl enable docker
-chkconfig docker on
 systemctl restart docker.service
 
 # install rvm
-gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-cd /tmp
-curl -sSL https://get.rvm.io -o rvm.sh
-cat /tmp/rvm.sh | bash -s stable --rails
-source /usr/local/rvm/scripts/rvm
+sudo apt-add-repository -y ppa:rael-gc/rvm
+sudo apt-get update
+sudo apt-get install rvm
 
 # install ruby
-rvm install ruby-2.5.1
-
-# set gemsets
-rvm gemset create dev
-rvm use 2.5.1@dev --default
+rvm install 2.5.1
 
 
 # install gems
@@ -107,7 +96,7 @@ gem install colorls
 gem install neovim
 
 # reload rvm
-source /usr/local/rvm/scripts/rvm
+source /usr/share/rvm/scripts/rvm
 
 # install nodejs for rails pipeline
 cd /tmp
@@ -121,12 +110,16 @@ npm install -g neovim
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 cp ~/.zshrc ~/.zshrc.orig
-ln -s ~/vps-setup/zshrc ~/.zshrc
+ln -f -s ~/vps-setup/zshrc ~/.zshrc
 chsh -s /bin/zsh
 
 ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
+rm -f $ZSH_PLUGINS/zsh-autosuggestions
+rm -f $ZSH_PLUGINS/zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/zsh-syntax-highlighting
+
+rm -f ~/.oh-my-zsh/custom/themes/powerlevel9k
 git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 
