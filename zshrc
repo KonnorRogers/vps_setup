@@ -118,4 +118,7 @@ alias ohmyzsh="vim ~/.oh-my-zsh"
 alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
 alias ls='ls -G'
-source /usr/share/rvm/scripts/rvm 
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/opt/chruby/share/chruby/auto.sh
+chruby 2.4.4
