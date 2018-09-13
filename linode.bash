@@ -75,6 +75,11 @@ sudo ufw allow port 60000:61000 proto udp
 # enable firewall
 sudo ufw enable
 
+# install asciicinema for terminal recording
+sudo apt-add-repository ppa:zanchey/asciinema
+sudo apt-get update
+sudo apt-get install asciinema
+
 # install docker
 snap install docker
 
