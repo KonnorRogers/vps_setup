@@ -96,7 +96,7 @@ sudo make install
 
 # install ruby
 ruby-install ruby-2.5.1
-
+echo "ruby-2.5.1" > ~/.ruby-version
 
 
 # install gems
