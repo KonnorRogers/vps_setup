@@ -5,15 +5,9 @@ PATH=$PATH:$HOME/.rvm/bin
 
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rvm vcs newline status)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir chruby vcs newline status)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-POWERLEVEL9K_RVM_ALWAYS=true
-POWERLEVEL9K_RVM_PROMPT_ALWAYS_SHOW=true
-POWERLEVEL9K_RVM_SHOW_VERSION=true
-POWERLEVEL9K_RVM_BACKGROUND="red"
-POWERLEVEL9K_RVM_FOREGROUND="black"
-POWERLEVEL9K_RVM_VISUAL_IDENTIFIER_COLOR="black"
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -75,13 +69,13 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
- #git
+ git
  # rails
  # mosh
  #  rvm
  # tmux
-  zsh-autosuggestions
-  zsh-syntax-highlighting
+ zsh-autosuggestions
+ zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -119,6 +113,5 @@ alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
 alias ls='ls -G'
 source /usr/local/share/chruby/chruby.sh
-source /usr/local/opt/chruby/share/chruby/chruby.sh
-source /usr/local/opt/chruby/share/chruby/auto.sh
+source /usr/local/share/chruby/auto.sh
 chruby 2.4.4
