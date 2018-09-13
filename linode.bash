@@ -2,13 +2,13 @@ username="paramagician"
 email="konnor5456@gmail.com"
 
 
-if 'getent passwd $1 > /dev/null 2>&1'; then
-    echo "$username is already being used!" || true
-else
-   echo "$username is not taken!"
-   adduser $username
-   adduser $username sudo
-fi
+# if 'getent passwd $1 > /dev/null 2>&1'; then
+#    echo "$username is already being used!" || true
+# else
+#   echo "$username is not taken!"
+#   adduser $username
+#   adduser $username sudo
+#fi
 
 sudo apt update
 sudo apt upgrade -y
