@@ -114,4 +114,3 @@ alias lsc='colorls'
 alias ls='ls -G'
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
-chruby 2.4.4
