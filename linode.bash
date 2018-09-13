@@ -25,7 +25,7 @@ git.config --global user.name paramagicdev
 git.config --global user.email $email
 
 # set tmux
-ln -f -s ~/vps-setup/tmux.conf ~/.tmux.conf
+cp ~/vps-setup/tmux.conf ~/.tmux.conf
 # add tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
@@ -47,10 +47,10 @@ sudo pip3 --user install neovim
 # install nvim plugin manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Recursively copies nvim setup
-ln -f -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
+cp ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
 
 # Copy vimrc should neovim have issues
-ln -f -s ~/vps-setup/vimrc ~/.vimrc
+cp ~/vps-setup/vimrc ~/.vimrc
 
 # install mosh
 sudo apt-get install python-software-properties
@@ -85,12 +85,13 @@ cd ~
 wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
 tar -xzvf chruby-0.3.9.tar.gz
 cd chruby-0.3.9/
-mkdir -p /usr/local/$dir
-cp $file /usr/local/$file
-mkdir -p /usr/local/share/doc/chruby-0.3.9
-cp -r *.md *.txt /usr/local/share/doc/chruby-0.3.9/
 sudo make install
 
+#install ruby
+wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
+tar -xzvf ruby-install-0.7.0.tar.gz
+cd ruby-install-0.7.0/
+sudo make install
 
 # install gems
 gem install bundler
@@ -111,7 +112,7 @@ npm install -g neovim
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 cp ~/.zshrc ~/.zshrc.orig
-ln -f -s ~/vps-setup/zshrc ~/.zshrc
+cp ~/vps-setup/zshrc ~/.zshrc
 chsh -s /bin/zsh
 
 ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
