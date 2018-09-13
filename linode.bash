@@ -80,13 +80,15 @@ usermod -aG docker $username
 systemctl enable docker
 systemctl restart docker.service
 
-# install rvm
-sudo apt-add-repository -y ppa:rael-gc/rvm
-sudo apt-get update
-sudo apt-get install rvm
-
-# install ruby
-rvm install 2.5.1
+# install chruby
+wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+tar -xzvf chruby-0.3.9.tar.gz
+cd chruby-0.3.9/
+mkdir -p /usr/local/$dir
+cp $file /usr/local/$file
+mkdir -p /usr/local/share/doc/chruby-0.3.9
+cp -r *.md *.txt /usr/local/share/doc/chruby-0.3.9/
+sudo make install
 
 
 # install gems
@@ -95,8 +97,6 @@ gem install rails -v 5.2.0
 gem install colorls
 gem install neovim
 
-# reload rvm
-source /usr/share/rvm/scripts/rvm
 
 # install nodejs for rails pipeline
 cd /tmp
