@@ -34,7 +34,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # install nvim
 sudo apt-add-repository ppa:neovim-ppa/stable
 sudo apt-get update
-sudo apt-get install neovim
+sudo apt-get install neovim -y
 # update editor
 sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
 sudo update-alternatives --config vi
@@ -43,8 +43,8 @@ sudo update-alternatives --config vim
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 sudo update-alternatives --config editor
 # update python3 & python2 - neovim
-sudo pip2 --user install neovim
-sudo pip3 --user install neovim
+sudo pip2 --user install neovim -y
+sudo pip3 --user install neovim -y
 
 # install nvim plugin manager
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -57,10 +57,10 @@ rm -f ~/.vimrc
 cp ~/vps-setup/vimrc ~/.vimrc
 
 # install mosh
-sudo apt-get install python-software-properties
+sudo apt-get install python-software-properties -y
 sudo add-apt-repository ppa:keithw/mosh
 sudo apt-get update
-sudo apt-get install mosh
+sudo apt-get install mosh -y
 
 ## enabling traffic
 sudo ufw default allow outgoing
@@ -78,10 +78,10 @@ sudo ufw enable
 # install asciicinema for terminal recording
 sudo apt-add-repository ppa:zanchey/asciinema
 sudo apt-get update
-sudo apt-get install asciinema
+sudo apt-get install asciinema -y
 
 # install docker
-snap install docker
+snap install docker -y
 
 # Configure docker
 groupadd docker
