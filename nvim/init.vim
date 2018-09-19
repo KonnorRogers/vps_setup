@@ -13,6 +13,11 @@ set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
 syntax on           "turn on syntax highlighting
 set clipboard+=unnamedplus
+colorscheme challenger_deep "set colorscheme
+
+if has('nvim') || has('termguicolors')
+  set termguicolors
+endif
 
 if has("autocmd")
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -30,6 +35,7 @@ autocmd BufWritePre *.conf :%s/\s\+$//e
 autocmd BufWritePre *.py :%s/\s\+$//e
 autocmd BufWritePre *.css :%s/\s\+$//e
 autocmd BufWritePre *.html :%s/\s\+$//e
+autocmd BufWritePre *.rb :%s/\s\+$//e
 
 :set bs=2 "fix backspace on some consoles
 
@@ -57,15 +63,10 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'scrooloose/nerdtree'
     "vim ruby
     Plug 'vim-ruby/vim-ruby'
+    "challenger deep colorscheme
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    
 call plug#end()
 
-colorscheme nord    "set colorscheme
-let g:nord_italic = 1
-let g:nord_underline = 1
-let g:nord_italic_comments = 1
-let g:nord_uniform_status_lines = 1
-let g:nord_comment_brightness = 12
-let g:nord_uniform_diff_background = 1
-let g:nord_cursor_line_number_background = 1
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
