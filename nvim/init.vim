@@ -65,8 +65,14 @@ call plug#begin("~/.config/nvim/plugged")
     Plug 'vim-ruby/vim-ruby'
     "challenger deep colorscheme
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-    
+    "add lightline
+     Plug 'itchyny/lightline.vim'
+     "add ctrlp for file finding
+     Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 call plug#end()
 
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
+
+" set lightline to challenger deep
+let g:lightline = { 'colorscheme': 'challenger_deep'}
