@@ -54,3 +54,7 @@ echo -ne '\e]4;12;#65b2ff\a'  # bold blue
 echo -ne '\e]4;13;#906cff\a'  # bold magenta
 echo -ne '\e]4;14;#63f2f1\a'  # bold cyan
 echo -ne '\e]4;15;#a6b3cc\a'  # bold whiteot
+
+echo -ne '\e]10;#000000\a'  # Black foreground
+echo -ne '\e]11;#C0C0C0\a'  # Light gray background
+echo -ne '\e]12;#00FF00\a'  # Green cursor
