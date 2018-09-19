@@ -12,6 +12,11 @@ set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
 syntax on           "turn on syntax highlighting
+colorscheme challenger_deep "set colorscheme
+
+if has('nvim') || has('termguicolors')
+  set termguicolors
+endif
  
 if has("autocmd")
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -40,15 +45,8 @@ autocmd BufWritePre *.html :%s/\s\+$//e
 "endif
 
 call plug#begin('~/.vim/plugged')
-    Plug 'arcticicestudio/nord-vim'
     "Fugitive Vim Github Wrapper
     Plug 'tpope/vim-fugitive'
+    " CHALLENGER DEEP COLORSCHEME
+    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 call plug#end()
-colorscheme nord    "set colorscheme
-let g:nord_italic = 1
-let g:nord_underline = 1
-let g:nord_italic_comments = 1
-let g:nord_uniform_status_lines = 1
-let g:nord_comment_brightness = 12
-let g:nord_uniform_diff_background = 1
-let g:nord_cursor_line_number_background = 1
