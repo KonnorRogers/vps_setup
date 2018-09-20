@@ -50,6 +50,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin("~/.vim/plugged")
+    "Challenger-deep colorscheme
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     "add lightline
     Plug 'itchyny/lightline.vim'

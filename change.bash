@@ -12,3 +12,7 @@ mkdir .config
 mkdir nvim
 cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.orig
 ln -f -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
+
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
