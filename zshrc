@@ -110,6 +110,6 @@ alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
-alias ls='ls --color'
+alias ls="ls --color=always"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh

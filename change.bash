@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #tmux
 cp ~/.tmux.conf ~/.tmux.conf.orig
 ln -f -s ~/vps-setup/tmux.conf ~/.tmux.conf

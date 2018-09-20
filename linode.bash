@@ -2,50 +2,52 @@ username="paramagician"
 email="konnor5456@gmail.com"
 
 
-# if 'getent passwd $1 > /dev/null 2>&1'; then
-#    echo "$username is already being used!" || true
-# else
-#   echo "$username is not taken!"
-#   adduser $username
-#   adduser $username sudo
-#fi
+if [[ -e /home/"$username" ]]; then
+   echo "$username is already being used!"
+else
+  echo "$username is not taken!"
+  adduser $username
+  adduser $username sudo
+fi
 
 sudo apt update
-sudo apt upgrade -y
-sudo apt autoremove -y
+sudo apt upgrade -y 
+sudo apt autoremove -y 
 PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev nodejs apt-transport-https ca-certificates"
 
 
 
 for item in $PACKAGE_LIST; do
-  sudo apt -y install $item 
+  sudo apt -y install $item
 done
 
 # setup git
-git.config --global user.name paramagicdev 
-git.config --global user.email $email
+git config --global user.name paramagicdev 
+git config --global user.email $email
 
 # add tmux plugin manager
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
+if [[ ! -e ~/.tmux/plugins/tpm ]]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+    echo 'Tmux plugins already installed!'
+fi
 # install nvim
 sudo apt-add-repository -y ppa:neovim-ppa/stable
 sudo apt-get update
 sudo apt-get -y install neovim
 # update editor
 sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-sudo update-alternatives --config vi
+yes "0" | sudo update-alternatives --config vi
 sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-sudo update-alternatives --config vim
+yes "0" | sudo update-alternatives --config vim
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-sudo update-alternatives --config editor
+yes "0" | sudo update-alternatives --config editor
 # update python3 & python2 - neovim
-sudo pip2 install neovim -y --user 
-sudo pip3 install neovim -y --user 
+sudo -H pip2 install neovim 
+sudo -H pip3 install neovim 
 
 # install mosh
-sudo apt-get -y install python-software-properties
-sudo add-apt-repository ppa:keithw/mosh
+yes "\n" | sudo add-apt-repository ppa:keithw/mosh
 sudo apt-get update
 sudo apt-get -y install mosh
 
@@ -71,7 +73,7 @@ sudo apt-get -y install asciinema
 # Instructions straight from https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo apt-key fingerprint 0EBFCD88
-sudo add-apt-repository -y \
+yes "\n" | sudo add-apt-repository -y \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) \
    stable"
@@ -85,9 +87,10 @@ usermod -aG docker $username
 
 # install chruby
 cd ~
-if [[ command -v chruby ]]; then
+if [[ -e /usr/local/share/chruby/chruby.sh ]]; then
     echo 'chruby is already installed'
 else
+    
     wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
     tar -xzvf chruby-0.3.9.tar.gz
     cd chruby-0.3.9/
@@ -95,27 +98,26 @@ else
 fi
 
 #install ruby-install
-if [[ command -v ruby-install ]]; then 
+if [[ $"(command -v ruby-install)" ]]; then 
     echo 'ruby-install is already installed'
 else
     wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
     tar -xzvf ruby-install-0.7.0.tar.gz
     cd ruby-install-0.7.0/
-    sudo make install
+    sudo make install 
 fi
 # install ruby
 ruby-install ruby-2.5.1 --no-reinstall # will not install if 2.5.1 already detected
 echo "ruby-2.5.1" > ~/.ruby-version # Sets current working ruby version to 2.5.1
-chruby 2.5.1
 
 # install gems
-gem install bundler
-gem install rails -v 5.2.0
-gem install colorls # file highlighting
-gem install neovim
+# gem install bundler
+# gem install rails -v 5.2.0
+# gem install colorls # file highlighting
+# gem install neovim
 
 # Install neovim-npm
-npm install -g neovim -y
+yes "\n" | npm install -g neovim
 
 # Install zsh and accompanying plugins
 
@@ -142,7 +144,7 @@ fi
 
 ZSH_THEMES="~/.oh-my-zsh/custom/themes"
 # Check if powerlevel9k already installed
-if [[ ! -e "$ZSH_PLUGINS/powerlevel9k" ]]; then
+if [[ ! -d "~/.oh-my-zsh/custom/themes/powerlevel9k" ]]; then
     git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 else
     echo 'Powerlevel9k already exists'
@@ -151,11 +153,11 @@ fi
 DOTFILES="~/vps-setup/change.bash"
 # Runs the change.bash file provided in vps-setup which this file is cloned from
 if [[ -e "$DOTFILES" ]]; then
-    sudo bash "$DOTFILES"
+    bash "$DOTFILES"
 else
     echo "$DOTFILES does not exist. Run change.bash to transfer over dotfiles." 
 fi
 
 cd ~
-source ~/.zshrc
+# source ~/.zshrc
 
