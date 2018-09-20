@@ -1,3 +1,5 @@
+CopyOnSelect=yes
+
 Term=xterm-256color
 
 ForegroundColour=203,227,231
