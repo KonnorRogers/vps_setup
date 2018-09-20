@@ -8,8 +8,6 @@ ln -f -s ~/vps-setup/vimrc ~/.vimrc
 cp ~/.zshrc ~/.zshrc.orig
 ln -f -s ~/vps-setup/zshrc ~/.zshrc
 # neovim
-mkdir .config
-mkdir nvim
 cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.orig
 ln -f -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
 
