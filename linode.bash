@@ -18,7 +18,7 @@ PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 po
 
 
 for item in $PACKAGE_LIST; do
-  sudo apt install $item -y
+  sudo apt -y install $item 
 done
 
 # setup git
@@ -29,9 +29,9 @@ git.config --global user.email $email
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # install nvim
-sudo apt-add-repository ppa:neovim-ppa/stable
+sudo apt-add-repository -y ppa:neovim-ppa/stable
 sudo apt-get update
-sudo apt-get install neovim -y
+sudo apt-get -y install neovim
 # update editor
 sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
 sudo update-alternatives --config vi
@@ -44,10 +44,10 @@ sudo pip2 install neovim -y --user
 sudo pip3 install neovim -y --user 
 
 # install mosh
-sudo apt-get install python-software-properties -y
+sudo apt-get -y install python-software-properties
 sudo add-apt-repository ppa:keithw/mosh
 sudo apt-get update
-sudo apt-get install mosh -y
+sudo apt-get -y install mosh
 
 ## enabling traffic
 sudo ufw default allow outgoing
@@ -63,12 +63,21 @@ sudo ufw allow port 60000:61000 proto udp
 sudo ufw enable
 
 # install asciicinema for terminal recording
-sudo apt-add-repository ppa:zanchey/asciinema
+sudo apt-add-repository -y ppa:zanchey/asciinema
 sudo apt-get update
-sudo apt-get install asciinema -y
+sudo apt-get -y install asciinema 
 
 # install docker
-snap install docker -y
+# Instructions straight from https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository -y \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt-get update
+sudo apt-get -y install docker-ce
 
 # Configure docker
 groupadd docker
@@ -95,33 +104,36 @@ else
     sudo make install
 fi
 # install ruby
-ruby-install ruby-2.5.1
-echo "ruby-2.5.1" > ~/.ruby-version
-
+ruby-install ruby-2.5.1 --no-reinstall # will not install if 2.5.1 already detected
+echo "ruby-2.5.1" > ~/.ruby-version # Sets current working ruby version to 2.5.1
+chruby 2.5.1
 
 # install gems
 gem install bundler
 gem install rails -v 5.2.0
-gem install colorls
+gem install colorls # file highlighting
 gem install neovim
 
 # Install neovim-npm
 npm install -g neovim -y
 
 # Install zsh and accompanying plugins
+
+# checks if ohmyzsh already installed
 if [[ ! -e "~/.oh-my-zsh" ]]; then
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
     chsh -s /bin/zsh
 fi
 
 ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
-
+# checks if autosuggestions exists
 if [[ ! -e "$ZSH_PLUGINS/zsh-autosuggestions" ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
 else
     echo 'zsh-autosuggestions already exists'
 fi
 
+# check if syntax highlighting already installed
 if [[ ! -e "$ZSH_PLUGINS/zsh-syntax-highlighting" ]]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/zsh-syntax-highlighting
 else
@@ -129,6 +141,7 @@ else
 fi
 
 ZSH_THEMES="~/.oh-my-zsh/custom/themes"
+# Check if powerlevel9k already installed
 if [[ ! -e "$ZSH_PLUGINS/powerlevel9k" ]]; then
     git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 else
@@ -136,6 +149,7 @@ else
 fi
 
 DOTFILES="~/vps-setup/change.bash"
+# Runs the change.bash file provided in vps-setup which this file is cloned from
 if [[ -e "$DOTFILES" ]]; then
     sudo bash "$DOTFILES"
 else
