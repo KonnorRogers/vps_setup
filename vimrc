@@ -14,6 +14,7 @@ set linebreak       "only break lines on 'breakat' characters
 set nobackup        "no backupfiles
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
+set noundofile      "prevents extra files from being created
 syntax on           "turn on syntax highlighting
 colorscheme challenger_deep "set colorscheme
 
