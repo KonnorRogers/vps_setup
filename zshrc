@@ -73,7 +73,7 @@ plugins=(
  # rails
  # mosh
  #  rvm
- # tmux
+ tmux
  zsh-autosuggestions
  zsh-syntax-highlighting
 )

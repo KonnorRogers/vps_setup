@@ -12,6 +12,7 @@ set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
 syntax on           "turn on syntax highlighting
+set nobackup        "no backups
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created

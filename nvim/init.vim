@@ -12,7 +12,8 @@ set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
 syntax on           "turn on syntax highlighting
-set clipboard+=unnamedplus "clipboard functionalityset nobackup        "no backupfiles
+set clipboard+=unnamedplus
+set nobackup        "no backupfiles
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
@@ -68,14 +69,14 @@ call plug#begin("~/.config/nvim/plugged")
     "challenger deep colorscheme
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     "add lightline
-    Plug 'itchyny/lightline.vim'
-    "add ctrlp for file finding
-    Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+     Plug 'itchyny/lightline.vim'
+     "add ctrlp for file finding
+     Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 call plug#end()
 
-colorscheme challenger_deep
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
+colorscheme challenger_deep "set colorscheme
 " set lightline to challenger deep
 let g:lightline = { 'colorscheme': 'challenger_deep'}
