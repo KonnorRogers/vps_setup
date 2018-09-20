@@ -13,7 +13,7 @@ email="konnor5456@gmail.com"
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
-PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev"
+PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev nodejs"
 
 
 
@@ -25,9 +25,6 @@ done
 git.config --global user.name paramagicdev 
 git.config --global user.email $email
 
-# set tmux
-rm -f ~/.tmux.conf
-cp ~/vps-setup/tmux.conf ~/.tmux.conf
 # add tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
@@ -45,16 +42,6 @@ sudo update-alternatives --config editor
 # update python3 & python2 - neovim
 sudo pip2 --user install neovim -y
 sudo pip3 --user install neovim -y
-
-# install nvim plugin manager
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-# Recursively copies nvim setup
-rm -f ~/.config/nvim/init.vim
-cp ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
-
-# Copy vimrc should neovim have issues
-rm -f ~/.vimrc
-cp ~/vps-setup/vimrc ~/.vimrc
 
 # install mosh
 sudo apt-get install python-software-properties -y
@@ -113,32 +100,42 @@ gem install rails -v 5.2.0
 gem install colorls
 gem install neovim
 
+# Install neovim-npm
+npm install -g neovim -y
 
-# install nodejs for rails pipeline
-cd /tmp
-# installs nodejs as root. Important note, will not properly install if not root
-\curl -sSL https://deb.nodesource.com/setup_10.x -o nodejs.sh | bash -
-less nodejs.sh
-cat /tmp/nodejs.sh | sudo -E bash -
-sudo apt install -y nodejs
-npm install -g neovim
-# install ohmyzsh
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-cp ~/.zshrc ~/.zshrc.orig
-rm -f ~/.zshrc
-cp ~/vps-setup/zshrc ~/.zshrc
-chsh -s /bin/zsh
+# Install zsh and accompanying plugins
+if [[ ! -e "~/.oh-my-zsh" ]]; then
+    git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+    chsh -s /bin/zsh
+fi
 
 ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
-rm -f $ZSH_PLUGINS/zsh-autosuggestions
-rm -f $ZSH_PLUGINS/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/zsh-syntax-highlighting
 
-rm -f ~/.oh-my-zsh/custom/themes/powerlevel9k
-git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+if [[ ! -e "$ZSH_PLUGINS/zsh-autosuggestions" ]]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
+else
+    echo 'zsh-autosuggestions already exists'
+fi
 
+if [[ ! -e "$ZSH_PLUGINS/zsh-syntax-highlighting" ]]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/zsh-syntax-highlighting
+else
+    echo 'zsh-syntax-highlighting already exists'
+fi
+
+ZSH_THEMES="~/.oh-my-zsh/custom/themes"
+if [[ ! -e "$ZSH_PLUGINS/powerlevel9k" ]]; then
+    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+else
+    echo 'Powerlevel9k already exists'
+fi
+
+DOTFILES="~/vps-setup/change.bash"
+if [[ -e "$DOTFILES" ]]; then
+    sudo bash "$DOTFILES"
+else
+    echo "$DOTFILES does not exist. Run change.bash to transfer over dotfiles." 
+fi
 
 cd ~
 source ~/.zshrc
