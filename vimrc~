@@ -12,7 +12,6 @@ set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
 syntax on           "turn on syntax highlighting
-set clipboard+=unnamedplus "clipboard functionalityset nobackup        "no backupfiles
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
@@ -43,39 +42,25 @@ autocmd BufWritePre *.rb :%s/\s\+$//e
 
 
 " Will install plugins if not detected
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin("~/.config/nvim/plugged")
-    Plug 'brooth/far.vim'
-    "nord color theme
-    Plug 'arcticicestudio/nord-vim'
-    "Fugitive Vim Github Wrapper
-    Plug 'tpope/vim-fugitive'
-    "Bundler wrapper
-    Plug 'tpope/vim-bundler'
-    "Rapid file search
-    Plug 'skalnik/vim-vroom'
-    "Tab complete ends
-    Plug 'tpope/vim-endwise'
-    "nerdtree file explorer
-    Plug 'scrooloose/nerdtree'
-    "vim ruby
-    Plug 'vim-ruby/vim-ruby'
-    "challenger deep colorscheme
+call plug#begin("~/.vim/plugged")
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
     "add lightline
     Plug 'itchyny/lightline.vim'
-    "add ctrlp for file finding
-    Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 call plug#end()
 
 colorscheme challenger_deep
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
+if !has('gui_running')
+  set t_Co=256
+endif
 " set lightline to challenger deep
 let g:lightline = { 'colorscheme': 'challenger_deep'}
+
