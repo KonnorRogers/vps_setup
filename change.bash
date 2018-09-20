@@ -14,3 +14,5 @@ if [[ $OSTYPE == 'linux-gnu' ]]; then
     cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.orig
     ln -f -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
 fi
+
+echo 'dotfiles transferred successfully!'

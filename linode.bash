@@ -1,7 +1,6 @@
 username="paramagician"
 email="konnor5456@gmail.com"
 
-
 if [[ -e /home/"$username" ]]; then
    echo "$username is already being used!"
 else
@@ -9,6 +8,8 @@ else
   adduser $username
   adduser $username sudo
 fi
+
+HOME_DIR="/home/$username"
 
 sudo apt update
 sudo apt upgrade -y 
@@ -26,7 +27,7 @@ git config --global user.name paramagicdev
 git config --global user.email $email
 
 # add tmux plugin manager
-if [[ ! -e ~/.tmux/plugins/tpm ]]; then
+if [[ ! -e "$HOME_DIR/.tmux/plugins/tpm" ]]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 else
     echo 'Tmux plugins already installed!'
@@ -122,12 +123,12 @@ yes "\n" | npm install -g neovim
 # Install zsh and accompanying plugins
 
 # checks if ohmyzsh already installed
-if [[ ! -e "~/.oh-my-zsh" ]]; then
+if [[ ! -e "$HOME_DIR/.oh-my-zsh" ]]; then
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
     chsh -s /bin/zsh
 fi
 
-ZSH_PLUGINS="~/.oh-my-zsh/custom/plugins"
+ZSH_PLUGINS="$HOME_DIR/.oh-my-zsh/custom/plugins"
 # checks if autosuggestions exists
 if [[ ! -e "$ZSH_PLUGINS/zsh-autosuggestions" ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
@@ -142,17 +143,17 @@ else
     echo 'zsh-syntax-highlighting already exists'
 fi
 
-ZSH_THEMES="~/.oh-my-zsh/custom/themes"
+ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
 # Check if powerlevel9k already installed
-if [[ ! -d "~/.oh-my-zsh/custom/themes/powerlevel9k" ]]; then
+if [[ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k ]]; then
     git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 else
     echo 'Powerlevel9k already exists'
 fi
 
-DOTFILES="~/vps-setup/change.bash"
+DOTFILES="$HOME_DIR/vps-setup/change.bash"
 # Runs the change.bash file provided in vps-setup which this file is cloned from
-if [[ -e "$DOTFILES" ]]; then
+if [ -e "$DOTFILES" ]; then
     bash "$DOTFILES"
 else
     echo "$DOTFILES does not exist. Run change.bash to transfer over dotfiles." 
