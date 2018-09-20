@@ -13,7 +13,7 @@ email="konnor5456@gmail.com"
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove -y
-PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev nodejs"
+PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev nodejs apt-transport-https ca-certificates"
 
 
 
@@ -40,8 +40,8 @@ sudo update-alternatives --config vim
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
 sudo update-alternatives --config editor
 # update python3 & python2 - neovim
-sudo pip2 --user install neovim -y
-sudo pip3 --user install neovim -y
+sudo pip2 install neovim -y --user 
+sudo pip3 install neovim -y --user 
 
 # install mosh
 sudo apt-get install python-software-properties -y
@@ -73,22 +73,27 @@ snap install docker -y
 # Configure docker
 groupadd docker
 usermod -aG docker $username
-systemctl enable docker
-systemctl restart docker.service
 
 # install chruby
 cd ~
-wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-tar -xzvf chruby-0.3.9.tar.gz
-cd chruby-0.3.9/
-sudo make install
+if [[ command -v chruby ]]; then
+    echo 'chruby is already installed'
+else
+    wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+    tar -xzvf chruby-0.3.9.tar.gz
+    cd chruby-0.3.9/
+    sudo make install
+fi
 
 #install ruby-install
-wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
-tar -xzvf ruby-install-0.7.0.tar.gz
-cd ruby-install-0.7.0/
-sudo make install
-
+if [[ command -v ruby-install ]]; then 
+    echo 'ruby-install is already installed'
+else
+    wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
+    tar -xzvf ruby-install-0.7.0.tar.gz
+    cd ruby-install-0.7.0/
+    sudo make install
+fi
 # install ruby
 ruby-install ruby-2.5.1
 echo "ruby-2.5.1" > ~/.ruby-version
