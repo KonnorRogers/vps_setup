@@ -1,22 +1,19 @@
-#!/bin/bash
-
-echo -ne '\e]4;0;#565575\a'   # black
-echo -ne '\e]4;1;#ff8080\a'   # red
-echo -ne '\e]4;2;#95ffa4\a'   # green
-echo -ne '\e]4;3;#ffe9aa\a'   # yellow
-echo -ne '\e]4;4;#91ddff\a'   # blue
-echo -ne '\e]4;5;#c991e1\a'   # magenta
-echo -ne '\e]4;6;#aaffe4\a'   # cyan
-echo -ne '\e]4;7;#cbe3e7\a'   # white (light grey really)
-echo -ne '\e]4;8;#100e23\a'   # bold black (i.e. dark grey)
-echo -ne '\e]4;9;#ff5458\a'   # bold red
-echo -ne '\e]4;10;#62d196\a'  # bold green
-echo -ne '\e]4;11;#ffb378\a'  # bold yellow
-echo -ne '\e]4;12;#65b2ff\a'  # bold blue
-echo -ne '\e]4;13;#906cff\a'  # bold magenta
-echo -ne '\e]4;14;#63f2f1\a'  # bold cyan
-echo -ne '\e]4;15;#a6b3cc\a'  # bold whiteot
-
-echo -ne '\e]10;#cbe3e7\a'  # foreground
-echo -ne '\e]11;#1e1c31\a'  # background
-echo -ne '\e]12;#fbfcfc\a'  # cursor
+ForegroundColour=cbe3e7
+BackgroundColour=1e1c31
+CursorColour=fbfcfc
+Black=565575
+BoldBlack=100e23
+Red=ff8080
+BoldRed=ff5458
+Green=95ffa4
+BoldGreen=62d196
+Yellow=ffe9aa
+BoldYellow=ffb378
+Blue=91ddff
+BoldBlue=65b2ff
+Magenta=c991e1
+BoldMagenta=906cff
+Cyan=aaffe4
+BoldCyan=63f2f1
+White=cbe3e7
+BoldWhite=a6b3cc
