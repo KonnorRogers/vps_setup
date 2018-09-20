@@ -11,17 +11,15 @@ set nohls           "don't highlight the previous search term
 set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
-set nobackup        "no backupfiles
+syntax on           "turn on syntax highlighting
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
-syntax on           "turn on syntax highlighting
-colorscheme challenger_deep "set colorscheme
 
 if has('nvim') || has('termguicolors')
   set termguicolors
 endif
- 
+
 if has("autocmd")
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 \| exe "normal g'\"" | endif
@@ -38,19 +36,31 @@ autocmd BufWritePre *.conf :%s/\s\+$//e
 autocmd BufWritePre *.py :%s/\s\+$//e
 autocmd BufWritePre *.css :%s/\s\+$//e
 autocmd BufWritePre *.html :%s/\s\+$//e
+autocmd BufWritePre *.rb :%s/\s\+$//e
 
 :set bs=2 "fix backspace on some consoles
 
-" Automatically install Vim-Plug
-"if empty(glob('~/.vim/autoload/plug.vim'))
-"    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-"endif
 
-call plug#begin('~/.vim/plugged')
-    "Fugitive Vim Github Wrapper
-    Plug 'tpope/vim-fugitive'
-    " CHALLENGER DEEP COLORSCHEME
+" Will install plugins if not detected
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin("~/.vim/plugged")
     Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    "add lightline
+    Plug 'itchyny/lightline.vim'
 call plug#end()
+
+colorscheme challenger_deep
+" ctrl-n for nerdtree toggle
+map <C-n> :NERDTreeToggle<CR>
+
+if !has('gui_running')
+  set t_Co=256
+endif
+" set lightline to challenger deep
+let g:lightline = { 'colorscheme': 'challenger_deep'}
+
