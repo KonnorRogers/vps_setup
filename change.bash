@@ -1,8 +1,8 @@
 #tmux
-cp ~/vps-setup/tmux.conf ~/.tmux.conf
+ln -f -s ~/vps-setup/tmux.conf ~/.tmux.conf
 # vim
-cp ~/vps-setup/vimrc ~/.vimrc
+ln -f -s ~/vps-setup/vimrc ~/.vimrc
 # zsh
-cp ~/vps-setup/zshrc ~/.zshrc
+ln -f -s ~/vps-setup/zshrc ~/.zshrc
 # neovim
-cp ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
+ln -f -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim

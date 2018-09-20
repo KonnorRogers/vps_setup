@@ -11,6 +11,9 @@ set nohls           "don't highlight the previous search term
 set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
+set nobackup        "no backupfiles
+set nowritebackup   "no backup file while editing
+set noswapfile      "no creation of swap files
 syntax on           "turn on syntax highlighting
 colorscheme challenger_deep "set colorscheme
 
