@@ -78,16 +78,16 @@ if has('nvim')
         "add ctrlp for file finding
         Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
     call plug#end()
+else
+    call plug#begin("~/.vim/plugged")
+        "Challenger-deep colorscheme, forked version with updates for mintty
+        Plug 'https://github.com/ParamagicDev/vim.git', { 'as': 'challenger-deep' }
+        "add lightline
+        Plug 'itchyny/lightline.vim'
+        "Add nerdtree
+        Plug 'scrooloose/nerdtree'
+    call plug#end()
 endif
-
-call plug#begin("~/.vim/plugged")
-    "Challenger-deep colorscheme, forked version with updates for mintty
-    Plug 'https://github.com/ParamagicDev/vim.git', { 'as': 'challenger-deep' }
-    "add lightline
-    Plug 'itchyny/lightline.vim'
-    "Add nerdtree
-    Plug 'scrooloose/nerdtree'
-call plug#end()
 
 if !has('gui_running')
   set t_Co=256
