@@ -54,8 +54,11 @@ install_added_repos() {
 
 set_git_config() {
     # setup git
-    git config --global user.name $username 
-    git config --global user.email $email
+    git config --global user.name "$username" 
+    git config --global user.email "$email"
+    echo "setting git global username to $username"
+    echo "setting git global email to $email"
+    echo "if you would like to change this later, go to ~/.gitconfig or by using git config --global user.name 'name'"
 }
 
 install_tmux_plugin_manager(){
@@ -198,16 +201,16 @@ install_dotfiles() {
     fi
 }
 cd ~
-setup_user
-get_dependencies
-add_repos
-install_added_repos
+#setup_user
+#get_dependencies
+#add_repos
+#install_added_repos
 set_git_config
-install_tmux_plugin_manager
-install_neovim_stuff
-change_default_editor_to_nvim
-ufw_connection_setup
-setup_docker
+#install_tmux_plugin_manager
+#install_neovim_stuff
+#change_default_editor_to_nvim
+#ufw_connection_setup
+# setup_docker
 #install_chruby
 #install_ruby_install
 #install_and_set_ruby_version
@@ -217,5 +220,3 @@ install_zsh_autosuggestions
 install_zsh_syntax_highlighting
 install_powerlevel9k
 install_dotfiles
-source ~/.zshrc
-cd ~
