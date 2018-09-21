@@ -1,14 +1,14 @@
 username="paramagician"
 email="konnor5456@gmail.com"
-
-if [[ -e /home/"$username" ]]; then
-   echo "$username is already being used!"
-else
-  echo "$username is not taken!"
-  adduser $username
-  adduser $username sudo
-fi
-
+setup_user() {
+    if [[ -e /home/"$username" ]]; then
+       echo "$username is already being used!"
+    else
+      echo "$username is not taken!"
+      adduser $username
+      adduser $username sudo
+    fi
+}
 HOME_DIR="/home/$username"
 
 sudo apt update
