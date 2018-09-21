@@ -126,26 +126,28 @@ yes "\n" | npm install -g neovim
 if [[ ! -e "$HOME_DIR/.oh-my-zsh" ]]; then
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
     chsh -s /bin/zsh
+else
+    echo "ohmyzsh already installed"
 fi
 
 ZSH_PLUGINS="$HOME_DIR/.oh-my-zsh/custom/plugins"
 # checks if autosuggestions exists
 if [[ ! -e "$ZSH_PLUGINS/zsh-autosuggestions" ]]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_PLUGINS/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_PLUGINS/zsh-autosuggestions"
 else
     echo 'zsh-autosuggestions already exists'
 fi
 
 # check if syntax highlighting already installed
 if [[ ! -e "$ZSH_PLUGINS/zsh-syntax-highlighting" ]]; then
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_PLUGINS/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_PLUGINS/zsh-syntax-highlighting"
 else
     echo 'zsh-syntax-highlighting already exists'
 fi
 
-ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
+ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes/powerlevel9k"
 # Check if powerlevel9k already installed
-if [[ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k ]]; then
+if [[ ! -d "$ZSH_THEMES" ]]; then
     git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 else
     echo 'Powerlevel9k already exists'
@@ -154,11 +156,11 @@ fi
 DOTFILES="$HOME_DIR/vps-setup/change.bash"
 # Runs the change.bash file provided in vps-setup which this file is cloned from
 if [ -e "$DOTFILES" ]; then
-    bash "$DOTFILES"
+    source "$DOTFILES"
 else
     echo "$DOTFILES does not exist. Run change.bash to transfer over dotfiles." 
 fi
 
 cd ~
-# source ~/.zshrc
+source ~/.zshrc
 
