@@ -49,6 +49,37 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+if has('nvim')
+    " Will install plugins if not detected
+    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+        silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        "autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+    
+    call plug#begin("~/.config/nvim/plugged")
+        Plug 'brooth/far.vim'
+        "Fugitive Vim Github Wrapper
+        Plug 'tpope/vim-fugitive'
+        "Bundler wrapper
+        Plug 'tpope/vim-bundler'
+        "Rapid file search
+        Plug 'skalnik/vim-vroom'
+        "Tab complete ends
+        Plug 'tpope/vim-endwise'
+        "nerdtree file explorer
+        Plug 'scrooloose/nerdtree'
+        "vim ruby
+        Plug 'vim-ruby/vim-ruby'
+        "challenger deep colorscheme
+        Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+        "add lightline
+        Plug 'itchyny/lightline.vim'
+        "add ctrlp for file finding
+        Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+    call plug#end()
+endif
+
 call plug#begin("~/.vim/plugged")
     "Challenger-deep colorscheme, forked version with updates for mintty
     Plug 'https://github.com/ParamagicDev/vim.git', { 'as': 'challenger-deep' }
