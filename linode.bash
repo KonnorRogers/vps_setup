@@ -1,5 +1,13 @@
-username="paramagician"
-email="konnor5456@gmail.com"
+if [[ "$#" -ne 2 ]]; then
+    echo 'You must supply two arguments.'
+    echo 'The first must be your username'
+    echo 'The second must be your email'
+    exit
+fi
+
+username="$1"
+email="$2"
+
 setup_user() {
     if [[ -e /home/"$username" ]]; then
        echo "$username is already being used!"
@@ -46,7 +54,7 @@ install_added_repos() {
 
 set_git_config() {
     # setup git
-    git config --global user.name paramagicdev 
+    git config --global user.name $username 
     git config --global user.email $email
 }
 
