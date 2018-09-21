@@ -50,8 +50,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin("~/.vim/plugged")
-    "Challenger-deep colorscheme
-    Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+    "Challenger-deep colorscheme, forked version with updates for mintty
+    Plug 'https://github.com/ParamagicDev/vim.git', { 'as': 'challenger-deep' }
     "add lightline
     Plug 'itchyny/lightline.vim'
 call plug#end()
@@ -65,4 +65,3 @@ if !has('gui_running')
 endif
 " set lightline to challenger deep
 let g:lightline = { 'colorscheme': 'challenger_deep'}
-
