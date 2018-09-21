@@ -1,19 +1,25 @@
 #!/bin/bash
-
 #tmux
 cp ~/.tmux.conf ~/.tmux.conf.orig
 ln -f -s ~/vps-setup/tmux.conf ~/.tmux.conf
+
 # vim
 cp ~/.vimrc ~/.vimrc.orig
 ln -f -s ~/vps-setup/vimrc ~/.vimrc
 
+# neovim
+cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.orig
+
+NVIM_PATH="/home/$USER/.config/nvim"
+if [[ ! -e "$NVIM_PATH" ]]; then
+    mkdir -p "$NVIM_PATH/init.vim"
+fi
+
+ln -f -s ~/vps-setup/vimrc ~/.config/nvim/init.vim
 if [[ $OSTYPE == 'linux-gnu' ]]; then
     #zsh
     cp ~/.zshrc ~/.zshrc.orig
     ln -f -s ~/vps-setup/zshrc ~/.zshrc
-    # neovim
-    cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.orig
-    ln -f -s ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
 fi
 
 if [[ $OSTYPE == 'cygwin' ]]; then

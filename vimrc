@@ -54,14 +54,17 @@ call plug#begin("~/.vim/plugged")
     Plug 'https://github.com/ParamagicDev/vim.git', { 'as': 'challenger-deep' }
     "add lightline
     Plug 'itchyny/lightline.vim'
+    "Add nerdtree
+    Plug 'scrooloose/nerdtree'
 call plug#end()
+
+if !has('gui_running')
+  set t_Co=256
+endif
 
 colorscheme challenger_deep
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
-if !has('gui_running')
-  set t_Co=256
-endif
 " set lightline to challenger deep
 let g:lightline = { 'colorscheme': 'challenger_deep'}
