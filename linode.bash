@@ -196,14 +196,14 @@ add_repos
 install_added_repos
 set_git_config
 install_tmux_plugin_manager
-install_nvim_stuff
-change_nvim_to_default_editor
+install_neovim_stuff
+change_default_editor_to_nvim
 ufw_connection_setup
 setup_docker
-install_chruby
-install_ruby_install
-install_and_set_ruby_version
-install_gems
+#install_chruby
+#install_ruby_install
+#install_and_set_ruby_version
+# install_gems
 install_oh_my_zsh
 install_zsh_autosuggestions
 install_zsh_syntax_highlighting
