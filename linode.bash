@@ -142,10 +142,29 @@ install_and_set_ruby_version() {
 
 install_gems() {
     # install gems
-    gem install bundler
-    gem install rails -v 5.2.0
-    gem install colorls # file highlighting
-    gem install neovim
+    # gem install bundler
+    # gem install rails -v 5.2.0
+    # gem install colorls # file highlighting
+    # gem install neovim
+    # gem install rake
+    GEMS_DIR="$HOME_DIR/.gem/ruby/2.5.1"
+    if [[ ! -e "$GEMS_DIR" ]]; then
+        mkdir -p "$GEMS_DIR"
+        echo "No gem directory found. Creating a gem directory @ $GEMS_DIR"
+    else
+        echo "$GEMS_DIR already exists, installing to this directory."
+    fi
+
+    GEM_LIST="bundler rails colorls neovim rake"
+
+    for gem_name in "$GEM_LIST"; do
+        if [[ $gem_name == "rails" ]]; then
+            $gem_name="rails -v 5.2.0"
+            gem install "$gem_name" --install-dir "$GEMS_DIR"
+        else
+            gem install $gem_name --install-dir "$GEMS_DIR"
+        fi
+    done
 }
 # Install zsh and accompanying plugins
 
@@ -205,7 +224,7 @@ cd ~
 #get_dependencies
 #add_repos
 #install_added_repos
-set_git_config
+# set_git_config
 #install_tmux_plugin_manager
 #install_neovim_stuff
 #change_default_editor_to_nvim
@@ -214,9 +233,9 @@ set_git_config
 #install_chruby
 #install_ruby_install
 #install_and_set_ruby_version
-# install_gems
-install_oh_my_zsh
-install_zsh_autosuggestions
-install_zsh_syntax_highlighting
-install_powerlevel9k
-install_dotfiles
+install_gems
+# install_oh_my_zsh
+# install_zsh_autosuggestions
+# install_zsh_syntax_highlighting
+# install_powerlevel9k
+# install_dotfiles
