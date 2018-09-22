@@ -1,4 +1,6 @@
 #!/bin/bash
+
+source "$HOME/vps-setup/install_zsh.sh"
 #tmux
 cp ~/.tmux.conf ~/.tmux.conf.orig
 ln -f -s ~/vps-setup/tmux.conf ~/.tmux.conf
