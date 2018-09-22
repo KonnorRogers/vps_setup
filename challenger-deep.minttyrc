@@ -1,9 +1,5 @@
-CopyOnSelect=yes
-
-Term=xterm-256color
-
 ForegroundColour=203,227,231
-BackgroundColour=30,28,49
+BackgroundColour=38,38,38
 CursorColour=251,252,252
 Black=86,85,117
 BoldBlack=16,14,35

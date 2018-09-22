@@ -4,15 +4,14 @@
      
     Note: this is a fragile process and currently is OS dependent. Currenly only testing and working with
     Ubuntu 18.04 LTS on Linode
-    SSH key testing
 
 
 # Warnings
-    if intending to use rvm, DO NOT run this script as a root user. 
-    It will cause RVM to not install locally and instead install to root causing other issues as described
-    in the RVM installation process
-    
+   This is a very fragile process only currently tested in a ubuntu 18.04 environment
+
 # Updating amazon ec2 instance as text
+
+    Amazon instances not currently test
 
     sudo yum install git -y
     git clone https://github.com/ParamagicDev/vps-setup.git
@@ -22,11 +21,11 @@
 
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git
-    sudo bash ~/vps-setup/linode.bash
+    sudo bash /path/to/vps-setup/linode.bash
 
 
 # updates for the future?
-    update .tmuxrc
-    update neovim/init.vim with ruby / rails related plugins
-    add other various devops related things
-    use docker more?
+    
+    Possibly creating more robust bash scripts
+    Docker files?
+

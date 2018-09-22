@@ -99,7 +99,7 @@ fi
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
-alias tmux='tmux -S ~/.tmp'
+alias tmuxr='tmux -S ~/.tmp'
 alias lsc="colorls"
 alias ls='ls -G'
 alias ls='ls --color=auto'
