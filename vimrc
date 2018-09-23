@@ -54,7 +54,7 @@ if has('nvim')
     if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
         silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        "autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
     endif
     
     call plug#begin("~/.config/nvim/plugged")
@@ -71,12 +71,14 @@ if has('nvim')
         Plug 'scrooloose/nerdtree'
         "vim ruby
         Plug 'vim-ruby/vim-ruby'
-        "challenger deep colorscheme
-        Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
         "add lightline
         Plug 'itchyny/lightline.vim'
-        "add ctrlp for file finding
-        Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+        "Add colorschemes
+        Plug 'flazz/vim-colorschemes'
+        "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        "linting
+        Plug 'w0rp/ale'
     call plug#end()
 else
     call plug#begin("~/.vim/plugged")
