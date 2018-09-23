@@ -73,7 +73,7 @@ echo 'symlinking vim'
 symlink_vim
 echo 'symlinking neovim'
 symlink_neovim
-echo 'symlinking zshrc'
-symlink_zshrc
+echo 'symlinking zsh'
+symlink_zsh
 
 echo 'dotfiles transferred successfully!'
