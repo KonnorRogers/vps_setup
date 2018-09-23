@@ -79,9 +79,9 @@ if !has('gui_running')
   set t_Co=256
 endif
 
-colorscheme challenger_deep
+colorscheme zenburn
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
 " set lightline to challenger deep
-let g:lightline = { 'colorscheme': 'challenger_deep'}
+let g:lightline = { 'colorscheme': 'zenburn'
