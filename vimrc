@@ -84,4 +84,4 @@ colorscheme zenburn
 map <C-n> :NERDTreeToggle<CR>
 
 " set lightline to challenger deep
-let g:lightline = { 'colorscheme': 'zenburn'
+let g:lightline = { 'colorscheme': 'zenburn' }
