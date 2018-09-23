@@ -69,7 +69,7 @@ symlink_zsh(){
 
 symlink_mintty(){
    
-    if [[ $OSTYPE == 'cygwin' ]]
+    if [[ $OSTYPE == 'cygwin' ]]; then
         echo "$OSTYPE detected. Symlinking .minttyrc"
    
         MINTTY_ORIG="$HOME/.minttyrc.orig"
