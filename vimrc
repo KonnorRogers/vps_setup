@@ -47,49 +47,33 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    ln -s -f ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
 endif
 
-if has('nvim')
-    " Will install plugins if not detected
-    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-        silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    endif
     
-    call plug#begin("~/.config/nvim/plugged")
-        Plug 'brooth/far.vim'
-        "Fugitive Vim Github Wrapper
-        Plug 'tpope/vim-fugitive'
-        "Bundler wrapper
-        Plug 'tpope/vim-bundler'
-        "Rapid file search
-        Plug 'skalnik/vim-vroom'
-        "Tab complete ends
-        Plug 'tpope/vim-endwise'
-        "nerdtree file explorer
-        Plug 'scrooloose/nerdtree'
-        "vim ruby
-        Plug 'vim-ruby/vim-ruby'
-        "add lightline
-        Plug 'itchyny/lightline.vim'
-        "Add colorschemes
-        Plug 'flazz/vim-colorschemes'
-        "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
-        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-        "linting
-        Plug 'w0rp/ale'
-    call plug#end()
-else
-    call plug#begin("~/.vim/plugged")
-        "Challenger-deep colorscheme, forked version with updates for mintty
-        Plug 'https://github.com/ParamagicDev/vim.git', { 'as': 'challenger-deep' }
-        "add lightline
-        Plug 'itchyny/lightline.vim'
-        "Add nerdtree
-        Plug 'scrooloose/nerdtree'
-    call plug#end()
-endif
+call plug#begin("~/.vim/plugged")
+    Plug 'brooth/far.vim'
+    "Fugitive Vim Github Wrapper
+    Plug 'tpope/vim-fugitive'
+    "Bundler wrapper
+    Plug 'tpope/vim-bundler'
+    "Rapid file search
+    Plug 'skalnik/vim-vroom'
+    "Tab complete ends
+    Plug 'tpope/vim-endwise'
+    "nerdtree file explorer
+    Plug 'scrooloose/nerdtree'
+    "vim ruby
+    Plug 'vim-ruby/vim-ruby'
+    "add lightline
+    Plug 'itchyny/lightline.vim'
+    "Add colorschemes
+    Plug 'flazz/vim-colorschemes'
+    "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    "linting
+    Plug 'w0rp/ale'
+call plug#end()
 
 if !has('gui_running')
   set t_Co=256

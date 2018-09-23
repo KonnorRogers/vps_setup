@@ -113,3 +113,5 @@ alias lsc='colorls'
 alias ls="ls --color=always"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
