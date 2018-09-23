@@ -15,8 +15,8 @@ NVIM_PATH="/home/$USER/.config/nvim"
 if [[ ! -e "$NVIM_PATH" ]]; then
     mkdir -p "$NVIM_PATH/init.vim"
     mkdir -p "$NVIM_PATH/autoload"
-    ln -f -s ~/.vim ~/.config/nvim
-    ln -f -s ~/.vimrc ~/.config/nvim/init.vim
+    ln -f -s ~/.vim "$NVIM_PATH"
+    ln -f -s ~/.vimrc "$NVIM_PATH/init.vim"
 fi
 
 ln -f -s ~/vps-setup/vimrc ~/.config/nvim/init.vim
