@@ -65,6 +65,28 @@ symlink_zsh(){
         echo "$OSTYPE detected. Installed ZSH intended for $OSTYPE"
         ln -f -s ~/vps-setup/cygwin_zshrc "$ZSH_RC"
     fi
+}
+
+symlink_mintty(){
+   
+    if [[ $OSTYPE == 'cygwin' ]]
+        echo "$OSTYPE detected. Symlinking .minttyrc"
+   
+        MINTTY_ORIG="$HOME/.minttyrc.orig"
+        MINTTY_RC="$HOME/.minttyrc"
+    
+        if [[ ! -e "$MINTTY_ORIG" ]]; then
+            echo "No $MINTTY_ORIG detected. Creating a copy of .minttyrc at $MINTTY_ORIG"
+            cp "$MINTTY_RC" "$MINTTY_ORIG"
+        else
+            echo "$MINTTY_ORIG already exists. No original copy will be made"
+        fi
+
+        ln -f -s ~/vps-setup/minttyrc "$MINTTY_RC"
+    else
+        echo 'No need to install mintty! Youre not using cygwin / babun!'
+    fi
+}
 
 echo 'symlinking tmux'
 symlink_tmux
@@ -74,5 +96,7 @@ echo 'symlinking neovim'
 symlink_neovim
 echo 'symlinking zsh'
 symlink_zsh
+echo 'symlinking mintty w/ zenburn colorscheme and inconsolata nerdfont.'
+symlink_mintty
 
 echo 'dotfiles transferred successfully!'
