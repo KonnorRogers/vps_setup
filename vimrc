@@ -47,32 +47,36 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    ln -s -f ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    mkdir -p ~/.local/share/nvim/site/autoload
+    ln -s -f ~/.local/share/nvim/site/autoload/plug.vim
 endif
 
     
 call plug#begin("~/.vim/plugged")
-    Plug 'brooth/far.vim'
     "Fugitive Vim Github Wrapper
     Plug 'tpope/vim-fugitive'
-    "Bundler wrapper
-    Plug 'tpope/vim-bundler'
-    "Rapid file search
-    Plug 'skalnik/vim-vroom'
-    "Tab complete ends
-    Plug 'tpope/vim-endwise'
-    "nerdtree file explorer
-    Plug 'scrooloose/nerdtree'
-    "vim ruby
-    Plug 'vim-ruby/vim-ruby'
-    "add lightline
-    Plug 'itchyny/lightline.vim'
     "Add colorschemes
     Plug 'flazz/vim-colorschemes'
-    "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    "linting
-    Plug 'w0rp/ale'
+    if has('nvim')
+        "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        "linting
+        Plug 'w0rp/ale'
+        "Bundler wrapper
+        Plug 'tpope/vim-bundler'
+        "Rapid file search
+        Plug 'skalnik/vim-vroom'
+        "Tab complete ends
+        Plug 'tpope/vim-endwise'
+        "nerdtree file explorer
+        Plug 'scrooloose/nerdtree'
+        "vim ruby
+        Plug 'vim-ruby/vim-ruby'
+        "add lightline
+        Plug 'itchyny/lightline.vim'
+        "add zenburn_lightline
+        Plug 'acepukas/vim-zenburn.git'
+    endif
 call plug#end()
 
 if !has('gui_running')
@@ -84,4 +88,4 @@ colorscheme zenburn
 map <C-n> :NERDTreeToggle<CR>
 
 " set lightline to challenger deep
-let g:lightline = { 'colorscheme': 'zenburn' }
+let g:lightline = { 'colorscheme': '' }
