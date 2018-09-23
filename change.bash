@@ -10,11 +10,13 @@ cp ~/.vimrc ~/.vimrc.orig
 ln -f -s ~/vps-setup/vimrc ~/.vimrc
 
 # neovim
-cp ~/.config/nvim/init.vim ~/.config/nvim/init.vim.orig
 
 NVIM_PATH="/home/$USER/.config/nvim"
 if [[ ! -e "$NVIM_PATH" ]]; then
     mkdir -p "$NVIM_PATH/init.vim"
+    mkdir -p "$NVIM_PATH/autoload"
+    ln -f -s ~/.vim ~/.config/nvim
+    ln -f -s ~/.vimrc ~/.config/nvim/init.vim
 fi
 
 ln -f -s ~/vps-setup/vimrc ~/.config/nvim/init.vim
