@@ -75,7 +75,7 @@ call plug#begin("~/.vim/plugged")
         "add lightline
         Plug 'itchyny/lightline.vim'
         "add zenburn_lightline
-        Plug 'acepukas/vim-zenburn.git'
+        Plug 'https://github.com/acepukas/vim-zenburn.git'
     endif
 call plug#end()
 
@@ -88,4 +88,4 @@ colorscheme zenburn
 map <C-n> :NERDTreeToggle<CR>
 
 " set lightline to challenger deep
-let g:lightline = { 'colorscheme': '' }
+let g:lightline = { 'colorscheme': 'zenburn' }
