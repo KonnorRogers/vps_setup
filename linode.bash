@@ -4,6 +4,7 @@ if [[ "$#" -ne 2 ]]; then
     echo 'The second must be your email'
     exit
 fi
+source 
 
 username="$1"
 email="$2"
@@ -142,11 +143,6 @@ install_and_set_ruby_version() {
 
 install_gems() {
     # install gems
-    # gem install bundler
-    # gem install rails -v 5.2.0
-    # gem install colorls # file highlighting
-    # gem install neovim
-    # gem install rake
     GEMS_DIR="$HOME_DIR/.gem/ruby/2.5.1"
     if [[ ! -e "$GEMS_DIR" ]]; then
         mkdir -p "$GEMS_DIR"
@@ -158,12 +154,7 @@ install_gems() {
     GEM_LIST="bundler rails colorls neovim rake"
 
     for gem_name in "$GEM_LIST"; do
-        if [[ $gem_name == "rails" ]]; then
-            $gem_name="rails -v 5.2.0"
-            gem install "$gem_name" --install-dir "$GEMS_DIR"
-        else
-            gem install $gem_name --install-dir "$GEMS_DIR"
-        fi
+        gem install $gem_name --install-dir "$GEMS_DIR"
     done
 }
 # Install zsh and accompanying plugins
@@ -219,6 +210,7 @@ install_dotfiles() {
         echo "$DOTFILES does not exist. Run change.bash to transfer over dotfiles." 
     fi
 }
+
 cd ~
 #setup_user
 #get_dependencies
@@ -233,9 +225,10 @@ cd ~
 #install_chruby
 #install_ruby_install
 #install_and_set_ruby_version
-install_gems
+# install_gems
 # install_oh_my_zsh
 # install_zsh_autosuggestions
 # install_zsh_syntax_highlighting
 # install_powerlevel9k
 # install_dotfiles
+source "$HOME_DIR/vps-setup/secure_server.bash"
