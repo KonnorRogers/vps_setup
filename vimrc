@@ -89,5 +89,6 @@ colorscheme zenburn
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
+set laststatus=2
 " set lightline to zenburn 
 let g:lightline = { 'colorscheme': 'zenburn' }
