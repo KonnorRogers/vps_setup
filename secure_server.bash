@@ -3,7 +3,8 @@
 SSH_CONFIG="/etc/ssh/sshd_config"
 # Disable root login
 disable_root_login(){ 
-    if [[ -n cat "$SSH_CONFIG" | grep -e "/^\s*PermitRootLogin no \s*$/" ]]; then
+    ROOTLOGIN=$(grep -e '/^\s*PermitRootLogin no \s*$/' "$SSH_CONFIG")
+    if [[ -n $ROOTLOGIN ]]; then
         # checks if rootlogin not empty
         echo "Rootlogin is already set to no. No modifications made"
     else
@@ -13,8 +14,8 @@ disable_root_login(){
 }
 
 disable_clear_text_password(){
-    
-    if [[ -n cat "$SSH_CONFIG" | grep -e "/^\s*PasswordAuthentication no\s*$/") ]]; then
+    PASS_AUTO=$(grep -e '/^\s*PasswordAuthentication no\s*$/' "$SSH_CONFIG")
+    if [[ -n "$PASS_AUTO" ]]; then
         # checks if password authentication is non empty
         echo "PasswordAuthentication already disabled. No modifications made."
     else
@@ -23,9 +24,9 @@ disable_clear_text_password(){
     fi
 }
 
-disable_ipv6(){
-
-    if [[ -n  cat "$SSH_CONFIG" | grep -e "/^\s*AddressFamily inet\s*$/") ]]; then
+enable_ipv4(){
+    IPV4=$(grep -e '/^\s*AddressFamily inet\s*$/' "$SSH_CONFIG")
+    if [[ -n  "$IPV4" ]]; then
         # checks if ipv4 already enabled
         echo "AddressFamily inet already enabled. No Modifications made"
     else
@@ -47,7 +48,7 @@ check_if_sshd_exists(){
 
 check_if_ssh_active(){
     SSH="eval $(ps -ef | grep sshd)"
-    if [[ $SSH == "" ]]; then
+    if [[ -n "$SSH" ]]; then
         echo "This is not an SSH server. SSH will not be secured"
         exit 2
     fi
@@ -58,6 +59,6 @@ check_if_ssh_active
 check_if_sshd_exists
 disable_root_login
 disable_clear_text_password
-disable_ipv6
+enable_ipv4
 reset_sshd
 
