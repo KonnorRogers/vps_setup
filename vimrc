@@ -21,6 +21,10 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 
+if !has('gui_running')
+  set t_Co=256
+endif
+
 if has("autocmd")
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 \| exe "normal g'\"" | endif
@@ -79,10 +83,6 @@ call plug#begin("~/.vim/plugged")
         Plug 'vim-ruby/vim-ruby'
    endif
 call plug#end()
-
-if !has('gui_running')
-  set t_Co=256
-endif
 
 colorscheme zenburn
 
