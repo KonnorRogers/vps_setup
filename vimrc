@@ -81,6 +81,8 @@ call plug#begin("~/.vim/plugged")
         Plug 'scrooloose/nerdtree'
         "vim ruby
         Plug 'vim-ruby/vim-ruby'
+        Plug 'https://github.com/mvdan/sh.git'
+        Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
    endif
 call plug#end()
 
