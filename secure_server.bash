@@ -3,18 +3,18 @@
 SSH_CONFIG="/etc/ssh/sshd_config"
 # Disable root login
 disable_root_login(){
-    echo "# Authentication" >> "$SSH_CONFIG"
-    echo "PermitRootLogin no" >> "$SSH_CONFIG"
+    echo "# Authentication" | sudo tee -a "$SSH_CONFIG"
+    echo "PermitRootLogin no" | sudo tee -a "$SSH_CONFIG"
 }
 
 disable_clear_text_password(){
-    echo "# When set to no, disables tunnelled clear text passwords" >> "$SSH_CONFIG"
-    echo "PasswordAuthentication no" >> "$SSH_CONFIG"
+    echo "# When set to no, disables tunnelled clear text passwords" | sudo tee -a "$SSH_CONFIG"
+    echo "PasswordAuthentication no" | sudo tee -a "$SSH_CONFIG"
 }
 
 disable_ipv6(){
-    echo "Enables on ipv4 connectivity. Change to AddressFamily inet6 for ipv6" >> "$SSH_CONFIG"
-    echo "AddressFamily inet" >> "$SSH_CONFIG"
+    echo "Enables on ipv4 connectivity. Change to AddressFamily inet6 for ipv6" | sudo tee -a "$SSH_CONFIG"
+    echo "AddressFamily inet" | sudo tee -a "$SSH_CONFIG"
 }
 
 reset_sshd(){
@@ -29,7 +29,7 @@ check_if_sshd_exists(){
 }
 
 check_if_ssh_active(){
-    SSH=eval "$(ps -ef | grep sshd)"
+    SSH="eval $(ps -ef | grep sshd)"
     if [[ $SSH == '' ]]; then
         echo "This is not an SSH server. SSH will not be secured"
         exit 2

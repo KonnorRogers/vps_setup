@@ -1,13 +1,14 @@
-if [[ "$#" -ne 2 ]]; then
-    echo 'You must supply two arguments.'
-    echo 'The first must be your username'
-    echo 'The second must be your email'
-    exit
-fi
-source 
+set_username_and_email(){
+    if [[ "$#" -ne 2 ]]; then
+        echo 'You did not supply two arguments.'
+        echo 'if you would like rerun the command, please use your username as the first arg and email as the second'
+        echo 'A local user will not be setup and dotfiles will not be transferred'
+    else
+        username="$1"
+        email="$2"
+    fi
+}
 
-username="$1"
-email="$2"
 
 setup_user() {
     if [[ -e /home/"$username" ]]; then
@@ -19,7 +20,6 @@ setup_user() {
     fi
 }
 
-HOME_DIR="/home/$username"
 get_dependencies() {
     sudo apt update
     sudo apt upgrade -y 
@@ -73,10 +73,6 @@ install_tmux_plugin_manager(){
 
 change_default_editor_to_nvim() {
     # update editor
-    sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-    yes "0" | sudo update-alternatives --config vi
-    sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-    yes "0" | sudo update-alternatives --config vim
     sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
     yes "0" | sudo update-alternatives --config editor
 }
@@ -143,7 +139,6 @@ install_and_set_ruby_version() {
 
 install_gems() {
     # install gems
-    GEMS_DIR="$HOME_DIR/.gem/ruby/2.5.1"
     if [[ ! -e "$GEMS_DIR" ]]; then
         mkdir -p "$GEMS_DIR"
         echo "No gem directory found. Creating a gem directory @ $GEMS_DIR"
@@ -169,7 +164,6 @@ install_oh_my_zsh() {
     fi
 }
 
-ZSH_PLUGINS="$HOME_DIR/.oh-my-zsh/custom/plugins"
 
 install_zsh_autosuggestions() {
     #checks if autosuggestions exists
@@ -189,7 +183,6 @@ install_zsh_syntax_highlighting() {
     fi
 }
 
-ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
 
 install_powerlevel9k() {
     # Check if powerlevel9k already installed
@@ -200,9 +193,8 @@ install_powerlevel9k() {
     fi
 }
 
-DOTFILES="$HOME_DIR/vps-setup/change.bash"
 
-install_dotfiles() {
+symlink_dotfiles() {
     # Runs the change.bash file provided in vps-setup which this file is cloned from
     if [ -e "$DOTFILES" ]; then
         source "$DOTFILES"
@@ -211,24 +203,52 @@ install_dotfiles() {
     fi
 }
 
+runs_without_user_setup(){
+    get_dependencies
+    add_repos
+    install_added_repos
+    ufw_connection_setup
+    change_default_editor_to_nvim
+    install_neovim_stuff
+
+}
+
+runs_with_user_and_email_only(){
+    set_git_config
+    install_tmux_plugin_manager
+    setup_docker
+    install_chruby
+    install_ruby_install
+    install_and_set_ruby
+
+    install_gems
+    install_oh_my_zsh
+    install_zsh_autosuggestions
+    install_zsh_syntax_highlighting
+    install_powerlevel9k
+    install_dotfiles
+    source "$HOME_DIR/vps-setup/secure_server.bash"
+}
+
 cd ~
-#setup_user
-#get_dependencies
-#add_repos
-#install_added_repos
-# set_git_config
-#install_tmux_plugin_manager
-#install_neovim_stuff
-#change_default_editor_to_nvim
-#ufw_connection_setup
-# setup_docker
-#install_chruby
-#install_ruby_install
-#install_and_set_ruby_version
-# install_gems
-# install_oh_my_zsh
-# install_zsh_autosuggestions
-# install_zsh_syntax_highlighting
-# install_powerlevel9k
-# install_dotfiles
-source "$HOME_DIR/vps-setup/secure_server.bash"
+username=""
+email=""
+HOME_DIR="/home/$username"
+DOTFILES="$HOME_DIR/vps-setup/change.bash"
+GEMS_DIR="$HOME_DIR/.gem/ruby/2.5.1"
+ZSH_PLUGINS="$HOME_DIR/.oh-my-zsh/custom/plugins"
+ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
+
+setup_user
+# length of string is 0
+if [[ "$#" -z ]]; then
+    runs_without_user_setup
+elif [[ "$#" -e 2 ]]; then 
+    runs_without_user_setup
+    runs_with_user_and_email_only
+else
+    echo "Supply no arguments for minimal setup."
+    echo "Supply username then email for full setup"
+fi
+
+
