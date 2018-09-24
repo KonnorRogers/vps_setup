@@ -57,6 +57,11 @@ call plug#begin("~/.vim/plugged")
     Plug 'tpope/vim-fugitive'
     "Add colorschemes
     Plug 'flazz/vim-colorschemes'
+    "add lightline
+    Plug 'itchyny/lightline.vim'
+    "add zenburn_lightline
+    Plug 'https://github.com/acepukas/vim-zenburn.git'
+ 
     if has('nvim')
         "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -72,11 +77,7 @@ call plug#begin("~/.vim/plugged")
         Plug 'scrooloose/nerdtree'
         "vim ruby
         Plug 'vim-ruby/vim-ruby'
-        "add lightline
-        Plug 'itchyny/lightline.vim'
-        "add zenburn_lightline
-        Plug 'https://github.com/acepukas/vim-zenburn.git'
-    endif
+   endif
 call plug#end()
 
 if !has('gui_running')
@@ -84,6 +85,7 @@ if !has('gui_running')
 endif
 
 colorscheme zenburn
+
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
