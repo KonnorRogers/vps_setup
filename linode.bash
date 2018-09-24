@@ -241,9 +241,9 @@ ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
 
 setup_user
 # length of string is 0
-if [[ "$#" -z ]]; then
+if [[ -z "$#" ]]; then
     runs_without_user_setup
-elif [[ "$#" -e 2 ]]; then 
+elif [[ -e "$#" 2 ]]; then 
     runs_without_user_setup
     runs_with_user_and_email_only
 else
