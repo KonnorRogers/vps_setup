@@ -7,7 +7,7 @@ FontWeight=500
 Term=xterm-256color
 
 ForegroundColour=220,220,204
-BackgroundColour=58,58,58
+BackgroundColour=75,75,75
 CursorColour=115,99,90
 
 Black=30,35,32
