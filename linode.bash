@@ -1,14 +1,4 @@
-set_username_and_email(){
-    if [[ "$#" -ne 2 ]]; then
-        echo 'You did not supply two arguments.'
-        echo 'if you would like rerun the command, please use your username as the first arg and email as the second'
-        echo 'A local user will not be setup and dotfiles will not be transferred'
-    else
-        username="$1"
-        email="$2"
-    fi
-}
-
+#!/bin/bash
 
 setup_user() {
     if [[ -e /home/"$username" ]]; then
@@ -203,18 +193,18 @@ symlink_dotfiles() {
     fi
 }
 
-runs_without_user_setup(){
+runs_with_user_and_email(){
+    runs_with_user_only
+    set_git_config
+}
+
+runs_with_user_only(){
     get_dependencies
     add_repos
     install_added_repos
     ufw_connection_setup
     change_default_editor_to_nvim
     install_neovim_stuff
-
-}
-
-runs_with_user_and_email_only(){
-    set_git_config
     install_tmux_plugin_manager
     setup_docker
     install_chruby
@@ -239,16 +229,47 @@ GEMS_DIR="$HOME_DIR/.gem/ruby/2.5.1"
 ZSH_PLUGINS="$HOME_DIR/.oh-my-zsh/custom/plugins"
 ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
 
-setup_user
-# length of string is 0
-if [[ -z "$#" ]]; then
-    runs_without_user_setup
-elif [[ -e "$#" 2 ]]; then 
-    runs_without_user_setup
-    runs_with_user_and_email_only
-else
-    echo "Supply no arguments for minimal setup."
-    echo "Supply username then email for full setup"
+# :: - optional
+# : - required optional
+# nothing - semi-flag
+
+# set an initial value for the flag
+username=
+email=
+
+OPTS=`getopt -o e:u: --long email:,username: -n 'parse-options' -- "$@"`
+
+if [ $? != 0 ] ; then echo "echo Script Usage: linode.bash [-e|--email=email (optional)]  [-u|--username=name (required)]." >&2 ; exit 1 ; fi
+
+echo "$OPTS"
+eval set -- "$OPTS"
+
+while true; do
+  case "$1" in
+      -e | --email ) email="$2"; shift 2;;
+      -u | --username ) username="$2"; shift 2 ;;
+      -- ) shift; break ;;
+      * ) 
+          exit 2 ;;
+  esac
+done
+# do something with the variables -- in this case the lamest possible one :-)
+echo "username = $username"
+echo "email = $email"
+
+if [[ -z "$username" ]]; then
+    echo "No arguments were passed to -u"
+    echo "Set username by running sudo bash linode.bash -u foo or"
+    echo "by using --username=foo"
+    echo "Exiting."
+    exit 3
 fi
+ 
+setup_user
 
-
+if [[ -z "$email" ]]; then
+    echo "Email not given. Set git config --global user.email to fix the only command not run"
+    runs_with_user_only
+else
+    runs_with_user_and_email
+fi
