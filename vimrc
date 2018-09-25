@@ -83,6 +83,7 @@ call plug#begin("~/.vim/plugged")
         Plug 'vim-ruby/vim-ruby'
         Plug 'https://github.com/mvdan/sh.git'
         Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+        Plug 'ryanoasis/vim-devicons'
    endif
 call plug#end()
 
@@ -91,6 +92,8 @@ colorscheme zenburn
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
+"fzf mapping
+map <Leader>t :FZF <Esc>
 set laststatus=2
 " set lightline to zenburn 
 let g:lightline = { 'colorscheme': 'zenburn' }
