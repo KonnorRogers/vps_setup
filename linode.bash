@@ -249,10 +249,11 @@ while true; do
       -e | --email ) email="$2"; shift 2;;
       -u | --username ) username="$2"; shift 2 ;;
       -- ) shift; break ;;
-      * ) 
-          exit 2 ;;
+      * ) echo "echo Script Usage: linode.bash [-e|--email=email (optional)]  [-u|--username=name (required)]." ; exit 1 ;;
   esac
 done
+# checks for no exit errors of last comand
+if [[ $? != 0 ]] ; then echo "Internal error" >&2 ; exit 1 ; fi
 # do something with the variables -- in this case the lamest possible one :-)
 echo "username = $username"
 echo "email = $email"
