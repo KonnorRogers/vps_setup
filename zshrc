@@ -2,18 +2,18 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export TERM="xterm-256color"
 
-POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir chruby vcs newline status)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+# POWERLEVEL9K_MODE='nerdfont-complete'
+# POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir chruby vcs newline status)
+# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
+# POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="superjarin"
 # ZSH_THEME="agnoster"
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -69,9 +69,9 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
  git
- # rails
- # mosh
- #  rvm
+ chruby
+ rails
+ mosh
  tmux
  zsh-autosuggestions
  zsh-syntax-highlighting
@@ -93,7 +93,6 @@ else
   export EDITOR='vim'
 fi
 
-# source rvm gemset use dev
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -106,8 +105,8 @@ fi
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
+alias zshc="vim ~/.zshrc"
+alias omz="vim ~/.oh-my-zsh"
 alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
 alias ls="ls --color=always"
