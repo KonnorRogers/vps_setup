@@ -59,13 +59,10 @@ endif
 call plug#begin("~/.vim/plugged")
     "Fugitive Vim Github Wrapper
     Plug 'tpope/vim-fugitive'
-    "Add colorschemes
-    Plug 'flazz/vim-colorschemes'
     "add lightline
     Plug 'itchyny/lightline.vim'
-    "add zenburn_lightline
-    Plug 'https://github.com/acepukas/vim-zenburn.git'
- 
+    Plug 'joshdick/onedark.vim'
+    
     if has('nvim')
         "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -73,8 +70,6 @@ call plug#begin("~/.vim/plugged")
         Plug 'w0rp/ale'
         "Bundler wrapper
         Plug 'tpope/vim-bundler'
-        "Rapid file search
-        Plug 'skalnik/vim-vroom'
         "Tab complete ends
         Plug 'tpope/vim-endwise'
         "nerdtree file explorer
@@ -87,7 +82,8 @@ call plug#begin("~/.vim/plugged")
    endif
 call plug#end()
 
-colorscheme zenburn
+colorscheme onedark
+let g:lightline = { 'colorscheme': 'onedark' }
 
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
@@ -95,5 +91,3 @@ map <C-n> :NERDTreeToggle<CR>
 "fzf mapping
 map <Leader>t :FZF <Esc>
 set laststatus=2
-" set lightline to zenburn 
-let g:lightline = { 'colorscheme': 'zenburn' }
