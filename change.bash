@@ -95,6 +95,17 @@ symlink_mintty(){
     fi
 }
 
+# needs to be added
+add_one_dark_gnome(){
+    wget https://raw.githubusercontent.com/denysdovhan/gnome-terminal-one/master/one-dark.sh && . one-dark.sh
+    # careful this will reload the terminal
+}
+
+# needs to be finished
+add_inconsolata_font(){
+    https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Inconsolata/complete/Inconsolata%20Nerd%20Font%20Complete%20Mono.otf
+}
+
 echo 'symlinking tmux'
 symlink_tmux
 echo 'symlinking vim'

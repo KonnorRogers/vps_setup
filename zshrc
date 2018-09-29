@@ -105,11 +105,13 @@ fi
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
+alias vim="nvim"
 alias zshc="vim ~/.zshrc"
 alias omz="vim ~/.oh-my-zsh"
 alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
 alias ls="ls --color=always"
+
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 
