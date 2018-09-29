@@ -12,7 +12,19 @@ set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
 syntax on           "turn on syntax highlighting
- 
+set nobackup        "no backups
+set nowritebackup   "no backup file while editing
+set noswapfile      "no creation of swap files
+set noundofile      "prevents extra files from being created
+
+if has('nvim') || has('termguicolors')
+  set termguicolors
+endif
+
+if !has('gui_running')
+  set t_Co=256
+endif
+
 if has("autocmd")
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 \| exe "normal g'\"" | endif
@@ -29,26 +41,52 @@ autocmd BufWritePre *.conf :%s/\s\+$//e
 autocmd BufWritePre *.py :%s/\s\+$//e
 autocmd BufWritePre *.css :%s/\s\+$//e
 autocmd BufWritePre *.html :%s/\s\+$//e
+autocmd BufWritePre *.rb :%s/\s\+$//e
 
 :set bs=2 "fix backspace on some consoles
 
-" Automatically install Vim-Plug
-"if empty(glob('~/.vim/autoload/plug.vim'))
-"    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-"endif
 
-call plug#begin('~/.vim/plugged')
-    Plug 'arcticicestudio/nord-vim'
+" Will install plugins if not detected
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    mkdir -p ~/.local/share/nvim/site/autoload
+    ln -s -f ~/.local/share/nvim/site/autoload/plug.vim
+endif
+
+    
+call plug#begin("~/.vim/plugged")
     "Fugitive Vim Github Wrapper
     Plug 'tpope/vim-fugitive'
+    "add lightline
+    Plug 'itchyny/lightline.vim'
+    Plug 'joshdick/onedark.vim'
+    
+    if has('nvim')
+        "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        "linting
+        Plug 'w0rp/ale'
+        "Bundler wrapper
+        Plug 'tpope/vim-bundler'
+        "Tab complete ends
+        Plug 'tpope/vim-endwise'
+        "nerdtree file explorer
+        Plug 'scrooloose/nerdtree'
+        "vim ruby
+        Plug 'vim-ruby/vim-ruby'
+        Plug 'https://github.com/mvdan/sh.git'
+        Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+        Plug 'ryanoasis/vim-devicons'
+   endif
 call plug#end()
-colorscheme nord    "set colorscheme
-let g:nord_italic = 1
-let g:nord_underline = 1
-let g:nord_italic_comments = 1
-let g:nord_uniform_status_lines = 1
-let g:nord_comment_brightness = 12
-let g:nord_uniform_diff_background = 1
-let g:nord_cursor_line_number_background = 1
+colorscheme onedark
+let g:lightline = { 'colorscheme': 'onedark' }
+
+" ctrl-n for nerdtree toggle
+map <C-n> :NERDTreeToggle<CR>
+
+"fzf mapping
+map <Leader>t :FZF <Esc>
+set laststatus=2
