@@ -50,6 +50,8 @@ sudo pip3 --user install neovim -y
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 # Recursively copies nvim setup
 rm -f ~/.config/nvim/init.vim
+mkdir ~/.config
+mkdir ~/.config/nvim
 cp ~/vps-setup/nvim/init.vim ~/.config/nvim/init.vim
 
 # Copy vimrc should neovim have issues
