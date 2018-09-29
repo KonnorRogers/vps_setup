@@ -65,6 +65,8 @@ symlink_zsh(){
         echo "$OSTYPE detected. Installed ZSH intended for $OSTYPE"
         ln -f -s ~/vps-setup/cygwin_zshrc "$ZSH_RC"
     fi
+
+    ln -f -s ~/vps-setup/zprofile ~/.zprofile
 }
 
 symlink_mintty(){
