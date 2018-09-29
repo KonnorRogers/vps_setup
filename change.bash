@@ -33,15 +33,20 @@ symlink_vim(){
 }
 # neovim
 symlink_neovim(){
-    NVIM_PATH="/home/$USER/.config/nvim"
+    NVIM_PATH="$HOME/.config/nvim"
     if [[ ! -e "$NVIM_PATH" ]]; then
-        mkdir -p "$NVIM_PATH/init.vim"
-        mkdir -p "$NVIM_PATH/autoload"
-        ln -f -s ~/.vim "$NVIM_PATH"
-        ln -f -s ~/.vimrc "$NVIM_PATH/init.vim"
+        mkdir -p "$NVIM_PATH"
+    fi
+   
+    if [[ ! -e "$HOME/.local/share/nvim/site/autoload" ]]; then
+        mkdir -p "$HOME/.local/share/nvim/site/autoload"
     fi
 
-    ln -f -s ~/vps-setup/vimrc "$NVIM_PATH/init.vim"
+    # change user permisssions because they may belong to root
+    SITE="$HOME/.local/share/nvim/site"
+    chmod -R u+rwx "$SITE"
+    ln -f -s "$HOME/.vim/autoload" "$SITE/autoload"
+    ln -f -s "$HOME/vps-setup/vimrc" "$NVIM_PATH/init.vim"
 }
 
 symlink_zsh(){

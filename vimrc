@@ -51,10 +51,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    mkdir -p ~/.local/share/nvim/site/autoload
-    ln -s -f ~/.local/share/nvim/site/autoload/plug.vim
 endif
-
     
 call plug#begin("~/.vim/plugged")
     "Fugitive Vim Github Wrapper
