@@ -33,7 +33,7 @@ symlink_vim(){
 }
 # neovim
 symlink_neovim(){
-NVIM_PATH="/home/$USER/.config/nvim"
+    NVIM_PATH="/home/$USER/.config/nvim"
     if [[ ! -e "$NVIM_PATH" ]]; then
         mkdir -p "$NVIM_PATH/init.vim"
         mkdir -p "$NVIM_PATH/autoload"

@@ -213,8 +213,7 @@ runs_with_user_only(){
     install_oh_my_zsh
     install_zsh_autosuggestions
     install_zsh_syntax_highlighting
-    install_powerlevel9k
-    install_dotfiles
+    symlink_dotfiles
     source "$HOME_DIR/vps-setup/secure_server.bash"
 }
 
