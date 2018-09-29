@@ -81,7 +81,6 @@ call plug#begin("~/.vim/plugged")
         Plug 'ryanoasis/vim-devicons'
    endif
 call plug#end()
-
 colorscheme onedark
 let g:lightline = { 'colorscheme': 'onedark' }
 
