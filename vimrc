@@ -65,19 +65,26 @@ call plug#begin("~/.vim/plugged")
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
         "linting
         Plug 'w0rp/ale'
-        "Bundler wrapper
-        Plug 'tpope/vim-bundler'
-        "Tab complete ends
-        Plug 'tpope/vim-endwise'
         "nerdtree file explorer
         Plug 'scrooloose/nerdtree'
-        "vim ruby
+        "tpope plugins
         Plug 'vim-ruby/vim-ruby'
-        Plug 'https://github.com/mvdan/sh.git'
-        Plug 'z0mbix/vim-shfmt', { 'for': 'sh' }
+        Plug 'tpope/vim-bundler'
+        Plug 'tpope/vim-endwise'
+        Plug 'tpope/vim-rails'
+        
+        "nvim completion manager
+        Plug 'ncm2/ncm2'
+        Plug 'roxma/nvim-yarp'
+        Plug 'ncm2/ncm2-bufword'
+        Plug 'ncm2/ncm2-tmux'
+        Plug 'ncm2/ncm2-path'
+        Plug 'SirVer/ultisnips'
+        Plug 'ncm2/ncm2-ultisnips'
         Plug 'ryanoasis/vim-devicons'
    endif
 call plug#end()
+
 colorscheme onedark
 let g:lightline = { 'colorscheme': 'onedark' }
 
@@ -87,3 +94,19 @@ map <C-n> :NERDTreeToggle<CR>
 "fzf mapping
 map <Leader>t :FZF <Esc>
 set laststatus=2
+
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANTE: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+
+" Press enter key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" c-j c-k for moving in snippet
+" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
