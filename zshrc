@@ -111,6 +111,10 @@ alias omz="vim ~/.oh-my-zsh"
 alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
 alias ls="ls --color=always"
+alias g=git
+alias ga.="git add ."
+alias gdiff="git diff"
+alias gcm="git commit -m"
 
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh

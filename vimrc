@@ -79,8 +79,11 @@ call plug#begin("~/.vim/plugged")
         Plug 'ncm2/ncm2-bufword'
         Plug 'ncm2/ncm2-tmux'
         Plug 'ncm2/ncm2-path'
+        "add ulti snips
         Plug 'SirVer/ultisnips'
         Plug 'ncm2/ncm2-ultisnips'
+
+        "icons for nerdtree
         Plug 'ryanoasis/vim-devicons'
    endif
 call plug#end()
@@ -103,10 +106,10 @@ set completeopt=noinsert,menuone,noselect
 
 " Press enter key to trigger snippet expansion
 " The parameters are the same as `:help feedkeys()`
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+" inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 
 " c-j c-k for moving in snippet
-" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
