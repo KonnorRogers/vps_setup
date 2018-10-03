@@ -1,0 +1,5 @@
+#!/bin/bash
+
+wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2018-09/R/eclipse-committers-2018-09-linux-gtk-x86_64.tar.gz&mirror_id=1135/        
+
+tar -zxf eclipse-commiters-2018-09-linux-gtk-x86_64.tar.gz
