@@ -16,6 +16,7 @@ set nobackup        "no backups
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
+filetype plugin indent on
 
 if has('nvim') || has('termguicolors')
   set termguicolors

@@ -1,5 +1,11 @@
 #!/bin/bash
 
-wget http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2018-09/R/eclipse-committers-2018-09-linux-gtk-x86_64.tar.gz&mirror_id=1135/        
-
-tar -zxf eclipse-commiters-2018-09-linux-gtk-x86_64.tar.gz
+cd ~
+wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
+./eclim_2.8.0.bin
+sudo chmod +rwx eclim_2.8.0.bin
+./eclim_2.8.0.bin \
+     --yes \
+     --eclipse /opt/eclipse \
+     --vimfiles "$HOME/.vim" \
+     --plugins=jdt,pydev,vimplugin,dltk,dltkruby
