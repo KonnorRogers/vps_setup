@@ -1,11 +1,16 @@
 #!/bin/bash
+ECLIPSE_PACK="eclipse-committers-2018-09-linux-gtk-x86_64.tar.gz"
 
 cd ~
-wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
+if [[ ! -e "$HOME/$ECLIPSE_PACK" ]]; then
+    wget "http://eclipse.mirror.rafal.ca/technology/epp/downloads/release/2018-09/R/$ECLIPSE_PACK"
+fi
+
+tar -zxf "$HOME/$ECLIPSE_PACK" 
 ./eclim_2.8.0.bin
 sudo chmod +rwx eclim_2.8.0.bin
 ./eclim_2.8.0.bin \
      --yes \
-     --eclipse /opt/eclipse \
+     --eclipse "$HOME/eclipse" \
      --vimfiles "$HOME/.vim" \
-     --plugins=jdt,pydev,vimplugin,dltk,dltkruby
+     --plugins=0,3,5
