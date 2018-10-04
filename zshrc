@@ -116,9 +116,11 @@ alias ga.="git add ."
 alias gdiff="git diff"
 alias gcm="git commit -m"
 alias gp="git push -u origin"
+alias eclstart="Xvfb :1 -screen 0 1024x768x24 & DISPLAY=:1 ./eclipse/eclimd"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 
+export JAVA="$JAVA_HOME"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
