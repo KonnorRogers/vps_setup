@@ -8,14 +8,20 @@
 
 # Warnings
    This is a very fragile process only currently tested in a ubuntu 18.04 environment
+   when using eclim, you must have X11 forwarding enabled ifnyou are using SSH
+   IE: ssh -X root@10.10.10.10
 
 # Updating amazon ec2 instance as text
+
+## NOT SUPPORTED CURRENTLY
 
     Amazon instances not currently test
 
     sudo yum install git -y
     git clone https://github.com/ParamagicDev/vps-setup.git
     sudo bash ~/ec2setup/amazon-ec2-install.bash
+    
+    
   
 # Updating linode instance
 
