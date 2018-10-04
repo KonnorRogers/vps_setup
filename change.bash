@@ -45,6 +45,7 @@ symlink_neovim(){
     # change user permisssions because they may belong to root
     SITE="$HOME/.local/share/nvim/site"
     chmod -R u+rwx "$SITE"
+    ln -f -s "$HOME/.vim" "$NVIM_PATH"
     ln -f -s "$HOME/.vim/autoload" "$SITE/autoload"
     ln -f -s "$HOME/vps-setup/vimrc" "$NVIM_PATH/init.vim"
 }
