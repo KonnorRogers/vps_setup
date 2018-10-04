@@ -116,7 +116,6 @@ alias ga.="git add ."
 alias gdiff="git diff"
 alias gcm="git commit -m"
 alias gp="git push -u origin"
-
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 
