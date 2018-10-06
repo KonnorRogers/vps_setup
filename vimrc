@@ -85,7 +85,7 @@ call plug#begin("~/.vim/plugged")
 
         Plug 'autozimu/LanguageClient-neovim', {
         \ 'branch': 'next',
-        \ 'do': 'bash install.sh',
+        \ 'do': 'bash install.sh'
         \ }
         " NOTE: you need to install completion
         " sources to get completions. Check
