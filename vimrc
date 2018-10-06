@@ -85,6 +85,7 @@ call plug#begin("~/.vim/plugged")
 
         Plug 'autozimu/LanguageClient-neovim', {
         \ 'branch': 'next',
+        \ 'do': ':UpdateRemotePlugins',
         \ 'do': 'bash install.sh',
         \ }
         " NOTE: you need to install completion
