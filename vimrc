@@ -83,7 +83,10 @@ call plug#begin("~/.vim/plugged")
         Plug 'ncm2/ncm2'
         Plug 'roxma/nvim-yarp'
 
-
+        Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': 'bash install.sh',
+        \ }
         " NOTE: you need to install completion
         " sources to get completions. Check
         " our wiki page for a list of sources:
@@ -91,7 +94,7 @@ call plug#begin("~/.vim/plugged")
         Plug 'ncm2/ncm2-bufword'
         Plug 'ncm2/ncm2-tmux'
         Plug 'ncm2/ncm2-path'
-endif
+    endif
 call plug#end()
 
 colorscheme onedark
@@ -104,6 +107,11 @@ map <C-n> :NERDTreeToggle<CR>
 map <Leader>t :FZF <Esc>
 set laststatus=2
 
+
+let g:LanguageClient_autoStop = 0
+let g:LanguageClient_serverCommands = {
+    \ 'ruby': ['tcp://localhost:7658']
+    \ }
 
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -120,14 +128,16 @@ set shortmess+=c
 " <ESC> instead.
 inoremap <c-c> <ESC>
 
+
 " When the <Enter> key is pressed while the popup
 " menu is visible, it only
 " hides the menu. Use this mapping to close the
 "menu and also start a new
 " line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 " Use <TAB> to select the popup
 " menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
