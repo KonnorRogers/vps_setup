@@ -107,12 +107,6 @@ map <C-n> :NERDTreeToggle<CR>
 map <Leader>t :FZF <Esc>
 set laststatus=2
 
-
-let g:LanguageClient_autoStop = 0
-let g:LanguageClient_serverCommands = {
-    \ 'ruby': ['tcp://localhost:7658']
-    \ }
-
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 
@@ -124,6 +118,7 @@ set completeopt=noinsert,menuone,noselect
 " found' messages
 set shortmess+=c
 
+au TextChangedI * call ncm2#auto_trigger()
 " CTRL-C doesn't trigger the InsertLeave autocmd . map to
 " <ESC> instead.
 inoremap <c-c> <ESC>
@@ -134,10 +129,17 @@ inoremap <c-c> <ESC>
 " hides the menu. Use this mapping to close the
 "menu and also start a new
 " line.
-"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 " Use <TAB> to select the popup
 " menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+
+let g:LanguageClient_autoStop = 0
+let g:LanguageClient_serverCommands = {
+    \ 'ruby': ['tcp://localhost:7658']
+    \ }
+
 
