@@ -6,22 +6,21 @@ Font=Inconsolata NF
 FontWeight=500
 Term=xterm-256color
 
-ForegroundColour=182,190,204
-BackgroundColour=31,33,38
-CursorColour=109,230,245
-Black=30,34,42
-BoldBlack=30,34,42
-Red=255,123,133
-BoldRed=255,123,133
-Green=192,246,153
-BoldGreen=192,246,153
-Yellow=255,214,137
-BoldYellow=255,214,137
-Blue=103,187,255
-BoldBlue=103,187,255
-Magenta=228,138,255
-BoldMagenta=228,138,255
-Cyan=109,230,245
-BoldCyan=109,230,245
-White=228,238,255
-BoldWhite=228,238,255
+*.foreground: #BCBCBC
+*.background: #262626
+*.color0:     #1C1C1C
+*.color8:     #444444
+*.color1:     #AF5F5F
+*.color9:     #FF8700
+*.color2:     #5F875F
+*.color10:    #87AF87
+*.color3:     #87875F
+*.color11:    #FFFFAF
+*.color4:     #5F87AF
+*.color12:    #8FAFD7
+*.color5:     #5F5F87
+*.color13:    #8787AF
+*.color6:     #5F8787
+*.color14:    #5FAFAF
+*.color7:     #6C6C6C
+*.color15:    #FFFFFF

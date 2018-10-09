@@ -12,7 +12,6 @@ call plug#begin("~/.vim/plugged")
     Plug 'tpope/vim-fugitive'
     "add lightline
     Plug 'itchyny/lightline.vim'
-    Plug 'joshdick/onedark.vim'
     Plug 'flazz/vim-colorschemes'
     
     if has('nvim')
@@ -29,10 +28,6 @@ call plug#begin("~/.vim/plugged")
         Plug 'tpope/vim-rails'
         Plug 'tpope/vim-commentary'
         Plug 'tpope/vim-surround'
-
-        
-        "icons for nerdtree
-        Plug 'ryanoasis/vim-devicons'
     endif
 call plug#end()
 
@@ -40,9 +35,6 @@ call plug#end()
 set expandtab       "expand tabs into spaces
 set autoindent      "auto-indent new lines
 set smartindent     "return ending brackets to proper locations
-set softtabstop=4   "indentation level of soft-tabs
-set tabstop=4       "indentation leves of normal tabs
-set shiftwidth=4    "how many columns to re-indent with << and >>
 set showmatch       "show matching brackets
 set ruler           "show cursor position at all times
 set nohls           "don't highlight the previous search term
@@ -92,8 +84,8 @@ autocmd BufWritePre *.rb :%s/\s\+$//e
 :set bs=2 "fix backspace on some consoles
 
 
-colorscheme onedark
-let g:lightline = { 'colorscheme': 'onedark' }
+colorscheme apprentice
+let g:lightline = { 'colorscheme': 'wombat' }
 
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
