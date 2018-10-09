@@ -129,7 +129,7 @@ inoremap <c-c> <ESC>
 " hides the menu. Use this mapping to close the
 "menu and also start a new
 " line.
-"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 " Use <TAB> to select the popup
 " menu:
