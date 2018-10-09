@@ -13,6 +13,7 @@ call plug#begin("~/.vim/plugged")
     "add lightline
     Plug 'itchyny/lightline.vim'
     Plug 'joshdick/onedark.vim'
+    Plug 'flazz/vim-colorschemes'
     
     if has('nvim')
         "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
