@@ -89,6 +89,7 @@ let g:lightline = { 'colorscheme': 'wombat' }
 
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
+map <Leader>r :NERDTreeRefreshRoot<Esc>
 
 "fzf mapping
 map <Leader>t :FZF <Esc>
