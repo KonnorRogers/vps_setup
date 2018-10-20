@@ -118,6 +118,7 @@ alias gcm="git commit -m"
 alias gp="git push -u origin"
 alias gbr="git checkout -b"
 alias gco="git checkout"
+alias gm="git merge"
 # alias eclstart="Xvfb :1 -screen 0 1024x768x24 & DISPLAY=:1 ./eclipse/eclimd"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
