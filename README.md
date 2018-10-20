@@ -35,6 +35,10 @@
 <p> At full speed it should look like: </p>
     ssh -L 9000:localhost:4567 user@remoteserver.com
 
+<p> Also, to setup heroku, ensure to use: </p>
+
+    heroku login
+
 
 # updates for the future?
     

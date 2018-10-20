@@ -46,6 +46,9 @@ install_added_repos() {
    sudo apt install -y mosh
 }
 
+install_herok(){
+   sudo snap install heroku
+}
 set_git_config() {
     # setup git
     git config --global user.name "$username" 
@@ -204,6 +207,7 @@ runs_with_user_only(){
     get_dependencies
     add_repos
     install_added_repos
+    install_heroku
     ufw_connection_setup
     change_default_editor_to_nvim
     install_neovim_stuff
