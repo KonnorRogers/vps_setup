@@ -41,6 +41,9 @@ set nohls           "don't highlight the previous search term
 set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
+set tabstop=2 " when indenting with '>', use 4 spaces width
+set shiftwidth=2 " On pressing tab, insert 4 spaces
+set expandtab
 syntax on           "turn on syntax highlighting
 set nobackup        "no backups
 set nowritebackup   "no backup file while editing
