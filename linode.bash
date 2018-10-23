@@ -141,7 +141,7 @@ install_gems() {
         echo "$GEMS_DIR already exists, installing to this directory."
     fi
 
-    GEM_LIST="bundler rails colorls neovim rake sinatra solargraph"
+    GEM_LIST="bundler rails colorls neovim rake sinatra solargraph thin"
 
     for gem_name in "$GEM_LIST"; do
         gem install $gem_name --install-dir "$GEMS_DIR"
