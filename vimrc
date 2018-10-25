@@ -1,21 +1,62 @@
 set nocompatible    "run in vim mode
+
+" Will install plugins if not detected
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+    
+call plug#begin("~/.vim/plugged")
+    "Fugitive Vim Github Wrapper
+    Plug 'tpope/vim-fugitive'
+    "add lightline
+    Plug 'itchyny/lightline.vim'
+    Plug 'flazz/vim-colorschemes'
+    
+    if has('nvim')
+        "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+        "linting
+        Plug 'w0rp/ale'
+        "nerdtree file explorer
+        Plug 'scrooloose/nerdtree'
+        "tpope plugins
+        Plug 'vim-ruby/vim-ruby'
+        Plug 'tpope/vim-bundler'
+        Plug 'tpope/vim-endwise'
+        Plug 'tpope/vim-rails'
+        Plug 'tpope/vim-commentary'
+        Plug 'tpope/vim-surround'
+    endif
+call plug#end()
+
+
 set expandtab       "expand tabs into spaces
 set autoindent      "auto-indent new lines
 set smartindent     "return ending brackets to proper locations
-set softtabstop=4   "indentation level of soft-tabs
-set tabstop=4       "indentation leves of normal tabs
-set shiftwidth=4    "how many columns to re-indent with << and >>
 set showmatch       "show matching brackets
 set ruler           "show cursor position at all times
 set nohls           "don't highlight the previous search term
 set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
+set tabstop=2 " when indenting with '>', use 4 spaces width
+set shiftwidth=2 " On pressing tab, insert 4 spaces
+set expandtab
 syntax on           "turn on syntax highlighting
 set nobackup        "no backups
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
+filetype plugin indent on
+set backspace=indent,eol,start
+" 'matchit.vim' is built-in so let's enable it!
+" " Hit '%' on 'if' to jump to 'else'.
+runtime macros/matchit.vim
+set wildmenu
+set incsearch
+set hidden
 
 if has('nvim') || has('termguicolors')
   set termguicolors
@@ -46,70 +87,14 @@ autocmd BufWritePre *.rb :%s/\s\+$//e
 :set bs=2 "fix backspace on some consoles
 
 
-" Will install plugins if not detected
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-    
-call plug#begin("~/.vim/plugged")
-    "Fugitive Vim Github Wrapper
-    Plug 'tpope/vim-fugitive'
-    "add lightline
-    Plug 'itchyny/lightline.vim'
-    Plug 'joshdick/onedark.vim'
-    
-    if has('nvim')
-        "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
-        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-        "linting
-        Plug 'w0rp/ale'
-        "nerdtree file explorer
-        Plug 'scrooloose/nerdtree'
-        "tpope plugins
-        Plug 'vim-ruby/vim-ruby'
-        Plug 'tpope/vim-bundler'
-        Plug 'tpope/vim-endwise'
-        Plug 'tpope/vim-rails'
-        
-        "nvim completion manager
-        Plug 'ncm2/ncm2'
-        Plug 'roxma/nvim-yarp'
-        Plug 'ncm2/ncm2-bufword'
-        Plug 'ncm2/ncm2-tmux'
-        Plug 'ncm2/ncm2-path'
-        "add ulti snips
-        Plug 'SirVer/ultisnips'
-        Plug 'ncm2/ncm2-ultisnips'
-
-        "icons for nerdtree
-        Plug 'ryanoasis/vim-devicons'
-   endif
-call plug#end()
-
-colorscheme onedark
-let g:lightline = { 'colorscheme': 'onedark' }
+colorscheme apprentice
+let g:lightline = { 'colorscheme': 'wombat' }
 
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
+map <Leader>r :NERDTreeRefreshRoot<Esc>
 
 "fzf mapping
 map <Leader>t :FZF <Esc>
 set laststatus=2
 
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" IMPORTANTE: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
-
-" Press enter key to trigger snippet expansion
-" The parameters are the same as `:help feedkeys()`
-" inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-
-" c-j c-k for moving in snippet
-let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
