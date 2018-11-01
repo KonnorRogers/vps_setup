@@ -111,17 +111,17 @@ alias omz="vim ~/.oh-my-zsh"
 alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
 alias ls="ls --color=always"
-alias g=git
+alias g='git'
 alias ga.="git add ."
 alias gdiff="git diff"
 alias gcm="git commit -m"
 alias gp="git push -u origin"
-alias gbr="git checkout -b"
+alias gcob="git checkout -b"
 alias gco="git checkout"
 alias gm="git merge"
-alias gd="git branch -D"
+alias gbr="git branch"
+alias gbrd="git branch -D"
 alias gs="git status"
-# alias eclstart="Xvfb :1 -screen 0 1024x768x24 & DISPLAY=:1 ./eclipse/eclimd"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 
