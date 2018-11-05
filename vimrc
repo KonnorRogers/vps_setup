@@ -28,6 +28,10 @@ call plug#begin("~/.vim/plugged")
         Plug 'tpope/vim-rails'
         Plug 'tpope/vim-commentary'
         Plug 'tpope/vim-surround'
+
+        " Formatting
+        " post install (yarn install | npm install)
+        Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
     endif
 call plug#end()
 

@@ -126,6 +126,11 @@ alias gst="git status"
 # tmux
 alias tm="tmux"
 alias tmd="tmux detach"
+# heroku
+alias hero="heroku"
+alias heroc="heroku create"
+alias heropush="git push heroku master"
+alias hero-change="heroku git:remote -a"
 
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
