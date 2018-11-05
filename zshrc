@@ -106,11 +106,12 @@ fi
 #
 # Example aliases
 alias vim="nvim"
-alias zshc="vim ~/.zshrc"
+alias zshrc="vim ~/.zshrc"
 alias omz="vim ~/.oh-my-zsh"
 alias ncfg="vim ~/.config/nvim/init.vim"
 alias lsc='colorls'
 alias ls="ls --color=always"
+# git
 alias g='git'
 alias ga.="git add ."
 alias gdiff="git diff"
@@ -121,7 +122,11 @@ alias gco="git checkout"
 alias gm="git merge"
 alias gbr="git branch"
 alias gbrd="git branch -D"
-alias gs="git status"
+alias gst="git status"
+# tmux
+alias tm="tmux"
+alias tmd="tmux detach"
+
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 
