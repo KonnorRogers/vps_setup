@@ -86,6 +86,7 @@ ufw_connection_setup(){
     ## enabling traffic
     sudo ufw default allow outgoing
     sudo ufw default deny incoming
+    sudo ufw allow 60000:61000/tcp
     sudo ufw allow ssh
 
     # enable firewall
