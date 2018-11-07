@@ -106,14 +106,10 @@ map <Leader>r :NERDTreeRefreshRoot<Esc>
 map <Leader>t :FZF <Esc>
 set laststatus=2
 
-" ragtag recomendded keybindings
-inoremap <M-o>       <Esc>o
-"jumps to next line in insert
+" ragtag recomendded keybinding
+" "jumps to next line in insert
+inoremap <M-o> <Esc>o 
 
-inoremap <C-j>       <Down>
 " moves down a line from where you are
-
+inoremap <C-j>       <Down>
 let g:ragtag_global_maps = 1 "available globally
-
-
-
