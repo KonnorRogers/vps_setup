@@ -114,3 +114,5 @@ inoremap <M-o> <Esc>o
 inoremap <C-j>       <Down>
 let g:ragtag_global_maps = 1 "available globally
 
+"ragtag remap for normal mode
+nnoremap <Leader>%
