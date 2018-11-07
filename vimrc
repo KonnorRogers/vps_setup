@@ -113,3 +113,4 @@ inoremap <M-o> <Esc>o
 " moves down a line from where you are
 inoremap <C-j>       <Down>
 let g:ragtag_global_maps = 1 "available globally
+
