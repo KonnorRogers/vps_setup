@@ -16,7 +16,7 @@
 
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
-    sudo bash /path/to/vps-setup/linode.bash -u #{username} [-e] user@example.com
+    sudo bash /path/to/vps-setup/linode.bash -u #{username} [-e] #{email}
 
 * -u specifies the home directory where everything will be installed, just in case its being run from root
 * -e flag is optional for email
