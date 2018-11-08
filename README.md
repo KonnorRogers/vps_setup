@@ -23,7 +23,7 @@
 
 * Then run:
 
-    heroku login
+      heroku login
 
 * Also, ensure to secure your server via /etc/ssh/sshd_config 
 
@@ -33,20 +33,24 @@
 * Ensure you go into your server and secure it properly sshd, although i may copy past my sshd in the future
 
 * For viewing apps over ssh, ensure to use 
-    ssh -L <localport>:localhost:<remoteport> user@ssh.com
+    
+      ssh -L <localport>:localhost:<remoteport> user@ssh.com
+
 * At full speed it should look like: 
-    ssh -L 9000:localhost:3000 user@remoteserver.com
+    
+       ssh -L 9000:localhost:3000 user@remoteserver.com
 
 * Alternatively, ngrok is installed via linode.bash 
-    ngrok http <localport>
+    
+      ngrok http <localport>
 
-    ngrok http 3000 
+      ngrok http 3000 
 
 * This will bring up a CLI to connect to for example localhost:3000 on the web  
 
 * Also, to setup heroku, ensure to use: 
 
-    heroku login
+      heroku login
 
 ## Dependencies Installed
 
