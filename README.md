@@ -29,7 +29,6 @@
 
 ## Setup
 
-* Not everything could be done via bash script 
 * Ensure you go into your server and secure it properly
 
 * For viewing apps over ssh, ensure to use 
@@ -39,6 +38,7 @@
 * At full speed it should look like: 
     
        ssh -L 9000:localhost:3000 user@remoteserver.com
+* Then you can visit <em>localhost:9000</em> in your browser and view your web app
 
 * Alternatively, ngrok is installed via linode.bash 
     
@@ -48,9 +48,6 @@
 
 * This will bring up a CLI to connect to for example localhost:3000 on the web  
 
-* Also, to setup heroku, ensure to use: 
-
-      heroku login
 
 ## Dependencies Installed
 
