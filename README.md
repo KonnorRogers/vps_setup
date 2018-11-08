@@ -1,9 +1,9 @@
 # Purpose
-    To be able to spin up multiple development environments without
-    having to reconfigure all the time
-     
-    Note: this is a fragile process and currently is OS dependent. Currenly only testing and working with
-    Ubuntu 18.04 LTS on Linode
+> To be able to spin up multiple development environments without
+> having to reconfigure all the time
+>  
+> Note: this is a fragile process and currently is OS dependent. Currenly only testing and working with
+> Ubuntu 18.04 LTS on Linode
 
 ## Warnings
    * This is a very fragile process only currently tested in a ubuntu 18.04 environment
@@ -28,23 +28,22 @@
 
 ## Setup
 
-<p> Not everything could be done via bash script </p>
-<p> Ensure you go into your server and secure it properly sshd, although i may copy past my sshd in the future</p>
+* Not everything could be done via bash script 
+* Ensure you go into your server and secure it properly sshd, although i may copy past my sshd in the future
 
-<p> For viewing apps over ssh, ensure to use </p>
+* For viewing apps over ssh, ensure to use 
     ssh -L <localport>:localhost:<remoteport> user@ssh.com
-
-<p> At full speed it should look like: </p>
+* At full speed it should look like: 
     ssh -L 9000:localhost:3000 user@remoteserver.com
 
-<p> Alternatively, ngrok is installed via linode.bash </p>
+* Alternatively, ngrok is installed via linode.bash 
     ngrok http <localport>
-    
+
     ngrok http 3000 
 
-<p> This will bring up a CLI to connect to for example localhost:3000 on the web </p> 
+* This will bring up a CLI to connect to for example localhost:3000 on the web  
 
-<p> Also, to setup heroku, ensure to use: </p>
+* Also, to setup heroku, ensure to use: 
 
     heroku login
 
