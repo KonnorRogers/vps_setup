@@ -9,8 +9,8 @@
    * This is a very fragile process only currently tested in a ubuntu 18.04 environment
    * Currently, there is no Xforwarding setup because I am working from a cygwin environment 
 
-### This will also update your /etc/ssh/sshd_config file.
-### Your original can be obtained at /etc/sshd/sshd_config.orig
+* ### This will also update your /etc/ssh/sshd_config file.
+* ### Your original can be obtained at /etc/sshd/sshd_config.orig
   
 ## Updating linode instance
 
