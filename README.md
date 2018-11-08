@@ -82,13 +82,14 @@
 * Chruby
 * Ruby-Install
 * Rails
-* Gems:
-  ** pry - Ruby debugger / IRB alternative
-  ** bundler - package manager
-  ** neovim - neovim support
-  ** colorls - colorful file display
-  ** rake
-  ** rails
+
+## Gems
+* pry - Ruby debugger / IRB alternative
+* bundler - package manager
+* neovim - neovim support
+* colorls - colorful file display
+* rake
+* rails
 
 
 ## updates for the future?
