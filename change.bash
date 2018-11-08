@@ -96,10 +96,9 @@ symlink_mintty(){
     fi
 }
 
-# needs to be added
-add_one_dark_gnome(){
-    wget https://raw.githubusercontent.com/denysdovhan/gnome-terminal-one/master/one-dark.sh && . one-dark.sh
-    # careful this will reload the terminal
+symlink_pryrc(){
+  PRYRC="$HOME/.pryrc"
+  ln -f -s ~/vps-setup/pryrc "$PRYRC"
 }
 
 # needs to be finished
