@@ -15,7 +15,7 @@ get_dependencies() {
     sudo apt upgrade -y 
     sudo apt autoremove -y 
     # Currently install python2/3, pip, tmux, vim, zsh, sqlite3, postgresql, golang, nodejs as well as other get_dependencies
-    PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev nodejs apt-transport-https ca-certificates golang oracle-java8-installer make gcc ruby-dev rubygems fail2ban httpie"
+    PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev nodejs apt-transport-https ca-certificates golang make gcc ruby-dev rubygems fail2ban httpie"
 
     for item in $PACKAGE_LIST; do
       sudo apt -y install $item
@@ -47,8 +47,12 @@ install_added_repos() {
    sudo apt install -y mosh
 }
 
+install_ngrok(){
+  sudo npm install --unsafe-perm -g ngrok
+}
+
 install_heroku(){
-   sudo snap install heroku
+   sudo snap install heroku --classic
 }
 set_git_config() {
     # setup git
@@ -139,7 +143,7 @@ install_gems() {
         echo "$GEMS_DIR already exists, installing to this directory."
     fi
 
-    GEM_LIST="bundler rails colorls neovim rake sinatra solargraph thin"
+    GEM_LIST="bundler rails colorls neovim rake pry"
 
     for gem_name in "$GEM_LIST"; do
         gem install $gem_name --install-dir "$GEMS_DIR"
@@ -196,6 +200,15 @@ symlink_dotfiles() {
     fi
 }
 
+symlink_sshd_config(){
+  SSHD_PATH="/etc/ssh/sshd_config"
+  if [[ -e "$SSHD_PATH" ]]; then
+    echo "$SSHD_PATH exists already, copying to $SSHD_PATH.orig"
+    mv "$SSHD_PATH" "$SSHD_PATH.orig"
+  fi
+  ln -f -s ~/vps-setup/sshd_config "$SSHD_PATH"
+}
+
 runs_with_user_and_email(){
     runs_with_user_only
     set_git_config
@@ -205,6 +218,7 @@ runs_with_user_only(){
     get_dependencies
     add_repos
     install_added_repos
+    install_ngrok
     install_heroku
     ufw_connection_setup
     change_default_editor_to_nvim
@@ -220,6 +234,7 @@ runs_with_user_only(){
     install_zsh_autosuggestions
     install_zsh_syntax_highlighting
     symlink_dotfiles
+    symlink_sshd_config
     # sourcing other files
     source "$HOME_DIR/vps-setup/secure_server.bash"
 }

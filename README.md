@@ -5,41 +5,90 @@
     Note: this is a fragile process and currently is OS dependent. Currenly only testing and working with
     Ubuntu 18.04 LTS on Linode
 
+## Warnings
+   * This is a very fragile process only currently tested in a ubuntu 18.04 environment
+   * Currently, there is no Xforwarding setup because I am working from a cygwin environment 
 
-# Warnings
-   This is a very fragile process only currently tested in a ubuntu 18.04 environment
-   Currently, there is no Xforwarding setup because I am working from a cygwin environment
-
-## NOT SUPPORTED CURRENTLY
-
-    Amazon instances not currently test
-
-    sudo yum install git -y
-    git clone https://github.com/ParamagicDev/vps-setup.git
-    sudo bash ~/ec2setup/amazon-ec2-install.bash
-     
+   * This will also update your /etc/ssh/sshd_config file.
+   * Your original can be obtained at /etc/sshd/sshd_config.orig
   
-# Updating linode instance
+## Updating linode instance
 
     sudo apt install git
-    git clone https://github.com/ParamagicDev/vps-setup.git
-    sudo bash /path/to/vps-setup/linode.bash
+    git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
+    sudo bash /path/to/vps-setup/linode.bash -u #{username} [-e] user@example.com
 
-# Setup
+* -u specifies the home directory where everything will be installed, just in case its being run from root
+* -e flag is optional for email
+
+* Then run:
+    heroku login
+
+<p> Also, ensure to secure your server via /etc/ssh/sshd\_config </p>
+
+## Setup
 
 <p> Not everything could be done via bash script </p>
-<p> Ensure you go into your server and secure it properly </p>
+<p> Ensure you go into your server and secure it properly sshd, although i may copy past my sshd in the future</p>
+
 <p> For viewing apps over ssh, ensure to use </p>
     ssh -L <localport>:localhost:<remoteport> user@ssh.com
 
 <p> At full speed it should look like: </p>
-    ssh -L 9000:localhost:4567 user@remoteserver.com
+    ssh -L 9000:localhost:3000 user@remoteserver.com
+
+<p> Alternatively, ngrok is installed via linode.bash </p>
+    ngrok http <localport>
+    
+    ngrok http 3000 
+
+<p> This will bring up a CLI to connect to for example localhost:3000 on the web </p> 
 
 <p> Also, to setup heroku, ensure to use: </p>
 
     heroku login
 
+## Dependencies Installed
 
-# updates for the future?
+* A full list can be seen at line 18 of ~/vps-setup/linode.bash
+
+## Tools installed
+
+* Vim / Neovim
+* Zsh / OhMyZsh
+* Tmux w/ tmux plugin manager - Terminal multiplexer
+* Mosh - Mobile Shell
+* Asciinema - records your terminal
+* Docker (Installed but not used currently)
+* Heroku CLI (--classic)
+* Ufw - Allows only certain people to connect
+* Httpie - for playing around with API requests
+
+# Languages / Frameworks installed
+* Nodejs
+* Yarn
+* Npm
+
+* sqlite3
+
+* Python3 / pip
+* Golang
+
+* Ruby 2.5.1
+* Chruby
+* Ruby-Install
+* Rails
+* Gems:
+  ** pry - Ruby debugger / IRB alternative
+  ** bundler - package manager
+  ** neovim - neovim support
+  ** colorls - colorful file display
+  ** rake
+  ** rails
+
+
+## updates for the future?
     
-    Adding docker instead of manual installs
+* Adding docker support via images
+
+* Putting everything into a Rakefile / Task
