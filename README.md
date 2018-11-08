@@ -3,12 +3,15 @@
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode
 
 ## Warnings
-   * This is a very fragile process only currently tested in a ubuntu 18.04 environment
-   * Currently, there is no Xforwarding setup 
-
 * ### This will update your /etc/ssh/sshd_config file.
 * ### Your original can be obtained at /etc/sshd/sshd_config.orig
   
+* This will also update your dotfiles
+* dotfiles should be able to be restored by appending a .orig to the file like so
+
+      ~/.vimrc.orig
+      ~/.tmux.conf.orig
+      ~/.zshrc.orig
 ## Updating linode instance
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
