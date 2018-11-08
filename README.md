@@ -22,9 +22,10 @@
 * -e flag is optional for email
 
 * Then run:
+
     heroku login
 
-<p> Also, ensure to secure your server via /etc/ssh/sshd_config </p>
+* Also, ensure to secure your server via /etc/ssh/sshd_config 
 
 ## Setup
 
@@ -63,7 +64,7 @@
 * Ufw - Allows only certain people to connect
 * Httpie - for playing around with API requests
 
-# Languages / Frameworks installed
+## Languages / Frameworks installed
 * Nodejs
 * Yarn
 * Npm
