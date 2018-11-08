@@ -24,7 +24,7 @@
 * Then run:
     heroku login
 
-<p> Also, ensure to secure your server via /etc/ssh/sshd\_config </p>
+<p> Also, ensure to secure your server via /etc/ssh/sshd_config </p>
 
 ## Setup
 
