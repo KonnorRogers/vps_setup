@@ -1,6 +1,6 @@
 # Purpose
 * To be able to spin up multiple development environments without having to reconfigure all the time
-* ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currenly only testing and working with Ubuntu 18.04 LTS on Linode
+* ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode
 
 ## Warnings
    * This is a very fragile process only currently tested in a ubuntu 18.04 environment
