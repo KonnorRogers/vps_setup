@@ -1,54 +1,41 @@
 # Purpose
-> To be able to spin up multiple development environments without
-> having to reconfigure all the time
->  
-> Note: this is a fragile process and currently is OS dependent. Currenly only testing and working with
-> Ubuntu 18.04 LTS on Linode
+* To be able to spin up multiple development environments without having to reconfigure all the time
+* ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currenly only testing and working with Ubuntu 18.04 LTS on Linode
 
 ## Warnings
    * This is a very fragile process only currently tested in a ubuntu 18.04 environment
-   * Currently, there is no Xforwarding setup because I am working from a cygwin environment 
+   * Currently, there is no Xforwarding setup 
 
-* ### This will also update your /etc/ssh/sshd_config file.
+* ### This will update your /etc/ssh/sshd_config file.
 * ### Your original can be obtained at /etc/sshd/sshd_config.orig
   
 ## Updating linode instance
-
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
     sudo bash /path/to/vps-setup/linode.bash -u #{username} [-e] #{email}
-
 * -u specifies the home directory where everything will be installed, just in case its being run from root
 * -e flag is optional for email
-
 * Then run:
 
       heroku login
-
 * Also, ensure to secure your server via /etc/ssh/sshd_config 
 
 ## Setup
 
 * Ensure you go into your server and secure it properly
 
-* For viewing apps over ssh, ensure to use 
-    
+* For viewing apps over ssh, ensure to use
+        
       ssh -L <localport>:localhost:<remoteport> user@ssh.com
-
 * At full speed it should look like: 
-    
-       ssh -L 9000:localhost:3000 user@remoteserver.com
-* Then you can visit <em>localhost:9000</em> in your browser and view your web app
-
+       
+      ssh -L 9000:localhost:3000 user@remoteserver.com
+* Then you can visit <strong>localhost:9000</strong> in your browser and view your web app
 * Alternatively, ngrok is installed via linode.bash 
-    
+      
       ngrok http <localport>
-
       ngrok http 3000 
-
 * This will bring up a CLI to connect to for example localhost:3000 on the web  
-
-
 ## Dependencies Installed
 
 * A full list can be seen at line 18 of ~/vps-setup/linode.bash
@@ -69,12 +56,9 @@
 * Nodejs
 * Yarn
 * Npm
-
 * sqlite3
-
 * Python3 / pip
 * Golang
-
 * Ruby 2.5.1
 * Chruby
 * Ruby-Install
@@ -89,7 +73,7 @@
 * rails
 
 
-## updates for the future?
+## Updates for the future?
     
 * Adding docker support via images
 
