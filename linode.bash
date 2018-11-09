@@ -54,6 +54,7 @@ install_ngrok(){
 install_heroku(){
    sudo snap install heroku --classic
 }
+
 set_git_config() {
     # setup git
     git config --global user.name "$username" 
@@ -180,14 +181,19 @@ install_zsh_syntax_highlighting() {
     fi
 }
 
+update_gnome_terminal_settings(){
+  BACKUPDIR="$HOME/.tmp"
+  LOCATION="$BACKUPDIR/gnome-terminal-settings.orig"
 
-install_powerlevel9k() {
-    # Check if powerlevel9k already installed
-    if [[ ! -e "$ZSH_THEMES/powerlevel9k" ]]; then
-        git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-    else
-        echo 'Powerlevel9k already exists'
-    fi
+  if [[ ! -e "$BACKUPDIR" ]]; then
+    mkdir -p "$BACKUPDIR"
+  fi
+
+  echo "Your original gnome settings will be placed in $LOCATION" 
+  dconf dump /org/gnome/terminal/ > "$LOCATION"
+  dconf reset -f /org/gnome/terminal/
+
+  dconf load /org/gnome/terminal/ < "$HOME/vps-setup/gnome-terminal"
 }
 
 
@@ -235,6 +241,7 @@ runs_with_user_only(){
     install_zsh_syntax_highlighting
     symlink_dotfiles
     symlink_sshd_config
+    update_gnome_terminal_settings
     # sourcing other files
     source "$HOME_DIR/vps-setup/secure_server.bash"
 }

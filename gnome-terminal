@@ -1,0 +1,108 @@
+[legacy/profiles:]
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '835855e4-90ac-439d-b442-0bc5c20ffd0c', '4ddf165a-0853-475c-8750-443d64a9e2a3', 'a92a60cb-229f-4d91-ba4c-17fcc1f4de62']
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+
+[legacy/profiles:/:835855e4-90ac-439d-b442-0bc5c20ffd0c]
+foreground-color='#D8DEE9'
+cjk-utf8-ambiguous-width='narrow'
+visible-name='Nord'
+login-shell=true
+palette=['#3B4252', '#BF616A', '#A3BE8C', '#EBCB8B', '#81A1C1', '#B48EAD', '#88C0D0', '#E5E9F0', '#4C566A', '#BF616A', '#A3BE8C', '#EBCB8B', '#81A1C1', '#B48EAD', '#8FBCBB', '#ECEFF4']
+default-size-columns=80
+default-size-rows=26
+cursor-background-color='rgb(216,222,233)'
+cursor-shape='block'
+cursor-colors-set=true
+highlight-colors-set=true
+use-system-font=true
+use-custom-command=false
+use-theme-colors=false
+cursor-foreground-color='rgb(59,66,82)'
+font='Fira Code 12'
+use-theme-transparency=false
+use-theme-background=false
+use-transparent-background=false
+bold-color-same-as-fg=true
+bold-color='#D8DEE9'
+background-color='#2E3440'
+nord-gnome-terminal-version='0.1.0'
+highlight-background-color='rgb(136,192,208)'
+highlight-foreground-color='rgb(46,52,64)'
+
+[legacy/profiles:/:4ddf165a-0853-475c-8750-443d64a9e2a3]
+foreground-color='rgb(255,255,255)'
+cjk-utf8-ambiguous-width='narrow'
+visible-name='One Dark'
+login-shell=true
+palette=['rgb(0,0,0)', 'rgb(205,0,0)', 'rgb(0,205,0)', 'rgb(205,205,0)', 'rgb(0,0,205)', 'rgb(205,0,205)', 'rgb(0,205,205)', 'rgb(250,235,215)', 'rgb(64,64,64)', 'rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(255,255,0)', 'rgb(0,0,255)', 'rgb(255,0,255)', 'rgb(0,255,255)', 'rgb(255,255,255)']
+default-size-columns=80
+default-size-rows=26
+cursor-background-color='rgb(216,222,233)'
+cursor-shape='block'
+cursor-colors-set=true
+highlight-colors-set=true
+use-system-font=true
+use-custom-command=false
+use-theme-colors=false
+cursor-foreground-color='rgb(59,66,82)'
+font='Fira Code 12'
+use-theme-transparency=false
+use-theme-background=false
+use-transparent-background=false
+bold-color-same-as-fg=true
+bold-color='#ABB2BF'
+background-color='rgb(0,0,0)'
+nord-gnome-terminal-version='0.1.0'
+highlight-background-color='rgb(136,192,208)'
+highlight-foreground-color='rgb(46,52,64)'
+
+[legacy/profiles:/:a92a60cb-229f-4d91-ba4c-17fcc1f4de62]
+foreground-color='rgb(131,148,150)'
+cjk-utf8-ambiguous-width='narrow'
+visible-name='One Dark'
+nord-gnome-terminal-version='0.1.0'
+login-shell=true
+highlight-background-color='rgb(136,192,208)'
+palette=['rgb(46,52,54)', 'rgb(204,0,0)', 'rgb(78,154,6)', 'rgb(196,160,0)', 'rgb(52,101,164)', 'rgb(117,80,123)', 'rgb(6,152,154)', 'rgb(211,215,207)', 'rgb(85,87,83)', 'rgb(239,41,41)', 'rgb(138,226,52)', 'rgb(252,233,79)', 'rgb(114,159,207)', 'rgb(173,127,168)', 'rgb(52,226,226)', 'rgb(238,238,236)']
+default-size-columns=80
+default-size-rows=26
+cursor-background-color='rgb(216,222,233)'
+cursor-shape='underline'
+cursor-colors-set=true
+highlight-colors-set=true
+use-system-font=false
+use-custom-command=false
+use-theme-colors=false
+cursor-foreground-color='rgb(59,66,82)'
+font='Fira Code 12'
+use-theme-transparency=false
+use-theme-background=false
+use-transparent-background=false
+bold-color-same-as-fg=true
+cursor-blink-mode='off'
+background-color='rgb(0,43,54)'
+audible-bell=false
+bold-color='#ABB2BF'
+highlight-foreground-color='rgb(46,52,64)'
+
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+foreground-color='rgb(188,188,188)'
+cjk-utf8-ambiguous-width='narrow'
+visible-name='konnor'
+login-shell=true
+palette=['rgb(28,28,28)', 'rgb(175,95,95)', 'rgb(95,135,95)', 'rgb(135,135,95)', 'rgb(95,135,175)', 'rgb(95,95,135)', 'rgb(95,135,135)', 'rgb(108,108,108)', 'rgb(68,68,68)', 'rgb(255,135,0)', 'rgb(135,175,135)', 'rgb(255,255,175)', 'rgb(143,175,215)', 'rgb(135,135,175)', 'rgb(95,175,175)', 'rgb(255,255,255)']
+default-size-rows=26
+default-size-columns=80
+cursor-shape='underline'
+use-custom-command=false
+use-theme-colors=false
+use-system-font=false
+font='Fira Code 12'
+use-theme-transparency=false
+bold-color-same-as-fg=true
+cursor-blink-mode='off'
+background-color='rgb(38,38,38)'
+audible-bell=false
+
+[legacy]
+schema-version=uint32 3
