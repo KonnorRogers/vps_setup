@@ -182,18 +182,26 @@ install_zsh_syntax_highlighting() {
 }
 
 update_gnome_terminal_settings(){
-  BACKUPDIR="$HOME/.tmp"
-  LOCATION="$BACKUPDIR/gnome-terminal-settings.orig"
+  if [[ -e "/org/gnome/terminal" ]]; then
+    BACKUPDIR="$HOME/.tmp"
+    LOCATION="$BACKUPDIR/gnome-terminal-settings.orig"
 
-  if [[ ! -e "$BACKUPDIR" ]]; then
-    mkdir -p "$BACKUPDIR"
-  fi
+    if [[ ! -e "$BACKUPDIR" ]]; then
+      mkdir -p "$BACKUPDIR"
+    fi
 
-  echo "Your original gnome settings will be placed in $LOCATION" 
-  dconf dump /org/gnome/terminal/ > "$LOCATION"
-  dconf reset -f /org/gnome/terminal/
+    echo "Your original gnome settings will be placed in $LOCATION" 
+    echo "Should you want to restore them simply type"
+    echo "dconf load /org/gnome/terminal < $LOCATION"
 
-  dconf load /org/gnome/terminal/ < "$HOME/vps-setup/gnome-terminal"
+    # Saves a backup
+    dconf dump /org/gnome/terminal/ > "$LOCATION"
+    
+    # Wipes original
+    dconf reset -f /org/gnome/terminal/
+    
+    # loads new
+    dconf load /org/gnome/terminal/ < "$HOME/vps-setup/gnome_terminal_settings"
 }
 
 
