@@ -202,8 +202,8 @@ update_gnome_terminal_settings(){
     
     # loads new
     dconf load /org/gnome/terminal/ < "$HOME/vps-setup/gnome_terminal_settings"
+  fi
 }
-
 
 symlink_dotfiles() {
     # Runs the change.bash file provided in vps-setup which this file is cloned from
