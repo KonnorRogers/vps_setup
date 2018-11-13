@@ -30,6 +30,7 @@ call plug#begin("~/.vim/plugged")
         Plug 'tpope/vim-surround'
         Plug 'tpope/vim-ragtag'
 
+        Plug 'jiangmiao/auto-pairs'
     endif
 call plug#end()
 
