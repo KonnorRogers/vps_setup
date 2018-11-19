@@ -31,6 +31,8 @@ call plug#begin("~/.vim/plugged")
         Plug 'tpope/vim-ragtag'
 
         Plug 'jiangmiao/auto-pairs'
+
+        Plug 'ngmy/vim-rubocop'
     endif
 call plug#end()
 
