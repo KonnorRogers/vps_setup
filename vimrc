@@ -110,7 +110,7 @@ map <Leader>t :FZF <Esc>
 set laststatus=2
 
 " rubocop mapping
-nmap <Leader>ra :Rubocop -a<CR>
+nmap <Leader>ra :RuboCop -a<CR>
 
 " ragtag recomendded keybinding
 " "jumps to next line in insert
