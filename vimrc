@@ -109,6 +109,9 @@ map <Leader>r :NERDTreeRefreshRoot<Esc>
 map <Leader>t :FZF <Esc>
 set laststatus=2
 
+" rubocop mapping
+nmap <Leader>ra :Rubocop -a<CR>
+
 " ragtag recomendded keybinding
 " "jumps to next line in insert
 inoremap <M-o> <Esc>o 
