@@ -113,7 +113,7 @@ alias lsc='colorls'
 alias ls="ls --color=always"
 # git
 alias g='git'
-alias ga.="git add ."
+alias gaa="git add -A"
 alias gdiff="git diff"
 alias gcm="git commit -m"
 alias gp="git push -u origin"
