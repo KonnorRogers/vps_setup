@@ -1,5 +1,4 @@
 set nocompatible    "run in vim mode
-
 " Will install plugins if not detected
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -32,10 +31,14 @@ call plug#begin("~/.vim/plugged")
 
         Plug 'jiangmiao/auto-pairs'
         Plug 'ngmy/vim-rubocop'
+
+        " Snippets are separated from the engine. Add this if you want them:
+        Plug 'honza/vim-snippets'
+
+        " Track the engine.
+        Plug 'SirVer/ultisnips'
     endif
 call plug#end()
-
-
 set expandtab       "expand tabs into spaces
 set autoindent      "auto-indent new lines
 set smartindent     "return ending brackets to proper locations
@@ -115,12 +118,9 @@ set laststatus=2
 " rubocop mapping
 nmap <Leader>ra :RuboCop -a<CR>
 
-" ragtag recomendded keybinding
-" "jumps to next line in insert
+" ragtag recommended keybinding
 inoremap <M-o> <Esc>o 
-
-" moves down a line from where you are
-inoremap <C-j>       <Down>
+inoremap <C-j> <Down>
 let g:ragtag_global_maps = 1 "available globally
 
 function! RenameFile()
