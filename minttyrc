@@ -2,7 +2,7 @@ CursorType=underscore
 CursorBlinks=no
 FontHeight=14
 FontSmoothing=default
-Font=Inconsolata NF
+Font=DejaVuSansMono NF
 FontWeight=500
 Term=xterm-256color
 
