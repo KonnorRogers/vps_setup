@@ -36,7 +36,7 @@ call plug#begin("~/.vim/plugged")
         " Track the engine.
         Plug 'SirVer/ultisnips'
         " Snippets are separated from the engine. Add this if you want them:
-        Plugin 'honza/vim-snippets'
+        Plug 'honza/vim-snippets'
 
     endif
 call plug#end()
