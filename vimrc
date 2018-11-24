@@ -83,6 +83,9 @@ augroup filetypedetect
   autocmd BufNewFile,BufReadPost *.ino,*.pde set filetype=cpp
 augroup END 
 
+"removes auto-commenting when hitting <CR>
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
 "strip trailing whitespace from certain files
 autocmd BufWritePre *.conf :%s/\s\+$//e
 autocmd BufWritePre *.py :%s/\s\+$//e
