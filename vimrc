@@ -32,6 +32,14 @@ call plug#begin("~/.vim/plugged")
 
         Plug 'jiangmiao/auto-pairs'
         Plug 'ngmy/vim-rubocop'
+
+        " Snipmates & Dependencies
+        Plug 'MarcWeber/vim-addon-mw-utils'
+        Plug 'tomtom/tlib_vim'
+        Plug 'garbas/vim-snipmate'
+
+        " Preconfigured snippets
+        Plug 'honza/vim-snippets'
     endif
 call plug#end()
 
@@ -119,11 +127,14 @@ inoremap <M-o> <Esc>o
 inoremap <C-j>       <Down>
 let g:ragtag_global_maps = 1 "available globally
 
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+map <Leader>rn :call RenameFile()<cr>
