@@ -63,6 +63,7 @@ runtime macros/matchit.vim
 set wildmenu
 set incsearch
 set hidden
+set lazyredraw
 
 if has('nvim') || has('termguicolors')
   set termguicolors
