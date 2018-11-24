@@ -32,14 +32,6 @@ call plug#begin("~/.vim/plugged")
 
         Plug 'jiangmiao/auto-pairs'
         Plug 'ngmy/vim-rubocop'
-
-        " Snipmates & Dependencies
-        Plug 'MarcWeber/vim-addon-mw-utils'
-        Plug 'tomtom/tlib_vim'
-        Plug 'garbas/vim-snipmate'
-
-        " Preconfigured snippets
-        Plug 'honza/vim-snippets'
     endif
 call plug#end()
 
