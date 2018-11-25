@@ -102,8 +102,11 @@ symlink_pryrc(){
 }
 
 # needs to be finished
-add_inconsolata_font(){
-    https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/Inconsolata/complete/Inconsolata%20Nerd%20Font%20Complete%20Mono.otf
+add_dejavu_sans_mono_font(){
+  if [[ $OSTYPE == 'linux-gnu' ]]; then
+    mkdir -p ~/.local/share/fonts
+    cd ~/.local/share/fonts && curl -fLo "Dejavu Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf?raw=true
+  fi
 }
 
 echo 'symlinking tmux'
@@ -114,7 +117,9 @@ echo 'symlinking neovim'
 symlink_neovim
 echo 'symlinking zsh'
 symlink_zsh
-echo 'symlinking mintty w/ zenburn colorscheme and inconsolata nerdfont.'
+echo 'symlinking mintty.'
 symlink_mintty
+echo 'Adding dejavu sans mono font'
+add_dejavu_sans_mono_font
 
 echo 'dotfiles transferred successfully!'

@@ -37,8 +37,13 @@ call plug#begin("~/.vim/plugged")
 
         " Track the engine.
         Plug 'SirVer/ultisnips'
+
+        "Devicons for nerdtree
+        Plug 'ryanoasis/vim-devicons'
+        Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     endif
 call plug#end()
+
 set expandtab       "expand tabs into spaces
 set autoindent      "auto-indent new lines
 set smartindent     "return ending brackets to proper locations
@@ -67,6 +72,7 @@ set wildmenu
 set incsearch
 set hidden
 set lazyredraw
+set guifont=DejavuSansMono\ Nerd\ Font\ 12
 
 if has('nvim') || has('termguicolors')
   set termguicolors
@@ -106,6 +112,11 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
 colorscheme apprentice
 let g:lightline = { 'colorscheme': 'wombat' }
+
+" loading the plugin
+let g:webdevicons_enable = 1
+" adding the flags to NERDTree
+let g:webdevicons_enable_nerdtree = 1
 
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
