@@ -250,8 +250,6 @@ runs_with_user_only(){
     symlink_dotfiles
     symlink_sshd_config
     update_gnome_terminal_settings
-    # sourcing other files
-    source "$HOME_DIR/vps-setup/secure_server.bash"
 }
 
 cd ~
