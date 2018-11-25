@@ -105,7 +105,7 @@ symlink_pryrc(){
 add_dejavu_sans_mono_font(){
   if [[ $OSTYPE == 'linux-gnu' ]]; then
     mkdir -p ~/.local/share/fonts
-    cd ~/.local/share/fonts && curl -fLo "Dejavu Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf?raw=true
+    cd ~/.local/share/fonts && curl -fLo "DejaVu Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
   fi
 }
 
