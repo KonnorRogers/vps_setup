@@ -134,6 +134,12 @@ inoremap <M-o> <Esc>o
 inoremap <C-j> <Down>
 let g:ragtag_global_maps = 1 "available globally
 
+"Ultisnips config
+g:UltiSnipsExpandTrigger               <tab>
+g:UltiSnipsListSnippets                <c-tab>
+g:UltiSnipsJumpForwardTrigger          <c-j>
+g:UltiSnipsJumpBackwardTrigger         <c-k>
+
 function! RenameFile()
   let old_name = expand('%')
   let new_name = input('New file name: ', expand('%'), 'file')
