@@ -134,11 +134,15 @@ inoremap <M-o> <Esc>o
 inoremap <C-j> <Down>
 let g:ragtag_global_maps = 1 "available globally
 
-"Ultisnips config
-g:UltiSnipsExpandTrigger               <tab>
-g:UltiSnipsListSnippets                <c-tab>
-g:UltiSnipsJumpForwardTrigger          <c-j>
-g:UltiSnipsJumpBackwardTrigger         <c-k>
+" Rebinds omnicomplete to ctrl-x ctrl-k to not interfere with snippet jumping
+inoremap <c-x><c-k> <c-x><c-k>
+
+" Ultisnips config
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsEditSplit='vertical'
 
 function! RenameFile()
   let old_name = expand('%')
