@@ -58,11 +58,13 @@ set linebreak       "only break lines on 'breakat' characters
 set tabstop=2 " when indenting with '>', use 4 spaces width
 set shiftwidth=2 " On pressing tab, insert 4 spaces
 set expandtab
+set nofoldenable
 syntax on           "turn on syntax highlighting
 set nobackup        "no backups
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
+
 filetype plugin indent on
 filetype on
 filetype indent on
