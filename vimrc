@@ -34,6 +34,8 @@ call plug#begin("~/.vim/plugged")
 
         " Snippets are separated from the engine. Add this if you want them:
         Plug 'honza/vim-snippets'
+        " My custom snippets
+        Plug 'ParamagicDev/ParamagicianUltiSnips'
 
         " Track the engine.
         Plug 'SirVer/ultisnips'
@@ -112,6 +114,16 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
 colorscheme apprentice
 let g:lightline = { 'colorscheme': 'wombat' }
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \    'left': [ [ 'mode', 'paste' ],
+      \              [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
+      \  },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \   }
+      \ }
 
 " loading the plugin
 let g:webdevicons_enable = 1
@@ -138,12 +150,14 @@ let g:ragtag_global_maps = 1 "available globally
 inoremap <c-x><c-k> <c-x><c-k>
 
 " Ultisnips config
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/plugged/ParamagicianUltiSnips']
+
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsEditSplit='vertical'
-
+map <Leader>us :UltiSnipsEdit <ESC>
 function! RenameFile()
   let old_name = expand('%')
   let new_name = input('New file name: ', expand('%'), 'file')

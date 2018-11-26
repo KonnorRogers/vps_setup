@@ -109,6 +109,7 @@ add_dejavu_sans_mono_font(){
   fi
 }
 
+
 echo 'symlinking tmux'
 symlink_tmux
 echo 'symlinking vim'
