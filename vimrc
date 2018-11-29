@@ -43,9 +43,6 @@ call plug#begin("~/.vim/plugged")
         "Devicons for nerdtree
         Plug 'ryanoasis/vim-devicons'
         Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-        Plug 'sheerun/vim-polyglot'
-        Plug 'trevordmiller/nova-vim' 
     endif
 call plug#end()
 
@@ -118,7 +115,6 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
 
 colorscheme apprentice
-let g:nova_transparent = 1
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
