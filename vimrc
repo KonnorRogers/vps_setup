@@ -64,7 +64,7 @@ set nobackup        "no backups
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
-
+set smarttab 
 filetype plugin indent on
 filetype on
 filetype indent on
@@ -115,7 +115,6 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
 
 colorscheme apprentice
-let g:lightline = { 'colorscheme': 'wombat' }
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -158,8 +157,9 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsEditSplit='vertical'
+let g:UltiSnipsEditSplit='horizontal'
 map <Leader>us :UltiSnipsEdit <ESC>
+
 function! RenameFile()
   let old_name = expand('%')
   let new_name = input('New file name: ', expand('%'), 'file')
