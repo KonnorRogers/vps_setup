@@ -153,7 +153,7 @@ let g:ragtag_global_maps = 1 "available globally
 inoremap <c-x><c-k> <c-x><c-k>
 
 " Ultisnips config
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/plugged/ParamagicianUltiSnips', 'UltiSnips']
+let g:UltiSnipsSnippetDirectories=[$HOME.'/ParamagicianUltiSnips', 'UltiSnips']
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"

@@ -120,6 +120,13 @@ add_dejavu_sans_mono_font(){
   fi
 }
 
+add_personal_snippets(){
+  git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git "$HOME"
+  cd "$HOME/ParamagicianUltiSnips"
+  git pull
+  cd ~
+}
+
 
 echo 'symlinking tmux'
 symlink_tmux
@@ -135,5 +142,7 @@ echo 'symlinking .gitconfig'
 symlink_gitconfig
 echo 'Adding dejavu sans mono font'
 add_dejavu_sans_mono_font
+echo 'Adding paramagician ultisnips'
+add_personal_snippets
 
 echo 'dotfiles transferred successfully!'
