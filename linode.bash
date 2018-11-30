@@ -215,7 +215,7 @@ symlink_sshd_config(){
 }
 
 
-runs_script(){
+run_script(){
     get_dependencies
     add_repos
     install_added_repos
