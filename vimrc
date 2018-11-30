@@ -12,6 +12,9 @@ call plug#begin("~/.vim/plugged")
     "add lightline
     Plug 'itchyny/lightline.vim'
     Plug 'flazz/vim-colorschemes'
+
+    Plug 'sheerun/vim-polyglot'
+    Plug 'trevordmiller/nova-vim'
     
     if has('nvim')
         "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
@@ -39,8 +42,6 @@ call plug#begin("~/.vim/plugged")
         "Devicons for nerdtree
         Plug 'ryanoasis/vim-devicons'
         Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-        Plug 'sheerun/vim-polyglot'
-        Plug 'trevordmiller/nova-vim'
     endif
 call plug#end()
 
