@@ -1,6 +1,7 @@
 # Purpose
 * To be able to spin up multiple development environments without having to reconfigure all the time
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode
+* Ideally, you should brush over the contents of each file
 
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
@@ -12,16 +13,18 @@
       ~/.vimrc.orig
       ~/.tmux.conf.orig
       ~/.zshrc.orig
+      
 ## Updating linode instance
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
-    sudo bash /path/to/vps-setup/linode.bash -u #{username} [-e] #{email}
+    sudo bash /path/to/vps-setup/linode.bash -u #{username}
 * -u specifies the home directory where everything will be installed, just in case its being run from root
-* -e flag is optional for email
+
 * Then run:
 
       heroku login
-* Also, ensure to secure your server via /etc/ssh/sshd_config 
+      
+* Also, ensure to secure your server via /etc/ssh/sshd_config should you not find my settings acceptable
 
 ## Setup
 
@@ -30,18 +33,22 @@
 * For viewing apps over ssh, ensure to use
         
       ssh -L <localport>:localhost:<remoteport> user@ssh.com
+      
 * At full speed it should look like: 
        
       ssh -L 9000:localhost:3000 user@remoteserver.com
+      
 * Then you can visit <strong>localhost:9000</strong> in your browser and view your web app
 * Alternatively, ngrok is installed via linode.bash 
       
       ngrok http <localport>
       ngrok http 3000 
+      
 * This will bring up a CLI to connect to for example localhost:3000 on the web  
 ## Dependencies Installed
 
-* A full list can be seen at line 18 of ~/vps-setup/linode.bash
+* There are many dependencies installed, a large list can be located in 
+* /path/to/vps-setup/linode.bash
 
 ## Tools installed
 
