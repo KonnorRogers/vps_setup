@@ -108,6 +108,8 @@ symlink_gitconfig(){
     cp "$GITCONFIG" "$GITCONFIG.orig"
   fi
   ln -f -s ~/vps-setup/gitconfig "$GITCONFIG"
+
+  "Ensure to update your email and username accordingly for your .gitconfig"
 }
 
 # needs to be finished

@@ -55,15 +55,6 @@ install_heroku(){
    sudo snap install heroku --classic
 }
 
-set_git_config() {
-    # setup git
-    git config --global user.name "$username" 
-    git config --global user.email "$email"
-    echo "setting git global username to $username"
-    echo "setting git global email to $email"
-    echo "if you would like to change this later, go to ~/.gitconfig or by using git config --global user.name 'name'"
-}
-
 install_tmux_plugin_manager(){
     # add tmux plugin manager
     if [[ ! -e "$HOME_DIR/.tmux/plugins/tpm" ]]; then
