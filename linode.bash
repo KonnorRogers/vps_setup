@@ -223,12 +223,8 @@ symlink_sshd_config(){
   ln -f -s ~/vps-setup/sshd_config "$SSHD_PATH"
 }
 
-runs_with_user_and_email(){
-    runs_with_user_only
-    set_git_config
-}
 
-runs_with_user_only(){
+runs_script(){
     get_dependencies
     add_repos
     install_added_repos
@@ -254,7 +250,6 @@ runs_with_user_only(){
 
 cd ~
 username=""
-email=""
 HOME_DIR="/home/$username"
 DOTFILES="$HOME_DIR/vps-setup/change.bash"
 GEMS_DIR="$HOME_DIR/.gem/ruby/2.5.1"
@@ -267,28 +262,25 @@ ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
 
 # set an initial value for the flag
 username=
-email=
 
 OPTS=`getopt -o e:u: --long email:,username: -n 'parse-options' -- "$@"`
 
-if [ $? != 0 ] ; then echo "echo Script Usage: linode.bash [-e|--email=email (optional)]  [-u|--username=name (required)]." >&2 ; exit 1 ; fi
+if [ $? != 0 ] ; then echo "echo Script Usage: linode.bash [-u|--username=name (required)]." >&2 ; exit 1 ; fi
 
 echo "$OPTS"
 eval set -- "$OPTS"
 
 while true; do
   case "$1" in
-      -e | --email ) email="$2"; shift 2;;
       -u | --username ) username="$2"; shift 2 ;;
       -- ) shift; break ;;
-      * ) echo "echo Script Usage: linode.bash [-e|--email=email (optional)]  [-u|--username=name (required)]." ; exit 1 ;;
+      * ) echo "echo Script Usage: linode.bash [-u|--username=name (required)]." ; exit 1 ;;
   esac
 done
 # checks for no exit errors of last comand
 if [[ $? != 0 ]] ; then echo "Internal error" >&2 ; exit 1 ; fi
 # do something with the variables -- in this case the lamest possible one :-)
 echo "username = $username"
-echo "email = $email"
 
 if [[ -z "$username" ]]; then
     echo "No arguments were passed to -u"
@@ -299,10 +291,5 @@ if [[ -z "$username" ]]; then
 fi
  
 setup_user
-
-if [[ -z "$email" ]]; then
-    echo "Email not given. Set git config --global user.email to fix the only command not run"
-    runs_with_user_only
-else
-    runs_with_user_and_email
-fi
+  
+run_script
