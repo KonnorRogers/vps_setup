@@ -33,10 +33,6 @@ call plug#begin("~/.vim/plugged")
         Plug 'ngmy/vim-rubocop'
 
         " Snippets are separated from the engine. Add this if you want them:
-        Plug 'honza/vim-snippets'
-        " My custom snippets
-        Plug 'ParamagicDev/ParamagicianUltiSnips'
-
         " Track the engine.
         Plug 'SirVer/ultisnips'
 
@@ -153,7 +149,7 @@ let g:ragtag_global_maps = 1 "available globally
 inoremap <c-x><c-k> <c-x><c-k>
 
 " Ultisnips config
-let g:UltiSnipsSnippetDirectories=[$HOME.'/ParamagicianUltiSnips', 'UltiSnips']
+let g:UltiSnipsSnippetDirectories=[$HOME.'/ParamagicianUltiSnips']
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"
