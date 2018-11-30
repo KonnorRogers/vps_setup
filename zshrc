@@ -109,6 +109,7 @@ alias vim="nvim"
 alias zshrc="vim ~/.zshrc"
 alias omz="vim ~/.oh-my-zsh"
 alias ncfg="vim ~/.config/nvim/init.vim"
+alias tcfg="vim ~/.tmux.conf"
 alias lsc='colorls'
 alias ls="ls --color=always"
 # git

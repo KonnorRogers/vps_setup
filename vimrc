@@ -43,6 +43,8 @@ call plug#begin("~/.vim/plugged")
         "Devicons for nerdtree
         Plug 'ryanoasis/vim-devicons'
         Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+        Plug 'sheerun/vim-polyglot'
+        Plug 'trevordmiller/nova-vim'
     endif
 call plug#end()
 
@@ -114,9 +116,9 @@ autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
 
-colorscheme apprentice
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
+colorscheme nova
+let g:lightline = { 
+      \ 'colorscheme': 'nova',
       \ 'active': {
       \    'left': [ [ 'mode', 'paste' ],
       \              [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
@@ -151,7 +153,7 @@ let g:ragtag_global_maps = 1 "available globally
 inoremap <c-x><c-k> <c-x><c-k>
 
 " Ultisnips config
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/plugged/ParamagicianUltiSnips']
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/plugged/ParamagicianUltiSnips', 'UltiSnips']
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"

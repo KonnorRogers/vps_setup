@@ -40,11 +40,7 @@ symlink_neovim(){
    
     if [[ ! -e "$HOME/.local/share/nvim/site/autoload" ]]; then
         mkdir -p "$HOME/.local/share/nvim/site/autoload"
-    fi
-
-    # change user permisssions because they may belong to root
-    SITE="$HOME/.local/share/nvim/site"
-    chmod -R 777 "$SITE"
+    fi 
     ln -f -s "$HOME/.vim" "$NVIM_PATH"
     ln -f -s "$HOME/.vim/autoload" "$SITE/autoload"
     ln -f -s "$HOME/vps-setup/vimrc" "$NVIM_PATH/init.vim"
@@ -98,7 +94,20 @@ symlink_mintty(){
 
 symlink_pryrc(){
   PRYRC="$HOME/.pryrc"
+  if [[ -e "$PRYRC" ]]; then
+    echo "creating pryrc backup @ $PRYRC.orig"
+    cp "$PRYRC" "$PRYRC.orig"
+  fi
   ln -f -s ~/vps-setup/pryrc "$PRYRC"
+}
+
+symlink_gitconfig(){
+  GITCONFIG="$HOME/.gitconfig" 
+  if [[ -e "$GITCONFIG" ]]; then
+    echo "creating gitconfig backup @ $GITCONFIG.orig"
+    cp "$GITCONFIG" "$GITCONFIG.orig"
+  fi
+  ln -f -s ~/vps-setup/gitconfig "$GITCONFIG"
 }
 
 # needs to be finished
@@ -120,6 +129,8 @@ echo 'symlinking zsh'
 symlink_zsh
 echo 'symlinking mintty.'
 symlink_mintty
+echo 'symlinking .gitconfig'
+symlink_gitconfig
 echo 'Adding dejavu sans mono font'
 add_dejavu_sans_mono_font
 
