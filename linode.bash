@@ -72,8 +72,8 @@ change_default_editor_to_nvim() {
 
 install_neovim_stuff() {
     # update python3 & python2 - neovim
-    sudo -H pip2 install neovim 
-    sudo -H pip3 install neovim 
+    sudo pip2 --system install neovim 
+    sudo pip3 --system install neovim 
     # Install neovim-npm
     yes "\n" | npm install -g neovim
 }
