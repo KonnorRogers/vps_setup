@@ -86,7 +86,7 @@ symlink_mintty(){
             echo "$MINTTY_ORIG already exists. No original copy will be made"
         fi
 
-        ln -f -s ~/vps-setup/minttyrc "$MINTTY_RC"
+        ln -f -s ~/vps-setup/nova_minttyrc "$MINTTY_RC"
     else
         echo 'No need to install mintty! Youre not using cygwin / babun!'
     fi
@@ -95,8 +95,12 @@ symlink_mintty(){
 symlink_pryrc(){
   PRYRC="$HOME/.pryrc"
   if [[ -e "$PRYRC" ]]; then
-    echo "creating pryrc backup @ $PRYRC.orig"
-    cp "$PRYRC" "$PRYRC.orig"
+    if [[ ! -e "$PRYRC.orig" ]]; then
+      echo "creating pryrc backup @ $PRYRC.orig"
+      cp "$PRYRC" "$PRYRC.orig"
+    else
+      echo "$PRYRC.orig already exists. No backup created"
+    fi
   fi
   ln -f -s ~/vps-setup/pryrc "$PRYRC"
 }
@@ -104,15 +108,18 @@ symlink_pryrc(){
 symlink_gitconfig(){
   GITCONFIG="$HOME/.gitconfig" 
   if [[ -e "$GITCONFIG" ]]; then
-    echo "creating gitconfig backup @ $GITCONFIG.orig"
-    cp "$GITCONFIG" "$GITCONFIG.orig"
+    if [[ ! -e "$GITCONFIG.orig" ]]; then
+      echo "creating gitconfig backup @ $GITCONFIG.orig"
+      cp "$GITCONFIG" "$GITCONFIG.orig"
+    else
+      echo "$GITCONFIG.orig already exists. No backup created"
+    fi
   fi
   ln -f -s ~/vps-setup/gitconfig "$GITCONFIG"
 
-  "Ensure to update your email and username accordingly for your .gitconfig"
+  echo "Ensure to update your email and username accordingly for your .gitconfig"
 }
 
-# needs to be finished
 add_dejavu_sans_mono_font(){
   if [[ $OSTYPE == 'linux-gnu' ]]; then
     mkdir -p ~/.local/share/fonts
@@ -121,10 +128,13 @@ add_dejavu_sans_mono_font(){
 }
 
 add_personal_snippets(){
-  git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git "$HOME"
-  cd "$HOME/ParamagicianUltiSnips"
-  git pull
-  cd ~
+  if [[ ! -e "$HOME/ParamagicianUltiSnips" ]]; then
+    git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git "$HOME"
+  else
+    cd "$HOME/ParamagicianUltiSnips"
+    git pull
+    cd ~
+  fi
 }
 
 

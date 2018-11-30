@@ -234,9 +234,9 @@ run_script(){
     install_oh_my_zsh
     install_zsh_autosuggestions
     install_zsh_syntax_highlighting
-    symlink_dotfiles
     symlink_sshd_config
     update_gnome_terminal_settings
+    symlink_dotfiles
 }
 
 cd ~
