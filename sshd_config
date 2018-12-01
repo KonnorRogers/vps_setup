@@ -92,7 +92,7 @@ X11Forwarding yes
 #PermitTTY yes
 PrintMotd no
 #PrintLastLog yes
-#TCPKeepAlive yes
+TCPKeepAlive yes
 #UseLogin no
 #PermitUserEnvironment no
 #Compression delayed
@@ -120,3 +120,4 @@ Subsystem	sftp	/usr/lib/openssh/sftp-server
 #	AllowTcpForwarding no
 #	PermitTTY no
 #	ForceCommand cvs server
+#ServerAliveInterval 120
