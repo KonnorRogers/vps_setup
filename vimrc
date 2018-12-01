@@ -81,9 +81,7 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 
-if !has('gui_running')
-  set t_Co=256
-endif
+set t_Co=256
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -112,7 +110,7 @@ autocmd BufWritePre *.rb :%s/\s\+$//e
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
-
+set background=dark
 colorscheme nova
 let g:lightline = { 
       \ 'colorscheme': 'nova',
