@@ -13,9 +13,6 @@ call plug#begin("~/.vim/plugged")
     Plug 'itchyny/lightline.vim'
     Plug 'flazz/vim-colorschemes'
 
-    Plug 'sheerun/vim-polyglot'
-    Plug 'trevordmiller/nova-vim'
-    
     if has('nvim')
         "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
         Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -111,9 +108,9 @@ autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
-colorscheme nova
+colorscheme apprentice
 let g:lightline = { 
-      \ 'colorscheme': 'nova',
+      \ 'colorscheme': 'wombat',
       \ 'active': {
       \    'left': [ [ 'mode', 'paste' ],
       \              [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
