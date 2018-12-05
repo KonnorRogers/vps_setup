@@ -129,7 +129,7 @@ add_dejavu_sans_mono_font(){
 
 add_personal_snippets(){
   if [[ ! -e "$HOME/ParamagicianUltiSnips" ]]; then
-    git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git "$HOME"
+    git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git "$HOME/ParamagicianUltiSnips"
   else
     cd "$HOME/ParamagicianUltiSnips"
     git pull
