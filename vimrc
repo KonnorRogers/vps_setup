@@ -165,3 +165,4 @@ function! RenameFile()
 endfunction
 
 map <Leader>rn :call RenameFile()<cr>
+
