@@ -60,7 +60,6 @@ set nobackup        "no backups
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
-set smarttab 
 filetype plugin indent on
 filetype on
 filetype indent on
@@ -165,4 +164,3 @@ function! RenameFile()
 endfunction
 
 map <Leader>rn :call RenameFile()<cr>
-
