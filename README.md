@@ -2,6 +2,7 @@
 * To be able to spin up multiple development environments without having to reconfigure all the time
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode
 * Ideally, you should brush over the contents of each file
+* .rc files located in config/
 
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
