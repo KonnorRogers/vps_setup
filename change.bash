@@ -2,7 +2,7 @@
 
 source "$HOME/vps-setup/install_zsh.sh"
 #tmux
-symlink_tmux(){
+copy_tmux(){
     TMUX_ORIG="$HOME/.tmux.conf.orig"
     TMUX_RC="$HOME/.tmux.conf"
     if [[ ! -e "$TMUX_ORIG" ]]; then
@@ -11,10 +11,10 @@ symlink_tmux(){
     else
         echo "$TMUX_ORIG" already exists. No original .tmux.conf copy will be made.
     fi
-    ln -f -s ~/vps-setup/tmux.conf "$TMUX_RC"
+    cp ~/vps-setup/config/tmux.conf "$TMUX_RC"
 }
 # vim
-symlink_vim(){
+copy_vim(){
     VIM_ORIG="$HOME/.vimrc.orig"
     VIM_RC="$HOME/.vimrc"
     DOTVIM="$HOME/.vim"
@@ -29,10 +29,10 @@ symlink_vim(){
     else
         echo "$VIM_ORIG already exists. No original .vimrc copy will be made."
     fi
-    ln -f -s ~/vps-setup/vimrc "$VIM_RC"
+    cp ~/vps-setup/config/vimrc "$VIM_RC"
 }
 # neovim
-symlink_neovim(){
+copy_neovim(){
     NVIM_PATH="$HOME/.config/nvim"
     if [[ ! -e "$NVIM_PATH" ]]; then
         mkdir -p "$NVIM_PATH"
@@ -41,12 +41,12 @@ symlink_neovim(){
     if [[ ! -e "$HOME/.local/share/nvim/site/autoload" ]]; then
         mkdir -p "$HOME/.local/share/nvim/site/autoload"
     fi 
-    ln -f -s "$HOME/.vim" "$NVIM_PATH"
-    ln -f -s "$HOME/.vim/autoload" "$SITE/autoload"
-    ln -f -s "$HOME/vps-setup/vimrc" "$NVIM_PATH/init.vim"
+    cp "$HOME/.vim" "$NVIM_PATH"
+    cp "$HOME/.vim/autoload" "$SITE/autoload"
+    cp "$HOME/vps-setup/config/vimrc" "$NVIM_PATH/init.vim"
 }
 
-symlink_zsh(){
+copy_zsh(){
     ZSH_ORIG="$HOME/.zshrc.orig"
     ZSH_RC="$HOME/.zshrc"
 
@@ -60,18 +60,16 @@ symlink_zsh(){
     if [[ $OSTYPE == 'linux-gnu' ]]; then
         #zsh
         echo "#$OSTYPE detected. Installing ZSH intended for $OSTYPE"
-        ln -f -s ~/vps-setup/zshrc "$ZSH_RC"
+        cp ~/vps-setup/config/zshrc "$ZSH_RC"
     fi
 
     if [[ $OSTYPE == 'cygwin' ]]; then
         echo "$OSTYPE detected. Installed ZSH intended for $OSTYPE"
-        ln -f -s ~/vps-setup/cygwin_zshrc "$ZSH_RC"
+        cp ~/vps-setup/config/cygwin_zshrc "$ZSH_RC"
     fi
-
-    ln -f -s ~/vps-setup/zprofile ~/.zprofile
 }
 
-symlink_mintty(){
+copy_mintty(){
    
     if [[ $OSTYPE == 'cygwin' ]]; then
         echo "$OSTYPE detected. Symlinking .minttyrc"
@@ -86,13 +84,13 @@ symlink_mintty(){
             echo "$MINTTY_ORIG already exists. No original copy will be made"
         fi
 
-        ln -f -s ~/vps-setup/nova_minttyrc "$MINTTY_RC"
+        cp ~/vps-setup/config/minttyrc "$MINTTY_RC"
     else
         echo 'No need to install mintty! Youre not using cygwin / babun!'
     fi
 }
 
-symlink_pryrc(){
+copy_pryrc(){
   PRYRC="$HOME/.pryrc"
   if [[ -e "$PRYRC" ]]; then
     if [[ ! -e "$PRYRC.orig" ]]; then
@@ -102,22 +100,7 @@ symlink_pryrc(){
       echo "$PRYRC.orig already exists. No backup created"
     fi
   fi
-  ln -f -s ~/vps-setup/pryrc "$PRYRC"
-}
-
-symlink_gitconfig(){
-  GITCONFIG="$HOME/.gitconfig" 
-  if [[ -e "$GITCONFIG" ]]; then
-    if [[ ! -e "$GITCONFIG.orig" ]]; then
-      echo "creating gitconfig backup @ $GITCONFIG.orig"
-      cp "$GITCONFIG" "$GITCONFIG.orig"
-    else
-      echo "$GITCONFIG.orig already exists. No backup created"
-    fi
-  fi
-  ln -f -s ~/vps-setup/gitconfig "$GITCONFIG"
-
-  echo "Ensure to update your email and username accordingly for your .gitconfig"
+  cp ~/vps-setup/config/pryrc "$PRYRC"
 }
 
 add_dejavu_sans_mono_font(){
@@ -138,18 +121,16 @@ add_personal_snippets(){
 }
 
 
-echo 'symlinking tmux'
-symlink_tmux
-echo 'symlinking vim'
-symlink_vim
-echo 'symlinking neovim'
-symlink_neovim
-echo 'symlinking zsh'
-symlink_zsh
-echo 'symlinking mintty.'
-symlink_mintty
-echo 'symlinking .gitconfig'
-symlink_gitconfig
+echo 'copying tmux'
+copy_tmux
+echo 'copying vim'
+copy_vim
+echo 'copying neovim'
+copy_neovim
+echo 'copying zsh'
+copy_zsh
+echo 'copying mintty.'
+copy_mintty
 echo 'Adding dejavu sans mono font'
 add_dejavu_sans_mono_font
 echo 'Adding paramagician ultisnips'

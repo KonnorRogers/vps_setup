@@ -193,7 +193,7 @@ update_gnome_terminal_settings(){
   fi
 }
 
-symlink_dotfiles() {
+copy_dotfiles() {
     # Runs the change.bash file provided in vps-setup which this file is cloned from
     if [ -e "$DOTFILES" ]; then
         source "$DOTFILES"
@@ -202,13 +202,13 @@ symlink_dotfiles() {
     fi
 }
 
-symlink_sshd_config(){
+copy_sshd_config(){
   SSHD_PATH="/etc/ssh/sshd_config"
   if [[ -e "$SSHD_PATH" ]]; then
     echo "$SSHD_PATH exists already, copying to $SSHD_PATH.orig"
     mv "$SSHD_PATH" "$SSHD_PATH.orig"
   fi
-  ln -f -s ~/vps-setup/sshd_config "$SSHD_PATH"
+  cp ~/vps-setup/sshd_config "$SSHD_PATH"
 }
 
 
@@ -231,9 +231,9 @@ run_script(){
     install_oh_my_zsh
     install_zsh_autosuggestions
     install_zsh_syntax_highlighting
-    symlink_sshd_config
+    copy_sshd_config
     update_gnome_terminal_settings
-    symlink_dotfiles
+    copy_dotfiles
 }
 
 cd ~

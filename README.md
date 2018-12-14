@@ -20,6 +20,10 @@
     sudo bash /path/to/vps-setup/linode.bash -u #{username}
 * -u specifies the home directory where everything will be installed, just in case its being run from root
 
+* Do not forget to set git via:
+    
+      git config --global user.name
+
 * Then run:
 
       heroku login
