@@ -13,19 +13,19 @@ copy_sshd_config(){
 #tmux
 copy_tmux(){
   TMUX_RC="$HOME/.tmux.conf"
-  cp "$TMUX_RC" "$CONFIG"
+  cp "$TMUX_RC" "$CONFIG/tmux.conf"
 }
 # vim
 copy_vim(){
   VIM_RC="$HOME/.vimrc"
-  cp "$VIM_RC" "$CONFIG"
+  cp "$VIM_RC" "$CONFIG/vimrc"
 }
 
 # copy_zsh(){
 #   ZSH_RC="$HOME/.zshrc"
 # 
 #   if [[ $OSTYPE == "linux-gnu"]]; then
-#     cp "$ZSH_RC" "$CONFIG"
+#     cp "$ZSH_RC" "$CONFIG/zshrc"
 #   fi
 # 
 #   if [[ $OSTYPE == "cygwin" ]]; then
@@ -42,12 +42,12 @@ copy_vim(){
 
 copy_pryrc(){
   PRYRC="$HOME/.pryrc"
-  cp "$PRYRC" "$CONFIG"
+  cp "$PRYRC" "$CONFIG/pryrc"
 }
 
 copy_pryrc
-copy_mintty
-copy_zsh
+# copy_mintty
+# copy_zsh
 copy_vim
 copy_tmux
 copy_sshd_config
