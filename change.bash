@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ADDED --remove-destination to remove symlinks
+# ADDED -f to remove symlinks
 
 source "$HOME/vps-setup/install_zsh.sh"
 #tmux
@@ -9,11 +9,11 @@ copy_tmux(){
     TMUX_RC="$HOME/.tmux.conf"
     if [[ ! -e "$TMUX_ORIG" ]]; then
         echo "copying your current $TMUX_RC file to $TMUX_ORIG"
-        cp --remove-destination ~/.tmux.conf ~/.tmux.conf.orig
+        cp -f ~/.tmux.conf ~/.tmux.conf.orig
     else
         echo "$TMUX_ORIG" already exists. No original .tmux.conf copy will be made.
     fi
-    cp --remove-destination ~/vps-setup/config/tmux.conf "$TMUX_RC"
+    cp -f ~/vps-setup/config/tmux.conf "$TMUX_RC"
 }
 # vim
 copy_vim(){
@@ -27,11 +27,11 @@ copy_vim(){
 
     if [[ ! -e "$VIM_ORIG" ]]; then
         echo "copying $VIM_RC to $VIM_ORIG"
-        cp --remove-destination "$VIM_RC" "$VIM_ORIG"
+        cp -f "$VIM_RC" "$VIM_ORIG"
     else
         echo "$VIM_ORIG already exists. No original .vimrc copy will be made."
     fi
-    cp --remove-destination ~/vps-setup/config/vimrc "$VIM_RC"
+    cp -f ~/vps-setup/config/vimrc "$VIM_RC"
 }
 # neovim
 copy_neovim(){
@@ -43,9 +43,9 @@ copy_neovim(){
     if [[ ! -e "$HOME/.local/share/nvim/site/autoload" ]]; then
         mkdir -p "$HOME/.local/share/nvim/site/autoload"
     fi 
-    cp --remove-destination "$HOME/.vim" "$NVIM_PATH"
-    cp --remove-destination "$HOME/.vim/autoload" "$SITE/autoload"
-    cp --remove-destination "$HOME/vps-setup/config/vimrc" "$NVIM_PATH/init.vim"
+    cp -f "$HOME/.vim" "$NVIM_PATH"
+    cp -f "$HOME/.vim/autoload" "$SITE/autoload"
+    cp -f "$HOME/vps-setup/config/vimrc" "$NVIM_PATH/init.vim"
 }
 
 copy_zsh(){
@@ -54,7 +54,7 @@ copy_zsh(){
 
     if [[ ! -e "$ZSH_ORIG" ]]; then
         echo "copying $ZSH_RC to $ZSH_ORIG"
-        cp --remove-destination "$ZSH_RC" "$ZSH_ORIG"
+        cp -f "$ZSH_RC" "$ZSH_ORIG"
     else
         echo "$ZSH_ORIG detected. No original copy of .zshrc will be made"
     fi
@@ -62,12 +62,12 @@ copy_zsh(){
     if [[ $OSTYPE == 'linux-gnu' ]]; then
         #zsh
         echo "#$OSTYPE detected. Installing ZSH intended for $OSTYPE"
-        cp --remove-destination ~/vps-setup/config/zshrc "$ZSH_RC"
+        cp -f ~/vps-setup/config/zshrc "$ZSH_RC"
     fi
 
     if [[ $OSTYPE == 'cygwin' ]]; then
         echo "$OSTYPE detected. Installed ZSH intended for $OSTYPE"
-        cp --remove-destination ~/vps-setup/config/cygwin_zshrc "$ZSH_RC"
+        cp -f ~/vps-setup/config/cygwin_zshrc "$ZSH_RC"
     fi
 }
 
@@ -81,12 +81,12 @@ copy_mintty(){
     
         if [[ ! -e "$MINTTY_ORIG" ]]; then
             echo "No $MINTTY_ORIG detected. Creating a copy of .minttyrc at $MINTTY_ORIG"
-            cp --remove-destination "$MINTTY_RC" "$MINTTY_ORIG"
+            cp -f "$MINTTY_RC" "$MINTTY_ORIG"
         else
             echo "$MINTTY_ORIG already exists. No original copy will be made"
         fi
 
-        cp --remove-destination ~/vps-setup/config/minttyrc "$MINTTY_RC"
+        cp -f ~/vps-setup/config/minttyrc "$MINTTY_RC"
     else
         echo 'No need to install mintty! Youre not using cygwin / babun!'
     fi
@@ -97,12 +97,12 @@ copy_pryrc(){
   if [[ -e "$PRYRC" ]]; then
     if [[ ! -e "$PRYRC.orig" ]]; then
       echo "creating pryrc backup @ $PRYRC.orig"
-      cp --remove-destination "$PRYRC" "$PRYRC.orig"
+      cp -f "$PRYRC" "$PRYRC.orig"
     else
       echo "$PRYRC.orig already exists. No backup created"
     fi
   fi
-  cp --remove-destination ~/vps-setup/config/pryrc "$PRYRC"
+  cp -f ~/vps-setup/config/pryrc "$PRYRC"
 }
 
 add_dejavu_sans_mono_font(){
