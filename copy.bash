@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # This script is meant to copy local changes to git
+# Rather than symlinking files from the repo to local files
+# This allows for more flexibility for other people using the repo
 
 CONFIG="$HOME/vps-setup/config"
 
