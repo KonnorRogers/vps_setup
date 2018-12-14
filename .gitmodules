@@ -1,6 +1,0 @@
-[submodule "nvim/nvim/plugged/ultisnips"]
-	path = nvim/nvim/plugged/ultisnips
-	url = https://github.com/SirVer/ultisnips.git
-[submodule "nvim/nvim/plugged/vim-snippets"]
-	path = nvim/nvim/plugged/vim-snippets
-	url = https://github.com/honza/vim-snippets.git
