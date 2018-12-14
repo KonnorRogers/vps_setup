@@ -138,36 +138,6 @@ install_gems() {
         gem install $gem_name --install-dir "$GEMS_DIR"
     done
 }
-# Install zsh and accompanying plugins
-
-# checks if ohmyzsh already installed
-install_oh_my_zsh() {
-    if [[ ! -e "$HOME_DIR/.oh-my-zsh" ]]; then
-        git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-        chsh -s /bin/zsh
-    else
-        echo "ohmyzsh already installed"
-    fi
-}
-
-
-install_zsh_autosuggestions() {
-    #checks if autosuggestions exists
-    if [[ ! -e "$ZSH_PLUGINS/zsh-autosuggestions" ]]; then
-        git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_PLUGINS/zsh-autosuggestions"
-    else
-        echo 'zsh-autosuggestions already exists'
-    fi
-}
-
-install_zsh_syntax_highlighting() {
-    # check if syntax highlighting already installed
-    if [[ ! -e "$ZSH_PLUGINS/zsh-syntax-highlighting" ]]; then
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_PLUGINS/zsh-syntax-highlighting"
-    else
-        echo 'zsh-syntax-highlighting already exists'
-    fi
-}
 
 update_gnome_terminal_settings(){
   if [[ -e "/org/gnome/terminal" ]]; then
@@ -195,6 +165,7 @@ update_gnome_terminal_settings(){
 
 copy_dotfiles() {
     # Runs the change.bash file provided in vps-setup which this file is cloned from
+    # Includes installing ohmyzsh / zsh
     if [ -e "$DOTFILES" ]; then
         source "$DOTFILES"
     else
@@ -228,9 +199,6 @@ run_script(){
     install_and_set_ruby
 
     install_gems
-    install_oh_my_zsh
-    install_zsh_autosuggestions
-    install_zsh_syntax_highlighting
     copy_sshd_config
     update_gnome_terminal_settings
     copy_dotfiles
