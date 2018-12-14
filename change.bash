@@ -133,6 +133,8 @@ echo 'copying zsh'
 copy_zsh
 echo 'copying mintty.'
 copy_mintty
+echo 'copying pryrc'
+copy_pryrc
 echo 'Adding dejavu sans mono font'
 add_dejavu_sans_mono_font
 echo 'Adding paramagician ultisnips'
