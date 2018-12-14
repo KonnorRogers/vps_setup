@@ -21,24 +21,24 @@ copy_vim(){
   cp "$VIM_RC" "$CONFIG/vimrc"
 }
 
-# copy_zsh(){
-#   ZSH_RC="$HOME/.zshrc"
-# 
-#   if [[ $OSTYPE == "linux-gnu"]]; then
-#     cp "$ZSH_RC" "$CONFIG/zshrc"
-#   fi
-# 
-#   if [[ $OSTYPE == "cygwin" ]]; then
-#     cp "$ZSH_RC" "$CONFIG/cygwin_zshrc"
-#   fi
-# }
-# 
-# copy_mintty(){
-#   if [[ $OSTYPE == "cygwin" ]]; then
-#     MINTTY_RC="$HOME/.minttyrc"
-#     cp "$MINTTY_RC" "$CONFIG"
-#   fi
-# }
+copy_zsh(){
+  ZSH_RC="$HOME/.zshrc"
+
+  if [ $OSTYPE == "linux-gnu" ]; then
+    cp "$ZSH_RC" "$CONFIG/zshrc"
+  fi
+
+  if [ $OSTYPE == "cygwin" ]; then
+    cp "$ZSH_RC" "$CONFIG/cygwin_zshrc"
+  fi
+}
+
+copy_mintty(){
+  if [ $OSTYPE == "cygwin" ]; then
+    MINTTY_RC="$HOME/.minttyrc"
+    cp "$MINTTY_RC" "$CONFIG"
+  fi
+}
 
 copy_pryrc(){
   PRYRC="$HOME/.pryrc"
@@ -46,8 +46,8 @@ copy_pryrc(){
 }
 
 copy_pryrc
-# copy_mintty
-# copy_zsh
+copy_mintty
+copy_zsh
 copy_vim
 copy_tmux
 copy_sshd_config
