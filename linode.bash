@@ -14,7 +14,7 @@ get_dependencies() {
     sudo apt update
     sudo apt upgrade -y 
     sudo apt autoremove -y 
-    # Currently install python2/3, pip, tmux, vim, zsh, sqlite3, postgresql, golang, nodejs as well as other get_dependencies
+
     PACKAGE_LIST="curl software-properties-common tmux git vim zsh gnupg2 sqlite3 postgresql less python3 python3-pip python-dev python3-dev python-pip ufw pry ack-grep libfuse2 fuse python3-neovim build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev nodejs apt-transport-https ca-certificates golang make gcc ruby-dev rubygems fail2ban httpie"
     sudo apt install -y "$PACKAGE_LIST"
 }
@@ -69,8 +69,8 @@ change_default_editor_to_nvim() {
 
 install_neovim_stuff() {
     # update python3 & python2 - neovim
-    sudo pip2 --system install neovim 
-    sudo pip3 --system install neovim 
+    sudo pip2 install neovim --system
+    sudo pip3 install neovim --system
     # Install neovim-npm
     yes "\n" | npm install -g neovim
 }
@@ -179,7 +179,7 @@ copy_sshd_config(){
     echo "$SSHD_PATH exists already, copying to $SSHD_PATH.orig"
     mv "$SSHD_PATH" "$SSHD_PATH.orig"
   fi
-  cp ~/vps-setup/sshd_config "$SSHD_PATH"
+  cp ~/vps-setup/config/sshd_config "$SSHD_PATH"
 }
 
 
@@ -205,12 +205,6 @@ run_script(){
 }
 
 cd ~
-username=""
-HOME_DIR="/home/$username"
-DOTFILES="$HOME_DIR/vps-setup/change.bash"
-GEMS_DIR="$HOME_DIR/.gem/ruby/2.5.1"
-ZSH_PLUGINS="$HOME_DIR/.oh-my-zsh/custom/plugins"
-ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
 
 # :: - optional
 # : - required optional
@@ -245,6 +239,12 @@ if [[ -z "$username" ]]; then
     echo "Exiting."
     exit 3
 fi
+
+HOME_DIR="/home/$username"
+DOTFILES="$HOME_DIR/vps-setup/change.bash"
+GEMS_DIR="$HOME_DIR/.gem/ruby/2.5.1"
+ZSH_PLUGINS="$HOME_DIR/.oh-my-zsh/custom/plugins"
+ZSH_THEMES="$HOME_DIR/.oh-my-zsh/custom/themes"
  
 setup_user
   
