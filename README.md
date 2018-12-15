@@ -3,6 +3,7 @@
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode
 * Ideally, you should brush over the contents of each file
 * .rc files located in config/
+* Currently, vps-setup needs to be in your home directory to work
 
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
