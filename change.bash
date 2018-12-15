@@ -43,9 +43,9 @@ copy_neovim(){
     if [[ ! -e "$HOME/.local/share/nvim/site/autoload" ]]; then
         mkdir -p "$HOME/.local/share/nvim/site/autoload"
     fi 
-    cp -f "$HOME/.vim" "$NVIM_PATH"
-    cp -f "$HOME/.vim/autoload" "$SITE/autoload"
-    cp -f "$HOME/vps-setup/config/vimrc" "$NVIM_PATH/init.vim"
+    ln -f -s "$HOME/.vim" "$NVIM_PATH"
+    ln -f -s "$HOME/.vim/autoload" "$SITE/autoload"
+    ln -f -s "$HOME/vps-setup/config/vimrc" "$NVIM_PATH/init.vim"
 }
 
 copy_zsh(){
@@ -123,6 +123,30 @@ add_personal_snippets(){
 }
 
 
+update_gnome_terminal_settings(){
+  if [[ -e "/org/gnome/terminal" ]]; then
+    BACKUPDIR="$HOME/.tmp"
+    LOCATION="$BACKUPDIR/gnome-terminal-settings.orig"
+
+    if [[ ! -e "$BACKUPDIR" ]]; then
+      mkdir -p "$BACKUPDIR"
+    fi
+
+    echo "Your original gnome settings will be placed in $LOCATION" 
+    echo "Should you want to restore them simply type"
+    echo "dconf load /org/gnome/terminal < $LOCATION"
+
+    # Saves a backup
+    dconf dump /org/gnome/terminal/ > "$LOCATION"
+    
+    # Wipes original
+    dconf reset -f /org/gnome/terminal/
+    
+    # loads new
+    dconf load /org/gnome/terminal/ < "$HOME/vps-setup/gnome_terminal_settings"
+  fi
+}
+
 echo 'copying tmux'
 copy_tmux
 echo 'copying vim'
@@ -139,5 +163,7 @@ echo 'Adding dejavu sans mono font'
 add_dejavu_sans_mono_font
 echo 'Adding paramagician ultisnips'
 add_personal_snippets
+echo 'updating gnome terminal settings'
+update_gnome_terminal_settings
 
 echo 'dotfiles transferred successfully!'

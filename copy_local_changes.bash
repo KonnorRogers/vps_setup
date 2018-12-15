@@ -38,7 +38,7 @@ copy_zsh(){
 copy_mintty(){
   if [ $OSTYPE == "cygwin" ]; then
     MINTTY_RC="$HOME/.minttyrc"
-    cp "$MINTTY_RC" "$CONFIG"
+    cp "$MINTTY_RC" "$CONFIG/minttyrc"
   fi
 }
 
@@ -47,9 +47,14 @@ copy_pryrc(){
   cp "$PRYRC" "$CONFIG/pryrc"
 }
 
+copy_gnome_terminal(){
+  dconf dump /org/gnome/terminal/ > "$CONFIG/gnome_terminal_settings"
+}
+
 copy_pryrc
 copy_mintty
 copy_zsh
 copy_vim
 copy_tmux
 copy_sshd_config
+copy_gnome_terminal
