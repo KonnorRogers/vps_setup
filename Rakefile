@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-LOAD_PATH = File.dirname(File.expand_path(__FILE__))
+require 'fileutils'
 
-CONFIG_DIR = File.expand_path("config")
+LOAD_PATH = File.dirname(File.expand_path(__FILE__))
 
 task :example do
   # p LOAD_PATH
@@ -12,7 +12,8 @@ end
 desc 'copies files from config dir to home dir'
 task :copy_config do
   FileList.new(Dir.children('config')).each do |file|
-    next if file == 'sshd_config'
-    puts file
+    dot_file = ".#{file}"
+    backup_file = "#{dot_file}.orig"
+    FileUtils.cp(file, Dir.home)
   end
 end
