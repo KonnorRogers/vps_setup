@@ -94,12 +94,12 @@
 * Adding docker support via images
 * Start git branching
 
-# BASH
+### BASH
 * Add repositories
 * Install every apt-get
 * Create a user
 * Log in to user
 
-# RAKE
+### RAKE
 * run the Rake task to finish setup
 * ensure it works outside of home
