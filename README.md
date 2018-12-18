@@ -92,5 +92,14 @@
 ## Updates for the future?
     
 * Adding docker support via images
+* Start git branching
 
-* Putting everything into a Rakefile / Task
+# BASH
+* Add repositories
+* Install every apt-get
+* Create a user
+* Log in to user
+
+# RAKE
+* run the Rake task to finish setup
+* ensure it works outside of home
