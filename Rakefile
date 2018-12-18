@@ -41,7 +41,7 @@ def file_exists?(file)
 end
 
 def create_backup_dir
-  unless Dir.exist?('backup_dotfiles')
-    Dir.mkdir(File.join(Dir.home, 'backup_dotfiles'))
-  end
+  return if Dir.exist?('backup_dotfiles')
+  
+  Dir.mkdir(File.join(Dir.home, 'backup_dotfiles'))
 end
