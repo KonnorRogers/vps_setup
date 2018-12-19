@@ -16,10 +16,12 @@ task :copy_config do
     dot_file = ".#{file}"
     backup_file = "#{dot_file}.orig"
 
+    puts "#{dot_file} does not exist, no backup created" unless file_exists?(dot_file)
+
+    file_exist?(backup_file)
     # Copies to the backup dir if a .examplerc exists
-    copy_file(dot_file, backup_file, BACKUP_DIR) 
-    return #{dot_file} does not exist, no backup created" file_exists?(dot_file)
-      
+    copy_file(dot_file, backup_file, BACKUP_DIR)
+
 
     # copies from vps-setup/config/file to ~/.examplerc
     copy_file(file, dot_file)
