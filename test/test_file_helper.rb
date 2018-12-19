@@ -1,7 +1,4 @@
 require 'minitest/autorun'
-
-LOAD_PATH = File.dirname(File.dirname(File.expand_path(__FILE__)))
-require File.join(File.expand_path(LOAD_PATH), 'file_helper.rb')
 require 'fileutils'
 
 

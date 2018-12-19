@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
 require 'rake/testtask'
-require './file_helper'
+require 'lib/file_helper'
 
 # LOAD_PATH = File.dirname(File.expand_path(__FILE__))
 @fh = FileHelper.new
 BACKUP_DIR = @fh.create_backup_dir
 
-task :test do
-
+Rake::TestTask(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.test_files = FileList['test/test*.rb']
 end
-
 task :example do
   # p LOAD_PATH
   # sh 'echo', 'hi' # *cmd, &block
