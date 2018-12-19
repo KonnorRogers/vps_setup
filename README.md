@@ -3,7 +3,6 @@
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode
 * Ideally, you should brush over the contents of each file
 * .rc files located in config/
-* Currently, vps-setup needs to be in your home directory to work
 
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
@@ -12,9 +11,9 @@
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
-      ~/.vimrc.orig
-      ~/.tmux.conf.orig
-      ~/.zshrc.orig
+      ~/backup_dotfiles/.vimrc.orig
+      ~/backup_dotfiles/.tmux.conf.orig
+      ~/backup_dotfiles/.zshrc.orig
       
 ## Updating linode instance
     sudo apt install git
