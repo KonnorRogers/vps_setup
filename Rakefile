@@ -17,7 +17,9 @@ task :copy_config do
     backup_file = "#{dot_file}.orig"
 
     # Copies to the backup dir if a .examplerc exists
-    copy_file(dot_file, backup_file, BACKUP_DIR) if file_exists?(dot_file)
+    copy_file(dot_file, backup_file, BACKUP_DIR) 
+    return #{dot_file} does not exist, no backup created" file_exists?(dot_file)
+      
 
     # copies from vps-setup/config/file to ~/.examplerc
     copy_file(file, dot_file)
@@ -28,11 +30,12 @@ private
 
 # Defaults to Dir.home, can specify Dir, useful for backups
 def copy_file(file, new_file, dir = Dir.home)
-  FileUtils.cp(file, File.join(dir, new_file))
+  new_file = File.join(dir, new_file)
+  FileUtils.cp(file, new_file)
 end
 
-def file_exists?(file)
-  File.exist?(File.join(Dir.home, file))
+def file_exists?(file, dir = Dir.home)
+  File.exist?(File.join(dir, file))
 end
 
 def create_backup_dir
