@@ -4,7 +4,7 @@ CONFIG_DIR = File.join(File.expand_path('../', __dir__), 'config')
 namespace :config do
   desc 'copies files from config dir to a destination dir, will place existing dotfiles into a backupdir'
   # Allows the setting of a backup_dir for your dotfiles
-  task :copy_config, [:backup_dir, :dest_dir] do |_t, args|
+  task :copy, [:backup_dir, :dest_dir] do |_t, args|
     args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
 
     @cc = CopyConfig.new

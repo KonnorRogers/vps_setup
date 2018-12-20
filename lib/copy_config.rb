@@ -26,19 +26,29 @@ class CopyConfig
   end
 
   # TODO: Add test, may be better to allow users to do on their own or place with initial sudo bash script
-  # def copy_sshd_config(backup_dir)
-  #   return unless OS.linux?
-  #   return unless Dir.exist?('/etc/ssh')
+  def copy_sshd_config(backup_dir)
+    return unless sshd_copyable?
 
-  #   sshd_config_path = File.join(File.expand_path('../', __dir__), 'sshd_config')
-  #   sshd_path = '/etc/ssh/sshd_config'
-  #   sshd_backup = File.join(backup_dir, 'sshd_config.orig')
+    sshd_config_path = File.join(File.expand_path('../', __dir__), 'sshd_config')
+    sshd_path = '/etc/ssh/sshd_config'
+    sshd_backup = File.join(backup_dir, 'sshd_config.orig')
 
-  #   FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
-  #   FileUtils.cp(sshd_config_path, '/etc/ssh/sshd_config')
-  # end
+    FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
+    FileUtils.cp(sshd_config_path, '/etc/ssh/sshd_config')
+  end
 
   private
+
+  def sshd_copyable?
+    linux = 'You are not running on linux. sshd_config not copied'
+    # do the same for the other 2
+    return (puts linux || false) unless OS.linux?
+    return false unless Dir.exist?('/etc/ssh')
+    # checks if running as root
+    return false unless Process.uid == 0
+
+    true
+  end
 
   def dot_file_found?(file, test = false)
     return true if File.exist?(file)
