@@ -6,14 +6,14 @@
 
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
-* ### Your original can be obtained at /etc/sshd/sshd_config.orig
+* ### Your original can be obtained at ~/backup_files/sshd_config.orig
   
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
-      ~/backup_dotfiles/.vimrc.orig
-      ~/backup_dotfiles/.tmux.conf.orig
-      ~/backup_dotfiles/.zshrc.orig
+      ~/backup_files/.vimrc.orig
+      ~/backup_files/.tmux.conf.orig
+      ~/backup_files/.zshrc.orig
       
 ## Updating linode instance
     sudo apt install git
