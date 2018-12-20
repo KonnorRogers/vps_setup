@@ -7,7 +7,7 @@ class FileHelper
     FileUtils.cp(file, new_file)
   end
 
-  def file_exists?(file, dir = Dir.home)
+  def file_exist?(file, dir = Dir.home)
     File.exist?(File.join(dir, file))
   end
 
