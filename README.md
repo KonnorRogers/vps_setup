@@ -102,3 +102,10 @@
 ### RAKE
 * run the Rake task to finish setup
 * ensure it works outside of home
+
+
+### TODO
+
+* Add symlink of neovim to vim
+* Brush over linode.bash and add the appropriate apt-get installs & adding repos
+* Im sure im missing lots of other stuff
