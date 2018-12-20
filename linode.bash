@@ -56,15 +56,6 @@ install_heroku(){
    sudo snap install heroku --classic
 }
 
-install_tmux_plugin_manager(){
-    # add tmux plugin manager
-    if [[ ! -e "$HOME_DIR/.tmux/plugins/tpm" ]]; then
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    else
-        echo 'Tmux plugins already installed!'
-    fi
-}
-
 change_default_editor_to_nvim() {
     # update editor
     sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
@@ -102,6 +93,7 @@ install_chruby() {
         echo 'chruby is already installed'
     else
         
+        cd ~
         wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
         tar -xzvf chruby-0.3.9.tar.gz
         cd chruby-0.3.9/
@@ -114,6 +106,7 @@ install_ruby_install() {
     if [[ $"(command -v ruby-install)" ]]; then 
         echo 'ruby-install is already installed'
     else
+        cd ~
         wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
         tar -xzvf ruby-install-0.7.0.tar.gz
         cd ruby-install-0.7.0/
