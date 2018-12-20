@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'fileutils'
+require 'os'
 
 # Copies config from /vps-setup/config to your home dir
 class CopyConfig
