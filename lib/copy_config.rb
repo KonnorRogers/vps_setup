@@ -14,7 +14,7 @@ class CopyConfig
       config_file = File.join(CONFIG_DIR, file)
 
       dot_file = File.join(dest_dir, ".#{file}")
-      backup_file = File.join(backup_dir, "#{dot_file}.orig")
+      backup_file = File.join(backup_dir, ".#{file}.orig")
 
       # if there is an original dot file & no backup file in the backupdir
       if dot_file_found?(dot_file, test)
@@ -31,6 +31,8 @@ class CopyConfig
     puts "dotfiles copied to #{dest_dir}." if test == false
     puts "backups created @ #{backup_dir}." if test == false
   end
+
+  private
 
   def dot_file_found?(file, test = false)
     return true if File.exist?(file)

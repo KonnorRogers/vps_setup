@@ -50,18 +50,12 @@ class TestCopyConfig < Minitest::Test
   def test_backup_dir_not_empty_if_orig_found
     Dir.mkdir(@dest_dir)
     backup_file = File.join(@backup_dir, '.vimrc.orig')
-    dest_file = File.join(@dest_dir, '.vimrc')
-
-    File.open(dest_file, 'w+') { |file| file.puts 'test' }
-    dest_file_before_copy = File.read(dest_file)
 
     @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     refute_empty(Dir.children(@backup_dir))
     assert_includes(Dir.children(@backup_dir), '.vimrc.orig')
-
-    assert dest_file_before_copy == File.read(backup_file)
-    refute dest_file_before_copy == File.read(dest_file)
+    assert File.read(f1) == File.read(f2)
   end
 
   def test_backup_file_will_not_be_overwritten
@@ -75,20 +69,5 @@ class TestCopyConfig < Minitest::Test
     @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     refute File.read(f1) == File.read(f2)
-  end
-
-  def test_config_file_will_be_copied_to_dest_dir
-    config_file = File.join(CopyConfig::CONFIG_DIR, 'vimrc')
-    dest_file = File.join(@dest_dir, '.vimrc')
-
-    assert_raises(Errno::ENOENT) { File.read(config_file) == File.read(dest_file) }
-
-    Dir.mkdir(@dest_dir)
-    File.open(dest_file, 'w+') { |file| file.puts 'test' }
-    refute File.read(config_file) == File.read(dest_file)
-
-    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
-
-    assert File.read(config_file) == File.read(dest_file)
   end
 end
