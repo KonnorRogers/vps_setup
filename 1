@@ -24,11 +24,12 @@ task copy_config: [BACKUP_DIR] do
     dot_file = File.join(Dir.home, ".#{file}")
     backup_file = File.join(BACKUP_DIR, "#{dot_file}.orig")
 
-    if dot_file_not_found?(dot_file) || backup_file_found?(backup_file)
-      cp(dot_file, backup_file)
-    end
+    next if dot_file_not_found?(dot_file)
+    next if backup_file_found?(backup_file)
 
-    cp(file, dot_file) # Then, sends the copies dot_file from config to home
+    cp(dot_file, backup_file) # Makes a backup first
+    cp(file, dot_file) # Then, sends the copies dot_file from config to backup
+
   end
 end
 
