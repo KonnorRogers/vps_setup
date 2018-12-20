@@ -40,9 +40,9 @@ class CopyConfig
   private
 
   def sshd_copyable?
-    linux = 'You are not running on linux. sshd_config not copied'
+    not_linux = 'You are not running on linux. sshd_config not copied'
     # do the same for the other 2
-    return (puts linux || false) unless OS.linux?
+    return (puts not_linux || false) unless OS.linux?
     return false unless Dir.exist?('/etc/ssh')
     # checks if running as root
     return false unless Process.uid == 0
