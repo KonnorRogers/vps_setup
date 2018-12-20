@@ -91,4 +91,11 @@ class TestCopyConfig < Minitest::Test
 
     assert File.read(config_file) == File.read(dest_file)
   end
+
+  def test_non_unix_files_not_copied
+    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
+
+    refute File.exist?(@dest_dir, '.minttyrc')
+    refute File.exist?(@dest_dir, '.cygwin_zshrc')
+  end
 end
