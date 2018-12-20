@@ -18,7 +18,7 @@ class CopyConfig
       backup = File.join(backup_dir, ".#{file}.orig")
 
       copy_unix_files(config, dot, backup, test)
-      copy_cygwin_files(config_file, dot_file, backup_file, test)
+      copy_cygwin_files(config, dot, backup, test)
     end
 
     puts "dotfiles copied to #{dest_dir}." if test == false
@@ -42,7 +42,7 @@ class CopyConfig
   end
 
   def copy_unix_files(config_file, dot_file, backup_file, test = false)
-    return unless OS.mac? || OS.linux?
+    puts 'you are running on mac or linux' && return unless OS.mac? || OS.linux?
 
     non_unix_files = %w[cygwin_zshrc minttyrc]
     return if non_unix_files.include?(File.basename(config_file))
@@ -51,7 +51,7 @@ class CopyConfig
   end
 
   def copy_cygwin_files(config_file, dot_file, backup_file, test = false)
-    return unless OS.cygwin?
+    puts 'you are running on cygwin' && return unless OS.cygwin?
 
     non_cygwin_files = %w[zshrc]
     return if non_cygwin_files.include?(File.basename(config_file))
