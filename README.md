@@ -108,4 +108,7 @@
 
 * Add symlink of neovim to vim
 * Brush over linode.bash and add the appropriate apt-get installs & adding repos
+* Sudo commands will run with Process.uid == 0
+
 * Im sure im missing lots of other stuff
+
