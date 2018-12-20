@@ -25,6 +25,19 @@ class CopyConfig
     puts "backups created @ #{backup_dir}." if test == false
   end
 
+  # TODO: Add test, may be better to allow users to do on their own or place with initial sudo bash script
+  # def copy_sshd_config(backup_dir)
+  #   return unless OS.linux?
+  #   return unless Dir.exist?('/etc/ssh')
+
+  #   sshd_config_path = File.join(File.expand_path('../', __dir__), 'sshd_config')
+  #   sshd_path = '/etc/ssh/sshd_config'
+  #   sshd_backup = File.join(backup_dir, 'sshd_config.orig')
+
+  #   FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
+  #   FileUtils.cp(sshd_config_path, '/etc/ssh/sshd_config')
+  # end
+
   private
 
   def dot_file_found?(file, test = false)
