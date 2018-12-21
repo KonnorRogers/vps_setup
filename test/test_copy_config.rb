@@ -100,8 +100,4 @@ class TestCopyConfig < Minitest::Test
     refute File.exist?(File.join(@dest_dir, '.minttyrc'))
     refute File.exist?(File.join(@dest_dir, '.cygwin_zshrc'))
   end
-
-  def test_class_method
-    assert_equal CopyConfig.example, :example
-  end
 end

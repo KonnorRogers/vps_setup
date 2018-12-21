@@ -25,11 +25,6 @@ class CopyConfig
     puts "backups created @ #{backup_dir}." if test == false
   end
 
-  # test via self.example or CopyConfig.example
-  def self.example
-    :example
-  end
-
   # TODO: Add test, may be better to allow users to do on their own or place with initial sudo bash script
   def self.copy_sshd_config(backup_dir)
     return unless sshd_copyable?
