@@ -7,7 +7,7 @@ require 'os'
 class CopyConfig
   CONFIG_DIR = File.join(File.expand_path('../', __dir__), 'config')
 
-  def copy(backup_dir:, dest_dir:, test: false)
+  def self.copy(backup_dir:, dest_dir:, test: false)
     puts 'Please run from a posix platform' unless OS.posix?
 
     mkdirs(backup_dir, dest_dir)
@@ -31,7 +31,7 @@ class CopyConfig
   end
 
   # TODO: Add test, may be better to allow users to do on their own or place with initial sudo bash script
-  def copy_sshd_config(backup_dir)
+  def self.copy_sshd_config(backup_dir)
     return unless sshd_copyable?
 
     sshd_config_path = File.join(File.expand_path('../', __dir__), 'sshd_config')
@@ -42,9 +42,7 @@ class CopyConfig
     FileUtils.cp(sshd_config_path, '/etc/ssh/sshd_config')
   end
 
-  private
-
-  def sshd_copyable?
+  def self.sshd_copyable?
     not_linux = 'You are not running on linux. sshd_config not copied'
     # do the same for the other 2
     return (puts not_linux || false) unless OS.linux?
@@ -55,21 +53,21 @@ class CopyConfig
     true
   end
 
-  def dot_file_found?(file, test = false)
+  def self.dot_file_found?(file, test = false)
     return true if File.exist?(file)
 
     puts "#{file} does not exist. No backup created." if test == false
     false
   end
 
-  def backup_file_not_found?(file, test = false)
+  def self.backup_file_not_found?(file, test = false)
     return true unless File.exist?(file)
 
     puts "#{file} exists already. No backup created." if test == false
     false
   end
 
-  def copy_unix_files(config_file, dot_file, backup_file, test = false)
+  def self.copy_unix_files(config_file, dot_file, backup_file, test = false)
     puts 'you are running on mac or linux' && return unless OS.mac? || OS.linux?
 
     non_unix_files = %w[cygwin_zshrc minttyrc]
@@ -78,7 +76,7 @@ class CopyConfig
     copy_files(config_file, dot_file, backup_file, test)
   end
 
-  def copy_cygwin_files(config_file, dot_file, backup_file, test = false)
+  def self.copy_cygwin_files(config_file, dot_file, backup_file, test = false)
     puts 'you are running on cygwin' && return unless OS.cygwin?
 
     non_cygwin_files = %w[zshrc]
@@ -93,7 +91,7 @@ class CopyConfig
     copy_files(config_file, dot_file, backup_file, test)
   end
 
-  def copy_files(config_file, dot_file, backup_file, test = false)
+  def self.copy_files(config_file, dot_file, backup_file, test = false)
     # if there is an original dot file & no backup file in the backupdir
     if dot_file_found?(dot_file, test)
       if backup_file_not_found?(backup_file, test)
@@ -106,7 +104,7 @@ class CopyConfig
     FileUtils.cp(config_file, dot_file)
   end
 
-  def mkdirs(*dirs)
+  def self.mkdirs(*dirs)
     dirs.each { |dir| FileUtils.mkdir_p(dir) unless Dir.exist?(dir) }
   end
 end

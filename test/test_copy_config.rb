@@ -5,7 +5,9 @@ require 'fileutils'
 
 class TestCopyConfig < Minitest::Test
   def setup
-    @cc = CopyConfig.new
+    # CopyConfig = CopyConfig.new
+
+
     @backup_dir = File.join(File.expand_path(__dir__), 'backup_dir')
     @dest_dir = File.join(File.expand_path(__dir__), 'dest_dir')
   end
@@ -19,7 +21,7 @@ class TestCopyConfig < Minitest::Test
     refute(Dir.exist?(@backup_dir))
     refute(Dir.exist?(@dest_dir))
 
-    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
+    CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     assert(Dir.exist?(@backup_dir))
     assert(Dir.exist?(@dest_dir))
@@ -31,14 +33,14 @@ class TestCopyConfig < Minitest::Test
     assert(Dir.exist?(@backup_dir))
     assert(Dir.exist?(@dest_dir))
 
-    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
+    CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     assert(Dir.exist?(@backup_dir))
     assert(Dir.exist?(@dest_dir))
   end
 
   def test_backup_dir_empty_and_dest_dir_should_not_be_empty
-    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
+    CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     # Will not add files to the backup_dir if original dotfiles do not exist
     assert_empty(Dir.children(@backup_dir))
@@ -55,7 +57,7 @@ class TestCopyConfig < Minitest::Test
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     dest_file_before_copy = File.read(dest_file)
 
-    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
+    CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     refute_empty(Dir.children(@backup_dir))
     assert_includes(Dir.children(@backup_dir), '.vimrc.orig')
@@ -72,7 +74,7 @@ class TestCopyConfig < Minitest::Test
     File.open(f1, 'w+') { |file| file.puts '1' }
     File.open(f2, 'w+') { |file| file.puts '2' }
 
-    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
+    CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     refute File.read(f1) == File.read(f2)
   end
@@ -87,15 +89,19 @@ class TestCopyConfig < Minitest::Test
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     refute File.read(config_file) == File.read(dest_file)
 
-    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
+    CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     assert File.read(config_file) == File.read(dest_file)
   end
 
   def test_non_unix_files_not_copied
-    @cc.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
+    CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir, test: true)
 
     refute File.exist?(File.join(@dest_dir, '.minttyrc'))
     refute File.exist?(File.join(@dest_dir, '.cygwin_zshrc'))
+  end
+
+  def test_class_method
+    assert_equal CopyConfig.example, :example
   end
 end
