@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'fileutils'
+# require 'fileutils'
+require 'rake'
 require 'os'
 
 # Copies config from /vps-setup/config to your home dir
@@ -33,8 +34,8 @@ class CopyConfig
     sshd_path = '/etc/ssh/sshd_config'
     sshd_backup = File.join(backup_dir, 'sshd_config.orig')
 
-    FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
-    FileUtils.cp(sshd_config_path, '/etc/ssh/sshd_config')
+    cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
+    cp(sshd_config_path, '/etc/ssh/sshd_config')
   end
 
   def self.sshd_copyable?
@@ -91,15 +92,15 @@ class CopyConfig
     if dot_file_found?(dot_file, test)
       if backup_file_not_found?(backup_file, test)
         # Copy the dot file to the backup dir
-        FileUtils.cp(dot_file, backup_file)
+        cp(dot_file, backup_file)
       end
     end
 
     # Copies from vps-setup/config to home_dir
-    FileUtils.cp(config_file, dot_file)
+    cp(config_file, dot_file)
   end
 
   def self.mkdirs(*dirs)
-    dirs.each { |dir| FileUtils.mkdir_p(dir) unless Dir.exist?(dir) }
+    dirs.each { |dir| mkdir_p(dir) unless Dir.exist?(dir) }
   end
 end
