@@ -21,8 +21,10 @@ class TestCopyConfig < Minitest::Test
 
   def teardown
     File.open(LOG_FILE, File::APPEND) do
+      LOG_FILE.write("Beginning of test\n\n")
       LOG_FILE.write(@err.string)
       LOG_FILE.write(@out.string)
+      LOG_FILE.write("\nEND OF TEST\n\n")
     end
 
     restore_out_err(@stdout, @stderr)
