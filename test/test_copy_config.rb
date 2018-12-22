@@ -11,10 +11,7 @@ LOG_FILE = File.new(LOG_PATH, 'w+')
 
 class TestCopyConfig < Minitest::Test
   def setup
-    @stderr = orig_stderr
-    @stdout = orig_stdout
-    @err = capture_err
-    @out = capture_out
+    @console = capture_console
     @backup_dir = File.join(ROOT, 'backup_dir')
     @dest_dir = File.join(ROOT, 'dest_dir')
   end
@@ -22,12 +19,12 @@ class TestCopyConfig < Minitest::Test
   def teardown
     File.open(LOG_FILE, File::APPEND) do
       LOG_FILE.write("Beginning of test\n\n")
-      LOG_FILE.write(@err.string)
-      LOG_FILE.write(@out.string)
+      LOG_FILE.write(@console[:fake_err].string)
+      LOG_FILE.write(@console[:fake_out].string)
       LOG_FILE.write("\nEND OF TEST\n\n")
     end
 
-    restore_out_err(@stdout, @stderr)
+    restore_out_err(@console)
     FileUtils.rm_rf(@backup_dir)
     FileUtils.rm_rf(@dest_dir)
   end
