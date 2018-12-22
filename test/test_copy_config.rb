@@ -2,12 +2,10 @@
 
 require 'test_helper'
 require 'fileutils'
+require 'stringio'
 
 class TestCopyConfig < Minitest::Test
   def setup
-    # CopyConfig = CopyConfig.new
-
-
     @backup_dir = File.join(File.expand_path(__dir__), 'backup_dir')
     @dest_dir = File.join(File.expand_path(__dir__), 'dest_dir')
   end
@@ -34,14 +32,12 @@ class TestCopyConfig < Minitest::Test
     assert(Dir.exist?(@dest_dir))
 
     CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir)
-
     assert(Dir.exist?(@backup_dir))
     assert(Dir.exist?(@dest_dir))
   end
 
   def test_backup_dir_empty_and_dest_dir_should_not_be_empty
     CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir)
-
     # Will not add files to the backup_dir if original dotfiles do not exist
     assert_empty(Dir.children(@backup_dir))
 
@@ -73,9 +69,7 @@ class TestCopyConfig < Minitest::Test
     f2 = File.join(@backup_dir, '.vimrc.orig')
     File.open(f1, 'w+') { |file| file.puts '1' }
     File.open(f2, 'w+') { |file| file.puts '2' }
-
     CopyConfig.copy(backup_dir: @backup_dir, dest_dir: @dest_dir)
-
     refute File.read(f1) == File.read(f2)
   end
 
