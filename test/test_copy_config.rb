@@ -4,13 +4,28 @@ require 'test_helper'
 require 'fileutils'
 require 'stringio'
 
+ROOT = File.expand_path(__dir__)
+
+LOG_PATH = File.join(ROOT, 'logs', "#{File.basename(__FILE__, '.rb')}.log")
+LOG_FILE = File.new(LOG_PATH, 'w+')
+
 class TestCopyConfig < Minitest::Test
   def setup
-    @backup_dir = File.join(File.expand_path(__dir__), 'backup_dir')
-    @dest_dir = File.join(File.expand_path(__dir__), 'dest_dir')
+    @stderr = orig_stderr
+    @stdout = orig_stdout
+    @err = capture_err
+    @out = capture_out
+    @backup_dir = File.join(ROOT, 'backup_dir')
+    @dest_dir = File.join(ROOT, 'dest_dir')
   end
 
   def teardown
+    File.open(LOG_FILE, File::APPEND) do
+      LOG_FILE.write(@err.string)
+      LOG_FILE.write(@out.string)
+    end
+
+    restore_out_err(@stdout, @stderr)
     FileUtils.rm_rf(@backup_dir)
     FileUtils.rm_rf(@dest_dir)
   end
@@ -26,8 +41,8 @@ class TestCopyConfig < Minitest::Test
   end
 
   def test_will_not_error_if_backup_dir_and_dest_dir_exist
-    Dir.mkdir(@backup_dir)
-    Dir.mkdir(@dest_dir)
+    FileUtils.mkdir_p(@backup_dir)
+    FileUtils.mkdir_p(@dest_dir)
     assert(Dir.exist?(@backup_dir))
     assert(Dir.exist?(@dest_dir))
 
@@ -46,7 +61,7 @@ class TestCopyConfig < Minitest::Test
   end
 
   def test_backup_dir_not_empty_if_orig_found
-    Dir.mkdir(@dest_dir)
+    FileUtils.mkdir_p(@dest_dir)
     backup_file = File.join(@backup_dir, '.vimrc.orig')
     dest_file = File.join(@dest_dir, '.vimrc')
 
@@ -63,8 +78,8 @@ class TestCopyConfig < Minitest::Test
   end
 
   def test_backup_file_will_not_be_overwritten
-    Dir.mkdir(@dest_dir)
-    Dir.mkdir(@backup_dir)
+    FileUtils.mkdir_p(@dest_dir)
+    FileUtils.mkdir_p(@backup_dir)
     f1 = File.join(@dest_dir, '.vimrc')
     f2 = File.join(@backup_dir, '.vimrc.orig')
     File.open(f1, 'w+') { |file| file.puts '1' }
@@ -79,7 +94,7 @@ class TestCopyConfig < Minitest::Test
 
     assert_raises(Errno::ENOENT) { File.read(config_file) == File.read(dest_file) }
 
-    Dir.mkdir(@dest_dir)
+    FileUtils.mkdir_p(@dest_dir)
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     refute File.read(config_file) == File.read(dest_file)
 

@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 require 'fileutils'
-require 'rake'
 require 'os'
+require 'logger'
 
 # Copies config from /vps-setup/config to your home dir
 class CopyConfig
-  CONFIG_DIR = File.join(File.expand_path('../', __dir__), 'config')
+  ROOT = File.expand_path(File.expand_path('../', __dir__))
+  CONFIG_DIR = File.join(ROOT, 'config')
 
   def self.copy(backup_dir:, dest_dir:)
     puts 'Please run from a posix platform' unless OS.posix?
@@ -34,8 +35,8 @@ class CopyConfig
     sshd_path = '/etc/ssh/sshd_config'
     sshd_backup = File.join(backup_dir, 'sshd_config.orig')
 
-    Rake.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
-    Rake.cp(sshd_config_path, '/etc/ssh/sshd_config')
+    FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
+    FileUtils.cp(sshd_config_path, '/etc/ssh/sshd_config')
   end
 
   def self.sshd_copyable?
@@ -92,15 +93,15 @@ class CopyConfig
     if dot_file_found?(dot_file)
       if backup_file_not_found?(backup_file)
         # Copy the dot file to the backup dir
-        Rake.cp(dot_file, backup_file)
+        FileUtils.cp(dot_file, backup_file)
       end
     end
 
     # Copies from vps-setup/config to home_dir
-    Rake.cp(config_file, dot_file)
+    FileUtils.cp(config_file, dot_file)
   end
 
   def self.mkdirs(*dirs)
-    dirs.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
+    dirs.each { |dir| FileUtils.mkdir_p(dir) unless Dir.exist?(dir) }
   end
 end
