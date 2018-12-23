@@ -10,8 +10,8 @@ BACKUP_DIR = File.join(ROOT, 'backup_dir')
 DEST_DIR = File.join(ROOT, 'dest_dir')
 
 LOG_PATH = File.join(ROOT, 'logs', "#{File.basename(__FILE__, '.rb')}.log")
-LOG_FILE = Logger.new(LOG_PATH, '5')
-# LOG_FILE = File.new(LOG_PATH, 'w+')
+LOG_FILE = File.new(LOG_PATH, 'w+')
+LOGGER = Logger.new(LOG_FILE)
 
 class TestCopyConfig < Minitest::Test
   def setup
@@ -22,15 +22,12 @@ class TestCopyConfig < Minitest::Test
 
   def teardown
     # File.open(LOG_FILE, File::APPEND) do
-    #   LOG_FILE.write("Beginning of test\n\n")
-    #   LOG_FILE.write(@console[:fake_err].string)
+    #   LOG_FILE.write("Beginning of test\n\n") LOG_FILE.write(@console[:fake_err].string)
     #   LOG_FILE.write(@console[:fake_out].string)
     #   LOG_FILE.write("\nEND OF TEST\n\n")
     # end
-    error = Logger::ERROR
-    info = Logger::INFO
-    LOG_FILE.add(error, @console[:fake_err])
-    LOG_FILE.add(info, @console[:fake_out])
+    LOGGER.info(@console[:fake_out].string)
+    LOGGER.error(@console[:fake_err].string)
 
     restore_out_err(@console)
     FileUtils.rm_rf(BACKUP_DIR)
