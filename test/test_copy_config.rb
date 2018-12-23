@@ -13,6 +13,8 @@ LOG_PATH = File.join(ROOT, 'logs', "#{File.basename(__FILE__, '.rb')}.log")
 LOG_FILE = File.new(LOG_PATH, 'w+')
 LOGGER = Logger.new(LOG_FILE)
 
+# can abstract a lot to test_helper
+
 class TestCopyConfig < Minitest::Test
   def setup
     LOGGER.info("#{class_name}::#{name}")
