@@ -32,6 +32,7 @@ class TestCopyConfig < Minitest::Test
     FileUtils.rm_rf(DEST_DIR)
   end
 
+  # self.after_run
   def test_creates_backup_dir_and_dest_dir
     refute(Dir.exist?(BACKUP_DIR))
     refute(Dir.exist?(DEST_DIR))
