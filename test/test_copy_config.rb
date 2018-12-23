@@ -2,6 +2,7 @@
 
 require 'test_helper'
 require 'fileutils'
+require 'rake'
 require 'stringio'
 require 'logger'
 
@@ -16,11 +17,14 @@ LOGGER = Logger.new(LOG_FILE)
 # can abstract a lot to test_helper
 
 class TestCopyConfig < Minitest::Test
+  def remove_dirs(*args)
+    args.each { |dir| FileUtils.rm_rf(dir) if Dir.exist?(dir) }
+  end
+
   def setup
     LOGGER.info("#{class_name}::#{name}")
     @console = capture_console
-    FileUtils.rm_rf(BACKUP_DIR)
-    FileUtils.rm_rf(DEST_DIR)
+    remove_dirs(BACKUP_DIR, DEST_DIR)
   end
 
   def teardown
@@ -28,8 +32,7 @@ class TestCopyConfig < Minitest::Test
     LOGGER.error(@console[:fake_err].string)
 
     restore_out_err(@console)
-    FileUtils.rm_rf(BACKUP_DIR)
-    FileUtils.rm_rf(DEST_DIR)
+    remove_dirs(BACKUP_DIR, DEST_DIR)
   end
 
   # self.after_run
