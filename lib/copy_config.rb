@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 require 'fileutils'
-require 'os'
-require 'logger'
+require 'os' # returns users OS
 
 # Copies config from /vps-setup/config to your home dir
 class CopyConfig
   ROOT = File.expand_path(File.expand_path('../', __dir__))
   CONFIG_DIR = File.join(ROOT, 'config')
 
-  def self.copy(backup_dir:, dest_dir:)
-    puts 'Please run from a posix platform' unless OS.posix?
+  def self.copy(backup_dir:, dest_dir:, posix: OS.posix?)
+    puts 'Please run from a posix platform' unless posix
 
     mkdirs(backup_dir, dest_dir)
 
@@ -39,13 +38,22 @@ class CopyConfig
     FileUtils.cp(sshd_config_path, '/etc/ssh/sshd_config')
   end
 
-  def self.sshd_copyable?
+  def self.sshd_copyable?(linux, ssh_dir, root)
+    linux ||= OS.linux?
+    ssh_dir ||= '/etc/ssh'
+    root ||= Process.uid == 0
+
     not_linux = 'You are not running on linux. sshd_config not copied'
     # do the same for the other 2
-    return (puts not_linux || false) unless OS.linux?
-    return false unless Dir.exist?('/etc/ssh')
+    return (puts not_linux || false) unless linux
+
+    no_ssh_found = 'unable to find /etc/ssh. sshd_config not copied'
+    ssh_dir_found = Dir.exist?(ssh_dir)
+    return (puts no_ssh_found || false) unless ssh_dir_found
+
     # checks if running as root
-    return false unless Process.uid == 0
+    not_root = 'process is not running as root. Please run as root'
+    return (puts not_root || false) unless root
 
     true
   end
@@ -64,8 +72,10 @@ class CopyConfig
     false
   end
 
-  def self.copy_unix_files(config_file, dot_file, backup_file)
-    puts 'you are running on mac or linux' && return unless OS.mac? || OS.linux?
+  # helper method to run within a file list
+  def self.copy_unix_files(config_file, dot_file, backup_file, unix = nil)
+    unix ||= (OS.mac? || OS.linux?)
+    puts 'you are not running on mac or linux' && return unless unix
 
     non_unix_files = %w[cygwin_zshrc minttyrc]
     return if non_unix_files.include?(File.basename(config_file))
