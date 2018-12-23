@@ -15,17 +15,13 @@ LOGGER = Logger.new(LOG_FILE)
 
 class TestCopyConfig < Minitest::Test
   def setup
+    LOGGER.info("#{class_name}::#{name}")
     @console = capture_console
     FileUtils.rm_rf(BACKUP_DIR)
     FileUtils.rm_rf(DEST_DIR)
   end
 
   def teardown
-    # File.open(LOG_FILE, File::APPEND) do
-    #   LOG_FILE.write("Beginning of test\n\n") LOG_FILE.write(@console[:fake_err].string)
-    #   LOG_FILE.write(@console[:fake_out].string)
-    #   LOG_FILE.write("\nEND OF TEST\n\n")
-    # end
     LOGGER.info(@console[:fake_out].string)
     LOGGER.error(@console[:fake_err].string)
 
