@@ -8,8 +8,9 @@ class CopyConfig
   ROOT = File.expand_path(File.expand_path('../', __dir__))
   CONFIG_DIR = File.join(ROOT, 'config')
 
-  def self.copy(backup_dir:, dest_dir:, posix: OS.posix?, attr: {})
-    raise 'Please run from a posix platform' unless posix
+  def self.copy(backup_dir:, dest_dir:, attr: {})
+    attr[:posix] ||= OS.posix?
+    raise 'Please run from a posix platform' unless attr[:posix] == true
 
     attr[:root] ||= (Process.uid.zero? && Dir.home == '/root')
     raise 'Do not run this as root, use sudo instead' if attr[:root] == true
@@ -30,13 +31,15 @@ class CopyConfig
       # .for_each returns '.' and '..' which we dont want
       next if file =~ /\A\.{1,2}\Z/
 
+      copy_sshd_config(backup_dir, attr) && next if file == 'sshd_config'
+
       config = File.join(CONFIG_DIR, file)
       dot = File.join(dest_dir, ".#{file}")
       backup = File.join(backup_dir, ".#{file}.orig")
 
       copy_unix_files(config, dot, backup, attr[:unix]) # checks for linux in the method
       copy_cygwin_files(config, dot, backup, attr[:cygwin]) # checks for cygwin in the method
-      copy_sshd_config(attr) # only copies if sudo, linux, and ssh_path exists
+      # only copies if sudo, linux, and ssh_path exists
     end
   end
 
@@ -52,25 +55,25 @@ class CopyConfig
     # don't know file structure of Macs, assuming its not the same
     no_ssh_found = 'unable to find /etc/ssh. sshd_config not copied'
     ssh_dir_found = Dir.exist?(attr[:ssh_dir])
-    return (puts no_ssh_found || false) unless ssh_dir_found == '/etc/ssh'
+    return (puts no_ssh_found || false) unless ssh_dir_found == true
 
     # checks if running as root
-    not_sudo = 'process is not running as root. Please run as root'
+    not_sudo = 'process is not running as sudo. Please run as sudo. sshd_config not copied'
     return (puts not_sudo || false) unless attr[:sudo] == true
 
     true
   end
 
-  # TODO: Add test, may be better to allow users to do on their own or place with initial sudo bash script
   def self.copy_sshd_config(backup_dir, attr = {})
     return unless sshd_copyable?(attr)
 
-    sshd_config_path = File.join(File.expand_path('../', __dir__), 'sshd_config')
+    sshd_cfg_path = File.join(CONFIG_DIR, 'sshd_config')
     attr[:sshd_path] ||= '/etc/ssh/sshd_config'
     sshd_backup = File.join(backup_dir, 'sshd_config.orig')
 
     FileUtils.cp(attr[:sshd_path], sshd_backup) if File.exist?(attr[:sshd_path])
-    FileUtils.cp(sshd_config_path, '/etc/ssh/sshd_config')
+    puts "copying to #{attr[:sshd_path]}"
+    FileUtils.cp(sshd_cfg_path, attr[:sshd_path])
   end
 
   def self.dot_file_found?(file)
