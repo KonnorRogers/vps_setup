@@ -11,23 +11,31 @@ class CopyConfig
   def self.copy(backup_dir:, dest_dir:, posix: OS.posix?, attr: {})
     raise 'Please run from a posix platform' unless posix
 
-    attr[:root] ||= (Process.uid == 0 && Dir.home == '/root')
+    attr[:root] ||= (Process.uid.zero? && Dir.home == '/root')
     raise 'Do not run this as root, use sudo instead' if attr[:root] == true
 
     mkdirs(backup_dir, dest_dir)
 
-    Dir.children(CONFIG_DIR).each do |file|
+    copy_config_dir(backup_dir, dest_dir, attr)
+
+    puts "dotfiles copied to #{dest_dir}."
+    puts "backups created @ #{backup_dir}."
+  end
+
+  def self.copy_config_dir(backup_dir, dest_dir, attr = {})
+    # Dir.children(CONFIG_DIR).each do |file|, released in ruby 2.5.1
+    # in 2.3.3 which is shipped with babun
+    Dir.foreach(CONFIG_DIR).each do |file|
+      next if file =~ /^\./ # .for_each returns '.' and '..' which we dont want
+
       config = File.join(CONFIG_DIR, file)
       dot = File.join(dest_dir, ".#{file}")
       backup = File.join(backup_dir, ".#{file}.orig")
 
       copy_unix_files(config, dot, backup) # checks for linux in the method
       copy_cygwin_files(config, dot, backup) # checks for cygwin in the method
-      copy_sshd_config(test) # only copies if sshd_path found, is linux, and is root
+      copy_sshd_config(attr) # only copies if sudo, linux, and ssh_path exists
     end
-
-    puts "dotfiles copied to #{dest_dir}."
-    puts "backups created @ #{backup_dir}."
   end
 
   def self.sshd_copyable?(attr = {})
@@ -41,8 +49,8 @@ class CopyConfig
 
     # don't know file structure of Macs, assuming its not the same
     no_ssh_found = 'unable to find /etc/ssh. sshd_config not copied'
-    attr[:ssh_dir_found] = Dir.exist?(ssh_dir)
-    return (puts no_ssh_found || false) unless attr[:ssh_dir_found]
+    ssh_dir_found = Dir.exist?(attr[:ssh_dir])
+    return (puts no_ssh_found || false) unless ssh_dir_found
 
     # checks if running as root
     not_sudo = 'process is not running as root. Please run as root'
