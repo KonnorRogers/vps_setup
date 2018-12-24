@@ -157,5 +157,7 @@ class TestCopyConfig < Minitest::Test
 
     sshd_config = File.join(CopyConfig::CONFIG_DIR, 'sshd_config')
     assert File.read(sshd_test_path) == File.read(sshd_config)
+
+    FileUtils.rm_rf(ssh_test_path)
   end
 end
