@@ -2,15 +2,13 @@
 
 require 'test_helper'
 require 'fileutils'
-require 'rake'
 require 'stringio'
 require 'logger'
 
-ROOT = File.expand_path(__dir__)
 BACKUP_DIR = File.join(ROOT, 'backup_dir')
 DEST_DIR = File.join(ROOT, 'dest_dir')
 
-LOG_PATH = File.join(ROOT, 'logs', "#{File.basename(__FILE__, '.rb')}.log")
+LOG_PATH = File.join(LOGS_DIR, "#{File.basename(__FILE__, '.rb')}.log")
 LOG_FILE = File.new(LOG_PATH, 'w+')
 LOGGER = Logger.new(LOG_FILE)
 

@@ -4,6 +4,10 @@ $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'copy_config'
 require 'minitest/autorun'
 
+ROOT = File.expand_path(__dir__)
+LOGS_DIR = File.join(ROOT, 'logs')
+mkdir_p(LOGS_DIR) unless Dir.exist?(LOGS_DIR)
+
 def capture_console
   orig_err = $stderr
   orig_out = $stdout
