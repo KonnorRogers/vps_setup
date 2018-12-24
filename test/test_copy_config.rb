@@ -15,6 +15,10 @@ LOGGER = Logger.new(LOG_FILE)
 # can abstract a lot to test_helper
 
 class TestCopyConfig < Minitest::Test
+  def dir_children(dir)
+    Dir.foreach(dir).reject { |file| file =~ /^\..$/ }
+  end
+
   def remove_dirs(*args)
     args.each { |dir| FileUtils.rm_rf(dir) if Dir.exist?(dir) }
   end
@@ -58,10 +62,10 @@ class TestCopyConfig < Minitest::Test
   def test_backup_dir_empty_and_dest_dir_should_not_be_empty
     CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
     # Will not add files to the backup_dir if original dotfiles do not exist
-    assert_empty(Dir.children(BACKUP_DIR))
+    assert_empty(dir_children(BACKUP_DIR))
 
-    refute_empty(Dir.children(DEST_DIR))
-    assert_includes(Dir.children(DEST_DIR), '.vimrc')
+    refute_empty(dir_children(DEST_DIR))
+    assert_includes(dir_children(DEST_DIR), '.vimrc')
   end
 
   def test_backup_dir_not_empty_if_orig_found
@@ -74,8 +78,8 @@ class TestCopyConfig < Minitest::Test
 
     CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
-    refute_empty(Dir.children(BACKUP_DIR))
-    assert_includes(Dir.children(BACKUP_DIR), '.vimrc.orig')
+    refute_empty(dir_children(BACKUP_DIR))
+    assert_includes(dir_children(BACKUP_DIR), '.vimrc.orig')
 
     assert dest_file_before_copy == File.read(backup_file)
     refute dest_file_before_copy == File.read(dest_file)
