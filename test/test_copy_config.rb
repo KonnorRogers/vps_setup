@@ -114,8 +114,9 @@ class TestCopyConfig < Minitest::Test
     assert File.read(config_file) == File.read(dest_file)
   end
 
-  def test_non_unix_files_not_copied
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+  def test_cygwin_files_not_copied
+    attr = { cygwin: false, unix: true }
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: attr)
 
     refute File.exist?(File.join(DEST_DIR, '.minttyrc'))
     refute File.exist?(File.join(DEST_DIR, '.cygwin_zshrc'))

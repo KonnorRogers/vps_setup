@@ -34,8 +34,8 @@ class CopyConfig
       dot = File.join(dest_dir, ".#{file}")
       backup = File.join(backup_dir, ".#{file}.orig")
 
-      copy_unix_files(config, dot, backup) # checks for linux in the method
-      copy_cygwin_files(config, dot, backup) # checks for cygwin in the method
+      copy_unix_files(config, dot, backup, attr[:unix]) # checks for linux in the method
+      copy_cygwin_files(config, dot, backup, attr[:cygwin]) # checks for cygwin in the method
       copy_sshd_config(attr) # only copies if sudo, linux, and ssh_path exists
     end
   end
