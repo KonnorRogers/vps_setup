@@ -115,7 +115,7 @@ class TestCopyConfig < Minitest::Test
   end
 
   def test_cygwin_files_not_copied
-    attr = { cygwin: false, unix: true }
+    attr = { cygwin: 'false', unix: true } # sets to a value other than true
     CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: attr)
 
     refute File.exist?(File.join(DEST_DIR, '.minttyrc'))
