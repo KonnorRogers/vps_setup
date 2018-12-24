@@ -47,16 +47,16 @@ class CopyConfig
 
     not_linux = 'You are not running on linux. sshd_config not copied'
     # do the same for the other 2
-    return (puts not_linux || false) unless attr[:linux]
+    return (puts not_linux || false) unless attr[:linux] == true
 
     # don't know file structure of Macs, assuming its not the same
     no_ssh_found = 'unable to find /etc/ssh. sshd_config not copied'
     ssh_dir_found = Dir.exist?(attr[:ssh_dir])
-    return (puts no_ssh_found || false) unless ssh_dir_found
+    return (puts no_ssh_found || false) unless ssh_dir_found == '/etc/ssh'
 
     # checks if running as root
     not_sudo = 'process is not running as root. Please run as root'
-    return (puts not_sudo || false) unless attr[:sudo]
+    return (puts not_sudo || false) unless attr[:sudo] == true
 
     true
   end
@@ -90,7 +90,7 @@ class CopyConfig
   # helper method to run within a file list
   def self.copy_unix_files(config_file, dot_file, backup_file, unix = nil)
     unix ||= (OS.mac? || OS.linux?)
-    puts 'you are not running on mac or linux' && return unless unix
+    puts 'you are not running on mac or linux' && return unless unix == true
 
     non_unix_files = %w[cygwin_zshrc minttyrc]
     return if non_unix_files.include?(File.basename(config_file))
@@ -100,7 +100,7 @@ class CopyConfig
 
   def self.copy_cygwin_files(config_file, dot_file, backup_file, cygwin = nil)
     cygwin ||= OS.cygwin?
-    puts 'you are running on cygwin' && return unless cygwin
+    puts 'you are running on cygwin' && return unless cygwin == true
 
     non_cygwin_files = %w[zshrc]
     return if non_cygwin_files.include?(File.basename(config_file))
