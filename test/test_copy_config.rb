@@ -16,7 +16,10 @@ LOGGER = Logger.new(LOG_FILE)
 
 class TestCopyConfig < Minitest::Test
   def dir_children(dir)
-    Dir.foreach(dir).reject { |file| file =~ /^\..$/ }
+    # Reads as \A == beginning of string
+    # \. == '.' {1,2} means minimum 1, maximum 2 occurences
+    # \Z == end of string
+    Dir.foreach(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
   end
 
   def remove_dirs(*args)

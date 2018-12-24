@@ -26,7 +26,9 @@ class CopyConfig
     # Dir.children(CONFIG_DIR).each do |file|, released in ruby 2.5.1
     # in 2.3.3 which is shipped with babun
     Dir.foreach(CONFIG_DIR).each do |file|
-      next if file =~ /^\./ # .for_each returns '.' and '..' which we dont want
+      # Explanation of this regexp in test/test_copy_confib.rb
+      # .for_each returns '.' and '..' which we dont want
+      next if file =~ /\A\.{1,2}\Z/
 
       config = File.join(CONFIG_DIR, file)
       dot = File.join(dest_dir, ".#{file}")
