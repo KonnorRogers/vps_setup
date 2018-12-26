@@ -6,7 +6,7 @@ require 'os'
 
 module VPS_Setup
   # Pull changes from local dir into config dir to be able to push changes up to repo
-  class PullChanges
+  class Pull
     # Must use foreach due to not having Dir.children in 2.3.3 for babun
     def self.linux_config_dotfiles
       CONFIG_DIR.reject { |file| NON_LINUX_DOTFILES.include?(file) }

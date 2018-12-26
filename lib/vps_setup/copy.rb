@@ -5,7 +5,7 @@ require 'os' # returns users OS
 
 module VPS_Setup
   # Copies config from /vps-setup/config to your home dir
-  class CopyConfig
+  class Copy
 
     def self.copy(backup_dir:, dest_dir:, attr: {})
       attr[:posix] ||= OS.posix?
