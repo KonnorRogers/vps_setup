@@ -56,7 +56,7 @@ module VpsSetup
       true
     end
 
-    def self.copy_sshd_config(backup_dir, sshd_path)
+    def self.copy_sshd_config(backup_dir, sshd_path = nil)
       return unless sshd_copyable?
 
       sshd_cfg_path = File.join(CONFIG_DIR, 'sshd_config')
