@@ -5,8 +5,6 @@ require 'os' # returns users OS
 
 # Copies config from /vps-setup/config to your home dir
 class CopyConfig
-  ROOT = File.expand_path(File.expand_path('../', __dir__))
-  CONFIG_DIR = File.join(ROOT, 'config')
 
   def self.copy(backup_dir:, dest_dir:, attr: {})
     attr[:posix] ||= OS.posix?

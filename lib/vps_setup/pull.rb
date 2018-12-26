@@ -6,10 +6,6 @@ require 'os'
 
 # Pull changes from local dir into config dir to be able to push changes up to repo
 class PullChanges
-  NON_DOTFILES = %w[gnome_terminal_settings sshd_config]
-  NON_CYGWIN_DOTFILES = %w[zshrc].concat(NON_DOTFILES)
-  NON_LINUX_DOTFILES = %w[cygwin_zshrc minttyrc].concat(NON_DOTFILES)
-
   # Must use foreach due to not having Dir.children in 2.3.3 for babun
   def self.linux_config_dotfiles
     CopyConfig::CONFIG_DIR.reject { |file| NON_LINUX_DOTFILES.include?(file) } # only returns dotfiles for linux
