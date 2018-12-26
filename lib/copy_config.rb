@@ -31,35 +31,25 @@ class CopyConfig
       # .for_each returns '.' and '..' which we dont want
       next if file =~ /\A\.{1,2}\Z/
 
-      copy_sshd_config(backup_dir, attr) && next if file == 'sshd_config'
-
       config = File.join(CONFIG_DIR, file)
       dot = File.join(dest_dir, ".#{file}")
       backup = File.join(backup_dir, ".#{file}.orig")
 
-      copy_unix_files(config, dot, backup, attr[:unix]) # checks for linux in the method
-      copy_cygwin_files(config, dot, backup, attr[:cygwin]) # checks for cygwin in the method
+      if OS.linux?
+        copy_unix_files(config, dot, backup)
+        copy_sshd_config(backup_dir) && next if file == 'sshd_config'
+      end
+      copy_cygwin_files(config, dot, backup) if OS.cygwin?
       # only copies if sudo, linux, and ssh_path exists
     end
   end
 
-  def self.sshd_copyable?(attr = {})
-    attr[:linux] ||= OS.linux?
-    attr[:ssh_dir] ||= '/etc/ssh'
-    attr[:sudo] ||= Process.uid.zero? # checks that userid is 0
+  def self.sshd_copyable?(ssh_dir = nil, process_uid = nil)
+    process_uid ||= Process.uid.zero?
+    ssh_dir ||= '/etc/ssh'
 
-    not_linux = 'You are not running on linux. sshd_config not copied'
-    # do the same for the other 2
-    return (puts not_linux || false) unless attr[:linux] == true
-
-    # don't know file structure of Macs, assuming its not the same
-    no_ssh_found = 'unable to find /etc/ssh. sshd_config not copied'
-    ssh_dir_found = Dir.exist?(attr[:ssh_dir])
-    return (puts no_ssh_found || false) unless ssh_dir_found == true
-
-    # checks if running as root
-    not_sudo = 'process is not running as sudo. Please run as sudo. sshd_config not copied'
-    return (puts not_sudo || false) unless attr[:sudo] == true
+    return false if process_uid != true
+    return false unless Dir.exist?(ssh_dir)
 
     true
   end
