@@ -42,7 +42,7 @@ class TestCopy < Minitest::Test
     refute(Dir.exist?(BACKUP_DIR))
     refute(Dir.exist?(DEST_DIR))
 
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
@@ -54,13 +54,13 @@ class TestCopy < Minitest::Test
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
 
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
   end
 
   def test_backup_dir_empty_and_dest_dir_should_not_be_empty
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
     # Will not add files to the backup_dir if original dotfiles do not exist
     assert_empty(dir_children(BACKUP_DIR))
 
@@ -76,7 +76,7 @@ class TestCopy < Minitest::Test
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     dest_file_before_copy = File.read(dest_file)
 
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     refute_empty(dir_children(BACKUP_DIR))
     assert_includes(dir_children(BACKUP_DIR), '.vimrc.orig')
@@ -92,7 +92,7 @@ class TestCopy < Minitest::Test
     f2 = File.join(BACKUP_DIR, '.vimrc.orig')
     File.open(f1, 'w+') { |file| file.puts '1' }
     File.open(f2, 'w+') { |file| file.puts '2' }
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
     refute File.read(f1) == File.read(f2)
   end
 
@@ -106,23 +106,23 @@ class TestCopy < Minitest::Test
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     refute File.read(config_file) == File.read(dest_file)
 
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     assert File.read(config_file) == File.read(dest_file)
   end
 
   def test_cygwin_files_not_copied_in_unix
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     refute File.exist?(File.join(DEST_DIR, '.minttyrc'))
     refute File.exist?(File.join(DEST_DIR, '.cygwin_zshrc'))
   end
 
   def test_unix_files_not_copied_in_cygwin
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
-    unix_zshrc = File.join(CopyConfig::CONFIG_DIR, 'zshrc')
-    cygwin_zshrc = File.join(CopyConfig::CONFIG_DIR, 'cygwin_zshrc')
+    unix_zshrc = File.join(Copy::CONFIG_DIR, 'zshrc')
+    cygwin_zshrc = File.join(Copy::CONFIG_DIR, 'cygwin_zshrc')
     dest_zshrc = File.join(DEST_DIR, '.zshrc')
 
     refute File.read(dest_zshrc) == File.read(unix_zshrc)
@@ -135,9 +135,9 @@ class TestCopy < Minitest::Test
     FileUtils.mkdir_p(ssh_test_path)
 
     # DEST_DIR included only because its required, does not effect test
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
-    sshd_config = File.join(CopyConfig::CONFIG_DIR, 'sshd_config')
+    sshd_config = File.join(Copy::CONFIG_DIR, 'sshd_config')
     assert File.read(sshd_cfg_test_path) == File.read(sshd_config)
 
     FileUtils.rm_rf(ssh_test_path)
