@@ -48,8 +48,11 @@ class CopyConfig
     process_uid ||= Process.uid.zero?
     ssh_dir ||= '/etc/ssh'
 
-    return false if process_uid != true
-    return false unless Dir.exist?(ssh_dir)
+    not_sudo = 'not running process as sudo, will sshd_config not copied'
+    return puts not_sudo if process_uid != true
+
+    no_ssh_dir = 'No ssh dir found. sshd_config not copied'
+    return puts no_ssh_dir unless Dir.exist?(ssh_dir)
 
     true
   end
@@ -62,8 +65,8 @@ class CopyConfig
     sshd_backup = File.join(backup_dir, 'sshd_config.orig')
 
     FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
-    puts "copying to #{sshd_path]}"
-    FileUtils.cp(sshd_cfg_path, sshd_path])
+    puts "copying to #{sshd_path}"
+    FileUtils.cp(sshd_cfg_path, sshd_path)
   end
 
   def self.dot_file_found?(file)
@@ -81,10 +84,7 @@ class CopyConfig
   end
 
   # helper method to run within a file list
-  def self.copy_unix_files(config_file, dot_file, backup_file, unix = nil)
-    unix ||= (OS.mac? || OS.linux?)
-    puts 'you are not running on mac or linux' && return unless unix == true
-
+  def self.copy_unix_files(config_file, dot_file, backup_file)
     non_unix_files = %w[cygwin_zshrc minttyrc]
     return if non_unix_files.include?(File.basename(config_file))
 
