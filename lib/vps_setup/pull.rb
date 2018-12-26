@@ -8,11 +8,13 @@ require 'os'
 class PullChanges
   # Must use foreach due to not having Dir.children in 2.3.3 for babun
   def self.linux_config_dotfiles
-    CopyConfig::CONFIG_DIR.reject { |file| NON_LINUX_DOTFILES.include?(file) } # only returns dotfiles for linux
+    CONFIG_DIR.reject { |file| NON_LINUX_DOTFILES.include?(file) }
+    # only returns dotfiles for linux
   end
 
   def self.cygwin_config_dotfiles
-    CopyConfig::CONFIG_DIR.reject { |file| NON_CYGWIN_DOTFILES.include(file) }
+    CONFIG_DIR.reject { |file| NON_CYGWIN_DOTFILES.include(file) }
+    # returns cygwin dotfiles
   end
 
   def self.cygwin_local_dotfiles(attr = {})
@@ -28,7 +30,7 @@ class PullChanges
 
   def self.copy_sshd_config
     sshd_local_path = '/etc/ssh/sshd_config'
-    sshd_config_path = File.join(CopyConfig::CONFIG_DIR, 'sshd_config')
+    sshd_config_path = File.join(CONFIG_DIR, 'sshd_config')
     FileUtils.cp(sshd_local_path, sshd_config_path)
   end
 
