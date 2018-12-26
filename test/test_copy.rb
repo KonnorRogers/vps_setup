@@ -10,8 +10,9 @@ LOG_PATH = File.join(LOGS_DIR, "#{File.basename(__FILE__, '.rb')}.log")
 LOG_FILE = File.new(LOG_PATH, 'w+')
 LOGGER = Logger.new(LOG_FILE)
 
-class TestCopyConfig < Minitest::Test
+class TestCopy < Minitest::Test
   include VpsSetup
+
   def dir_children(dir)
     # Reads as \A == beginning of string
     # \. == '.' {1,2} means minimum 1, maximum 2 occurences
