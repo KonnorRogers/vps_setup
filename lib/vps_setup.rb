@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Used for setting up a linux + cygwin environment for ssh purposes
-module VPS_Setup; end
+module VpsSetup; end
 
 require 'vps_setup/copy'
 require 'vps_setup/pull'

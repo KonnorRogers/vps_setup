@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
-# require 'vps_setup/'
+
 require 'minitest/autorun'
+require 'vps_setup'
 
 ROOT = File.expand_path(__dir__)
+
+BACKUP_DIR = File.join(ROOT, 'backup_dir')
+DEST_DIR = File.join(ROOT, 'dest_dir')
+
 LOGS_DIR = File.join(ROOT, 'logs')
 mkdir_p(LOGS_DIR) unless Dir.exist?(LOGS_DIR)
 

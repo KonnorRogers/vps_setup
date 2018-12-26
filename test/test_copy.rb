@@ -5,16 +5,13 @@ require 'fileutils'
 require 'stringio'
 require 'logger'
 
-BACKUP_DIR = File.join(ROOT, 'backup_dir')
-DEST_DIR = File.join(ROOT, 'dest_dir')
 
 LOG_PATH = File.join(LOGS_DIR, "#{File.basename(__FILE__, '.rb')}.log")
 LOG_FILE = File.new(LOG_PATH, 'w+')
 LOGGER = Logger.new(LOG_FILE)
 
-# can abstract a lot to test_helper
-
 class TestCopyConfig < Minitest::Test
+  include VpsSetup
   def dir_children(dir)
     # Reads as \A == beginning of string
     # \. == '.' {1,2} means minimum 1, maximum 2 occurences
@@ -40,19 +37,11 @@ class TestCopyConfig < Minitest::Test
     remove_dirs(BACKUP_DIR, DEST_DIR)
   end
 
-  def min_attr
-    {
-      posix: true,
-      root: false
-    }
-  end
-
-  # self.after_run
   def test_creates_backup_dir_and_dest_dir
     refute(Dir.exist?(BACKUP_DIR))
     refute(Dir.exist?(DEST_DIR))
 
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: min_attr)
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
@@ -64,7 +53,7 @@ class TestCopyConfig < Minitest::Test
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
 
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: min_attr)
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
   end
@@ -86,7 +75,7 @@ class TestCopyConfig < Minitest::Test
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     dest_file_before_copy = File.read(dest_file)
 
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: min_attr)
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     refute_empty(dir_children(BACKUP_DIR))
     assert_includes(dir_children(BACKUP_DIR), '.vimrc.orig')
@@ -102,12 +91,12 @@ class TestCopyConfig < Minitest::Test
     f2 = File.join(BACKUP_DIR, '.vimrc.orig')
     File.open(f1, 'w+') { |file| file.puts '1' }
     File.open(f2, 'w+') { |file| file.puts '2' }
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: min_attr)
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
     refute File.read(f1) == File.read(f2)
   end
 
   def test_config_file_will_be_copied_to_dest_dir
-    config_file = File.join(CopyConfig::CONFIG_DIR, 'vimrc')
+    config_file = File.join(CONFIG_DIR, 'vimrc')
     dest_file = File.join(DEST_DIR, '.vimrc')
 
     assert_raises(Errno::ENOENT) { File.read(config_file) == File.read(dest_file) }
@@ -116,23 +105,20 @@ class TestCopyConfig < Minitest::Test
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     refute File.read(config_file) == File.read(dest_file)
 
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: min_attr)
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     assert File.read(config_file) == File.read(dest_file)
   end
 
   def test_cygwin_files_not_copied_in_unix
-    attr = { cygwin: 'false', unix: true }.merge(min_attr) # sets to a value other than true
-
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: attr)
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     refute File.exist?(File.join(DEST_DIR, '.minttyrc'))
     refute File.exist?(File.join(DEST_DIR, '.cygwin_zshrc'))
   end
 
   def test_unix_files_not_copied_in_cygwin
-    attr = { cygwin: true, unix: 'false' }.merge(min_attr)
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: attr)
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     unix_zshrc = File.join(CopyConfig::CONFIG_DIR, 'zshrc')
     cygwin_zshrc = File.join(CopyConfig::CONFIG_DIR, 'cygwin_zshrc')
@@ -144,19 +130,14 @@ class TestCopyConfig < Minitest::Test
 
   def test_ssh_copying_works
     ssh_test_path = File.expand_path(File.join('test', 'ssh_test'))
-    sshd_test_path = File.expand_path(File.join(ssh_test_path, 'sshd_config'))
+    sshd_cfg_test_path = File.expand_path(File.join(ssh_test_path, 'sshd_config'))
     FileUtils.mkdir_p(ssh_test_path)
-    attr = {
-      ssh_dir: ssh_test_path,
-      sshd_path: sshd_test_path,
-      sudo: true,
-      linux: true
-    }.merge(min_attr)
+
     # DEST_DIR included only because its required, does not effect test
-    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, attr: attr)
+    CopyConfig.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
     sshd_config = File.join(CopyConfig::CONFIG_DIR, 'sshd_config')
-    assert File.read(sshd_test_path) == File.read(sshd_config)
+    assert File.read(sshd_cfg_test_path) == File.read(sshd_config)
 
     FileUtils.rm_rf(ssh_test_path)
   end

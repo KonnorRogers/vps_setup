@@ -3,7 +3,7 @@
 require 'fileutils'
 require 'os' # returns users OS
 
-module VPS_Setup
+module VpsSetup
   # Copies config from /vps-setup/config to your home dir
   class Copy
 
