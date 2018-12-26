@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
-require 'copy_config'
+require 'vps_setup/copy'
 require 'minitest/autorun'
 
 ROOT = File.expand_path(__dir__)
