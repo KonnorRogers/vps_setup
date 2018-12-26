@@ -54,16 +54,16 @@ class CopyConfig
     true
   end
 
-  def self.copy_sshd_config(backup_dir, attr = {})
-    return unless sshd_copyable?(attr)
+  def self.copy_sshd_config(backup_dir, sshd_path)
+    return unless sshd_copyable?
 
     sshd_cfg_path = File.join(CONFIG_DIR, 'sshd_config')
-    attr[:sshd_path] ||= '/etc/ssh/sshd_config'
+    sshd_path ||= '/etc/ssh/sshd_config'
     sshd_backup = File.join(backup_dir, 'sshd_config.orig')
 
-    FileUtils.cp(attr[:sshd_path], sshd_backup) if File.exist?(attr[:sshd_path])
-    puts "copying to #{attr[:sshd_path]}"
-    FileUtils.cp(sshd_cfg_path, attr[:sshd_path])
+    FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
+    puts "copying to #{sshd_path]}"
+    FileUtils.cp(sshd_cfg_path, sshd_path])
   end
 
   def self.dot_file_found?(file)
