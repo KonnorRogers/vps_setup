@@ -6,25 +6,25 @@ require 'os' # returns users OS
 module VpsSetup
   # Copies config from /vps-setup/config to your home dir
   class Copy
+    def self.copy(backup_dir:, dest_dir:, ssh_dir: nil)
+      raise 'Please run from a posix platform' unless OS.posix?
 
-    def self.copy(backup_dir:, dest_dir:, attr: {})
-      attr[:posix] ||= OS.posix?
-      raise 'Please run from a posix platform' unless attr[:posix] == true
-
-      attr[:root] ||= (Process.uid.zero? && Dir.home == '/root')
-      raise 'Do not run this as root, use sudo instead' if attr[:root] == true
+      root = (Process.uid.zero? && Dir.home == '/root')
+      raise 'Do not run this as root, use sudo instead' if root == true
 
       mkdirs(backup_dir, dest_dir)
 
-      copy_config_dir(backup_dir, dest_dir, attr)
+      copy_config_dir(backup_dir, dest_dir, ssh_dir)
 
       puts "dotfiles copied to #{dest_dir}."
       puts "backups created @ #{backup_dir}."
     end
 
-    def self.copy_config_dir(backup_dir, dest_dir, attr = {})
+    def self.copy_config_dir(backup_dir, dest_dir, ssh_dir = nil)
       # Dir.children(CONFIG_DIR).each do |file|, released in ruby 2.5.1
       # in 2.3.3 which is shipped with babun
+      linux = OS.linux?
+
       Dir.foreach(CONFIG_DIR).each do |file|
         # Explanation of this regexp in test/test_copy_confib.rb
         # .for_each returns '.' and '..' which we dont want
@@ -34,21 +34,22 @@ module VpsSetup
         dot = File.join(dest_dir, ".#{file}")
         backup = File.join(backup_dir, ".#{file}.orig")
 
-        if OS.linux?
-          copy_unix_files(config, dot, backup)
-          copy_sshd_config(backup_dir) && next if file == 'sshd_config'
+        if file == 'sshd_config' && linux
+          copy_sshd_config(backup_dir, ssh_dir)
+          next
         end
+
+        copy_unix_files(config, dot, backup) if linux || OS.mac?
         copy_cygwin_files(config, dot, backup) if OS.cygwin?
-        # only copies if sudo, linux, and ssh_path exists
       end
     end
 
-    def self.sshd_copyable?(ssh_dir = nil, process_uid = nil)
-      process_uid ||= Process.uid.zero?
+    def self.sshd_copyable?(ssh_dir = nil)
+      sudo = Process.uid.zero?
       ssh_dir ||= '/etc/ssh'
 
-      not_sudo = 'not running process as sudo, will sshd_config not copied'
-      return puts not_sudo if process_uid != true
+      not_sudo = 'not running process as sudo, sshd_config not copied'
+      return puts not_sudo if sudo != true
 
       no_ssh_dir = 'No ssh dir found. sshd_config not copied'
       return puts no_ssh_dir unless Dir.exist?(ssh_dir)
@@ -56,12 +57,13 @@ module VpsSetup
       true
     end
 
-    def self.copy_sshd_config(backup_dir, sshd_path = nil)
-      return unless sshd_copyable?
+    def self.copy_sshd_config(backup_dir, ssh_dir = nil)
+      return unless sshd_copyable?(ssh_dir)
 
       sshd_cfg_path = File.join(CONFIG_DIR, 'sshd_config')
-      sshd_path ||= '/etc/ssh/sshd_config'
+      ssh_dir ||= '/etc/ssh/sshd_config'
       sshd_backup = File.join(backup_dir, 'sshd_config.orig')
+      sshd_path = File.join(ssh_dir, 'sshd_config')
 
       FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
       puts "copying to #{sshd_path}"
@@ -90,10 +92,7 @@ module VpsSetup
       copy_files(config_file, dot_file, backup_file)
     end
 
-    def self.copy_cygwin_files(config_file, dot_file, backup_file, cygwin = nil)
-      cygwin ||= OS.cygwin?
-      puts 'you are running on cygwin' && return unless cygwin == true
-
+    def self.copy_cygwin_files(config_file, dot_file, backup_file)
       non_cygwin_files = %w[zshrc]
       return if non_cygwin_files.include?(File.basename(config_file))
 

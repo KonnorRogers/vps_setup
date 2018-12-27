@@ -5,7 +5,6 @@ require 'fileutils'
 require 'stringio'
 require 'logger'
 
-
 LOG_PATH = File.join(LOGS_DIR, "#{File.basename(__FILE__, '.rb')}.log")
 LOG_FILE = File.new(LOG_PATH, 'w+')
 LOGGER = Logger.new(LOG_FILE)
@@ -13,11 +12,9 @@ LOGGER = Logger.new(LOG_FILE)
 class TestCopy < Minitest::Test
   include VpsSetup
 
-
   def setup
     LOGGER.info("#{class_name}::#{name}")
     @console = capture_console
-    @linux_copy = {}
     remove_dirs(BACKUP_DIR, DEST_DIR)
   end
 
@@ -51,18 +48,25 @@ class TestCopy < Minitest::Test
     end
   end
 
+  def process_uid_eql_zero
+    # mimics being a super user
+    Process.stub(:uid, 0) do
+      yield
+    end
+  end
+
   def cygwin_env
     OS.stub(:posix?, true) do
-      OS.stub(:linux?, true) do
-        OS.stub(:cygwin?, false) do
+      OS.stub(:linux?, false) do
+        OS.stub(:cygwin?, true) do
           yield
         end
       end
     end
   end
 
-  def copy(backup_dir = BACKUP_DIR, dest_dir = DEST_DIR)
-    Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir)
+  def copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, ssh_dir: nil)
+    Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir, ssh_dir: ssh_dir)
   end
 
   # END OF HELPER METHODS #
@@ -78,7 +82,6 @@ class TestCopy < Minitest::Test
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
   end
-
 
   def test_will_not_error_if_backup_dir_and_dest_dir_exist
     FileUtils.mkdir_p(BACKUP_DIR)
@@ -170,18 +173,21 @@ class TestCopy < Minitest::Test
     cygwin_zshrc = File.join(CONFIG_DIR, 'cygwin_zshrc')
     dest_zshrc = File.join(DEST_DIR, '.zshrc')
 
+    assert File.exist?(dest_zshrc)
     refute File.read(dest_zshrc) == File.read(unix_zshrc)
     assert File.read(dest_zshrc) == File.read(cygwin_zshrc)
   end
 
   def test_ssh_copying_works
     ssh_test_path = File.expand_path(File.join('test', 'ssh_test'))
-    sshd_cfg_test_path = File.expand_path(File.join(ssh_test_path, 'sshd_config'))
+    sshd_cfg_test_path = File.join(ssh_test_path, 'sshd_config')
     FileUtils.mkdir_p(ssh_test_path)
 
     # DEST_DIR included only because its required, does not effect test
     linux_env do
-      copy
+      process_uid_eql_zero do
+        copy(ssh_dir: ssh_test_path)
+      end
     end
 
     sshd_config = File.join(CONFIG_DIR, 'sshd_config')

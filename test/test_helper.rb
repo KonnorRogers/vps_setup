@@ -5,12 +5,12 @@ $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'minitest/autorun'
 require 'vps_setup'
 
-ROOT = File.expand_path(__dir__)
+TEST_ROOT = File.expand_path(__dir__)
 
-BACKUP_DIR = File.join(ROOT, 'backup_dir')
-DEST_DIR = File.join(ROOT, 'dest_dir')
+BACKUP_DIR = File.join(TEST_ROOT, 'backup_dir')
+DEST_DIR = File.join(TEST_ROOT, 'dest_dir')
 
-LOGS_DIR = File.join(ROOT, 'logs')
+LOGS_DIR = File.join(TEST_ROOT, 'logs')
 mkdir_p(LOGS_DIR) unless Dir.exist?(LOGS_DIR)
 
 def capture_console
