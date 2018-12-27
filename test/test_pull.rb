@@ -143,6 +143,6 @@ class TestPull < Minitest::Test
   #   # assert_equal File.read(local_zshrc), File.read(zshrc_file)
   #   # assert_equal File.read(test_config_zshrc), File.read(zshrc_file)
 
-  end
+# end
 end
 
