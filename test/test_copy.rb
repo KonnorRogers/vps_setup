@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'fileutils'
 require 'stringio'
 require 'logger'
 
@@ -15,7 +14,7 @@ class TestCopy < Minitest::Test
   def setup
     LOGGER.info("#{class_name}::#{name}")
     @console = capture_console
-    remove_dirs(BACKUP_DIR, DEST_DIR)
+    rm_dirs(BACKUP_DIR, DEST_DIR)
   end
 
   def teardown
@@ -23,7 +22,7 @@ class TestCopy < Minitest::Test
     LOGGER.error(@console[:fake_err].string)
 
     restore_out_err(@console)
-    remove_dirs(BACKUP_DIR, DEST_DIR)
+    rm_dirs(BACKUP_DIR, DEST_DIR)
   end
 
   # HELPER METHODS #
@@ -32,10 +31,6 @@ class TestCopy < Minitest::Test
     # \. == '.' {1,2} means minimum 1, maximum 2 occurences
     # \Z == end of string
     Dir.foreach(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
-  end
-
-  def remove_dirs(*args)
-    args.each { |dir| FileUtils.rm_rf(dir) if Dir.exist?(dir) }
   end
 
   def linux_env
@@ -63,6 +58,10 @@ class TestCopy < Minitest::Test
         end
       end
     end
+  end
+
+  def non_posix_env
+    OS.stub(:posix?, false) { yield }
   end
 
   def copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, ssh_dir: nil)
@@ -194,5 +193,19 @@ class TestCopy < Minitest::Test
     assert File.read(sshd_cfg_test_path) == File.read(sshd_config)
 
     FileUtils.rm_rf(ssh_test_path)
+  end
+
+  def test_raises_error_in_non_posix_env
+    non_posix_env do
+      assert_raises(RuntimeError) { copy }
+    end
+  end
+
+  def test_raises_error_when_running_as_root
+    process_uid_eql_zero do
+      Dir.stub(:home, '/root') do # simulates root on linux
+        assert_raises(RuntimeError) { copy }
+      end
+    end
   end
 end
