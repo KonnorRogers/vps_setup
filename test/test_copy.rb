@@ -119,10 +119,13 @@ class TestCopy < Minitest::Test
   end
 
   def test_unix_files_not_copied_in_cygwin
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
-
-    unix_zshrc = File.join(Copy::CONFIG_DIR, 'zshrc')
-    cygwin_zshrc = File.join(Copy::CONFIG_DIR, 'cygwin_zshrc')
+    OS.stub :cygwin?, true do
+      OS.stub :linux?, false do
+        Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+      end
+    end
+    unix_zshrc = File.join(CONFIG_DIR, 'zshrc')
+    cygwin_zshrc = File.join(CONFIG_DIR, 'cygwin_zshrc')
     dest_zshrc = File.join(DEST_DIR, '.zshrc')
 
     refute File.read(dest_zshrc) == File.read(unix_zshrc)
@@ -137,7 +140,7 @@ class TestCopy < Minitest::Test
     # DEST_DIR included only because its required, does not effect test
     Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
 
-    sshd_config = File.join(Copy::CONFIG_DIR, 'sshd_config')
+    sshd_config = File.join(CONFIG_DIR, 'sshd_config')
     assert File.read(sshd_cfg_test_path) == File.read(sshd_config)
 
     FileUtils.rm_rf(ssh_test_path)
