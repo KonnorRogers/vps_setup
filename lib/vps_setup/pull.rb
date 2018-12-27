@@ -15,18 +15,18 @@ module VpsSetup
     end
 
     def self.cygwin_config_dotfiles_ary(cfg_dir = CONFIG_DIR)
-      cfg_dir.reject { |file| NON_CYGWIN_DOTFILES.include(file) }
+      cfg_dir.reject { |file| NON_CYGWIN_DOTFILES.include?(file) }
       # returns cygwin dotfiles
     end
 
-    def self.cygwin_local_dotfiles_ary
+    def self.cygwin_local_dotfiles_ary(local_dir = Dir.home)
       cygwin_files.map do |file|
         file = 'zshrc' if file == 'cygwin_zshrc' # need to convert for use with babun / cygwin
         file.prepend('.')
       end
     end
 
-    def self.linux_local_dotfiles_ary
+    def self.linux_local_dotfiles_ary(local_dir = Dir.home)
       linux_config_dotfiles.map { |file| file.prepend('.') }
     end
 
