@@ -106,43 +106,29 @@ class TestPull < Minitest::Test
     assert_equal File.read(local_term), File.read(config_term)
   end
 
-  # def test_pull_all_cygwin
-  #   attr = {
-  #     cfg_dir: PULL_CONFIG_DIR,
-  #     local_dir: PULL_LOCAL_DIR
-  #   }
+  def test_pull_all_cygwin
+    attr = {
+      cfg_dir: PULL_CONFIG_DIR,
+      local_dir: PULL_LOCAL_DIR
+    }
 
-  #   # pulls the real config_zshrc from the config dir for File read purpose
-  #   config_zshrc = File.new(File.join(CONFIG_DIR, 'cygwin_zshrc'), 'r+')
-  #   # test_config_zshrc = File.join(PULL_CONFIG_DIR, 'cygwin_zshrc')
+    # Dir.foreach(CONFIG_DIR) do |file|
+    #   next if file =~ /\A\.{1,2}\Z/
 
-  #   contents = File.read(config_zshrc)
+    #   FileUtils.cp(File.join(CONFIG_DIR, file), File.join(PULL_CONFIG_DIR, file))
+    #   # puts "copying #{File.join(CONFIG_DIR, file)} to #{File.join(CONFIG_DIR, file)}"
+    # end
 
-  #   local_zshrc = File.join(PULL_LOCAL_DIR, '.zshrc')
-  #   File.open(local_zshrc, 'w+') { |file| file.write(contents) }
+    local_zshrc = File.join(PULL_LOCAL_DIR, '.zshrc')
+    FileUtils.cp(File.join(CONFIG_DIR, 'cygwin_zshrc'), local_zshrc)
+    config_zshrc = File.join(PULL_CONFIG_DIR, 'cygwin_zshrc')
 
-  #   # zshrc_file = File.join(PULL_LOCAL_DIR, 'not_getting_pulled')
-  #   # File.open(File.join(zshrc_file), 'w+') do |file|
-  #   #   file.write(contents)
-  #   # end
+    assert_equal File.read(local_zshrc), File.read(File.join(CONFIG_DIR, 'cygwin_zshrc'))
+    refute_equal File.read(local_zshrc), File.read(config_zshrc)
 
-  #   FileUtils.mkdir_p(File.join(File.expand_path(__dir__), 'test_dir'))
-  #   dir = File.join(File.expand_path(__dir__), 'test_dir')
-  #   Dir.foreach(CONFIG_DIR) do |file|
-  #     next if file =~ /\A\.{1,2}\Z/
+    Pull.pull_all_cygwin(attr)
 
-  #     file_path = File.join(dir, file)
-  #     File.open(file_path, 'w+') do |f|
-  #       File.write(File.read(file))
-  #     end
-  #   end
-
-  #   Pull.pull_all_cygwin(attr)
-
-  #   # config_zshrc.rewind
-  #   # assert_equal File.read(local_zshrc), File.read(zshrc_file)
-  #   # assert_equal File.read(test_config_zshrc), File.read(zshrc_file)
-
-# end
+    assert_equal File.read(local_zshrc), File.read(config_zshrc)
+  end
 end
 
