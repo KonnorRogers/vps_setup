@@ -28,6 +28,8 @@ module VpsSetup
     end
 
     def self.pull_all_cygwin(attr = {})
+      attr[:cfg_dir] ||= CONFIG_DIR
+      attr[:local_dir] ||= Dir.home
       cygwin_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
         cygwin_local_dotfiles_ary(attr[:local_dir]).each do |local|
           if config.prepend('.') == local
@@ -38,11 +40,9 @@ module VpsSetup
 
           next unless config == 'cygwin_zshrc' && local == '.zshrc'
 
-          attr[:cfg_dir] ||= CONFIG_DIR
           cygwin_zshrc = File.join(attr[:cfg_dir], 'cygwin_zshrc')
           FileUtils.cp(File.join(attr[:cfg_dir], local), cygwin_zshrc)
           puts "Copying #{local} to #{cygwin_zshrc}"
-          attr[:cfg_dir] = nil
         end
       end
 
