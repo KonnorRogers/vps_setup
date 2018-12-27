@@ -118,7 +118,7 @@ class TestPull < Minitest::Test
     Dir.foreach(CONFIG_DIR) do |file|
       next if file =~ /\A\.{1,2}\Z/
 
-      FileUtils.cp(File.join(CONFIG_DIR, file), File.join(PULL_CONFIG_DIR, file))
+      FileUtils.cp(File.join(CONFIG_DIR, file), File.join(attr[:cfg_dir], file))
       puts "copying #{File.join(CONFIG_DIR, file)} to #{File.join(attr[:cfg_dir], file)}"
     end
 
