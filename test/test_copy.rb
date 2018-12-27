@@ -13,20 +13,11 @@ LOGGER = Logger.new(LOG_FILE)
 class TestCopy < Minitest::Test
   include VpsSetup
 
-  def dir_children(dir)
-    # Reads as \A == beginning of string
-    # \. == '.' {1,2} means minimum 1, maximum 2 occurences
-    # \Z == end of string
-    Dir.foreach(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
-  end
-
-  def remove_dirs(*args)
-    args.each { |dir| FileUtils.rm_rf(dir) if Dir.exist?(dir) }
-  end
 
   def setup
     LOGGER.info("#{class_name}::#{name}")
     @console = capture_console
+    @linux_copy = {}
     remove_dirs(BACKUP_DIR, DEST_DIR)
   end
 
@@ -38,15 +29,56 @@ class TestCopy < Minitest::Test
     remove_dirs(BACKUP_DIR, DEST_DIR)
   end
 
+  # HELPER METHODS #
+  def dir_children(dir)
+    # Reads as \A == beginning of string
+    # \. == '.' {1,2} means minimum 1, maximum 2 occurences
+    # \Z == end of string
+    Dir.foreach(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
+  end
+
+  def remove_dirs(*args)
+    args.each { |dir| FileUtils.rm_rf(dir) if Dir.exist?(dir) }
+  end
+
+  def linux_env
+    OS.stub(:posix?, true) do
+      OS.stub(:linux?, true) do
+        OS.stub(:cygwin?, false) do
+          yield
+        end
+      end
+    end
+  end
+
+  def cygwin_env
+    OS.stub(:posix?, true) do
+      OS.stub(:linux?, true) do
+        OS.stub(:cygwin?, false) do
+          yield
+        end
+      end
+    end
+  end
+
+  def copy(backup_dir = BACKUP_DIR, dest_dir = DEST_DIR)
+    Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir)
+  end
+
+  # END OF HELPER METHODS #
+
   def test_creates_backup_dir_and_dest_dir
     refute(Dir.exist?(BACKUP_DIR))
     refute(Dir.exist?(DEST_DIR))
 
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    linux_env do
+      copy
+    end
 
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
   end
+
 
   def test_will_not_error_if_backup_dir_and_dest_dir_exist
     FileUtils.mkdir_p(BACKUP_DIR)
@@ -54,13 +86,18 @@ class TestCopy < Minitest::Test
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
 
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    linux_env do
+      copy
+    end
+
     assert(Dir.exist?(BACKUP_DIR))
     assert(Dir.exist?(DEST_DIR))
   end
 
   def test_backup_dir_empty_and_dest_dir_should_not_be_empty
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    linux_env do
+      copy
+    end
     # Will not add files to the backup_dir if original dotfiles do not exist
     assert_empty(dir_children(BACKUP_DIR))
 
@@ -76,7 +113,9 @@ class TestCopy < Minitest::Test
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     dest_file_before_copy = File.read(dest_file)
 
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    linux_env do
+      copy
+    end
 
     refute_empty(dir_children(BACKUP_DIR))
     assert_includes(dir_children(BACKUP_DIR), '.vimrc.orig')
@@ -106,24 +145,27 @@ class TestCopy < Minitest::Test
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
     refute File.read(config_file) == File.read(dest_file)
 
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    linux_env do
+      copy
+    end
 
     assert File.read(config_file) == File.read(dest_file)
   end
 
   def test_cygwin_files_not_copied_in_unix
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    linux_env do
+      copy
+    end
 
     refute File.exist?(File.join(DEST_DIR, '.minttyrc'))
     refute File.exist?(File.join(DEST_DIR, '.cygwin_zshrc'))
   end
 
   def test_unix_files_not_copied_in_cygwin
-    OS.stub :cygwin?, true do
-      OS.stub :linux?, false do
-        Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
-      end
+    cygwin_env do
+      copy
     end
+
     unix_zshrc = File.join(CONFIG_DIR, 'zshrc')
     cygwin_zshrc = File.join(CONFIG_DIR, 'cygwin_zshrc')
     dest_zshrc = File.join(DEST_DIR, '.zshrc')
@@ -138,7 +180,9 @@ class TestCopy < Minitest::Test
     FileUtils.mkdir_p(ssh_test_path)
 
     # DEST_DIR included only because its required, does not effect test
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    linux_env do
+      copy
+    end
 
     sshd_config = File.join(CONFIG_DIR, 'sshd_config')
     assert File.read(sshd_cfg_test_path) == File.read(sshd_config)
