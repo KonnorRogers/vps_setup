@@ -108,17 +108,17 @@ class TestPull < Minitest::Test
 
   def test_pull_all_cygwin
     attr = {
-      # cfg_dir: PULL_CONFIG_DIR,
+      cfg_dir: PULL_CONFIG_DIR,
 
-      cfg_dir: 'test_dir',
+      # cfg_dir: 'test_dir',
       local_dir: PULL_LOCAL_DIR
     }
 
-    mk_dirs(File.join(File.expand_path(__dir__), attr[:cfg_dir]))
+    mk_dirs(File.expand_path(attr[:cfg_dir]))
     Dir.foreach(CONFIG_DIR) do |file|
       next if file =~ /\A\.{1,2}\Z/
 
-      FileUtils.cp(File.join(CONFIG_DIR, file), File.join(attr[:cfg_dir], file))
+      FileUtils.cp(File.join(CONFIG_DIR, file), File.join(File.expand_path(attr[:cfg_dir]), file))
       puts "copying #{File.join(CONFIG_DIR, file)} to #{File.join(attr[:cfg_dir], file)}"
     end
 
@@ -131,7 +131,6 @@ class TestPull < Minitest::Test
 
     Pull.pull_all_cygwin(attr)
 
-    # assert_equal File.read(local_zshrc), File.read(config_zshrc)
   end
 end
 
