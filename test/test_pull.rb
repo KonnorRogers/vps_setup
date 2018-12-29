@@ -152,6 +152,6 @@ class TestPull < Minitest::Test
     end
 
     assert_equal File.read(local_zshrc), File.read(config_zshrc)
-    assert_equal dir_files(attr[:cfg_dir]).sort, dir_files(CONFIG_DIR).sort
+    assert_equal dir_files(attr[:cfg_dir]).sort, TEST_CONFIG_FILES.sort
   end
 end
