@@ -34,6 +34,10 @@ class TestPull < Minitest::Test
     File.new(File.join(dir, file_name), 'w+')
   end
 
+  def dir_files(dir)
+    Dir.entries(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
+  end
+
   def teardown
     rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
   end
@@ -54,13 +58,23 @@ class TestPull < Minitest::Test
   end
 
   def test_cygwin_local_dotfiles_ary
-    ary = Pull.cygwin_local_dotfiles_ary(PULL_CONFIG_DIR)
+    TEST_CYGWIN_LOCAL_DOTFILES.each do |file|
+      path = File.join(File.expand_path(PULL_LOCAL_DIR), file)
+      File.new(path, 'w+')
+    end
+
+    ary = Pull.cygwin_local_dotfiles_ary(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
 
     assert_equal(ary.sort, TEST_CYGWIN_LOCAL_DOTFILES.sort)
   end
 
   def test_linux_local_dotfiles_ary
-    ary = Pull.linux_local_dotfiles_ary(PULL_CONFIG_DIR)
+    TEST_LINUX_LOCAL_DOTFILES.each do |file|
+      path = File.join(File.expand_path(PULL_LOCAL_DIR), file)
+      File.new(path, 'w+')
+    end
+
+    ary = Pull.linux_local_dotfiles_ary(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
 
     assert_equal(ary.sort, TEST_LINUX_LOCAL_DOTFILES.sort)
   end
@@ -91,7 +105,9 @@ class TestPull < Minitest::Test
     local_term = File.join(PULL_LOCAL_DIR, 'gnome_terminal_settings')
     config_term = File.join(PULL_CONFIG_DIR, 'gnome_terminal_settings')
 
-    Pull.pull_gnome_term_settings(local_term, config_term)
+    capture_io do
+      Pull.pull_gnome_term_settings(local_term, config_term)
+    end
 
     refute File.exist?(local_term)
     assert File.exist?(config_term)
@@ -99,6 +115,8 @@ class TestPull < Minitest::Test
     unless File.exist?('/org/gnome/terminal')
       skip('You do not have /org/gnome/terminal, dconf will not work')
     end
+
+    ## ONLY WORKS IF DCONF IS INSTALLED AND GNOME TERMINAL INSTALLED
     config_file = File.new('gnome_settings')
     FileUtils.sh("dconf dump /org/gnome/terminal > #{config_file}")
     Pull.pull_gnome_term_settings(local_term, config_term)
@@ -109,28 +127,31 @@ class TestPull < Minitest::Test
   def test_pull_all_cygwin
     attr = {
       cfg_dir: PULL_CONFIG_DIR,
-
-      # cfg_dir: 'test_dir',
       local_dir: PULL_LOCAL_DIR
     }
 
     mk_dirs(File.expand_path(attr[:cfg_dir]))
+
     Dir.foreach(CONFIG_DIR) do |file|
       next if file =~ /\A\.{1,2}\Z/
 
-      FileUtils.cp(File.join(CONFIG_DIR, file), File.join(File.expand_path(attr[:cfg_dir]), file))
-      puts "copying #{File.join(CONFIG_DIR, file)} to #{File.join(attr[:cfg_dir], file)}"
+      dotfile = ".#{file}"
+      next unless TEST_CYGWIN_LOCAL_DOTFILES.include?(dotfile)
+
+      dotfile_path = File.expand_path(attr[:local_dir])
+      FileUtils.cp(File.join(CONFIG_DIR, file), File.join(dotfile_path, dotfile))
     end
 
-    # local_zshrc = File.join(PULL_LOCAL_DIR, '.zshrc')
-    # FileUtils.cp(File.join(CONFIG_DIR, 'cygwin_zshrc'), local_zshrc)
-    # config_zshrc = File.join(PULL_CONFIG_DIR, 'cygwin_zshrc')
+    local_zshrc = File.join(PULL_LOCAL_DIR, '.zshrc')
+    config_zshrc = File.join(PULL_CONFIG_DIR, 'cygwin_zshrc')
 
-    # assert_equal File.read(local_zshrc), File.read(File.join(CONFIG_DIR, 'cygwin_zshrc'))
-    # refute_equal File.read(local_zshrc), File.read(config_zshrc)
+    refute_equal File.read(local_zshrc), File.read(config_zshrc)
 
-    Pull.pull_all_cygwin(attr)
+    capture_io do
+      Pull.pull_all_cygwin(attr)
+    end
 
+    assert_equal File.read(local_zshrc), File.read(config_zshrc)
+    assert_equal dir_files(attr[:cfg_dir]).sort, dir_files(CONFIG_DIR).sort
   end
 end
-
