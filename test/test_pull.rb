@@ -26,8 +26,14 @@ class TestPull < Minitest::Test
   include VpsSetup
 
   def setup
+    rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+    sleep(1)
     mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
-    TEST_CONFIG_FILES.each { |file| new_file(PULL_CONFIG_DIR, file) }
+
+    sleep(1)
+    TEST_CONFIG_FILES.each do |file|
+      new_file(PULL_CONFIG_DIR, file)
+    end
   end
 
   def new_file(dir, file_name)
@@ -40,6 +46,7 @@ class TestPull < Minitest::Test
 
   def teardown
     rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+    sleep(1)
   end
 
   def test_linux_config_dotfiles_ary

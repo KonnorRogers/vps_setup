@@ -42,7 +42,7 @@ def mk_dirs(*args)
 end
 
 def rm_dirs(*args)
-  args.each { |dir| FileUtils.rm_rf(dir) if Dir.exist?(dir) }
+  args.each { |dir| FileUtils.rm_rf(dir) }
 end
 
 ## END OF HELPER METHODS ##
