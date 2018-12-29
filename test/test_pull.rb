@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+# $LOAD_PATH.unshift(File.expand_path(__dir__))
+require_relative 'test_helper.rb'
 require 'os'
+require 'fileutils'
 
 TEST_CONFIG_FILES =
   %w[cygwin_zshrc
@@ -21,33 +23,38 @@ TEST_LINUX_CFG_DOTFILES = %w[zshrc pryrc tmux.conf vimrc].freeze
 
 PULL_CONFIG_DIR = File.join(TEST_ROOT, 'pull_config')
 PULL_LOCAL_DIR = File.join(TEST_ROOT, 'pull_test')
+mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+
+def new_file(dir, file_name)
+  File.new(File.join(dir, file_name), 'w+')
+end
+TEST_CONFIG_FILES.each { |file| new_file(PULL_CONFIG_DIR, file) }
 
 class TestPull < Minitest::Test
   include VpsSetup
 
   def setup
-    rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
-    sleep(1)
-    mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+    ###########################
+    # DOES NOT WORK IN CYGWIN #
+    ###########################
+    # rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+    # mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
 
-    sleep(1)
-    TEST_CONFIG_FILES.each do |file|
-      new_file(PULL_CONFIG_DIR, file)
-    end
+    # TEST_CONFIG_FILES.each do |file|
+    #   new_file(PULL_CONFIG_DIR, file)
+    # end
   end
 
-  def new_file(dir, file_name)
-    File.new(File.join(dir, file_name), 'w+')
-  end
 
   def dir_files(dir)
     Dir.entries(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
   end
 
   def teardown
-    rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
-    sleep(1)
+    # rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
   end
+
+  Minitest.after_run { rm_dirs(PULL_LOCAL_DIR, PULL_CONFIG_DIR) }
 
   def test_linux_config_dotfiles_ary
     ary = Pull.linux_config_dotfiles_ary(PULL_CONFIG_DIR)
