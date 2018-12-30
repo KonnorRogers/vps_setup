@@ -2,9 +2,11 @@
 
 require 'rake/testtask'
 
-# BACKUP_DIR = File.join(Dir.home, 'backup_files')
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-CONFIG_DIR = File.join(File.expand_path(__dir__), 'config')
+require 'vps_setup'
+
 task default: %w[test]
 
 desc 'Runs tests'
