@@ -9,6 +9,7 @@ namespace 'config' do
     args.with_defaults(config_dir: CONFIG_DIR, local_dir: Dir.home)
 
 
+    VpsSetup::Pull.pull_all()
   end
 
   task :test do
