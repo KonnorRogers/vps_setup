@@ -8,11 +8,6 @@ namespace 'config' do
   task :pull, [:config_dir, :local_dir] do |_t, args|
     args.with_defaults(config_dir: CONFIG_DIR, local_dir: Dir.home)
 
-
-    VpsSetup::Pull.pull_all()
-  end
-
-  task :test do
-    puts VpsSetup::Pull.name
+    VpsSetup::Pull.pull_all(args.config_dir, args.local_dir)
   end
 end
