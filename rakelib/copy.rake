@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 BACKUP_DIR = File.join(Dir.home, 'backup_files')
-CONFIG_DIR = File.join(File.expand_path('../', __dir__), 'config')
 
 namespace 'config' do
   desc 'copies from a config dir to backup & dest dirs'

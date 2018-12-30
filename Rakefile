@@ -3,8 +3,8 @@
 require 'rake/testtask'
 
 # BACKUP_DIR = File.join(Dir.home, 'backup_files')
-# CONFIG_DIR = File.join(__dir__, 'config')
 
+CONFIG_DIR = File.join(File.expand_path(__dir__), 'config')
 task default: %w[test]
 
 desc 'Runs tests'
