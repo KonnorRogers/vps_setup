@@ -4,22 +4,22 @@ LIBS = %w[software-properties-common gnupg2 less ufw
           ack-grep libfuse2 apt-transport-https
           ca-certificates build-essential bison
           zlib1g-dev libyaml-dev libssl-dev
-          libgdbm-dev libreadline-dev libffi-dev fuse make gcc].freeze
+          libgdbm-dev libreadline-dev libffi-dev fuse make gcc]
 
 LANGUAGES = %w[python3 python3-pip python-dev
                python3-dev python-pip python3-neovim
-               nodejs golang ruby ruby-dev].freeze
+               nodejs golang ruby ruby-dev]
 
 TOOLS = %w[curl tmux git vim zsh sqlite3
-           postgresql pry rubygems fail2ban].freeze
+           postgresql pry rubygems fail2ban]
 
-ADDED_REPOS = %w[neovim asciinema docker-ce mosh].freeze
+ADDED_REPOS = %w[neovim asciinema docker-ce mosh]
 PACKAGE_LIST = LIBS.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)
 
-GEMS = %w[bundler rails colorls neovim rake pry].freeze
+GEMS = %w[bundler rails colorls neovim rake pry]
 
 namespace :setup do
-  task :all_tasks [:add_user, :apt_all, :add_other_tools, :ruby_install] do
+  task :all_tasks, [:add_user, :apt_all, :add_other_tools, :ruby_install] do
   end
 
   task :add_user, [:username] do
