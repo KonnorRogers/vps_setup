@@ -26,9 +26,11 @@ This will put all files to be pulled into the ~/test_dir from ./vps_setup/config
     # swapped positions of local_dir and config_dir to allow a nil config_dir
     args.with_defaults(config_dir: VpsSetup::CONFIG_DIR, local_dir: Dir.home)
 
+    p args
     # converts args from a Rake::TaskArgument to a hash 
     hash = tilde_to_home_hash(args)
-    p hash
+    p hash[:config_dir]
+    p hash[:local_dir]
     VpsSetup::Pull.pull_all(config_dir: hash[:config_dir], local_dir: hash[:local_dir])
   end
 
