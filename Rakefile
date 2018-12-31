@@ -7,6 +7,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'vps_setup'
 
+def tilde_to_home(*args)
+  # turns ~ into /home/user, must be given a hash
+  return if args.nil? || args.empty?
+  args.each do |key, string|
+    args[key] = string.sub('~', Dir.home)
+  end
+end
+
 task default: %w[test]
 
 desc 'Runs tests'
