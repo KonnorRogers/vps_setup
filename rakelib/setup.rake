@@ -4,19 +4,17 @@ LIBS = %w[software-properties-common gnupg2 less ufw
           ack-grep libfuse2 apt-transport-https
           ca-certificates build-essential bison
           zlib1g-dev libyaml-dev libssl-dev
-          libgdbm-dev libreadline-dev libffi-dev fuse make gcc]
+          libgdbm-dev libreadline-dev libffi-dev fuse make gcc].freeze
 
 LANGUAGES = %w[python3 python3-pip python-dev
                python3-dev python-pip python3-neovim
-               nodejs golang ruby ruby-dev]
+               nodejs golang ruby ruby-dev].freeze
 
 TOOLS = %w[curl tmux git vim zsh sqlite3
-           postgresql pry rubygems fail2ban]
+           postgresql pry rubygems fail2ban].freeze
 
-ADDED_REPOS = %w[neovim asciinema docker-ce mosh]
-PACKAGE_LIST = LIBS.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)
-
-GEMS = %w[bundler rails colorls neovim rake pry]
+ADDED_REPOS = %w[neovim asciinema docker-ce mosh].freeze
+GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
 namespace :setup do
   task :all_tasks, [:add_user, :apt_all, :add_other_tools, :ruby_install] do
@@ -31,7 +29,9 @@ namespace :setup do
   end
 
   task :apt_all, [:add_repos] do
-    PACKAGE_LIST.each do |item|
+    packages = LIBS.concat(LANGUAGES.dup).concat(TOOLS.dup).concat(ADDED_REPOS.dup)
+
+    packages.each do |item|
       sh("sudo apt install -y #{item}")
     end
   end
