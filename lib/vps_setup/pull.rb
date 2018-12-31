@@ -13,6 +13,9 @@ module VpsSetup
     def self.pull_all(attr = {})
       cfg_dir = attr[:cfg_dir]
       Rake.mkdir_p(File.expand_path(cfg_dir)) unless cfg_dir.nil? || Dir.exist?(cfg_dir)
+      # checks for a blank dir, allows for pulling from vps_setup/config for testing output
+      attr[:cfg_dir] = CONFIG_DIR if Dir.entries(cfg_dir).size == 2
+
       pull_all_linux(attr) if OS.linux?
       pull_all_cygwin(attr) if OS.cygwin?
     end
@@ -21,19 +24,21 @@ module VpsSetup
       attr[:cfg_dir] ||= CONFIG_DIR
       attr[:local_dir] ||= Dir.home
 
+      p linux_config_dotfiles_ary(attr[:cfg_dir])
+      p linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir])
+
       linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
         linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
           next unless local == ".#{config}"
 
-          cfg_file = File.join(attr[:cfg_dir], config)
-          local_file = File.join(attr[:local_dir], local)
+          cfg_file = File.join(File.expand_path(attr[:cfg_dir]), config)
+          local_file = File.join(File.expand_path(attr[:local_dir]), local)
           Rake.cp(local_file, cfg_file)
-          puts "copying #{local_file} to #{cfg_file}"
         end
       end
 
-      pull_sshd_config(attr[:sshd_local], attr[:sshd_config])
-      pull_gnome_term_settings(attr[:gnome_local], attr[:gnome_config])
+      pull_sshd_config(attr[:sshd_local], attr[:cfg_dir])
+      pull_gnome_term_settings(attr[:gnome_local], attr[:cfg_dir])
     end
 
     def self.pull_all_cygwin(attr = {})
