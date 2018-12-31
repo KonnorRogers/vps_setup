@@ -11,14 +11,14 @@
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
-      ~/backup_files/.vimrc.orig
-      ~/backup_files/.tmux.conf.orig
-      ~/backup_files/.zshrc.orig
+      ~/backup_config/.vimrc.orig
+      ~/backup_config/.tmux.conf.orig
+      ~/backup_config/.zshrc.orig
       
 ## Updating linode instance
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
-    sudo bash /path/to/vps-setup/linode.bash -u #{username}
+    cd ~/vps-setup
 * -u specifies the home directory where everything will be installed, just in case its being run from root
 
 * Do not forget to set git via:
@@ -50,6 +50,17 @@
       ngrok http 3000 
       
 * This will bring up a CLI to connect to for example localhost:3000 on the web  
+
+## Rake Tasks
+
+copies files from vps_setup/config to ~/backup_config:
+
+      rake config:copy
+
+This can be specified with either both or one of the arguments:
+
+      rake "config:copy[/path/to/backup_dir, /path/to/dest_dir]"
+
 ## Dependencies Installed
 
 * There are many dependencies installed, a large list can be located in 

@@ -69,9 +69,9 @@ module VpsSetup
       sshd_backup = File.join(backup_dir, 'sshd_config.orig')
       sshd_path = File.join(ssh_dir, 'sshd_config')
 
-      FileUtils.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
+      Rake.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
       puts "copying to #{sshd_path}"
-      FileUtils.cp(sshd_cfg_path, sshd_path)
+      Rake.cp(sshd_cfg_path, sshd_path)
     end
 
     def self.dot_file_found?(file)
@@ -114,16 +114,16 @@ module VpsSetup
       if dot_file_found?(dot_file)
         if backup_file_not_found?(backup_file)
           # Copy the dot file to the backup dir
-          FileUtils.cp(dot_file, backup_file)
+          Rake.cp(dot_file, backup_file)
         end
       end
 
       # Copies from vps-setup/config to home_dir
-      FileUtils.cp(config_file, dot_file)
+      Rake.cp(config_file, dot_file)
     end
 
     def self.mkdirs(*dirs)
-      dirs.each { |dir| FileUtils.mkdir_p(dir) unless Dir.exist?(dir) }
+      dirs.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
     end
   end
 end
