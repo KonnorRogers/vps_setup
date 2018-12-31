@@ -18,7 +18,7 @@ GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
 PACKAGES = LIBS.dup.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)
 namespace :setup do
-  task :all_tasks, [:add_user, :apt_all, :add_other_tools, :ruby_install] do
+  task :ubuntu, [:add_user, :apt_all, :add_other_tools, :ruby_install] do
   end
 
   task :add_user, [:username] do
@@ -30,7 +30,6 @@ namespace :setup do
   end
 
   task :apt_all, [:add_repos] do
-
     PACKAGES.each do |item|
       sh("sudo apt install -y #{item}")
     end
@@ -41,6 +40,7 @@ namespace :setup do
     install_chruby
     sh('ruby-install ruby-2.5.1 --no-reinstall')
 
+    # may move to initial bundle bash script
     gem_dir = File.join(Dir.home, '.gem', 'ruby', '2.5.1')
     GEMS.each { |gem| sh("gem install #{gem} --install-dir #{gem_dir}") }
   end
@@ -92,23 +92,32 @@ def not_sudo_error
 end
 
 def install_chruby
-  sh(%(if [[ -e /usr/local/share/chruby/chruby.sh ]]; then
-        echo 'chruby is already installed'
-    else
-        wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-        tar -xzvf chruby-0.3.9.tar.gz
-        cd chruby-0.3.9/
-        sudo make install
-    fi))
+  exists = 'chruby already installed. Skipping install.'
+  return puts exists if File.exist?('/usr/local/share/chruby/chruby.sh')
+
+  temp_dir = File.join(Dir.home, '.tmp')
+  mkdir_p(temp_dir)
+  Dir.chdir(temp_dir)
+
+  sh(%(wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+      tar -xzvf chruby-0.3.9.tar.gz
+      cd chruby-0.3.9/
+      sudo make install))
+
+  Dir.chdir(Dir.home)
 end
 
 def install_ruby_install
-  sh(%{if [[ $"(command -v ruby-install)" ]]; then
-        echo 'ruby-install is already installed'
-    else
-        wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
+  exists = 'ruby-install already installed. Skipping install.'
+  return puts exists if File.exist?('/usr/local/bin/ruby-install')
+
+  temp_dir = File.join(Dir.home, '.tmp')
+  mkdir_p(temp_dir)
+  Dir.chdir(temp_dir)
+  sh(%(wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
         tar -xzvf ruby-install-0.7.0.tar.gz
         cd ruby-install-0.7.0/
-        sudo make install
-    fi})
+        sudo make install))
+
+  Dir.chdir(Dir.home)
 end
