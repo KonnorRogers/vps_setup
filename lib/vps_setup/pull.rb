@@ -23,6 +23,8 @@ module VpsSetup
 
       linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
         linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
+          next unless local == ".#{config}"
+
           cfg_file = File.join(attr[:cfg_dir], config)
           local_file = File.join(attr[:local_dir], local)
           Rake.cp(local_file, cfg_file)

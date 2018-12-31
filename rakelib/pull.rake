@@ -24,7 +24,7 @@ This will put all files to be pulled into the ~/test_dir from ./vps_setup/config
   # Allows the setting of a backup_dir for your dotfiles
   task :pull, [:config_dir, :local_dir] do |_t, args|
     # swapped positions of local_dir and config_dir to allow a nil config_dir
-    args.with_defaults(cfg_dir: VpsSetup::CONFIG_DIR, local_dir: Dir.home)
+    args.with_defaults(config_dir: VpsSetup::CONFIG_DIR, local_dir: Dir.home)
 
     p args
     # converts args from a Rake::TaskArgument to a hash 
