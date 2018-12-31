@@ -12,7 +12,7 @@ module VpsSetup
   class Pull
     def self.pull_all(attr = {})
       cfg_dir = attr[:cfg_dir]
-      mkdir_p(File.expand_path(cfg_dir)) unless cfg_dir.nil? || Dir.exist?(cfg_dir)
+      Rake.mkdir_p(File.expand_path(cfg_dir)) unless cfg_dir.nil? || Dir.exist?(cfg_dir)
       pull_all_linux(attr) if OS.linux?
       pull_all_cygwin(attr) if OS.cygwin?
     end
