@@ -7,11 +7,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'vps_setup'
 
-def tilde_to_home(*args)
-  # turns ~ into /home/user, must be given a hash
-  return if args.nil? || args.empty?
-  args.each do |key, string|
-    args[key] = string.sub('~', Dir.home)
+def tilde_to_home_hash(rake_args)
+  # Rake::TaskArguments.to_hash equivalent
+  rake_args.to_hash.each do |key, string|
+    rake_args[key] = string.sub('~', Dir.home)
   end
 end
 
