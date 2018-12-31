@@ -45,6 +45,7 @@ module VpsSetup
 
           cfg_file = File.join(attr[:cfg_dir], config)
           local_file = File.join(attr[:local_dir], local)
+
           Rake.cp(local_file, cfg_file)
           puts "copying #{local_file} to #{cfg_file}"
         end
