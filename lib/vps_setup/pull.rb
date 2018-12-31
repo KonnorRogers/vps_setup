@@ -10,21 +10,12 @@ module VpsSetup
   # Pull changes from local dir into config dir
   # to be able to push changes up to the config dir
   class Pull
-    extend VpsSetup # access to tilde_to_home
-
-    def self.convert_tilde(hash)
-      attr.each { |key, value| attr[key] = tilde_to_home(value) }
-    end
-
     def self.pull_all(attr = {})
-      convert_tilde(attr)
       pull_all_linux(attr) if OS.linux?
       pull_all_cygwin(attr) if OS.cygwin?
     end
 
     def self.pull_all_linux(attr = {})
-      convert_tilde(attr)
-
       linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
         linux_local_dotfiles_ary(attr[:local_dir]).each do |local|
           FileUtils.cp(local, config) if config.prepend('.') == local
@@ -36,8 +27,6 @@ module VpsSetup
     end
 
     def self.pull_all_cygwin(attr = {})
-      convert_tilde(attr)
-
       attr[:cfg_dir] ||= CONFIG_DIR
       attr[:local_dir] ||= Dir.home
 
@@ -56,7 +45,6 @@ module VpsSetup
 
     # Must use foreach due to not having Dir.children in 2.3.3 for babun
     def self.linux_config_dotfiles_ary(dir = CONFIG_DIR)
-      dir = tilde_to_home(dir)
       dir ||= CONFIG_DIR
 
       Dir.entries(dir).reject do |file|
@@ -66,7 +54,6 @@ module VpsSetup
     end
 
     def self.cygwin_config_dotfiles_ary(dir = CONFIG_DIR)
-      dir = tilde_to_home(dir)
       dir ||= CONFIG_DIR
 
       Dir.entries(dir).reject do |file|
@@ -78,8 +65,6 @@ module VpsSetup
 
     # *local_dotfiles_ary returns the files w/ a '.', ex: .vimrc
     def self.cygwin_local_dotfiles_ary(config_dir = nil, local_dir = nil)
-      local_dir = tilde_to_home(local_dir)
-      config_dir = tilde_to_home(config_dir)
       local_dir ||= Dir.home
       config_dir ||= CONFIG_DIR
 
@@ -101,9 +86,6 @@ module VpsSetup
     end
 
     def self.linux_local_dotfiles_ary(config_dir = nil, local_dir = nil)
-      local_dir = tilde_to_home(local_dir)
-      config_dir = tilde_to_home(config_dir)
-
       config_dir ||= CONFIG_DIR
       local_dir ||= Dir.home
 
@@ -119,9 +101,6 @@ module VpsSetup
     end
 
     def self.pull_sshd_config(sshd_local_path = nil, sshd_config_path = nil)
-      sshd_local_path = tilde_to_home(sshd_local_path)
-      sshd_config_path = tilde_to_home(sshd_config_path)
-
       sshd_local_path ||= '/etc/ssh/sshd_config'
       sshd_config_path ||= File.join(CONFIG_DIR, 'sshd_config')
 
@@ -133,9 +112,6 @@ module VpsSetup
     end
 
     def self.pull_gnome_term_settings(local_term = nil, config_term = nil)
-      local_term = tilde_to_home(local_term)
-      config_term = tilde_to_home(config_term)
-
       local_term ||= '/org/gnome/terminal/'
       config_term ||= File.join(CONFIG_DIR, 'gnome_terminal_settings')
 
@@ -149,9 +125,6 @@ module VpsSetup
     end
 
     def self.gnome_dump(local_term = nil, config_term = nil)
-      local_term = tilde_to_home(local_term)
-      config_term = tilde_to_home(config_term)
-
       local_term ||= '/org/gnome/terminal/'
       config_term ||= File.join(CONFIG_DIR, 'gnome_terminal_settings')
 

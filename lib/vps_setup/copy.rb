@@ -14,9 +14,6 @@ module VpsSetup
       root = (Process.uid.zero? && Dir.home == '/root')
       raise 'Do not run this as root, use sudo instead' if root == true
 
-      backup_dir = tilde_to_home(backup_dir)
-      dest_dir = tilde_to_home(dest_dir)
-
       mkdirs(backup_dir, dest_dir)
 
       copy_config_dir(backup_dir, dest_dir, ssh_dir)
@@ -29,8 +26,6 @@ module VpsSetup
       # Dir.children(CONFIG_DIR).each do |file|, released in ruby 2.5.1
       # in 2.3.3 which is shipped with babun
       linux = OS.linux?
-      backup_dir = tilde_to_home(backup_dir)
-      dest_dir = tilde_to_home(dest_dir)
 
       Dir.foreach(CONFIG_DIR).each do |file|
         # Explanation of this regexp in test/test_copy_confib.rb
@@ -53,7 +48,6 @@ module VpsSetup
 
     def self.sshd_copyable?(ssh_dir = nil)
       sudo = Process.uid.zero?
-      ssh_dir = tilde_to_home(ssh_dir)
       ssh_dir ||= '/etc/ssh'
 
       not_sudo = 'not running process as sudo, sshd_config not copied'
@@ -66,9 +60,7 @@ module VpsSetup
     end
 
     def self.copy_sshd_config(backup_dir, ssh_dir = nil)
-      backup_dir = tilde_to_home(backup_dir)
       ssh_dir ||= '/etc/ssh/sshd_config'
-      ssh_dir = tilde_to_home(ssh_dir)
 
       return unless sshd_copyable?(ssh_dir)
 

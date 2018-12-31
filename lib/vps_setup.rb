@@ -12,7 +12,4 @@ module VpsSetup
   NON_CYGWIN_DOTFILES = %w[zshrc].concat(NON_DOTFILES)
   NON_LINUX_DOTFILES = %w[cygwin_zshrc minttyrc].concat(NON_DOTFILES)
 
-  def tilde_to_home(string)
-    string.sub(/~/, Dir.home)
-  end
 end
