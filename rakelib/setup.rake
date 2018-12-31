@@ -16,6 +16,7 @@ TOOLS = %w[curl tmux git vim zsh sqlite3
 ADDED_REPOS = %w[neovim asciinema docker-ce mosh].freeze
 GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
+PACKAGES = LIBS.dup.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)
 namespace :setup do
   task :all_tasks, [:add_user, :apt_all, :add_other_tools, :ruby_install] do
   end
@@ -29,9 +30,8 @@ namespace :setup do
   end
 
   task :apt_all, [:add_repos] do
-    packages = LIBS.concat(LANGUAGES.dup).concat(TOOLS.dup).concat(ADDED_REPOS.dup)
 
-    packages.each do |item|
+    PACKAGES.each do |item|
       sh("sudo apt install -y #{item}")
     end
   end
