@@ -25,7 +25,7 @@ module VpsSetup
         linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
           cfg_file = File.join(attr[:cfg_dir], config)
           local_file = File.join(attr[:local_dir], local)
-          FileUtils.cp(local_file, cfg_file)
+          Rake.cp(local_file, cfg_file)
           puts "copying #{local_file} to #{cfg_file}"
         end
       end
@@ -45,7 +45,7 @@ module VpsSetup
 
           cfg_file = File.join(attr[:cfg_dir], config)
           local_file = File.join(attr[:local_dir], local)
-          FileUtils.cp(local_file, cfg_file)
+          Rake.cp(local_file, cfg_file)
           puts "copying #{local_file} to #{cfg_file}"
         end
       end
@@ -116,7 +116,7 @@ module VpsSetup
       error = "#{sshd_local_path} does not exist. sshd_config not copied to cfg"
       return puts error unless File.exist?(sshd_local_path)
 
-      FileUtils.cp(sshd_local_path, sshd_config_path)
+      Rake.cp(sshd_local_path, sshd_config_path)
     end
 
     def self.pull_gnome_term_settings(local_term = nil, config_term = nil)
