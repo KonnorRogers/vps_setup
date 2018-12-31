@@ -16,11 +16,10 @@ TOOLS = %w[curl tmux git vim zsh sqlite3
 ADDED_REPOS = %w[neovim asciinema docker-ce mosh].freeze
 PACKAGE_LIST = LIBS.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)
 
-GEMS = %w[bundler rails colorls neovim rake pry]
+GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
 namespace :setup do
-  task :all_tasks [:add_user, :apt_all, :add_other_tools,:additional_ruby_install] do
-
+  task :all_tasks [:add_user, :apt_all, :add_other_tools, :ruby_install] do
   end
 
   task :add_user, [:username] do
@@ -37,11 +36,11 @@ namespace :setup do
     end
   end
 
-  task :additional_ruby_install do
+  task :ruby_install do
     install_ruby_install
     install_chruby
     sh('ruby-install ruby-2.5.1 --no-reinstall')
-    
+
     gem_dir = File.join(Dir.home, '.gem', 'ruby', '2.5.1')
     GEMS.each { |gem| sh("gem install #{gem} --install-dir #{gem_dir}") }
   end
@@ -86,10 +85,10 @@ namespace :setup do
 end
 
 def not_sudo_error
-    not_sudo 'You are not running as sudo, unable to add a user'
-    raise not_sudo unless Process.uid.zero
+  not_sudo 'You are not running as sudo, unable to add a user'
+  raise not_sudo unless Process.uid.zero
 
-    true
+  true
 end
 
 def install_chruby
