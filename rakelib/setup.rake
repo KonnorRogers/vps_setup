@@ -18,7 +18,7 @@ GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
 PACKAGES = LIBS.dup.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)
 namespace :setup do
-  task :ubuntu, [:add_user, :apt_all, :add_other_tools, :ruby_install] do
+  task :ubuntu, [:username] => %i[apt_all add_other_tools ruby_install] do
   end
 
   task :add_user, [:username] do
@@ -27,6 +27,10 @@ namespace :setup do
 
     sh("adduser #{username}")
     sh("adduser #{username} sudo")
+  end
+
+  task :swap_user, [:username] => :adduser do |t, args|
+
   end
 
   task :apt_all, [:add_repos] do
