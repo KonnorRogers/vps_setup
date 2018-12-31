@@ -11,17 +11,22 @@ module VpsSetup
   # to be able to push changes up to the config dir
   class Pull
     def self.pull_all(attr = {})
-      # cfg_dir can be made to allow for temp files etc
-      Rake.mkdir_p(attr[:cfg_dir]) unless attr[:cfg_dir].nil?
-
+      cfg_dir = attr[:cfg_dir]
+      mkdir_p(File.expand_path(cfg_dir)) unless cfg_dir.nil? || Dir.exist?(cfg_dir)
       pull_all_linux(attr) if OS.linux?
       pull_all_cygwin(attr) if OS.cygwin?
     end
 
     def self.pull_all_linux(attr = {})
+      attr[:cfg_dir] ||= CONFIG_DIR
+      attr[:local_dir] ||= Dir.home
+
       linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
         linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
-          FileUtils.cp(local, config) if config.prepend('.') == local
+          cfg_file = File.join(attr[:cfg_dir], config)
+          local_file = File.join(attr[:local_dir], local)
+          FileUtils.cp(local_file, cfg_file)
+          puts "copying #{local_file} to #{cfg_file}"
         end
       end
 
@@ -50,7 +55,6 @@ module VpsSetup
     def self.linux_config_dotfiles_ary(dir = nil)
       dir ||= CONFIG_DIR
 
-      p dir
       Dir.entries(dir).reject do |file|
         NON_LINUX_DOTFILES.include?(file) || file =~ /\A\.{1,2}\Z/
       end
