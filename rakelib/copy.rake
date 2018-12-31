@@ -6,7 +6,7 @@ namespace 'config' do
   desc "copies from a config dir to backup & dest dirs.
 This can be accessed via:
     $ rake config:copy
-default :backup_dir to ~/backup_files
+default :backup_dir to ~/backup_config
 default :local_dir to ~
 
 or with arguments:
@@ -16,6 +16,8 @@ or with arguments:
   task :copy, [:backup_dir, :dest_dir] do |_t, args|
     args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
 
-    VpsSetup::Copy.copy(backup_dir: args.backup_dir, dest_dir: args.dest_dir)
+    hash = tilde_to_home_hash(args)
+
+    VpsSetup::Copy.copy(backup_dir: hash[:backup_dir], dest_dir: hash[:dest_dir])
   end
 end

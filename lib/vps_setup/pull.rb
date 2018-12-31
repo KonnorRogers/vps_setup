@@ -11,13 +11,16 @@ module VpsSetup
   # to be able to push changes up to the config dir
   class Pull
     def self.pull_all(attr = {})
+      # cfg_dir can be made to allow for temp files etc
+      Rake.mkdir_p(attr[:cfg_dir]) unless attr[:cfg_dir].nil?
+
       pull_all_linux(attr) if OS.linux?
       pull_all_cygwin(attr) if OS.cygwin?
     end
 
     def self.pull_all_linux(attr = {})
       linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
-        linux_local_dotfiles_ary(attr[:local_dir]).each do |local|
+        linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
           FileUtils.cp(local, config) if config.prepend('.') == local
         end
       end
@@ -44,16 +47,17 @@ module VpsSetup
     end
 
     # Must use foreach due to not having Dir.children in 2.3.3 for babun
-    def self.linux_config_dotfiles_ary(dir = CONFIG_DIR)
+    def self.linux_config_dotfiles_ary(dir = nil)
       dir ||= CONFIG_DIR
 
+      p dir
       Dir.entries(dir).reject do |file|
         NON_LINUX_DOTFILES.include?(file) || file =~ /\A\.{1,2}\Z/
       end
       # only returns dotfiles for linux
     end
 
-    def self.cygwin_config_dotfiles_ary(dir = CONFIG_DIR)
+    def self.cygwin_config_dotfiles_ary(dir = nil)
       dir ||= CONFIG_DIR
 
       Dir.entries(dir).reject do |file|

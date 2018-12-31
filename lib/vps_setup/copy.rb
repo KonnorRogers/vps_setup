@@ -6,13 +6,14 @@ require 'os' # returns users OS
 module VpsSetup
   # Copies config from /vps-setup/config to your home dir
   class Copy
-    extend VpsSetup
-
-    def self.copy(backup_dir:, dest_dir:, ssh_dir: nil)
+    def self.copy(backup_dir: nil, dest_dir: nil, ssh_dir: nil)
       raise 'Please run from a posix platform' unless OS.posix?
 
       root = (Process.uid.zero? && Dir.home == '/root')
       raise 'Do not run this as root, use sudo instead' if root == true
+
+      backup_dir ||= File.join(Dir.home, 'backup_config')
+      dest_dir ||= Dir.home
 
       mkdirs(backup_dir, dest_dir)
 

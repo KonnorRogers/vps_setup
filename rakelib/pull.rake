@@ -10,14 +10,20 @@ default :local_dir to ~
 default: :config_dir to ./vps_setup/config
 
 with arguments:
-    $ rake \"config:pull[local_dir, config_dir]\""
+    $ rake \"config:pull[local_dir, config_dir]\"
+
+Both arguments are optional and can be omitted
+  "
+    
   # Allows the setting of a backup_dir for your dotfiles
   task :pull, [:local_dir, :config_dir] do |_t, args|
     # swapped positions of local_dir and config_dir to allow a nil config_dir
-    tilde_to_home(args)
-    args.with_defaults(config_dir: CONFIG_DIR, local_dir: Dir.home)
+    args.with_defaults(config_dir: VpsSetup::CONFIG_DIR, local_dir: Dir.home)
 
-    VpsSetup::Pull.pull_all(config_dir: args.config_dir, local_dir: args.local_dir)
+    # converts args from a Rake::TaskArgument to a hash 
+    hash = tilde_to_home_hash(args)
+    p hash
+    VpsSetup::Pull.pull_all(config_dir: hash[:config_dir], local_dir: hash[:local_dir])
   end
 
   # used to see how rake args work
