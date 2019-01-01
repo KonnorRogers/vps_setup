@@ -18,11 +18,14 @@ GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
 PACKAGES = LIBS.dup.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)
 namespace :setup do
-  task :ubuntu, [:username] => %i[apt_all add_other_tools ruby_install] do
+  task :ubuntu, [:username] => %i[apt_all add_other_tools ruby_install] do |_t, args|
+
   end
 
-  task :add_user, [:username] do
+  task :add_user, [:username] do |_t, args|
     return if not_sudo_error
+
+    args.with_defaults(username: gets.chomp)
     return puts "#{username} is already taken" if Dir.exist?("/home/#{username}")
 
     sh("adduser #{username}")
