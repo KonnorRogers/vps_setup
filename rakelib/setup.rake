@@ -18,7 +18,7 @@ GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
 PACKAGES = LIBS.dup.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)
 namespace :setup do
-  task :ubuntu, [:username] => %i[apt_all add_other_tools ruby_install] do |_t, args|
+  task :ubuntu, [:username] => %i[swap_user apt_all add_other_tools ruby_install] do |_t, args|
 
   end
 
@@ -28,12 +28,14 @@ namespace :setup do
     args.with_defaults(username: gets.chomp)
     return puts "#{username} is already taken" if Dir.exist?("/home/#{username}")
 
-    sh("adduser #{username}")
-    sh("adduser #{username} sudo")
+    sh("adduser #{args.username}")
+    sh("adduser #{args.username} sudo")
   end
 
-  task :swap_user, [:username] => :adduser do |t, args|
+  task :swap_user, [:username] => :add_user do |t, args|
+    return unless Process.uid.zero? && Dir.home == '/root'
 
+    sh("su #{args.username}")
   end
 
   task :apt_all, [:add_repos] do
@@ -89,42 +91,43 @@ namespace :setup do
 
     sh('sudo apt update')
   end
-end
 
-def not_sudo_error
-  not_sudo 'You are not running as sudo, unable to add a user'
-  raise not_sudo unless Process.uid.zero
+  def not_sudo_error
+    not_sudo 'You are not running as sudo, unable to add a user'
+    raise not_sudo unless Process.uid.zero
 
-  true
-end
+    true
+  end
 
-def install_chruby
-  exists = 'chruby already installed. Skipping install.'
-  return puts exists if File.exist?('/usr/local/share/chruby/chruby.sh')
+  def install_chruby
+    exists = 'chruby already installed. Skipping install.'
+    return puts exists if File.exist?('/usr/local/share/chruby/chruby.sh')
 
-  temp_dir = File.join(Dir.home, '.tmp')
-  mkdir_p(temp_dir)
-  Dir.chdir(temp_dir)
+    temp_dir = File.join(Dir.home, '.tmp')
+    mkdir_p(temp_dir)
+    Dir.chdir(temp_dir)
 
-  sh(%(wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+    sh(%(wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
       tar -xzvf chruby-0.3.9.tar.gz
       cd chruby-0.3.9/
       sudo make install))
 
-  Dir.chdir(Dir.home)
-end
+    Dir.chdir(Dir.home)
+  end
 
-def install_ruby_install
-  exists = 'ruby-install already installed. Skipping install.'
-  return puts exists if File.exist?('/usr/local/bin/ruby-install')
+  def install_ruby_install
+    exists = 'ruby-install already installed. Skipping install.'
+    return puts exists if File.exist?('/usr/local/bin/ruby-install')
 
-  temp_dir = File.join(Dir.home, '.tmp')
-  mkdir_p(temp_dir)
-  Dir.chdir(temp_dir)
-  sh(%(wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
+    temp_dir = File.join(Dir.home, '.tmp')
+    mkdir_p(temp_dir)
+    Dir.chdir(temp_dir)
+    sh(%(wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
         tar -xzvf ruby-install-0.7.0.tar.gz
         cd ruby-install-0.7.0/
         sudo make install))
 
-  Dir.chdir(Dir.home)
+    Dir.chdir(Dir.home)
+  end
 end
+
