@@ -130,15 +130,4 @@ namespace :setup do
 
     Dir.chdir(Dir.home)
   end
-
-  task :example1, [:args] => [:example2] do |t, args|
-    args.with_defaults(args: 'nit_default')
-    puts "example 1: #{args.args}"
-  end
-
-  task :example2, [:args] do |t, args|
-    # args.with_defaults(args: 'default')
-    puts 'example 2: ' + args.args
-  end
 end
-
