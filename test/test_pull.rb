@@ -134,6 +134,8 @@ class TestPull < Minitest::Test
     end
 
     assert File.exist?(config_term)
+    # refute File.empty?(config_term)
+    ## if you dont have a /org/gnome/terminal/settings key, this file may be empty
   end
 
   def test_pull_all_cygwin
