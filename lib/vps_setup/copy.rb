@@ -18,6 +18,7 @@ module VpsSetup
       mkdirs(backup_dir, dest_dir)
 
       copy_config_dir(backup_dir, dest_dir, ssh_dir)
+      link_vim_to_nvim(dest_dir, backup_dir)
 
       puts "dotfiles copied to #{dest_dir}."
       puts "backups created @ #{backup_dir}."
@@ -37,7 +38,7 @@ module VpsSetup
         dot = File.join(dest_dir, ".#{file}")
         backup = File.join(backup_dir, ".#{file}.orig")
 
-        if file == 'sshd_config' && linux
+        if linux && file == 'sshd_config'
           copy_sshd_config(backup_dir, ssh_dir)
           next
         end
@@ -45,6 +46,7 @@ module VpsSetup
         copy_unix_files(config, dot, backup) if linux || OS.mac?
         copy_cygwin_files(config, dot, backup) if OS.cygwin?
       end
+
     end
 
     def self.sshd_copyable?(ssh_dir = nil)
@@ -126,15 +128,15 @@ module VpsSetup
       dirs.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
     end
 
-    def self.link_vim_to_nvim(vimrc = nil, nvimrc = nil, backup_path = nil)
-      vimrc ||= File.join(Dir.home, '.vimrc')
-      nvimrc ||= File.join(Dir.home, '.config', 'nvim', 'init.vim')
+    def self.link_vim_to_nvim(backup_dir, dest_dir, nvim_path = nil)
+      nvim_path ||= File.join(Dir.home, '.config', 'nvim', 'init.vim')
+      Rake.mkdir_p(File.dirname(nvim_path)) unless Dir.exist?(File.dirname(nvim_path))
 
-      Rake.mkdir_p(File.dirname, nvimrc)
+      backup = File.join(backup_dir, '.init.vim.orig')
+      vimrc = File.join(dest_dir, '.vimrc')
 
-      Rake.cp(nvimrc, backup_path) unless File.exist?(File.join(ba)))
-      Rake.ln_fs(vimrc, nvimrc)
-
+      Rake.cp(nvim_path, backup) if File.exist?(nvim_path)
+      Rake.ln_sf(nvim_path, vimrc)
     end
   end
 end
