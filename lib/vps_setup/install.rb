@@ -1,4 +1,4 @@
-require './packages'
+# require 'packages'
 
 module VpsSetup
   class Install

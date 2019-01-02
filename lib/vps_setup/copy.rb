@@ -125,5 +125,16 @@ module VpsSetup
     def self.mkdirs(*dirs)
       dirs.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
     end
+
+    def self.link_vim_to_nvim(vimrc = nil, nvimrc = nil, backup_path = nil)
+      vimrc ||= File.join(Dir.home, '.vimrc')
+      nvimrc ||= File.join(Dir.home, '.config', 'nvim', 'init.vim')
+
+      Rake.mkdir_p(File.dirname, nvimrc)
+
+      Rake.cp(nvimrc, backup_path) unless File.exist?(File.join(ba)))
+      Rake.ln_fs(vimrc, nvimrc)
+
+    end
   end
 end
