@@ -135,11 +135,8 @@ module VpsSetup
       backup = File.join(backup_dir, '.init.vim.orig')
       vimrc = File.join(dest_dir, '.vimrc')
 
-      p vimrc
-      p backup
       Rake.cp(nvim_path, backup) if File.exist?(nvim_path)
       Rake.ln_sf(vimrc, nvim_path)
-      # Rake.sh(%(ln -sf #{vimrc} #{nvim_path}))
       # FileUtils.ln_sf does not work
     end
   end
