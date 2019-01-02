@@ -2,9 +2,52 @@
 
 module VpsSetup
   class Setup
+    def privileged_user?
+      Process.uid.zero?
+    end
     #packagetask rake tar
     def self.add_user(name = nil)
-      name ||= gets.chomp
+      raise "Not a privilieged user" unless privileged_user?
+
+      name ||= retrieve_name
+
+      if Dir.exist?("/home/#{name}")
+        puts "#{name is already taken}"
+        return :taken
+      end
+
+      #######################################
+      #  This only works on a ubuntu system #
+      #######################################
+
+      # creates user
+      Rake.sh("adduser #{name}")
+      # makes a user a sudo user by adding them to the sudo group
+      Rake.sh("adduser #{name} sudo")
+    end
+
+    def self.swap_user(name = nil)
+      #######################################
+      #  This only works on a ubuntu system #
+      #######################################
+      name ||= retrieve_name
+
+      # changes user to the provided name. Will prompt for password
+      loop do
+        Rake.sh("su #{name}")
+      rescue
+        puts "Something went wrong. Please reenter your password:"
+      else
+        puts "Authentication successful"
+        break
+      end
+      # This will swap the user and end the program
+
+    end
+
+    def self.retrieve_name
+      puts "Please enter a username to be used:"
+      gets.chomp
     end
   end
 end
