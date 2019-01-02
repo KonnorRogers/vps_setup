@@ -18,6 +18,8 @@ or with arguments:
 
     hash = tilde_to_home_hash(args)
 
+    puts hash[:backup_dir]
+    puts hash[:dest_dir]
     VpsSetup::Copy.copy(backup_dir: hash[:backup_dir], dest_dir: hash[:dest_dir])
   end
 end
