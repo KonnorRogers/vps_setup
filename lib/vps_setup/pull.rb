@@ -23,9 +23,6 @@ module VpsSetup
       attr[:cfg_dir] ||= CONFIG_DIR
       attr[:local_dir] ||= Dir.home
 
-      p linux_config_dotfiles_ary(attr[:cfg_dir])
-      p linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir])
-
       linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
         linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
           next unless local == ".#{config}"

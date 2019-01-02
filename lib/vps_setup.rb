@@ -4,6 +4,7 @@ require 'vps_setup/copy'
 require 'vps_setup/pull'
 require 'vps_setup/setup'
 require 'vps_setup/packages'
+require 'vps_setup/install'
 # Used for setting up a linux + cygwin environment for ssh purposes
 module VpsSetup
   # top level constants
