@@ -4,6 +4,7 @@
 require_relative 'test_helper.rb'
 require 'os'
 require 'fileutils'
+require 'rake'
 
 TEST_CONFIG_FILES =
   %w[cygwin_zshrc
@@ -28,12 +29,13 @@ mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
 def new_file(dir, file_name)
   File.new(File.join(dir, file_name), 'w+')
 end
+
 TEST_CONFIG_FILES.each { |file| new_file(PULL_CONFIG_DIR, file) }
 
 class TestPull < Minitest::Test
   include VpsSetup
 
-  def setup
+  # def setup
     ###########################
     # DOES NOT WORK IN CYGWIN #
     ###########################
@@ -43,16 +45,16 @@ class TestPull < Minitest::Test
     # TEST_CONFIG_FILES.each do |file|
     #   new_file(PULL_CONFIG_DIR, file)
     # end
-  end
+  # end
 
 
   def dir_files(dir)
     Dir.entries(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
   end
 
-  def teardown
-    # rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
-  end
+ # def teardown
+ #    rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+ #  end
 
   Minitest.after_run { rm_dirs(PULL_LOCAL_DIR, PULL_CONFIG_DIR) }
 
@@ -116,26 +118,22 @@ class TestPull < Minitest::Test
 
   def test_pull_gnome_term_settings
     skip('You are not running on linux, this test will fail') unless OS.linux?
-    local_term = File.join(PULL_LOCAL_DIR, 'gnome_terminal_settings')
+    local_term = '/org/gnome/terminal/'
     config_term = File.join(PULL_CONFIG_DIR, 'gnome_terminal_settings')
 
+
     capture_io do
-      Pull.pull_gnome_term_settings(local_term, config_term)
+      Rake.sh(%(command -v dconf >/dev/null 2>&1 || { echo >&2 "I require dconf but it's not installed.  Aborting."; exit 1; }))
+    end
+  rescue
+    skip('This test skipped. You do not have dconf installed.')
+  else
+    ## ONLY WORKS IF DCONF IS INSTALLED
+    capture_io do
+      Pull.pull_gnome_term_settings(config_term, local_term)
     end
 
-    refute File.exist?(local_term)
     assert File.exist?(config_term)
-
-    unless File.exist?('/org/gnome/terminal')
-      skip('You do not have /org/gnome/terminal, dconf will not work')
-    end
-
-    ## ONLY WORKS IF DCONF IS INSTALLED AND GNOME TERMINAL INSTALLED
-    config_file = File.new('gnome_settings')
-    FileUtils.sh("dconf dump /org/gnome/terminal > #{config_file}")
-    Pull.pull_gnome_term_settings(local_term, config_term)
-
-    assert_equal File.read(local_term), File.read(config_term)
   end
 
   def test_pull_all_cygwin

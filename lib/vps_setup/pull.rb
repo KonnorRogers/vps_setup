@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'fileutils'
 require 'os'
 require 'rake'
 
@@ -127,37 +126,31 @@ module VpsSetup
       Rake.cp(sshd_local_path, sshd_config_path)
     end
 
-    def self.pull_gnome_term_settings(local_term = nil, config_term = nil)
+    def self.pull_gnome_term_settings(config_term = nil, local_term = nil)
       local_term ||= '/org/gnome/terminal/'
       config_term ||= File.join(CONFIG_DIR, 'gnome_terminal_settings')
 
-      local_error = "#{local_term} does not exist. No copy created of gnome settings"
-      return puts local_error unless File.exist?(local_term)
-
-      config_error = "#{config_term} does not exist. Gnome settings not pulled."
-      return puts config_error unless File.exist?(config_term)
-
-      gnome_dump(local_term, config_term)
+      gnome_dump(config_term, local_term)
     end
 
-    def self.gnome_dump(local_term = nil, config_term = nil)
+    def self.gnome_dump(config_term = nil, local_term = nil)
       local_term ||= '/org/gnome/terminal/'
       config_term ||= File.join(CONFIG_DIR, 'gnome_terminal_settings')
 
       Rake.sh("dconf dump #{local_term} > #{config_term}")
     rescue RuntimeError
-      dconf_not_installed
+      dconf_error
       false
     else
       puts "Gnome settings successfully dumped into #{config_term}"
       true
     end
-  end
 
-  def self.dconf_not_installed
-    puts 'it appears you dont have dconf installed.'
-    puts 'skipping dumping of gnome_settings'
-    puts 'To install dconf, simply use'
-    puts 'sudo apt-get install dconf-tools'
+    def self.dconf_error
+      puts 'something went wrong. Gnome settings not saved.'
+      puts 'You may not have dconf installed.'
+      puts 'To install dconf, simply use'
+      puts 'sudo apt-get install dconf-tools'
+    end
   end
 end
