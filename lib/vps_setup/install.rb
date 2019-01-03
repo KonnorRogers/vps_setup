@@ -1,4 +1,5 @@
 # require 'packages'
+require 'os'
 
 module VpsSetup
   class Install
@@ -16,8 +17,16 @@ module VpsSetup
     end
 
     def self.packages
+#      raise unless OS.linux?
+
       Packages::UBUNTU.each do |item|
-        Rake.sh("sudo apt-get install -y #{item}")
+        begin
+          Rake.sh("sudo apt-get install -y #{item}")
+        rescue => exception
+          warn exception.message
+          # reraise the error
+          raise "apt-get install / apt install not working as intended. Ensure you are sudo and that you have this package manager."
+        end
       end
 
       puts "Successfully completed apt-get install on all packages."
