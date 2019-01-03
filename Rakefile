@@ -23,9 +23,16 @@ task :test do
   end
 end
 
-task :make, %i[backup_dir dest_dir] => %w[config:setup install] do |_t, args|
+task :make, %i[backup_dir dest_dir] do |_t, args|
+  raise 'do not run this as root' if VpsSetup::Setup.root?
+
   args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
   params = tilde_to_home_hash(args)
+
+  if OS.linux?
+    Rake::Task['config:setup'].invoke
+    Rake::Task['install'].invoke
+  end
 
   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
 end
