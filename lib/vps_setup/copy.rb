@@ -143,8 +143,11 @@ module VpsSetup
     def self.copy_gnome_settings(backup_dir)
       backup = "#{backup_dir}/gnome_terminal_settings.orig"
       Rake.sh("dconf dump /org/gnome/terminal/ > #{backup}")
-      # Rake.sh('dconf reset -f /org/gnome/terminal/')
+      Rake.sh('dconf reset -f /org/gnome/terminal/')
       Rake.sh("dconf load /org/gnome/terminal/ < #{CONFIG_DIR}/gnome_terminal_settings")
+    rescue RuntimeError => error
+      warn error.message
+      puts "something went wrong with gnome, continuing on"
     end
   end
 end
