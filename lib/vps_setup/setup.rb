@@ -13,13 +13,11 @@ module VpsSetup
     def self.ufw_setup
       raise 'Not running as sudo' unless privileged_user?
 
-      Rake.sh("
-              sudo ufw default allow outgoing \
-              sudo ufw default deny incoming \
-              sudo ufw allow 60000:61000/tcp \
-              sudo ufw enable \
-              sudo systemctl restart sshd
-              ")
+      Rake.sh('sudo ufw default allow outgoing')
+      Rake.sh('sudo ufw default deny in')
+      Rake.sh('sudo ufw allow 60000:61000/tcp')
+      Rake.sh('sudo ufw enable')
+      Rake.sh('sudo systemctl restart sshd')
     end
 
     def self.add_repos
@@ -49,8 +47,24 @@ module VpsSetup
     end
 
     def self.add_dejavu_sans_mono_font
-      Rake.sh("mkdir -p ~/.local/share/fonts")
+      Rake.sh('mkdir -p ~/.local/share/fonts')
       Rake.sh(%(cd ~/.local/share/fonts && curl -fLo "DejaVu Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf))
+    end
+
+    def self.add_snippets
+      ultisnips_dir = File.join(Dir.home, 'ParamagicianUltiSnips')
+
+      if Dir.exist?(ultisnips_dir)
+        Dir.cd(ultisnips_dir)
+        Rake.sh('git add -a')
+        Rake.sh("git commit -m 'commiting snippets'")
+        Rake.sh('git pull')
+      else
+
+        Rake.sh("git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git #{ultisnips_dir}")
+      end
+
+      Dir.cd(Dir.home)
     end
   end
 end
