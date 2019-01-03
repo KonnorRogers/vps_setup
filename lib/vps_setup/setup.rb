@@ -7,14 +7,20 @@ module VpsSetup
     end
 
     def self.root?
-      privileged_user && Dir.home == '/root'
+      privileged_user? && Dir.home == '/root'
     end
 
     def self.add_user(name = nil)
+      unless privileged_user?
+        puts 'you are not running as root or sudo user'
+        puts 'unable to add user'
+        return :not_privileged_user
+      end
+
       name ||= retrieve_name
 
       if Dir.exist?("/home/#{name}")
-        puts "#{name is already taken}"
+        puts "#{name} is already taken"
         return :name_taken
       end
 
@@ -25,6 +31,7 @@ module VpsSetup
       Rake.sh("adduser #{name}")
       # makes a user a sudo user by adding them to the sudo group
       Rake.sh("adduser #{name} sudo")
+      :user_added
     end
 
     # This will swap the user and exit the program
@@ -37,17 +44,17 @@ module VpsSetup
       # changes user to the provided name. Will prompt for password
       begin
         Rake.sh("su #{name}")
-      rescue
-        puts "Something went wrong. Please reenter your password:"
+      rescue RuntimeError
+        puts 'Something went wrong. Please reenter your password:'
         retry
       else
-        puts "Authentication successful"
+        puts 'Authentication successful'
       end
+      :swapped
     end
 
-
     def self.retrieve_name
-      puts "Please enter a username to be used:"
+      puts 'Please enter a username to be used:'
       gets.chomp
     end
 

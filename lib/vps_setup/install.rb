@@ -1,9 +1,30 @@
+# frozen_string_literal: true
+
 # require 'packages'
 require 'os'
 
 module VpsSetup
+  # Installes the required packages
   class Install
     def self.full
+      unless OS.linux?
+        puts 'You are not running on linux. No packages installed.'
+        return :not_installed
+      end
+
+      begin
+        all_install
+      rescue RuntimeError => exception
+        warn exception.message
+        raise "The above error was raised.
+      Apt-get install (packages) / ruby and other tools not installed
+      Please ensure you are using the apt package manager."
+      else
+        :installed
+      end
+    end
+
+    def self.all_install
       prep
       packages
       other_tools
@@ -11,33 +32,28 @@ module VpsSetup
     end
 
     def self.prep
-      sh('sudo apt-get update')
-      sh('sudo apt-get upgrade -y')
-      sh('sudo apt-get autoremove -y')
+      Rake.sh('sudo apt-get update')
+      Rake.sh('sudo apt-get upgrade -y')
+      Rake.sh('sudo apt-get autoremove -y')
     end
 
     def self.packages
-#      raise unless OS.linux?
-
       Packages::UBUNTU.each do |item|
-        begin
-          Rake.sh("sudo apt-get install -y #{item}")
-        rescue => exception
-          warn exception.message
-          # reraise the error
-          raise "apt-get install / apt install not working as intended. Ensure you are sudo and that you have this package manager."
-        end
-      end
+        Rake.sh("sudo apt-get install -y #{item}")
 
-      puts "Successfully completed apt-get install on all packages."
+        puts 'Successfully completed apt-get install on all packages.'
+      end
     end
 
     def self.other_tools
       # add heroku
       Rake.sh('sudo snap install heroku --classic')
       # add tmux plugin manager
-      Rake.mkdir_p(File.join(Dir.home, '.tmux', 'plugins'))
-      Rake.sh('git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm')
+      tmp_plugins = File.join(Dir.home, '.tmux', 'plugins', 'tpm')
+      unless Dir.exist?(tmp_plugins)
+        Rake.mkdir_p(tmp_plugins)
+        Rake.sh('git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm')
+      end
       # add ngrok
       Rake.sh('sudo npm install --unsafe-perm -g ngrok')
     end
@@ -49,9 +65,12 @@ module VpsSetup
       install_chruby(temp_dir)
 
       Dir.chdir(Dir.home)
-      Rake.sh('ruby-install ruby-2.5.1 --no-reinstall') # no need to repeat if its there
+      # no need to repeat if its already installed
+      Rake.sh('ruby-install ruby-2.5.1 --no-reinstall')
       gem_dir = File.join(Dir.home, '.gem', 'ruby', '2.5.1')
-      GEMS.each { |gem| sh("gem install #{gem} --install-dir #{gem_dir}") }
+      Packages::GEMS.each do |gem|
+        Rake.sh("gem install #{gem} --install-dir #{gem_dir}")
+      end
     end
 
     def self.install_ruby_install(temp_dir)
@@ -61,9 +80,9 @@ module VpsSetup
       Dir.chdir(temp_dir)
 
       Rake.sh(%(wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz))
-      Rake.sh("tar -xzvf ruby-install-0.7.0.tar.gz")
-      Dir.chdir("ruby-install-0.7.0/")
-      Rake.sh("sudo make install")
+      Rake.sh('tar -xzvf ruby-install-0.7.0.tar.gz')
+      Dir.chdir('ruby-install-0.7.0/')
+      Rake.sh('sudo make install')
 
       Dir.chdir(dir)
     end
@@ -75,9 +94,9 @@ module VpsSetup
       Dir.chdir(temp_dir)
 
       Rake.sh(%(wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz))
-      Rake.sh("tar -xzvf chruby-0.3.9.tar.gz")
+      Rake.sh('tar -xzvf chruby-0.3.9.tar.gz')
       Dir.chdir('chruby-0.3.9/')
-      Rake.sh("sudo make install")
+      Rake.sh('sudo make install')
 
       # Reset back to temp_dir
       Dir.chdir(temp_dir)
