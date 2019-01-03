@@ -38,15 +38,14 @@ class TestSetup < Minitest::Test
       assert_equal VpsSetup::Setup.add_user(user), :not_privileged_user
     end
 
-#     error = 'This will not work if you are not running as sudo / root. The Tes'
-#     skip(error) unless Process.uid.zero?
+    #     error = 'This will not work if you are not running as sudo / root. The Tes'
+    #     skip(error) unless Process.uid.zero?
 
-#     assert_equal VpsSetup::Setup.add_user(user), :user_added
-#     assert Dir.exist?("/home/#{user}")
+    #     assert_equal VpsSetup::Setup.add_user(user), :user_added
+    #     assert Dir.exist?("/home/#{user}")
 
-#     assert_equal VpsSetup::Setup.add_user(user), :name_taken
+    #     assert_equal VpsSetup::Setup.add_user(user), :name_taken
 
-#     remove_user(user)
+    #     remove_user(user)
   end
-
 end
