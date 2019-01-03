@@ -47,5 +47,10 @@ module VpsSetup
 
       Rake.sh('sudo apt update')
     end
+
+    def self.add_dejavu_sans_mono_font
+      Rake.sh("mkdir -p ~/.local/share/fonts")
+      Rake.sh(%(cd ~/.local/share/fonts && curl -fLo "DejaVu Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf))
+    end
   end
 end

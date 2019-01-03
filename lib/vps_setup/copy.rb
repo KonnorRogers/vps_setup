@@ -17,7 +17,7 @@ module VpsSetup
 
       mkdirs(backup_dir, dest_dir)
 
-      copy_config_dir(backup_dir, dest_dir, ssh_dir)
+      copy_config_dir(backup_dir, dest_dir)
       link_vim_to_nvim(backup_dir, dest_dir)
       copy_gnome_settings(backup_dir)
       copy_sshd_config(backup_dir, ssh_dir)
@@ -26,7 +26,7 @@ module VpsSetup
       puts "backups created @ #{backup_dir}"
     end
 
-    def self.copy_config_dir(backup_dir, dest_dir, ssh_dir = nil)
+    def self.copy_config_dir(backup_dir, dest_dir)
       # Dir.children(CONFIG_DIR).each do |file|, released in ruby 2.5.1
       # in 2.3.3 which is shipped with babun
       linux = OS.linux?
