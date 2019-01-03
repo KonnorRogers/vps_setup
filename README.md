@@ -64,7 +64,7 @@ This can be specified with either both or one of the arguments:
 ## Dependencies Installed
 
 * There are many dependencies installed, a large list can be located in 
-* /path/to/vps-setup/linode.bash
+* /path/to/vps-setup/lib/vps_setup/packages.rb
 
 ## Tools installed
 

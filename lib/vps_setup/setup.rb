@@ -21,7 +21,7 @@ module VpsSetup
 
       if Dir.exist?("/home/#{name}")
         puts "#{name} is already taken"
-        return :name_taken
+        return name
       end
 
       #######################################
@@ -31,7 +31,7 @@ module VpsSetup
       Rake.sh("adduser #{name}")
       # makes a user a sudo user by adding them to the sudo group
       Rake.sh("adduser #{name} sudo")
-      :user_added
+      name
     end
 
     # This will swap the user and exit the program
@@ -56,6 +56,18 @@ module VpsSetup
     def self.retrieve_name
       puts 'Please enter a username to be used:'
       gets.chomp
+    end
+
+    def self.ufw_setup
+      raise 'Not running as sudo' unless Process.uid.zero?
+
+      Rake.sh("
+              sudo ufw default allow outgoing \
+              sudo ufw default deny incoming \
+              sudo ufw allow 60000:61000/tcp \
+              sudo ufw enable \
+              sudo systemctl restart sshd
+              ")
     end
 
     def self.add_repos
@@ -83,5 +95,3 @@ module VpsSetup
     end
   end
 end
-# namespace :setup do
-#   task :ubuntu, [:username] => %i[swap_user apt_all add_other_tools ruby_install] do |_t, args|

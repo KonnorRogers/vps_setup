@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace 'config' do
-  desc "copies dotfiles from a local dir to the config dir. 
+  desc "copies dotfiles from a local dir to the config dir.
 By default, copies from ~ to vps_setup/config.
 This can be changed by changing :config_dir and :local_dir
 Use this task via:
@@ -14,20 +14,19 @@ with arguments:
 
 Both arguments are optional and can be omitted
 to test what will be pulled, use:
-    
+
     $ rake \"config:pull[~/test_dir]\"
 
 This will put all files to be pulled into the ~/test_dir from ./vps_setup/config
   "
 
-    
   # Allows the setting of a backup_dir for your dotfiles
   task :pull, [:config_dir, :local_dir] do |_t, args|
     # swapped positions of local_dir and config_dir to allow a nil config_dir
     args.with_defaults(config_dir: VpsSetup::CONFIG_DIR, local_dir: Dir.home)
 
     p args
-    # converts args from a Rake::TaskArgument to a hash 
+    # converts args from a Rake::TaskArgument to a hash
     hash = tilde_to_home_hash(args)
     p hash[:config_dir]
     p hash[:local_dir]

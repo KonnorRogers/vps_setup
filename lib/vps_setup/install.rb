@@ -4,6 +4,8 @@
 require 'os'
 
 module VpsSetup
+  OMZ_DIR = File.join(Dir.home, '.oh-my-zsh')
+  OMZ_PLUGINS = File.join(OMZ_DIR, 'custom', 'plugins')
   # Installes the required packages
   class Install
     def self.full
@@ -25,10 +27,17 @@ module VpsSetup
     end
 
     def self.all_install
+      unless Process.uid.zero?
+        error = 'You are not running as sudo / root. Nothing installed'
+        raise error
+      end
+
       prep
       packages
       other_tools
       ruby_all
+      neovim_pip
+      omz_full_install
     end
 
     def self.prep
@@ -56,6 +65,49 @@ module VpsSetup
       end
       # add ngrok
       Rake.sh('sudo npm install --unsafe-perm -g ngrok')
+
+      # add docker
+      username = Dir.home.split('/')[2]
+      begin
+        Rake.sh('groupadd docker')
+        Rake.sh("usermod -aG docker #{username}")
+      rescue RuntimeError
+        puts 'docker group already exists.'
+        puts 'moving on...'
+      end
+    end
+
+    def self.neovim_pip
+      Rake.sh('sudo pip2 install neovim --system')
+      Rake.sh('sudo pip3 install neovim --system')
+      Rake.sh(%(yes "\n" | npm install -g neovim))
+    end
+
+    def self.omz_full_install
+      install_oh_my_zsh
+      install_syntax_highlighting
+      install_autosuggestions
+    end
+
+    def self.install_oh_my_zsh
+      return if Dir.exist?(OMZ_DIR)
+
+      Rake.sh('git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh')
+      Rake.sh('chsh -s /bin/zsh')
+    end
+
+    def self.install_autosuggestions
+      auto = File.join(OMZ_PLUGINS, 'zsh-autosuggestions')
+      return if File.exist?(auto)
+
+      Rake.sh("git clone https://github.com/zsh-users/zsh-autosuggestions #{auto}")
+    end
+
+    def self.install_syntax_highlighting
+      syntax = File.join(OMZ_PLUGINS, 'zsh-syntax-highlighting')
+      return if File.exist?(syntax)
+
+      Rake.sh("git clone https://github.com/zsh-users/zsh-syntax-highlighting.git #{syntax}")
     end
 
     def self.ruby_all
@@ -67,6 +119,7 @@ module VpsSetup
       Dir.chdir(Dir.home)
       # no need to repeat if its already installed
       Rake.sh('ruby-install ruby-2.5.1 --no-reinstall')
+      Rake.sh('gem update --system')
       gem_dir = File.join(Dir.home, '.gem', 'ruby', '2.5.1')
       Packages::GEMS.each do |gem|
         Rake.sh("gem install #{gem} --install-dir #{gem_dir}")

@@ -19,6 +19,7 @@ module VpsSetup
 
       copy_config_dir(backup_dir, dest_dir, ssh_dir)
       link_vim_to_nvim(backup_dir, dest_dir)
+      copy_gnome_terminal_settings(backup_dir)
 
       puts "dotfiles copied to #{dest_dir}."
       puts "backups created @ #{backup_dir}."
@@ -46,7 +47,6 @@ module VpsSetup
         copy_unix_files(config, dot, backup) if linux || OS.mac?
         copy_cygwin_files(config, dot, backup) if OS.cygwin?
       end
-
     end
 
     def self.sshd_copyable?(ssh_dir = nil)
@@ -138,6 +138,13 @@ module VpsSetup
       Rake.cp(nvim_path, backup) if File.exist?(nvim_path)
       Rake.ln_sf(vimrc, nvim_path)
       # FileUtils.ln_sf does not work
+    end
+
+    def self.copy_gnome_settings(backup_dir)
+      backup = "#{backup_dir}/gnome_terminal_settings.orig"
+      Rake.sh("dconf dump /org/gnome/terminal/ > #{backup}")
+      Rake.sh('dconf reset -f /org/gnome/terminal/')
+      Rake.sh("dconf load /org/gnome/terminal/ < #{CONFIG_DIR}/gnome_terminal_settings")
     end
   end
 end

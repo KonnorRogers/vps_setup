@@ -23,7 +23,13 @@ task :test do
   end
 end
 
-task :example do
-  # puts Process.uid
-  # puts Dir.home
+task :make, %i[backup_dir dest_dir] => %w[config:setup install] do |_t, args|
+  args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
+  params = tilde_to_home_hash(args)
+
+  Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
+end
+
+task :install do
+  VpsSetup::Install.full
 end
