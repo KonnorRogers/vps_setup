@@ -2,16 +2,63 @@
 
 module VpsSetup
   class Setup
-    def self.privileged_user?
-      Process.uid.zero?
+    def self.privileged_user?  Process.uid.zero?
     end
 
     def self.root?
       privileged_user? && Dir.home == '/root'
     end
 
+    #def self.add_user(name = nil)
+    #  unless privileged_user?
+    #    puts 'you are not running as root or sudo user'
+    #    puts 'unable to add user'
+    #    return :not_privileged_user
+    #  end
+
+    #  name ||= retrieve_name
+
+    #  if Dir.exist?("/home/#{name}")
+    #    puts "#{name} is already taken"
+    #    return name
+    #  end
+
+    #  #######################################
+    #  #  This only works on a ubuntu system #
+    #  #######################################
+    #  # creates user
+    #  Rake.sh("adduser #{name}")
+    #  # makes a user a sudo user by adding them to the sudo group
+    #  Rake.sh("adduser #{name} sudo")
+    #  name
+    #end
+
+    ## This will swap the user and exit the program
+    #def self.swap_user(name = nil)
+    #  #######################################
+    #  #  This only works on a ubuntu system #
+    #  #######################################
+    #  name ||= retrieve_name
+
+    #  # changes user to the provided name. Will prompt for password
+    #  begin
+    #    Rake.sh("su #{name}")
+    #  rescue RuntimeError
+    #    puts 'Something went wrong. Please reenter your password:'
+    #    retry
+    #  else
+    #    puts 'Authentication successful'
+    #  end
+    #  :swapped
+    #end
+
+    #def self.retrieve_name
+    #  puts 'Please enter a username to be used:'
+    #  gets.chomp
+    #end
+
     def self.ufw_setup
-      raise 'Not running as sudo' unless privileged_user?
+      raise 'Not running as sudo' unless Process.uid.zero?
 
       Rake.sh("
               sudo ufw default allow outgoing \
@@ -23,8 +70,6 @@ module VpsSetup
     end
 
     def self.add_repos
-      raise 'Not running as sudo' unless privileged_user?
-
       # neovim repo
       Rake.sh('sudo apt-add-repository -y ppa:neovim-ppa/stable')
       # asciinema repo for recording the terminal

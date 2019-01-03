@@ -20,9 +20,10 @@ module VpsSetup
       copy_config_dir(backup_dir, dest_dir, ssh_dir)
       link_vim_to_nvim(backup_dir, dest_dir)
       copy_gnome_settings(backup_dir)
+      copy_sshd_config(backup_dir, ssh_dir)
 
-      puts "dotfiles copied to #{dest_dir}."
-      puts "backups created @ #{backup_dir}."
+      puts "dotfiles copied to #{dest_dir}"
+      puts "backups created @ #{backup_dir}"
     end
 
     def self.copy_config_dir(backup_dir, dest_dir, ssh_dir = nil)
@@ -34,15 +35,11 @@ module VpsSetup
         # Explanation of this regexp in test/test_copy_confib.rb
         # .for_each returns '.' and '..' which we dont want
         next if file =~ /\A\.{1,2}\Z/
+        next if NON_DOTFILES.include?(file)
 
         config = File.join(CONFIG_DIR, file)
         dot = File.join(dest_dir, ".#{file}")
-        backup = File.join(backup_dir, ".#{file}.orig")
-
-        if linux && file == 'sshd_config'
-          copy_sshd_config(backup_dir, ssh_dir)
-          next
-        end
+        backup = File.join(backup_dir, "#{file}.orig")
 
         copy_unix_files(config, dot, backup) if linux || OS.mac?
         copy_cygwin_files(config, dot, backup) if OS.cygwin?
@@ -137,7 +134,6 @@ module VpsSetup
 
       Rake.cp(nvim_path, backup) if File.exist?(nvim_path)
       Rake.ln_sf(vimrc, nvim_path)
-      # FileUtils.ln_sf does not work
     end
 
     def self.copy_gnome_settings(backup_dir)
@@ -147,7 +143,7 @@ module VpsSetup
       Rake.sh("dconf load /org/gnome/terminal/ < #{CONFIG_DIR}/gnome_terminal_settings")
     rescue RuntimeError => error
       warn error.message
-      puts "something went wrong with gnome, continuing on"
+      puts 'something went wrong with gnome, continuing on'
     end
   end
 end

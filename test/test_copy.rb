@@ -109,7 +109,7 @@ class TestCopy < Minitest::Test
 
   def test_backup_dir_not_empty_if_orig_found
     FileUtils.mkdir_p(DEST_DIR)
-    backup_file = File.join(BACKUP_DIR, '.vimrc.orig')
+    backup_file = File.join(BACKUP_DIR, 'vimrc.orig')
     dest_file = File.join(DEST_DIR, '.vimrc')
 
     File.open(dest_file, 'w+') { |file| file.puts 'test' }
@@ -120,7 +120,7 @@ class TestCopy < Minitest::Test
     end
 
     refute_empty(dir_children(BACKUP_DIR))
-    assert_includes(dir_children(BACKUP_DIR), '.vimrc.orig')
+    assert_includes(dir_children(BACKUP_DIR), 'vimrc.orig')
 
     assert dest_file_before_copy == File.read(backup_file)
     refute dest_file_before_copy == File.read(dest_file)
