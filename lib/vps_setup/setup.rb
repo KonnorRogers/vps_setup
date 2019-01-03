@@ -35,13 +35,13 @@ module VpsSetup
       name ||= retrieve_name
 
       # changes user to the provided name. Will prompt for password
-      loop do
+      begin
         Rake.sh("su #{name}")
       rescue
         puts "Something went wrong. Please reenter your password:"
+        retry
       else
         puts "Authentication successful"
-        break
       end
     end
 
