@@ -11,14 +11,16 @@
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
-      ~/backup_config/.vimrc.orig
-      ~/backup_config/.tmux.conf.orig
-      ~/backup_config/.zshrc.orig
+      ~/backup_config/vimrc.orig
+      ~/backup_config/tmux.conf.orig
+      ~/backup_config/zshrc.orig
       
 ## Updating linode instance
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
     cd ~/vps-setup
+
+    sudo make rake
 * -u specifies the home directory where everything will be installed, just in case its being run from root
 
 * Do not forget to set git via:
