@@ -77,7 +77,7 @@ module VpsSetup
 
       if Dir.exist?(ultisnips_dir)
         Dir.chdir(ultisnips_dir)
-        Rake.sh('git add -a')
+        Rake.sh('git add -A')
         Rake.sh("git commit -m 'commiting snippets'")
         Rake.sh('git pull')
       else
