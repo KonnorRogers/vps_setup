@@ -1,12 +1,12 @@
 # Purpose
 * To be able to spin up multiple development environments without having to reconfigure all the time
-* ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode
+* ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode & Babun on windows.
 * Ideally, you should brush over the contents of each file
-* .rc files located in config/
+* .rc files located in config/ as well sshd_config & gnome_terminal_settings
 
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
-* ### Your original can be obtained at ~/backup_files/sshd_config.orig
+* ### Your original can be obtained at ~/backup_config/sshd_config.orig
   
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
@@ -19,17 +19,16 @@
     sudo apt install git
     git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
     cd ~/vps-setup
+    sudo bash install.bash
+* or
+  
+      sudo ./install.bash
+      
+* This will run heroku login & git config --global user.name & user.email
 
-    sudo make rake
-* -u specifies the home directory where everything will be installed, just in case its being run from root
+* It will make you create a user if running as root to then run the script as
 
-* Do not forget to set git via:
-    
-      git config --global user.name
 
-* Then run:
-
-      heroku login
       
 * Also, ensure to secure your server via /etc/ssh/sshd_config should you not find my settings acceptable
 
@@ -55,13 +54,48 @@
 
 ## Rake Tasks
 
-copies files from vps_setup/config to ~/backup_config:
+### rake make
+
+* The main function called by install.bash
+* will call rake config:copy
+* accepts the same arguments as config:copy
+* defaults backup_dir to ~/backup_config
+* defaults dest_dir to ~
+
+### rake config:copy
+* copies files from vps_setup/config to ~/backup_config:
 
       rake config:copy
 
-This can be specified with either both or one of the arguments:
+* This can be specified with either both or one of the arguments:
 
       rake "config:copy[/path/to/backup_dir, /path/to/dest_dir]"
+      
+* The following command lets you specify where you would like your backup directory to be
+
+      rake "config:copy[/path/to/backup_dir]"
+      
+* The following command lets you specify where you would like to put your dotfiles
+
+      rake "config:copy[nil, /path/to/dest_dir]"
+
+### rake config:pull
+* copies files from home dir (~) to your vps_setup repo (./vps_setup/config)
+
+      rake config:pull
+
+* Alternatively, you can specify where you would like files to be pulled from and to
+
+      rake "config:pull[/path/to/config_dir, /path/to/local_dotfiles_dir]"
+      
+* The following command will allow you to show what will be pulled to the repo:
+
+      rake "config:pull[/path/to/config_dir]"
+
+* The following command will let you leave the default config dir, and specify where to pull dotfiles from
+
+      rake "config:pull[nil, /path/to/dotfiles_dir]"
+    
 
 ## Dependencies Installed
 
