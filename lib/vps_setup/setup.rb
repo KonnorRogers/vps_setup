@@ -77,9 +77,13 @@ module VpsSetup
 
       if Dir.exist?(ultisnips_dir)
         Dir.chdir(ultisnips_dir)
+        ## Just in case anything is uncommitted
         Rake.sh('git add -A')
         Rake.sh("git commit -m 'commiting snippets'")
         Rake.sh('git pull')
+      rescue RuntimeError
+        puts "something went wrong adding snippets, just ensure everything is okay"
+        puts "by running ~/ParamagicianUltiSnips"
       else
 
         Rake.sh("git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git #{ultisnips_dir}")
