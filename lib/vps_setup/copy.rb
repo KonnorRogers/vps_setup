@@ -60,7 +60,7 @@ module VpsSetup
     end
 
     def self.copy_sshd_config(backup_dir, ssh_dir = nil)
-      ssh_dir ||= '/etc/ssh/sshd_config'
+      ssh_dir ||= '/etc/ssh'
 
       return unless sshd_copyable?(ssh_dir)
 
