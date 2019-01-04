@@ -10,6 +10,18 @@ module VpsSetup
       privileged_user? && Dir.home == '/root'
     end
 
+    def self.adduser
+      raise "You are not root, unable to add user" unless root?
+
+      puts "Please create a user to run this script as:"
+      username = gets.chomp
+      Rake.sh("sudo adduser #{username}")
+      Rake.sh("sudo adduser #{username} sudo")
+
+      puts "Please login as the new user and rerun the script as sudo."
+      Rake.sh("su #{username}")
+    end
+
     def self.ufw_setup
       raise 'Not running as sudo' unless privileged_user?
 
@@ -64,6 +76,23 @@ module VpsSetup
       end
 
       Dir.cd(Dir.home)
+    end
+
+    def self.git_config
+      puts "Please enter your git username:"
+      username = gets.chomp
+      Rake.sh("git config --global user.name #{username}")
+
+      puts "Please enter your email:"
+      email = gets.chomp
+      Rake.sh("git config --global user.email #{email}")
+
+      puts "Git config complete.\n"
+    end
+
+    def self.heroku_login
+      puts "Please login to heroku:"
+      Rake.sh("heroku login")
     end
   end
 end

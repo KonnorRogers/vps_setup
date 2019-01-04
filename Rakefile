@@ -24,7 +24,9 @@ task :test do
 end
 
 task :make, %i[backup_dir dest_dir] do |_t, args|
-  raise 'do not run this as root' if VpsSetup::Setup.root?
+  if VpsSetup::Setup.root?
+    VpsSetup::Setup.adduser
+  end
 
   args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
   params = tilde_to_home_hash(args)
