@@ -10,8 +10,18 @@ module VpsSetup
       privileged_user? && Dir.home == '/root'
     end
 
+    def self.full
+      adduser if root?
+      ufw_setup
+      add_repos
+      add_dejavu_sans_mono
+      add_snippets
+      git config
+      heroku_login
+    end
+
     def self.adduser
-      raise "You are not root, unable to add user" unless root?
+      raise "You are not sudo / root, unable to add user" unless privileged_user?
 
       puts "Please create a user to run this script as:"
       username = gets.chomp
@@ -97,4 +107,3 @@ module VpsSetup
   end
 end
 
-# curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.liste

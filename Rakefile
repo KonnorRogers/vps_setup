@@ -24,21 +24,23 @@ task :test do
 end
 
 task :make, %i[backup_dir dest_dir] do |_t, args|
-  if VpsSetup::Setup.root?
-    VpsSetup::Setup.adduser
+  # Not necessary for babun
+  if OS.linux?
+    Rake::Task['setup'].invoke
+    Rake::Task['install'].invoke
   end
+
 
   args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
   params = tilde_to_home_hash(args)
-
-  if OS.linux?
-    Rake::Task['config:setup'].invoke
-    Rake::Task['install'].invoke
-  end
 
   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
 end
 
 task :install do
   VpsSetup::Install.full
+end
+
+task :setup do
+  VpsSetup::Setup.full
 end
