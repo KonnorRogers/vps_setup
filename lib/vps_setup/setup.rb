@@ -76,7 +76,7 @@ module VpsSetup
       ultisnips_dir = File.join(Dir.home, 'ParamagicianUltiSnips')
 
       if Dir.exist?(ultisnips_dir)
-        Dir.cd(ultisnips_dir)
+        Dir.chdir(ultisnips_dir)
         Rake.sh('git add -a')
         Rake.sh("git commit -m 'commiting snippets'")
         Rake.sh('git pull')
@@ -85,7 +85,7 @@ module VpsSetup
         Rake.sh("git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git #{ultisnips_dir}")
       end
 
-      Dir.cd(Dir.home)
+      Dir.chdir(Dir.home)
     end
 
     def self.git_config
