@@ -17,7 +17,6 @@ module VpsSetup
                postgresql pry rubygems fail2ban].freeze
 
     ADDED_REPOS = %w[neovim asciinema docker-ce mosh yarn].freeze
-    GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
     # Does not include gems
     UBUNTU = LIBS.dup.concat(LANGUAGES).concat(TOOLS).concat(ADDED_REPOS)

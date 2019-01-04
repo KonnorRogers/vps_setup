@@ -12,7 +12,6 @@ module VpsSetup
 
     def self.full
       adduser if root?
-      ufw_setup
       add_repos
       add_dejavu_sans_mono_font
       add_snippets
@@ -22,7 +21,7 @@ module VpsSetup
       raise 'You are not sudo / root, unable to add user' unless privileged_user?
 
       puts 'Please create a user to run this script as:'
-      username = gets.chomp
+      username = $stdin.gets.chomp
       Rake.sh("sudo adduser #{username}")
       Rake.sh("sudo adduser #{username} sudo")
 
@@ -36,7 +35,7 @@ module VpsSetup
       Rake.sh('sudo ufw default allow outgoing')
       Rake.sh('sudo ufw default deny incoming')
       Rake.sh('sudo ufw allow 60000:61000/tcp')
-      Rake.sh('sudo ufw enable')
+      Rake.sh('yes | sudo ufw enable')
       Rake.sh('yes | sudo systemctl restart sshd')
     end
 
@@ -92,11 +91,11 @@ module VpsSetup
 
     def self.git_config
       puts 'Please enter your git username:'
-      username = gets.chomp
+      username = $stdin.gets.chomp
       Rake.sh("git config --global user.name #{username}")
 
       puts 'Please enter your email:'
-      email = gets.chomp
+      email = $stdin.gets.chomp
       Rake.sh("git config --global user.email #{email}")
 
       puts "Git config complete.\n"
