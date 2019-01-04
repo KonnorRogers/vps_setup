@@ -14,21 +14,21 @@ module VpsSetup
       adduser if root?
       ufw_setup
       add_repos
-      add_dejavu_sans_mono
+      add_dejavu_sans_mono_font
       add_snippets
       git config
       heroku_login
     end
 
     def self.adduser
-      raise "You are not sudo / root, unable to add user" unless privileged_user?
+      raise 'You are not sudo / root, unable to add user' unless privileged_user?
 
-      puts "Please create a user to run this script as:"
+      puts 'Please create a user to run this script as:'
       username = gets.chomp
       Rake.sh("sudo adduser #{username}")
       Rake.sh("sudo adduser #{username} sudo")
 
-      puts "Please login as the new user and rerun the script as sudo."
+      puts 'Please login as the new user and rerun the script as sudo.'
       Rake.sh("su #{username}")
     end
 
@@ -89,11 +89,11 @@ module VpsSetup
     end
 
     def self.git_config
-      puts "Please enter your git username:"
+      puts 'Please enter your git username:'
       username = gets.chomp
       Rake.sh("git config --global user.name #{username}")
 
-      puts "Please enter your email:"
+      puts 'Please enter your email:'
       email = gets.chomp
       Rake.sh("git config --global user.email #{email}")
 
@@ -101,9 +101,8 @@ module VpsSetup
     end
 
     def self.heroku_login
-      puts "Please login to heroku:"
-      Rake.sh("heroku login")
+      puts 'Please login to heroku:'
+      Rake.sh('heroku login')
     end
   end
 end
-
