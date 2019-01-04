@@ -14,7 +14,7 @@ module VpsSetup
       raise 'Not running as sudo' unless privileged_user?
 
       Rake.sh('sudo ufw default allow outgoing')
-      Rake.sh('sudo ufw default deny in')
+      Rake.sh('sudo ufw default deny incoming')
       Rake.sh('sudo ufw allow 60000:61000/tcp')
       Rake.sh('sudo ufw enable')
       Rake.sh('sudo systemctl restart sshd')
