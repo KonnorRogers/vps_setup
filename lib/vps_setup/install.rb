@@ -38,6 +38,7 @@ module VpsSetup
       ruby_all
       neovim_pip
       omz_full_install
+      Setup.ufw_setup
     end
 
     def self.prep

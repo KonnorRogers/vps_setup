@@ -16,7 +16,7 @@ module VpsSetup
                openssh-client openssh-server
                postgresql pry rubygems fail2ban].freeze
 
-    ADDED_REPOS = %w[neovim asciinema docker-ce mosh].freeze
+    ADDED_REPOS = %w[neovim asciinema docker-ce mosh yarn].freeze
     GEMS = %w[bundler rails colorls neovim rake pry].freeze
 
     # Does not include gems
