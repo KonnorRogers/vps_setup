@@ -7,7 +7,7 @@
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
 * ### Your original can be obtained at ~/backup_config/sshd_config.orig
-  
+
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
@@ -16,20 +16,20 @@
       ~/backup_config/zshrc.orig
       
 ## Updating linode instance
-    sudo apt install git
-    git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
-    cd ~/vps-setup
-    sudo bash install.bash
+
+* ### If you run this command as root, it will prompt you to make a user to use the script as
+
+      sudo apt install git
+      git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
+      cd ~/vps-setup
+      sudo bash install.bash
+    
 * or
   
       sudo ./install.bash
       
 * This will run heroku login & git config --global user.name & user.email
 
-* It will make you create a user if running as root to then run the script as
-
-
-      
 * Also, ensure to secure your server via /etc/ssh/sshd_config should you not find my settings acceptable
 
 ## Setup
@@ -138,24 +138,3 @@
 ## Updates for the future?
     
 * Adding docker support via images
-* Start git branching
-
-### BASH
-* Add repositories
-* Install every apt-get
-* Create a user
-* Log in to user
-
-### RAKE
-* run the Rake task to finish setup
-* ensure it works outside of home
-
-
-### TODO
-
-* Add symlink of neovim to vim
-* Brush over linode.bash and add the appropriate apt-get installs & adding repos
-* Sudo commands will run with Process.uid == 0
-
-* Im sure im missing lots of other stuff
-
