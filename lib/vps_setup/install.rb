@@ -120,13 +120,6 @@ module VpsSetup
       Dir.chdir(Dir.home)
       # no need to repeat if its already installed
       Rake.sh('ruby-install ruby-2.5.1 --no-reinstall')
-      Rake.sh('sudo chmod -R 777 /opt/rubies')
-      Rake.sh('sudo chmod go-w -R /opt/rubies')
-      Rake.sh('gem update --system')
-      gem_dir = File.join(Dir.home, '.gem', 'ruby', '2.5.1')
-      Packages::GEMS.each do |gem|
-        Rake.sh("gem install #{gem} --install-dir #{gem_dir}")
-      end
     end
 
     def self.install_ruby_install(temp_dir)

@@ -11,22 +11,9 @@ module VpsSetup
     end
 
     def self.full
-      adduser if root?
       add_repos
       add_dejavu_sans_mono_font
       add_snippets
-    end
-
-    def self.adduser
-      raise 'You are not sudo / root, unable to add user' unless privileged_user?
-
-      puts 'Please create a user to run this script as:'
-      username = $stdin.gets.chomp
-      Rake.sh("sudo adduser #{username}")
-      Rake.sh("sudo adduser #{username} sudo")
-
-      puts 'Please login as the new user and rerun the script as sudo.'
-      Rake.sh("su #{username}")
     end
 
     def self.ufw_setup
@@ -104,6 +91,8 @@ module VpsSetup
     def self.heroku_login
       puts 'Please login to heroku:'
       Rake.sh('heroku login')
+    rescue
+      puts 'you did not login to heroku. To login, use heroku login'
     end
   end
 end
