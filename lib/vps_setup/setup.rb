@@ -39,7 +39,7 @@ module VpsSetup
       Rake.sh('sudo ufw default deny incoming')
       Rake.sh('sudo ufw allow 60000:61000/tcp')
       Rake.sh('sudo ufw enable')
-      Rake.sh('sudo systemctl restart sshd')
+      Rake.sh('yes | sudo systemctl restart sshd')
     end
 
     def self.add_repos
