@@ -16,8 +16,6 @@ module VpsSetup
       add_repos
       add_dejavu_sans_mono_font
       add_snippets
-      git config
-      heroku_login
     end
 
     def self.adduser

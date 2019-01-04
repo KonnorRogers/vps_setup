@@ -30,11 +30,13 @@ task :make, %i[backup_dir dest_dir] do |_t, args|
     Rake::Task['install'].invoke
   end
 
-
   args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
   params = tilde_to_home_hash(args)
 
   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
+
+  VpsSetup::Setup.git_config
+  VpsSetup::Setup.heroku_login
 end
 
 task :install do
