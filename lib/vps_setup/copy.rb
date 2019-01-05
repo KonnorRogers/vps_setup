@@ -68,7 +68,11 @@ module VpsSetup
       sshd_backup = File.join(backup_dir, 'sshd_config.orig')
       sshd_path = File.join(ssh_dir, 'sshd_config')
 
-      Rake.cp(sshd_path, sshd_backup) if File.exist?(sshd_path)
+      if File.exist?(sshd_path) && !(File.exist?(sshd_backup))
+        Rake.cp(sshd_path, sshd_backup)
+      else
+        puts "#{sshd_backup} already exists. no backup created"
+      end
       puts "copying to #{sshd_path}"
       Rake.cp(sshd_cfg_path, sshd_path)
     end
