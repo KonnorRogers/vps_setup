@@ -51,3 +51,16 @@ end
 task :setup do
   VpsSetup::Setup.full
 end
+
+# monkey patch to work with cygwin
+class Hash
+  def self.transform_values(hash)
+    result = {}
+
+    hash.each_pair do |key, value|
+      result[yield(key)] = value
+    end
+
+    result
+  end
+end
