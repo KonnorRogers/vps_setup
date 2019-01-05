@@ -86,6 +86,9 @@ module VpsSetup
       Rake.sh("git config --global user.email #{email}")
 
       puts "Git config complete.\n"
+
+    rescue
+      "something went wrong. make sure to set your git config"
     end
 
     def self.heroku_login
