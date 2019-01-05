@@ -21,7 +21,7 @@ if [[ `id -u` == 0 ]]; then
   exit 1
 fi
 
-GEMS="bundler rails colorls neovim rake pry"
+GEMS="bundler colorls neovim rake pry"
 
 # install gems and run bundle install prior to sudo
 for item in $GEMS; do

@@ -130,6 +130,8 @@ module VpsSetup
     end
 
     def self.link_vim_to_nvim(backup_dir, dest_dir)
+      return unless OS.linux?
+
       nvim_path ||= File.join(dest_dir, '.config', 'nvim', 'init.vim')
       Rake.mkdir_p(File.dirname(nvim_path)) unless Dir.exist?(File.dirname(nvim_path))
 

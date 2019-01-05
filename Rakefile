@@ -9,7 +9,7 @@ require 'vps_setup'
 
 def tilde_to_home_hash(rake_args)
   # Rake::TaskArguments.to_hash equivalent
-  rake_args.to_hash.transform_values { |value| value.sub(/~/, Dir.home) }
+  rake_args.to_hash.map { |k, v| [k, v.sub('~', Dir.home)] }.to_h
 end
 
 task default: %w[test]
@@ -52,15 +52,3 @@ task :setup do
   VpsSetup::Setup.full
 end
 
-# monkey patch to work with cygwin
-class Hash
-  def self.transform_values(hash)
-    result = {}
-
-    hash.each_pair do |key, value|
-      result[yield(key)] = value
-    end
-
-    result
-  end
-end
