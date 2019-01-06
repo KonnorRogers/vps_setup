@@ -56,6 +56,9 @@ module VpsSetup
     end
 
     def self.other_tools
+      # update npm
+      Rake.sh('sudo npm install -g npm')
+
       # add heroku
       Rake.sh('sudo snap install heroku --classic')
       # add tmux plugin manager
