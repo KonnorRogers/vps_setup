@@ -101,6 +101,9 @@
 
 ## Rake Tasks
 
+### $ rake test
+* Default rake task, runs the test suite
+
 ### $ rake make[:backup_dir, dest_dir]
 
 * The main function called by install.bash
@@ -151,3 +154,12 @@
 ## Updates for the future?
     
 * Adding docker support via images
+
+
+## Things learned:
+
+* Configuration is hard. There is a reason things like chef, puppet, ansible etc exist.
+* How to create a logger. Example is in test/logs after running rake test
+* Rake is a great tool, but is weak with command line arguments, may look into Thor for the future
+* It works, its not pretty, but it gets the job done.
+* Mixing command line and Ruby is not easy
