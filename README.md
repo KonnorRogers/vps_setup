@@ -106,7 +106,8 @@
 * defaults backup_dir to ~/backup_config
 * defaults dest_dir to ~
 
-### $ rake config:copy
+### $ rake config:copy[:backup_dir, dest_dir]
+
 * copies files from vps_setup/config to ~/backup_config:
 
       rake config:copy
@@ -123,7 +124,7 @@
 
       rake "config:copy[nil, /path/to/dest_dir]"
 
-### $ rake config:pull
+### $ rake config:pull[:config_dir, :local_dir]
 
 * #### This is merely to pull local files into your vps_setup repo
 
