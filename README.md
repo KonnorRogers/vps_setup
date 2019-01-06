@@ -21,10 +21,9 @@
       
 ## Updating linode instance
 
-* ### If you run this command as root, it will prompt you to make a user to use the script as
+* ### If you run this command as root / sudo, it will prompt you to make a user to use the script as
+* ### This will continuously error out if you try to run as root / sudo
 
-* ### DO NOT RUN THE SCRIPT AS SUDO
-* ### It will prompt for sudo when needed
 
       sudo apt install git
       git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
