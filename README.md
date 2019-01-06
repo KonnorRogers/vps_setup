@@ -14,19 +14,26 @@
       ~/backup_config/vimrc.orig
       ~/backup_config/tmux.conf.orig
       ~/backup_config/zshrc.orig
+
+## Prerequisites
+
+* Ensure ruby is installed, preferably 2.3.3 or greater
       
 ## Updating linode instance
 
 * ### If you run this command as root, it will prompt you to make a user to use the script as
 
+* ### DO NOT RUN THE SCRIPT AS SUDO
+* ### It will prompt for sudo when needed
+
       sudo apt install git
       git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
       cd ~/vps-setup
-      sudo bash install.bash
+      bash install.bash
     
 * or
   
-      sudo ./install.bash
+      ./install.bash
       
 * This will run heroku login & git config --global user.name & user.email
 
@@ -54,7 +61,7 @@
 
 ## Rake Tasks
 
-### rake make
+### $ rake make
 
 * The main function called by install.bash
 * will call rake config:copy
@@ -62,7 +69,7 @@
 * defaults backup_dir to ~/backup_config
 * defaults dest_dir to ~
 
-### rake config:copy
+### $ rake config:copy
 * copies files from vps_setup/config to ~/backup_config:
 
       rake config:copy
@@ -79,7 +86,10 @@
 
       rake "config:copy[nil, /path/to/dest_dir]"
 
-### rake config:pull
+### $ rake config:pull
+
+* #### This is merely to pull local files into your vps_setup repo
+
 * copies files from home dir (~) to your vps_setup repo (./vps_setup/config)
 
       rake config:pull
