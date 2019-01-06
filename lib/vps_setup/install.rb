@@ -82,8 +82,8 @@ module VpsSetup
     end
 
     def self.neovim_pip
-      Rake.sh('sudo pip2 install neovim --system')
-      Rake.sh('sudo pip3 install neovim --system')
+      Rake.sh('sudo -H pip2 install neovim --system')
+      Rake.sh('sudo -H pip3 install neovim --system')
       Rake.sh(%(yes "\n" | npm install -g neovim))
     end
 
