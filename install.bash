@@ -24,9 +24,13 @@ fi
 GEMS="bundler colorls neovim rake pry"
 
 # install gems and run bundle install prior to sudo
-for item in $GEMS; do
-  gem install $item
-done
+if [[ $OSTYPE == 'linux-gnu' ]]; then
+  for item in $GEMS; do
+    gem install $item
+  done
+elif [[ $OSTYPE == 'cygwin' ]]; then
+  gem install bundler
+fi
 
 bundle install
 
