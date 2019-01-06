@@ -163,5 +163,6 @@
 * Rake is a great tool, but is weak with command line arguments, may look into Thor for the future
 * It works, its not pretty, but it gets the job done.
 * Mixing command line and Ruby is not easy
+* Testing apt-get install / apt install etc is nearly impossible unless i were to go through and do a $(command -v) for everything which is not feasible
 * My original, non extensible, less easily tested version is available here: 
   [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_setup/tree/deprecated_bash_scripting)
