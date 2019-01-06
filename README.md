@@ -101,7 +101,7 @@
 
 ## Rake Tasks
 
-### $ rake make
+### $ rake make[:backup_dir, dest_dir]
 
 * The main function called by install.bash
 * will call rake config:copy
