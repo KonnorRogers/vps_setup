@@ -39,6 +39,43 @@
 
 * Also, ensure to secure your server via /etc/ssh/sshd_config should you not find my settings acceptable
 
+## Dependencies Installed
+
+* There are many dependencies installed, a large list can be located in 
+* /path/to/vps-setup/lib/vps_setup/packages.rb
+
+## Tools installed
+
+* Vim / Neovim
+* Zsh / OhMyZsh
+* Tmux w/ tmux plugin manager - Terminal multiplexer
+* Mosh - Mobile Shell
+* Asciinema - records your terminal
+* Docker (Installed but not used currently)
+* Heroku CLI (--classic)
+* Ufw - Allows only certain people to connect
+* Httpie - for playing around with API requests
+
+## Languages / Frameworks installed
+* Nodejs
+* Yarn
+* Npm
+* sqlite3
+* Python3 / pip
+* Golang
+* Ruby 2.5.1
+* Chruby
+* Ruby-Install
+* Rails
+
+## Gems
+* pry - Ruby debugger / IRB alternative
+* bundler - package manager
+* neovim - neovim support
+* colorls - colorful file display
+* rake
+* rails
+
 ## Setup
 
 * Ensure you go into your server and secure it properly
@@ -105,44 +142,6 @@
 * The following command will let you leave the default config dir, and specify where to pull dotfiles from
 
       rake "config:pull[nil, /path/to/dotfiles_dir]"
-    
-
-## Dependencies Installed
-
-* There are many dependencies installed, a large list can be located in 
-* /path/to/vps-setup/lib/vps_setup/packages.rb
-
-## Tools installed
-
-* Vim / Neovim
-* Zsh / OhMyZsh
-* Tmux w/ tmux plugin manager - Terminal multiplexer
-* Mosh - Mobile Shell
-* Asciinema - records your terminal
-* Docker (Installed but not used currently)
-* Heroku CLI (--classic)
-* Ufw - Allows only certain people to connect
-* Httpie - for playing around with API requests
-
-## Languages / Frameworks installed
-* Nodejs
-* Yarn
-* Npm
-* sqlite3
-* Python3 / pip
-* Golang
-* Ruby 2.5.1
-* Chruby
-* Ruby-Install
-* Rails
-
-## Gems
-* pry - Ruby debugger / IRB alternative
-* bundler - package manager
-* neovim - neovim support
-* colorls - colorful file display
-* rake
-* rails
 
 
 ## Updates for the future?
