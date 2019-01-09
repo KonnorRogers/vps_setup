@@ -1,60 +1,51 @@
 # Purpose
 * To be able to spin up multiple development environments without having to reconfigure all the time
-* ### <strong>Note:</strong> This is a fragile process and currently is OS dependent. Currently only tested and working with Ubuntu 18.04 LTS on Linode
+* ### <strong>Note:</strong> This is a fragile process and currently is OS dependent.
+* ### Supported OS'es:
+  - Ubuntu 18.04 LTS full support
+  - Babun on windows, simply pulls dotfiles, no pact install etc, will only run bundle install initially
+  
 * Ideally, you should brush over the contents of each file
-* .rc files located in config/
-* Currently, vps-setup needs to be in your home directory to work
+* .rc files located in config/ as well sshd_config & gnome_terminal_settings
 
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
-* ### Your original can be obtained at /etc/sshd/sshd_config.orig
-  
+* ### Your original can be obtained at ~/backup_config/sshd_config.orig
+
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
-      ~/.vimrc.orig
-      ~/.tmux.conf.orig
-      ~/.zshrc.orig
+      ~/backup_config/vimrc.orig
+      ~/backup_config/tmux.conf.orig
+      ~/backup_config/zshrc.orig
+
+## Prerequisites
+
+* Ensure ruby is installed, preferably 2.3.3 or greater
       
 ## Updating linode instance
-    sudo apt install git
-    git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
-    sudo bash /path/to/vps-setup/linode.bash -u #{username}
-* -u specifies the home directory where everything will be installed, just in case its being run from root
 
-* Do not forget to set git via:
+* ### If you run this command as root / sudo, it will prompt you to make a user to use the script as
+* ### This will continuously error out if you try to run as root / sudo
+
+
+      sudo apt install git
+      git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
+      cd ~/vps-setup
+      bash install.bash
     
-      git config --global user.name
-
-* Then run:
-
-      heroku login
+* or
+  
+      ./install.bash
       
+* This will run heroku login & git config --global user.name & user.email
+
 * Also, ensure to secure your server via /etc/ssh/sshd_config should you not find my settings acceptable
 
-## Setup
-
-* Ensure you go into your server and secure it properly
-
-* For viewing apps over ssh, ensure to use
-        
-      ssh -L <localport>:localhost:<remoteport> user@ssh.com
-      
-* At full speed it should look like: 
-       
-      ssh -L 9000:localhost:3000 user@remoteserver.com
-      
-* Then you can visit <strong>localhost:9000</strong> in your browser and view your web app
-* Alternatively, ngrok is installed via linode.bash 
-      
-      ngrok http <localport>
-      ngrok http 3000 
-      
-* This will bring up a CLI to connect to for example localhost:3000 on the web  
 ## Dependencies Installed
 
 * There are many dependencies installed, a large list can be located in 
-* /path/to/vps-setup/linode.bash
+* /path/to/vps-setup/lib/vps_setup/packages.rb
 
 ## Tools installed
 
@@ -88,18 +79,90 @@
 * rake
 * rails
 
+## Setup
+
+* Ensure you go into your server and secure it properly
+
+* For viewing apps over ssh, ensure to use
+        
+      ssh -L <localport>:localhost:<remoteport> user@ssh.com
+      
+* At full speed it should look like: 
+       
+      ssh -L 9000:localhost:3000 user@remoteserver.com
+      
+* Then you can visit <strong>localhost:9000</strong> in your browser and view your web app
+* Alternatively, ngrok is installed via linode.bash 
+      
+      ngrok http <localport>
+      ngrok http 3000 
+      
+* This will bring up a CLI to connect to for example localhost:3000 on the web  
+
+## Rake Tasks
+
+### $ rake test
+* Default rake task, runs the test suite
+
+### $ rake make[:backup_dir, dest_dir]
+
+* The main function called by install.bash
+* will call rake config:copy
+* accepts the same arguments as config:copy
+* defaults backup_dir to ~/backup_config
+* defaults dest_dir to ~
+
+### $ rake config:copy[:backup_dir, dest_dir]
+
+* copies files from vps_setup/config to ~/backup_config:
+
+      rake config:copy
+
+* This can be specified with either both or one of the arguments:
+
+      rake "config:copy[/path/to/backup_dir, /path/to/dest_dir]"
+      
+* The following command lets you specify where you would like your backup directory to be
+
+      rake "config:copy[/path/to/backup_dir]"
+      
+* The following command lets you specify where you would like to put your dotfiles
+
+      rake "config:copy[nil, /path/to/dest_dir]"
+
+### $ rake config:pull[:config_dir, :local_dir]
+
+* #### This is merely to pull local files into your vps_setup repo
+
+* copies files from home dir (~) to your vps_setup repo (./vps_setup/config)
+
+      rake config:pull
+
+* Alternatively, you can specify where you would like files to be pulled from and to
+
+      rake "config:pull[/path/to/config_dir, /path/to/local_dotfiles_dir]"
+      
+* The following command will allow you to show what will be pulled to the repo:
+
+      rake "config:pull[/path/to/config_dir]"
+
+* The following command will let you leave the default config dir, and specify where to pull dotfiles from
+
+      rake "config:pull[nil, /path/to/dotfiles_dir]"
+
 
 ## Updates for the future?
     
 * Adding docker support via images
-* Start git branching
 
-### BASH
-* Add repositories
-* Install every apt-get
-* Create a user
-* Log in to user
 
-### RAKE
-* run the Rake task to finish setup
-* ensure it works outside of home
+## Things learned:
+
+* Configuration is hard. There is a reason things like chef, puppet, ansible etc exist.
+* How to create a logger. Example is in test/logs after running rake test
+* Rake is a great tool, but is weak with command line arguments, may look into Thor for the future
+* It works, its not pretty, but it gets the job done.
+* Mixing command line and Ruby is not easy
+* Testing apt-get install / apt install etc is nearly impossible unless i were to go through and do a $(command -v) for everything which is not feasible
+* My original, non extensible, less easily tested version is available here: 
+  [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_setup/tree/deprecated_bash_scripting)

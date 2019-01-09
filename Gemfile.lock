@@ -1,0 +1,23 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    guard-compat (1.2.1)
+    guard-minitest (2.4.6)
+      guard-compat (~> 1.2)
+      minitest (>= 3.0)
+    minitest (5.11.3)
+    os (1.0.0)
+    rake (12.3.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  guard-minitest
+  minitest
+  os
+  rake
+
+BUNDLED WITH
+   1.16.6
