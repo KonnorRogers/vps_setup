@@ -2,7 +2,7 @@
 
 module VpsSetup
   class Packages
-    LIBS = %w[software-properties-common gnupg2 less ufw npm
+    LIBS = %w[software-properties-common gnupg2 less ufw
               ack-grep libfuse2 apt-transport-https
               ca-certificates build-essential bison
               zlib1g-dev libyaml-dev libssl-dev
