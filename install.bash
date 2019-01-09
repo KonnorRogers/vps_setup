@@ -32,6 +32,6 @@ elif [[ $OSTYPE == 'cygwin' ]]; then
   gem install bundler
 fi
 
-sudo bundle install
+bundle install
 
-sudo rake make
+rake make

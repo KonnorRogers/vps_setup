@@ -26,6 +26,7 @@ end
 task :make, %i[backup_dir dest_dir] do |_t, args|
   # Not necessary for babun
   if OS.linux?
+    Rake.sh("sudo")
     Rake::Task['setup'].invoke
     Rake::Task['install'].invoke
   end
