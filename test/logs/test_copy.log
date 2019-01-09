@@ -1,105 +1,97 @@
-I, [2019-01-08T20:21:48.067226 #8511]  INFO -- : TestCopy::test_raises_error_in_non_posix_env
-I, [2019-01-08T20:21:48.067419 #8511]  INFO -- : 
-E, [2019-01-08T20:21:48.067436 #8511] ERROR -- : 
-I, [2019-01-08T20:21:48.067523 #8511]  INFO -- : TestCopy::test_unix_files_not_copied_in_cygwin
-I, [2019-01-08T20:21:49.782148 #8511]  INFO -- : /home/konnor/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.minttyrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
-copying to /etc/ssh/sshd_config
-dotfiles copied to /home/konnor/vps_setup/test/dest_dir
-backups created @ /home/konnor/vps_setup/test/backup_dir
+I, [2019-01-09T01:38:07.370486 #24414]  INFO -- : TestCopy::test_raises_error_when_running_as_root
+I, [2019-01-09T01:38:07.371267 #24414]  INFO -- : 
+E, [2019-01-09T01:38:07.371311 #24414] ERROR -- : 
+I, [2019-01-09T01:38:07.371476 #24414]  INFO -- : TestCopy::test_backup_dir_empty_and_dest_dir_should_not_be_empty
+I, [2019-01-09T01:38:07.373498 #24414]  INFO -- : /home/paramagician/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
+dotfiles copied to /home/paramagician/vps_setup/test/dest_dir
+backups created @ /home/paramagician/vps_setup/test/backup_dir
 
-E, [2019-01-08T20:21:49.782184 #8511] ERROR -- : dconf dump /org/gnome/terminal/ > /home/konnor/vps_setup/test/backup_dir/gnome_terminal_settings.orig
+E, [2019-01-09T01:38:07.373626 #24414] ERROR -- : 
+I, [2019-01-09T01:38:07.374479 #24414]  INFO -- : TestCopy::test_backup_dir_not_empty_if_orig_found
+I, [2019-01-09T01:38:07.400979 #24414]  INFO -- : /home/paramagician/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
+dotfiles copied to /home/paramagician/vps_setup/test/dest_dir
+backups created @ /home/paramagician/vps_setup/test/backup_dir
+
+E, [2019-01-09T01:38:07.401073 #24414] ERROR -- : dconf dump /org/gnome/terminal/ > /home/paramagician/vps_setup/test/backup_dir/gnome_terminal_settings.orig
 dconf reset -f /org/gnome/terminal/
-dconf load /org/gnome/terminal/ < /home/konnor/vps_setup/config/gnome_terminal_settings
+dconf load /org/gnome/terminal/ < /home/paramagician/vps_setup/config/gnome_terminal_settings
 
-I, [2019-01-08T20:21:49.782448 #8511]  INFO -- : TestCopy::test_backup_file_will_not_be_overwritten
-I, [2019-01-08T20:21:49.849720 #8511]  INFO -- : /home/konnor/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
-copying to /etc/ssh/sshd_config
-dotfiles copied to /home/konnor/vps_setup/test/dest_dir
-backups created @ /home/konnor/vps_setup/test/backup_dir
+I, [2019-01-09T01:38:07.402094 #24414]  INFO -- : TestCopy::test_raises_error_in_non_posix_env
+I, [2019-01-09T01:38:07.402638 #24414]  INFO -- : 
+E, [2019-01-09T01:38:07.402671 #24414] ERROR -- : 
+I, [2019-01-09T01:38:07.402846 #24414]  INFO -- : TestCopy::test_config_file_will_be_copied_to_dest_dir
+I, [2019-01-09T01:38:07.426683 #24414]  INFO -- : /home/paramagician/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
+dotfiles copied to /home/paramagician/vps_setup/test/dest_dir
+backups created @ /home/paramagician/vps_setup/test/backup_dir
 
-E, [2019-01-08T20:21:49.849781 #8511] ERROR -- : dconf dump /org/gnome/terminal/ > /home/konnor/vps_setup/test/backup_dir/gnome_terminal_settings.orig
+E, [2019-01-09T01:38:07.426797 #24414] ERROR -- : dconf dump /org/gnome/terminal/ > /home/paramagician/vps_setup/test/backup_dir/gnome_terminal_settings.orig
 dconf reset -f /org/gnome/terminal/
-dconf load /org/gnome/terminal/ < /home/konnor/vps_setup/config/gnome_terminal_settings
+dconf load /org/gnome/terminal/ < /home/paramagician/vps_setup/config/gnome_terminal_settings
 
-I, [2019-01-08T20:21:49.850336 #8511]  INFO -- : TestCopy::test_creates_backup_dir_and_dest_dir
-I, [2019-01-08T20:21:49.900351 #8511]  INFO -- : /home/konnor/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
-copying to /etc/ssh/sshd_config
-dotfiles copied to /home/konnor/vps_setup/test/dest_dir
-backups created @ /home/konnor/vps_setup/test/backup_dir
+I, [2019-01-09T01:38:07.427780 #24414]  INFO -- : TestCopy::test_unix_files_not_copied_in_cygwin
+I, [2019-01-09T01:38:07.455332 #24414]  INFO -- : /home/paramagician/vps_setup/test/dest_dir/.minttyrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
+dotfiles copied to /home/paramagician/vps_setup/test/dest_dir
+backups created @ /home/paramagician/vps_setup/test/backup_dir
 
-E, [2019-01-08T20:21:49.900418 #8511] ERROR -- : dconf dump /org/gnome/terminal/ > /home/konnor/vps_setup/test/backup_dir/gnome_terminal_settings.orig
+E, [2019-01-09T01:38:07.455421 #24414] ERROR -- : dconf dump /org/gnome/terminal/ > /home/paramagician/vps_setup/test/backup_dir/gnome_terminal_settings.orig
 dconf reset -f /org/gnome/terminal/
-dconf load /org/gnome/terminal/ < /home/konnor/vps_setup/config/gnome_terminal_settings
+dconf load /org/gnome/terminal/ < /home/paramagician/vps_setup/config/gnome_terminal_settings
 
-I, [2019-01-08T20:21:49.900798 #8511]  INFO -- : TestCopy::test_backup_dir_empty_and_dest_dir_should_not_be_empty
-I, [2019-01-08T20:21:49.902407 #8511]  INFO -- : /home/konnor/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
-copying to /etc/ssh/sshd_config
-dotfiles copied to /home/konnor/vps_setup/test/dest_dir
-backups created @ /home/konnor/vps_setup/test/backup_dir
+I, [2019-01-09T01:38:07.456139 #24414]  INFO -- : TestCopy::test_backup_file_will_not_be_overwritten
+I, [2019-01-09T01:38:07.484150 #24414]  INFO -- : /home/paramagician/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
+dotfiles copied to /home/paramagician/vps_setup/test/dest_dir
+backups created @ /home/paramagician/vps_setup/test/backup_dir
 
-E, [2019-01-08T20:21:49.902427 #8511] ERROR -- : 
-I, [2019-01-08T20:21:49.902666 #8511]  INFO -- : TestCopy::test_backup_dir_not_empty_if_orig_found
-I, [2019-01-08T20:21:49.960542 #8511]  INFO -- : /home/konnor/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
-copying to /etc/ssh/sshd_config
-dotfiles copied to /home/konnor/vps_setup/test/dest_dir
-backups created @ /home/konnor/vps_setup/test/backup_dir
-
-E, [2019-01-08T20:21:49.960577 #8511] ERROR -- : dconf dump /org/gnome/terminal/ > /home/konnor/vps_setup/test/backup_dir/gnome_terminal_settings.orig
+E, [2019-01-09T01:38:07.484240 #24414] ERROR -- : dconf dump /org/gnome/terminal/ > /home/paramagician/vps_setup/test/backup_dir/gnome_terminal_settings.orig
 dconf reset -f /org/gnome/terminal/
-dconf load /org/gnome/terminal/ < /home/konnor/vps_setup/config/gnome_terminal_settings
+dconf load /org/gnome/terminal/ < /home/paramagician/vps_setup/config/gnome_terminal_settings
 
-I, [2019-01-08T20:21:49.960905 #8511]  INFO -- : TestCopy::test_cygwin_files_not_copied_in_unix
-I, [2019-01-08T20:21:50.020486 #8511]  INFO -- : /home/konnor/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
-copying to /etc/ssh/sshd_config
-dotfiles copied to /home/konnor/vps_setup/test/dest_dir
-backups created @ /home/konnor/vps_setup/test/backup_dir
+I, [2019-01-09T01:38:07.485032 #24414]  INFO -- : TestCopy::test_creates_backup_dir_and_dest_dir
+I, [2019-01-09T01:38:07.508200 #24414]  INFO -- : /home/paramagician/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
+dotfiles copied to /home/paramagician/vps_setup/test/dest_dir
+backups created @ /home/paramagician/vps_setup/test/backup_dir
 
-E, [2019-01-08T20:21:50.020550 #8511] ERROR -- : dconf dump /org/gnome/terminal/ > /home/konnor/vps_setup/test/backup_dir/gnome_terminal_settings.orig
+E, [2019-01-09T01:38:07.508295 #24414] ERROR -- : dconf dump /org/gnome/terminal/ > /home/paramagician/vps_setup/test/backup_dir/gnome_terminal_settings.orig
 dconf reset -f /org/gnome/terminal/
-dconf load /org/gnome/terminal/ < /home/konnor/vps_setup/config/gnome_terminal_settings
+dconf load /org/gnome/terminal/ < /home/paramagician/vps_setup/config/gnome_terminal_settings
 
-I, [2019-01-08T20:21:50.020988 #8511]  INFO -- : TestCopy::test_raises_error_when_running_as_root
-I, [2019-01-08T20:21:50.021230 #8511]  INFO -- : 
-E, [2019-01-08T20:21:50.021247 #8511] ERROR -- : 
-I, [2019-01-08T20:21:50.021312 #8511]  INFO -- : TestCopy::test_config_file_will_be_copied_to_dest_dir
-I, [2019-01-08T20:21:50.095255 #8511]  INFO -- : /home/konnor/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
-copying to /etc/ssh/sshd_config
-dotfiles copied to /home/konnor/vps_setup/test/dest_dir
-backups created @ /home/konnor/vps_setup/test/backup_dir
+I, [2019-01-09T01:38:07.509014 #24414]  INFO -- : TestCopy::test_cygwin_files_not_copied_in_unix
+I, [2019-01-09T01:38:07.532833 #24414]  INFO -- : /home/paramagician/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
+dotfiles copied to /home/paramagician/vps_setup/test/dest_dir
+backups created @ /home/paramagician/vps_setup/test/backup_dir
 
-E, [2019-01-08T20:21:50.095296 #8511] ERROR -- : dconf dump /org/gnome/terminal/ > /home/konnor/vps_setup/test/backup_dir/gnome_terminal_settings.orig
+E, [2019-01-09T01:38:07.532956 #24414] ERROR -- : dconf dump /org/gnome/terminal/ > /home/paramagician/vps_setup/test/backup_dir/gnome_terminal_settings.orig
 dconf reset -f /org/gnome/terminal/
-dconf load /org/gnome/terminal/ < /home/konnor/vps_setup/config/gnome_terminal_settings
+dconf load /org/gnome/terminal/ < /home/paramagician/vps_setup/config/gnome_terminal_settings
 
-I, [2019-01-08T20:21:50.095637 #8511]  INFO -- : TestCopy::test_will_not_error_if_backup_dir_and_dest_dir_exist
-I, [2019-01-08T20:21:50.159400 #8511]  INFO -- : /home/konnor/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
-/home/konnor/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
-copying to /etc/ssh/sshd_config
-dotfiles copied to /home/konnor/vps_setup/test/dest_dir
-backups created @ /home/konnor/vps_setup/test/backup_dir
+I, [2019-01-09T01:38:07.534018 #24414]  INFO -- : TestCopy::test_will_not_error_if_backup_dir_and_dest_dir_exist
+I, [2019-01-09T01:38:07.560242 #24414]  INFO -- : /home/paramagician/vps_setup/test/dest_dir/.vimrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.pryrc does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.tmux.conf does not exist. No backup created.
+/home/paramagician/vps_setup/test/dest_dir/.zshrc does not exist. No backup created.
+dotfiles copied to /home/paramagician/vps_setup/test/dest_dir
+backups created @ /home/paramagician/vps_setup/test/backup_dir
 
-E, [2019-01-08T20:21:50.159438 #8511] ERROR -- : dconf dump /org/gnome/terminal/ > /home/konnor/vps_setup/test/backup_dir/gnome_terminal_settings.orig
+E, [2019-01-09T01:38:07.560336 #24414] ERROR -- : dconf dump /org/gnome/terminal/ > /home/paramagician/vps_setup/test/backup_dir/gnome_terminal_settings.orig
 dconf reset -f /org/gnome/terminal/
-dconf load /org/gnome/terminal/ < /home/konnor/vps_setup/config/gnome_terminal_settings
+dconf load /org/gnome/terminal/ < /home/paramagician/vps_setup/config/gnome_terminal_settings
 

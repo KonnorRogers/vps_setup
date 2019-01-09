@@ -65,7 +65,9 @@ class TestCopy < Minitest::Test
   end
 
   def copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, ssh_dir: nil)
-    Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir, ssh_dir: ssh_dir)
+    Copy.stub(:copy_sshd_config, true) do
+      Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir, ssh_dir: ssh_dir)
+    end
   end
 
   # END OF HELPER METHODS #
@@ -141,7 +143,9 @@ class TestCopy < Minitest::Test
     f2 = File.join(BACKUP_DIR, '.vimrc.orig')
     File.open(f1, 'w+') { |file| file.puts '1' }
     File.open(f2, 'w+') { |file| file.puts '2' }
-    Copy.copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR)
+    linux_env do
+      copy
+    end
     refute File.read(f1) == File.read(f2)
   end
 
