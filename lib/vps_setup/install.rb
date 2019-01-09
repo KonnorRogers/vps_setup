@@ -27,11 +27,6 @@ module VpsSetup
     end
 
     def self.all_install
-      unless Process.uid.zero?
-        error = 'You are not running as sudo / root. Nothing installed'
-        raise error
-      end
-
       prep
       packages
       other_tools
@@ -84,7 +79,7 @@ module VpsSetup
     def self.neovim_pip
       Rake.sh('sudo -H pip2 install neovim --system')
       Rake.sh('sudo -H pip3 install neovim --system')
-      Rake.sh(%(yes "\n" | npm install -g neovim))
+      Rake.sh(%(yes "\n" | sudo npm install -g neovim))
     end
 
     def self.omz_full_install

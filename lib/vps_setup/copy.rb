@@ -9,7 +9,7 @@ module VpsSetup
     def self.copy(backup_dir: nil, dest_dir: nil, ssh_dir: nil)
       raise 'Please run from a posix platform' unless OS.posix?
 
-      root = (Process.uid.zero? && Dir.home == '/root')
+      root = (Process.uid.zero? || Dir.home == '/root')
       raise 'Do not run this as root, use sudo instead' if root == true
 
       backup_dir ||= File.join(Dir.home, 'backup_config')
@@ -47,11 +47,7 @@ module VpsSetup
     end
 
     def self.sshd_copyable?(ssh_dir = nil)
-      sudo = Process.uid.zero?
       ssh_dir ||= '/etc/ssh'
-
-      not_sudo = 'not running process as sudo, sshd_config not copied'
-      return puts not_sudo if sudo != true
 
       no_ssh_dir = 'No ssh dir found. sshd_config not copied'
       return puts no_ssh_dir unless Dir.exist?(ssh_dir)
@@ -74,7 +70,7 @@ module VpsSetup
         puts "#{sshd_backup} already exists. no backup created"
       end
       puts "copying to #{sshd_path}"
-      Rake.cp(sshd_cfg_path, sshd_path)
+      Rake.sh("sudo cp #{sshd_cfg_path} #{sshd_path}")
     end
 
     def self.dot_file_found?(file)

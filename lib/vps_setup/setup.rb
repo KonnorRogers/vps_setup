@@ -17,8 +17,6 @@ module VpsSetup
     end
 
     def self.ufw_setup
-      raise 'Not running as sudo' unless privileged_user?
-
       Rake.sh('sudo ufw default allow outgoing')
       Rake.sh('sudo ufw default deny incoming')
       Rake.sh('sudo ufw allow 60000:61000/tcp')
@@ -27,8 +25,6 @@ module VpsSetup
     end
 
     def self.add_repos
-      raise 'Not running as sudo' unless privileged_user?
-
       # neovim repo
       Rake.sh('sudo apt-add-repository -y ppa:neovim-ppa/stable')
       # asciinema repo for recording the terminal

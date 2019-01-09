@@ -185,24 +185,6 @@ class TestCopy < Minitest::Test
     assert File.read(dest_zshrc) == File.read(cygwin_zshrc)
   end
 
-  def test_ssh_copying_works
-    ssh_test_path = File.expand_path(File.join('test', 'ssh_test'))
-    sshd_cfg_test_path = File.join(ssh_test_path, 'sshd_config')
-    FileUtils.mkdir_p(ssh_test_path)
-
-    # DEST_DIR included only because its required, does not effect test
-    linux_env do
-      process_uid_eql_zero do
-        copy(ssh_dir: ssh_test_path)
-      end
-    end
-
-    sshd_config = File.join(CONFIG_DIR, 'sshd_config')
-    assert File.read(sshd_cfg_test_path) == File.read(sshd_config)
-
-    FileUtils.rm_rf(ssh_test_path)
-  end
-
   def test_raises_error_in_non_posix_env
     non_posix_env do
       assert_raises(RuntimeError) { copy }
