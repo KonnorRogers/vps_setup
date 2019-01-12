@@ -25,6 +25,11 @@
       
 ## Updating ubuntu instance
 
+* FULLY AUTO script
+
+       ./vps --gitname foo --gitemail foo@example.com --herokuemail foo@example.com --herokupassword foobar
+* add ssh_key functionality
+
 * ### If you run this command as root / sudo, it will prompt you to make a user to use the script as
 * ### This will continuously error out if you try to run as root / sudo
 
@@ -80,10 +85,6 @@
 * rails
 
 ## Setup
-
-* FULLY AUTO script
-
-       ./vps --gitname foo --gitemail foo@example.com --herokuemail foo@example.com --herokupassword foobar
 
 * Ensure you go into your server and secure it properly
 
