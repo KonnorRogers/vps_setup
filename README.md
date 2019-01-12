@@ -23,7 +23,7 @@
 
 * Ensure ruby is installed, preferably 2.3.3 or greater
       
-## Updating linode instance
+## Updating ubuntu instance
 
 * ### If you run this command as root / sudo, it will prompt you to make a user to use the script as
 * ### This will continuously error out if you try to run as root / sudo
@@ -80,6 +80,10 @@
 * rails
 
 ## Setup
+
+* FULLY AUTO script
+
+       ./vps --gitname foo --gitemail foo@example.com --herokuemail foo@example.com --herokupassword foobar
 
 * Ensure you go into your server and secure it properly
 
@@ -163,6 +167,7 @@
 * Rake is a great tool, but is weak with command line arguments, may look into Thor for the future
 * It works, its not pretty, but it gets the job done.
 * Mixing command line and Ruby is not easy
+* Thor does args well
 * Testing apt-get install / apt install etc is nearly impossible unless i were to go through and do a $(command -v) for everything which is not feasible
 * My original, non extensible, less easily tested version is available here: 
   [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_setup/tree/deprecated_bash_scripting)
