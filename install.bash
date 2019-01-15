@@ -21,21 +21,19 @@ if [[ `id -u` == 0 ]]; then
   exit 1
 fi
 
-cd .tmp
-
-wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-tar -xzvf chruby-0.3.9.tar.gz
-cd chruby-0.3.9/
+wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz .tmp
+tar -xzvf .tmp/chruby-0.3.9.tar.gz
+cd .tmp/chruby-0.3.9/
 sudo make install
 
-cd .tmp
+cd ..
 
-ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
+wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz .tmp
 tar -xzvf ruby-install-0.7.0.tar.gz
-cd ruby-install-0.7.0/
+cd .tmp/ruby-install-0.7.0/
 sudo make install
 
-cd ../..
+cd ..
 
 ruby-install --latest ruby --no-reinstall
 
