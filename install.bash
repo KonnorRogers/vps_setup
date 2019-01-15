@@ -21,14 +21,18 @@ if [[ `id -u` == 0 ]]; then
   exit 1
 fi
 
+
 GEMS="bundler colorls neovim rake pry"
 
 # install gems and run bundle install prior to sudo
 if [[ $OSTYPE == 'linux-gnu' ]]; then
+#  sudo apt-get install ruby
+#  su - $USER
   for item in $GEMS; do
     gem install $item
   done
 elif [[ $OSTYPE == 'cygwin' ]]; then
+  pact install ruby || apt-cyg install ruby
   gem install bundler
 fi
 
