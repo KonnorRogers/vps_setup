@@ -25,12 +25,14 @@ module VpsSetup
     end
 
     def self.add_repos
-      # neovim repo
-      Rake.sh('sudo apt-add-repository -y ppa:neovim-ppa/stable')
+      # add neovim
+      # sudo add-apt-repository ppa:neovim-ppa/stable
       # asciinema repo for recording the terminal
-      Rake.sh('sudo apt-add-repository -y ppa:zanchey/asciinema')
+      # Rake.sh('sudo apt-add-repository -y ppa:zanchey/asciinema')
+      # Above repos already available in cosmic release
+
       # mosh repo
-      Rake.sh(%(yes "\n" | sudo add-apt-repository ppa:keithw/mosh))
+      # Rake.sh(%(yes "\n" | sudo add-apt-repository ppa:keithw/mosh))
 
       # Instructions straight from https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository
       # Docker repo
@@ -89,7 +91,7 @@ module VpsSetup
 
     def self.heroku_login
       puts 'Please login to heroku:'
-      Rake.sh('heroku login')
+      Rake.sh('heroku login --interactive')
     rescue
       puts 'you did not login to heroku. To login, use heroku login'
     end
