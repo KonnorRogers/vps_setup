@@ -5,15 +5,16 @@ if [[ `id -u` == 0 ]]; then
   exit 1
 fi
 
-LIBS="software-properties-common npm gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby"
+sudo apt-get update
+sudo apt-get upgrade -y
+
+LIBS="software-properties-common gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby nodejs"
 
 for lib in $LIBS; do
   sudo apt-get install $lib -y
 done
 
-# for some reason it doesnt work when placed in LIBS
-# sudo apt-get install npm -y
-
+sudo apt-get update
 
 mkdir -p .tmp
 
@@ -34,7 +35,11 @@ cd ../..
 
 ruby-install --latest ruby --no-reinstall
 
-filename="/etc/profile.d/chruby.sh"
+dirname="/etc/profile.d"
+filename="$dirname/chruby.sh"
+
+mkdir -p $dirname
+
 add_chruby="if [ -n "\$BASH_VERSION" ] || [ -n "\$ZSH_VERSION" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
