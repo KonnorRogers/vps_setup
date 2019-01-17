@@ -77,7 +77,7 @@
 * sqlite3
 * Python3 / pip
 * Golang
-* Ruby 2.5.1
+* Ruby 2.6.0
 * Chruby
 * Ruby-Install
 * Rails
