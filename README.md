@@ -20,6 +20,9 @@
       ~/backup_config/tmux.conf.orig
       ~/backup_config/zshrc.orig
       
+## Prerequisites
+* None as far as I can tell, it should pull in everything you need.
+      
 ## Updating ubuntu instance
 * Ensure to add a user
 
