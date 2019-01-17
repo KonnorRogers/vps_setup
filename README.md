@@ -22,14 +22,17 @@
       
 ## Prerequisites
 * None as far as I can tell, it should pull in everything you need.
-      
-## Updating ubuntu instance
 * Ensure to add a user
 
       adduser username
       adduser username sudo
+* Ensure that you have ssh keys added. I have disabled clear text passwords.
+* Easiest way when making a new DigitalOcean droplet and logged in as username:
+
+      username@localhost:~ $ sudo cp -R /root/.ssh ~/.ssh
+      username@localhost:~ $ sudo chown -R username:username .ssh
       
-* Ensure you have SSH keys added as you I have disabled plain text passwords
+## Updating ubuntu instances
 
 * FULLY AUTO script
 
