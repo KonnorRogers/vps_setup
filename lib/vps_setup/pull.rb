@@ -25,11 +25,24 @@ module VpsSetup
 
       linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
         linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
+          # IE: .vimrc .tmux.conf
           next unless local == ".#{config}"
 
           cfg_file = File.join(File.expand_path(attr[:cfg_dir]), config)
           local_file = File.join(File.expand_path(attr[:local_dir]), local)
-          Rake.cp(local_file, cfg_file)
+
+          # Covers the case of .config
+          if File.directory?(local_file)
+            # ie: .config/nvim
+            Dir.foreach(local_file) do |file|
+              next if file =~ /\.{1,2}/
+              file = File.join(local_file, file)
+
+              Rake.cp_r(file, cfg_file)
+            end
+          else
+            Rake.cp(local_file, cfg_file)
+          end
         end
       end
 

@@ -5,7 +5,6 @@ require 'test_helper'
 class TestPackages < Minitest::Test
   def test_each_constant_exists
     packages = [
-      VpsSetup::Packages::LIBS,
       VpsSetup::Packages::LANGUAGES,
       VpsSetup::Packages::TOOLS,
       VpsSetup::Packages::ADDED_REPOS

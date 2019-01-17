@@ -65,8 +65,11 @@ class TestCopy < Minitest::Test
   end
 
   def copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, ssh_dir: nil)
-    Copy.stub(:copy_sshd_config, true) do
-      Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir, ssh_dir: ssh_dir)
+      # stub sshd_config so you dont mess up someones local settings
+    Copy.stub(:copy_gnome_settings, true) do
+      Copy.stub(:copy_sshd_config, true) do
+        Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir, ssh_dir: ssh_dir)
+      end
     end
   end
 
@@ -99,16 +102,11 @@ class TestCopy < Minitest::Test
   end
 
   def test_backup_dir_empty_and_dest_dir_should_not_be_empty
-    # linux_env do
-    #   copy
-    # end
     # # Will not add files to the backup_dir if original dotfiles do not exist
     # assert_equal dir_children(BACKUP_DIR).size, 1
     # dconf automatically adds a file here, cannot stop this behavior without stubbing
     linux_env do
-      VpsSetup::Copy.stub(:copy_gnome_settings, true) do
-        copy
-      end
+      copy
     end
 
     assert_empty(dir_children(BACKUP_DIR))

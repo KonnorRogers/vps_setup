@@ -108,7 +108,9 @@ class TestPull < Minitest::Test
     file = new_file(PULL_LOCAL_DIR, 'sshd_config')
     file.write('testing')
 
-    Pull.pull_sshd_config(sshd_local_path, sshd_config_path)
+    capture_io do
+      Pull.pull_sshd_config(sshd_local_path, sshd_config_path)
+    end
 
     assert(File.exist?(sshd_config_path))
     assert(File.exist?(sshd_local_path))

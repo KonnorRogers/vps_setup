@@ -2,3 +2,4 @@
 tests/logs
 \.bundle
 bin
+/.tmp
