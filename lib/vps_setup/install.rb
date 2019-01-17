@@ -52,7 +52,7 @@ module VpsSetup
     def self.other_tools
       # update npm, there are some issues with ubuntu 18.10 removing npm
       # and then being unable to update it
-      Rake.sh('sudo apt-get install npm')
+      Rake.sh('sudo apt-get install npm -y')
       Rake.sh('sudo npm install -g npm')
 
       # add heroku
@@ -93,7 +93,7 @@ module VpsSetup
       return if Dir.exist?(OMZ_DIR)
 
       Rake.sh('git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh')
-      Rake.sh('chsh -s /bin/zsh')
+      Rake.sh('sudo chsh -s /bin/zsh')
     end
 
     def self.install_autosuggestions
