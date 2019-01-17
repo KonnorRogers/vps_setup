@@ -39,7 +39,6 @@ module VpsSetup
       Rake.sh('sudo apt-get update')
       Rake.sh('sudo apt-get upgrade -y')
       Rake.sh('sudo apt-get dist-upgrade -y')
-      Rake.sh('sudo apt-get autoremove -y')
     end
 
     def self.packages
@@ -51,7 +50,8 @@ module VpsSetup
     end
 
     def self.other_tools
-      # update npm
+      # update npm, there are some issues with ubuntu 18.10 removing npm
+      # and then being unable to update it
       Rake.sh('sudo apt-get install npm')
       Rake.sh('sudo npm install -g npm')
 

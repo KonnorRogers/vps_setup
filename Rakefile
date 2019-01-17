@@ -41,6 +41,7 @@ end
 
 task :install do
   VpsSetup::Install.full
+  sh('sudo apt-get autoremove -y')
 end
 
 task :example do
