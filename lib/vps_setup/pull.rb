@@ -34,7 +34,12 @@ module VpsSetup
           # Covers the case of .config
           if File.directory?(local_file)
             # ie: .config/nvim
-            Dir.foreach(local_file) { |file| Rake.cp_r(local_file, cfg_file) }
+            Dir.foreach(local_file) do |file|
+              next if file =~ /\.{1,2}/
+              file = File.join(local_file, file)
+
+              Rake.cp_r(file, cfg_file)
+            end
           else
             Rake.cp(local_file, cfg_file)
           end
