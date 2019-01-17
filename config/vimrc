@@ -133,6 +133,7 @@ let g:webdevicons_enable_nerdtree = 1
 " ctrl-n for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 map <Leader>r :NERDTreeRefreshRoot<Esc>
+let NERDTreeShowHidden = 1
 
 "fzf mapping
 map <Leader>t :FZF <Esc>
