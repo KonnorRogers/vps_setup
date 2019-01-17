@@ -17,9 +17,11 @@ module VpsSetup
     end
 
     def self.ufw_setup
-      Rake.sh('sudo ufw default allow outgoing')
       Rake.sh('sudo ufw default deny incoming')
+      Rake.sh('sudo ufw default allow outgoing')
+      # allows ssh & mosh connections
       Rake.sh('sudo ufw allow 60000:61000/tcp')
+      Rake.sh('sudo ufw allow 22')
       Rake.sh('yes | sudo ufw enable')
       Rake.sh('yes | sudo systemctl restart sshd')
     end

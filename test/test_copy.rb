@@ -99,9 +99,6 @@ class TestCopy < Minitest::Test
   end
 
   def test_backup_dir_empty_and_dest_dir_should_not_be_empty
-    # linux_env do
-    #   copy
-    # end
     # # Will not add files to the backup_dir if original dotfiles do not exist
     # assert_equal dir_children(BACKUP_DIR).size, 1
     # dconf automatically adds a file here, cannot stop this behavior without stubbing

@@ -18,7 +18,6 @@ module VpsSetup
       mkdirs(backup_dir, dest_dir)
 
       copy_config_dir(backup_dir, dest_dir)
-      link_vim_to_nvim(backup_dir, dest_dir)
       copy_gnome_settings(backup_dir)
       copy_sshd_config(backup_dir, ssh_dir)
 
@@ -92,11 +91,11 @@ module VpsSetup
       non_unix_files = %w[cygwin_zshrc minttyrc]
       return if non_unix_files.include?(File.basename(config_file))
 
-      copy_files(config_file, dot_file, backup_file)
+      copy_all(config_file, dot_file, backup_file)
     end
 
     def self.copy_cygwin_files(config_file, dot_file, backup_file)
-      non_cygwin_files = %w[zshrc]
+      non_cygwin_files = %w[zshrc config]
       return if non_cygwin_files.include?(File.basename(config_file))
 
       if File.basename(config_file) == 'cygwin_zshrc'
@@ -105,37 +104,47 @@ module VpsSetup
         backup_file = File.join(File.dirname(backup_file), '.zshrc.orig')
       end
 
-      copy_files(config_file, dot_file, backup_file)
+      copy_all(config_file, dot_file, backup_file)
+    end
+
+    def self.copy_all(config_file, dot_file, backup_file)
+      if File.directory?(config_file)
+        copy_dirs(config_file, dot_file, backup_file)
+      else
+        copy_files(config_file, dot_file, backup_file)
+      end
     end
 
     def self.copy_files(config_file, dot_file, backup_file)
       # if there is an original dot file & no backup file in the backupdir
-      if dot_file_found?(dot_file)
-        if backup_file_not_found?(backup_file)
-          # Copy the dot file to the backup dir
-          Rake.cp(dot_file, backup_file)
-        end
-      end
+      # Copy the dot file to the backup dir
+      Rake.cp(dot_file, backup_file) if create_backup?(dot_file, backup_file)
 
       # Copies from vps-setup/config to home_dir
       Rake.cp(config_file, dot_file)
     end
 
-    def self.mkdirs(*dirs)
-      dirs.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
+    def self.copy_dirs(config_file, dot_file, backup_file)
+      Rake.cp_r(dot_file, backup_file) if create_backup?(dot_file, backup_file)
+
+      Dir.foreach(config_file) do |c_file|
+        Dir.foreach(dot_file) do |d_file|
+          next if c_file != d_file
+
+          Rake.cp_r(c_file, d_file, force: true)
+        end
+      end
     end
 
-    def self.link_vim_to_nvim(backup_dir, dest_dir)
-      return unless OS.linux?
+    def self.create_backup?(dot_file, backup_file)
+      return false unless dot_file_found?(dot_file)
+      return false unless backup_file_not_found?(backup_file)
 
-      nvim_path ||= File.join(dest_dir, '.config', 'nvim', 'init.vim')
-      Rake.mkdir_p(File.dirname(nvim_path)) unless Dir.exist?(File.dirname(nvim_path))
+      true
+    end
 
-      backup = File.join(backup_dir, '.init.vim.orig')
-      vimrc = File.join(dest_dir, '.vimrc')
-
-      Rake.cp(nvim_path, backup) if File.exist?(nvim_path)
-      Rake.ln_sf(vimrc, nvim_path)
+    def self.mkdirs(*dirs)
+      dirs.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
     end
 
     def self.copy_gnome_settings(backup_dir)
