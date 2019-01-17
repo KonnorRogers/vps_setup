@@ -2,8 +2,9 @@
 * To be able to spin up multiple development environments without having to reconfigure all the time
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent.
 * ### Supported OS'es:
-  - Ubuntu 18.04 LTS full support
-  - Babun on windows, simply pulls dotfiles, no pact install etc, will only run bundle install initially
+  - Ubuntu 18.10 - DigitalOcean
+  - Babun on windows, simply pulls dotfiles, pact installs ruby, and bundle installs
+  - Ubuntu 18.04 LTS on personal laptop
   
 * Ideally, you should brush over the contents of each file
 * .rc files located in config/ as well sshd_config & gnome_terminal_settings
