@@ -34,7 +34,6 @@ linux_prereqs(){
   add_chruby_to_profile_d
   set_ruby_version
 
-  # due to setup, the script must rerun itself to be able to source chruby
   install_gems
 }
 
@@ -92,10 +91,17 @@ set_ruby_version(){
 }
 
 restart_shell(){
-  if [[ ! -e "~/.bash_profile" ]]; then
-    touch "~/.bash_profile"
+  if [[ "$SHELL" == '/bin/bash' ]]; then
+    if [[ ! -e "~/.bash_profile" ]]; then
+      touch "~/.bash_profile"
+    fi
+    source ~/.bash_profile
+  elif [[ "$SHELL" == '/bin/zsh' ]]; then
+    if [[ ! -e "~/.zshenv" ]]; then
+      touch "~/.zshenv"
+    fi
+    source ~/.zshenv
   fi
-  source ~/.bash_profile || source ~/.zshenv
 }
 
 install_gems(){

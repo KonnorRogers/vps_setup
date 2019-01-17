@@ -95,7 +95,6 @@ module VpsSetup
 
       Rake.sh('git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh')
       Rake.sh(%(sudo usermod --shell /bin/zsh "$USER"))
-      Rake.sh("exec zsh")
     end
 
     def self.install_autosuggestions
