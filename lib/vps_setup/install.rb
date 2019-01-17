@@ -94,7 +94,7 @@ module VpsSetup
       return if Dir.exist?(OMZ_DIR)
 
       Rake.sh('git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh')
-      Rake.sh(%(chsh -s /bin/zsh "$USER"))
+      Rake.sh(%(chsh -s /bin/zsh))
     end
 
     def self.install_autosuggestions
