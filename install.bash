@@ -5,66 +5,94 @@ if [[ `id -u` == 0 ]]; then
   exit 1
 fi
 
-sudo apt-get update
-sudo apt-get upgrade -y
+run(){
+  if [[ $OSTYPE == 'linux-gnu' ]]; then
+    linux_prereqs
+  elif [[ $OSTYPE == 'cygwin' ]]; then
+    pact install ruby || apt-cyg install ruby
+    gem install bundler
+  fi
 
-LIBS="software-properties-common gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby"
+  bundle install
 
-for lib in $LIBS; do
-  sudo apt-get install $lib -y
-done
+  rake make
+}
 
-sudo apt-get update
-mkdir -p .tmp
+linux_prereqs(){
+  apt_setup 
+  
+  mkdir -p .tmp
+  cd .tmp
 
-cd .tmp
-wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-tar -xzvf chruby-0.3.9.tar.gz
-cd chruby-0.3.9
-sudo make install
+  install_ruby
+  cd ..
+  install_chruby
+  cd ../..
 
-cd ..
+  add_chruby_to_profile_d
+  set_ruby_version
+  install_gems
+}
 
-wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz .tmp
-tar -xzvf ruby-install-0.7.0.tar.gz
-cd ruby-install-0.7.0
-sudo make install
+apt_setup(){
+  sudo apt-get update
+  sudo apt-get upgrade -y
 
-cd ../..
+  LIBS="software-properties-common gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby"
 
-ruby-install --latest ruby --no-reinstall
+  for lib in $LIBS; do
+    sudo apt-get install $lib -y
+  done
 
-dirname="/etc/profile.d"
-filename="$dirname/chruby.sh"
+  sudo apt-get update
+}
 
-mkdir -p $dirname
 
-add_chruby="if [ -n "\$BASH_VERSION" ] || [ -n "\$ZSH_VERSION" ]; then
+install_ruby(){
+  wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz .tmp
+  tar -xzvf ruby-install-0.7.0.tar.gz
+  cd ruby-install-0.7.0
+  sudo make install
+
+
+  ruby-install --latest ruby --no-reinstall
+}
+
+install_chruby(){
+  wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+  tar -xzvf chruby-0.3.9.tar.gz
+  cd chruby-0.3.9
+  sudo make install
+}
+
+add_chruby_to_profile_d(){
+  dirname="/etc/profile.d"
+  filename="$dirname/chruby.sh"
+
+  mkdir -p $dirname
+
+  add_chruby="if [ -n "\$BASH_VERSION" ] || [ -n "\$ZSH_VERSION" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
 fi" 
 
-if  ! grep -q "$add_chruby" "$filename"; then
-  echo "$add_chruby" | sudo tee -a "$filename"
-else
-  echo "chruby already added"	
-fi
+  if [[ $(! grep -q "$add_chruby" "$filename") ]]; then
+    echo "$add_chruby" | sudo tee -a "$filename"
+  else
+    echo "chruby already added"	
+  fi
+}
 
-echo "ruby-2.6" > ~/.ruby-version
-source ~/.bashrc
+set_ruby_version(){
+  echo "ruby-2.6" > ~/.ruby-version
+  source ~/.bashrc
+}
 
-GEMS="bundler colorls neovim rake pry"
-
-# install gems and run bundle install prior to sudo
-if [[ $OSTYPE == 'linux-gnu' ]]; then
+install_gems(){
+  GEMS="bundler colorls neovim rake pry"
   for item in $GEMS; do
     gem install $item
   done
-elif [[ $OSTYPE == 'cygwin' ]]; then
-  pact install ruby || apt-cyg install ruby
-  gem install bundler
-fi
+}
 
-bundle install
-
-rake make
+run

@@ -39,7 +39,7 @@ module VpsSetup
       Rake.sh('sudo apt-get update')
       Rake.sh('sudo apt-get upgrade -y')
       Rake.sh('sudo apt-get dist-upgrade -y')
-#      Rake.sh('sudo apt-get autoremove -y')
+      Rake.sh('sudo apt-get autoremove -y')
     end
 
     def self.packages
@@ -52,6 +52,7 @@ module VpsSetup
 
     def self.other_tools
       # update npm
+      Rake.sh('sudo apt-get install npm')
       Rake.sh('sudo npm install -g npm')
 
       # add heroku
