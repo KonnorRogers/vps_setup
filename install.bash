@@ -33,12 +33,15 @@ linux_prereqs(){
 
   add_chruby_to_profile_d
   set_ruby_version
+
+  # due to setup, the script must rerun itself to be able to source chruby
   install_gems
 }
 
 apt_setup(){
   sudo apt-get update
   sudo apt-get upgrade -y
+  yes "\n" | sudo apt-get dist-upgrade -y
 
   LIBS="software-properties-common gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby"
 
@@ -56,7 +59,6 @@ install_ruby(){
   cd ruby-install-0.7.0
   sudo make install
 
-
   ruby-install --latest ruby --no-reinstall
 }
 
@@ -64,7 +66,7 @@ install_chruby(){
   wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
   tar -xzvf chruby-0.3.9.tar.gz
   cd chruby-0.3.9
-  sudo make install
+  sudo ./scripts/setup.sh
 }
 
 add_chruby_to_profile_d(){
@@ -87,7 +89,13 @@ fi"
 
 set_ruby_version(){
   echo "ruby-2.6" > ~/.ruby-version
-  source ~/.bashrc
+}
+
+restart_shell(){
+  if [[ ! -e "~/.bash_profile" ]]; then
+    touch "~/.bash_profile"
+  fi
+  source ~/.bash_profile || source ~/.zshenv
 }
 
 install_gems(){

@@ -127,10 +127,10 @@ module VpsSetup
     def self.copy_dirs(config_file, dot_file, backup_file)
       Rake.cp_r(dot_file, backup_file) if create_backup?(dot_file, backup_file)
 
+      # To deal with access issues, done after creating a backup
+      Rake.sh(%(sudo chown -R "$USER":"$USER" #{dot_file})) unless File.writable?(dot_file)
       Rake.mkdir_p(dot_file) unless Dir.exist?(dot_file)
 
-
-      puts config_file
       Dir.foreach(config_file) do |c_file|
         next if c_file =~ /\.{1,2}/
         c_file = File.join(config_file, c_file)

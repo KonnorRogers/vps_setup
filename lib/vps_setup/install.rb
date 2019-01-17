@@ -33,6 +33,7 @@ module VpsSetup
       neovim_pip
       omz_full_install
       Setup.ufw_setup
+      plug_install_vim_neovim
     end
 
     def self.prep
@@ -93,7 +94,7 @@ module VpsSetup
       return if Dir.exist?(OMZ_DIR)
 
       Rake.sh('git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh')
-      Rake.sh('sudo chsh -s /bin/zsh')
+      Rake.sh(%(chsh -s /bin/zsh "$USER"))
     end
 
     def self.install_autosuggestions
@@ -108,6 +109,11 @@ module VpsSetup
       return if File.exist?(syntax)
 
       Rake.sh("git clone https://github.com/zsh-users/zsh-syntax-highlighting.git #{syntax}")
+    end
+
+    def self.plug_install_vim_neovim
+      Rake.sh(%(vim +'PlugInstall --sync' +qa))
+      Rake.sh(%(nvim +'PlugInstall --sync' +qa))
     end
   end
 end

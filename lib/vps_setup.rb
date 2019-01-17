@@ -14,7 +14,7 @@ module VpsSetup
   # Non dotfiles specified to allow easier adding of dotfiles
   # may make seperate dirs in the future
   NON_DOTFILES = %w[gnome_terminal_settings sshd_config].freeze
-  NON_CYGWIN_DOTFILES = %w[zshrc].concat(NON_DOTFILES)
+  NON_CYGWIN_DOTFILES = %w[zshrc config].concat(NON_DOTFILES)
   NON_LINUX_DOTFILES = %w[cygwin_zshrc minttyrc].concat(NON_DOTFILES)
 
 end
