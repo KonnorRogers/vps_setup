@@ -15,7 +15,6 @@ for lib in $LIBS; do
 done
 
 sudo apt-get update
-sudo npm install -g npm
 mkdir -p .tmp
 
 cd .tmp
@@ -43,7 +42,7 @@ mkdir -p $dirname
 add_chruby="if [ -n "\$BASH_VERSION" ] || [ -n "\$ZSH_VERSION" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
- fi" 
+fi" 
 
 if  ! grep -q "$add_chruby" "$filename"; then
   echo "$add_chruby" | sudo tee -a "$filename"
