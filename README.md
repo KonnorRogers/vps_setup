@@ -27,7 +27,7 @@
 
 * FULLY AUTO script
 
-       ./vps --gitname foo --gitemail foo@example.com --herokuemail foo@example.com --herokupassword foobar
+       ./install.bash --gitname foo --gitemail foo@example.com --herokuemail foo@example.com --herokupassword foobar
 * add ssh_key functionality
 
 * ### If you run this command as root / sudo, it will prompt you to make a user to use the script as

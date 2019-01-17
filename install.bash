@@ -5,6 +5,8 @@ if [[ `id -u` == 0 ]]; then
   exit 1
 fi
 
+# to pass all command line arguments use
+# "$@"
 run(){
   if [[ $OSTYPE == 'linux-gnu' ]]; then
     linux_prereqs
