@@ -42,8 +42,6 @@
 * ### If you run this command as root / sudo, it will prompt you to make a user to use the script as
 * ### This will continuously error out if you try to run as root / sudo
 
-
-      sudo apt install git
       git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
       cd ~/vps-setup
       bash install.bash
