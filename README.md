@@ -18,12 +18,14 @@
       ~/backup_config/vimrc.orig
       ~/backup_config/tmux.conf.orig
       ~/backup_config/zshrc.orig
-
-## Prerequisites
-
-* Ensure ruby is installed, preferably 2.3.3 or greater
       
 ## Updating ubuntu instance
+* Ensure to add a user
+
+      adduser username
+      adduser username sudo
+      
+* Ensure you have SSH keys added as you I have disabled plain text passwords
 
 * FULLY AUTO script
 
