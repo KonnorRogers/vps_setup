@@ -46,12 +46,11 @@
 * ### If you run this command as root / sudo, it will prompt you to make a user to use the script as
 * ### This will continuously error out if you try to run as root / sudo
 
-      git clone https://github.com/ParamagicDev/vps-setup.git ~/vps-setup
-      cd ~/vps-setup
+      git clone https://github.com/ParamagicDev/vps_setup.git ~/vps_setup
+      cd ~/vps_setup
       bash install.bash
-    
 * or
-  
+         
       ./install.bash
       
 * This will run heroku login & git config --global user.name & user.email
