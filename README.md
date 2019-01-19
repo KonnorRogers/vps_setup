@@ -27,10 +27,19 @@
       adduser username
       adduser username sudo
 * Ensure that you have ssh keys added. I have disabled clear text passwords.
-* Easiest way when making a new DigitalOcean droplet and logged in as username:
+* Easiest way when logged into a new DigitalOcean droplet via ssh and logged in as username:
 
       username@localhost:~ $ sudo cp -R /root/.ssh ~/.ssh
-      username@localhost:~ $ sudo chown -R username:username .ssh
+      username@localhost:~ $ sudo chown -R username:username ~/.ssh
+      
+* Or by simply adding your SSH public key to ~/.ssh/authorized_keys
+
+      mdkir ~/.ssh
+      touch ~/.ssh/authorized_keys
+      echo "MYSSHKEY" >> ~/.ssh/authorized_keys
+      sudo chmod -R go= ~/.ssh
+      sudo chown -R $USER:$USER ~/.ssh
+      
       
 ## Updating ubuntu instances
 
