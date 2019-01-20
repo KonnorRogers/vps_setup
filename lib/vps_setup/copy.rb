@@ -31,7 +31,6 @@ module VpsSetup
     def self.copy_config_dir(backup_dir, dest_dir)
       # Dir.children(CONFIG_DIR).each do |file|, released in ruby 2.5.1
       # in 2.3.3 which is shipped with babun
-      linux = OS.linux?
 
       Dir.foreach(CONFIG_DIR).each do |file|
         # Explanation of this regexp in test/test_copy_confib.rb
@@ -43,7 +42,7 @@ module VpsSetup
         dot = File.join(dest_dir, ".#{file}")
         backup = File.join(backup_dir, "#{file}.orig")
 
-        copy_unix_files(config, dot, backup) if linux || OS.mac?
+        copy_unix_files(config, dot, backup) if OS.linux? || OS.mac?
         copy_cygwin_files(config, dot, backup) if OS.cygwin?
       end
     end
@@ -91,7 +90,7 @@ module VpsSetup
 
     # helper method to run within a file list
     def self.copy_unix_files(config_file, dot_file, backup_file)
-      return if NON_CYGWIN_DOTFILES.include?(File.basename(config_file))
+      return if NON_LINUX_DOTFILES.include?(File.basename(config_file))
 
       copy_all(config_file, dot_file, backup_file)
     end
@@ -129,7 +128,13 @@ module VpsSetup
       Rake.cp_r(dot_file, backup_file) if create_backup?(dot_file, backup_file)
 
       # To deal with access issues, done after creating a backup
-      Rake.sh(%(sudo chown -R "$USER":"$USER" #{dot_file})) unless File.writable?(dot_file)
+      # ENV['test'] = true Set inside minitest due to file permissions issues
+      if !(File.writable?(dot_file)) && ENV['test'].nil?
+        user = Process.uid
+        Rake.sh(%(sudo chmod 700 -R #{dot_file}))
+        Rake.sh(%(sudo chown -R #{user} #{dot_file}))
+      end
+
       Rake.mkdir_p(dot_file) unless Dir.exist?(dot_file)
 
       Dir.foreach(config_file) do |c_file|
