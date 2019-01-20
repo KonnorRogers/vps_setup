@@ -36,8 +36,7 @@ task :make, %i[backup_dir dest_dir] do |_t, args|
   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
 
   # reloads the shell
-  sh("exec zsh")
-  sh('source ~/.zshrc')
+  sh('source ~/.zshenv')
   VpsSetup::Setup.git_config
   VpsSetup::Setup.heroku_login
 end

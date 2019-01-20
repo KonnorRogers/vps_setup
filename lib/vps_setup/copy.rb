@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'fileutils'
+require 'rake'
 require 'os' # returns users OS
 
 module VpsSetup
@@ -18,8 +18,11 @@ module VpsSetup
       mkdirs(backup_dir, dest_dir)
 
       copy_config_dir(backup_dir, dest_dir)
-      copy_gnome_settings(backup_dir)
-      copy_sshd_config(backup_dir, ssh_dir)
+
+      if OS.linux?
+        copy_gnome_settings(backup_dir)
+        copy_sshd_config(backup_dir, ssh_dir)
+      end
 
       puts "dotfiles copied to #{dest_dir}"
       puts "backups created @ #{backup_dir}"
@@ -88,15 +91,13 @@ module VpsSetup
 
     # helper method to run within a file list
     def self.copy_unix_files(config_file, dot_file, backup_file)
-      non_unix_files = %w[cygwin_zshrc minttyrc]
-      return if non_unix_files.include?(File.basename(config_file))
+      return if NON_CYGWIN_DOTFILES.include?(File.basename(config_file))
 
       copy_all(config_file, dot_file, backup_file)
     end
 
     def self.copy_cygwin_files(config_file, dot_file, backup_file)
-      non_cygwin_files = %w[zshrc config]
-      return if non_cygwin_files.include?(File.basename(config_file))
+      return if NON_CYGWIN_DOTFILES.include?(File.basename(config_file))
 
       if File.basename(config_file) == 'cygwin_zshrc'
         # Converts cygwin_zshrc to .zshrc for cygwin environment use
