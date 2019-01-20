@@ -165,8 +165,11 @@ class TestCopy < Minitest::Test
   end
 
   def test_cygwin_files_not_copied_in_unix
+      puts "is this linux? #{OS.linux?}"
+      puts "is this cygwin? #{OS.cygwin?}"
+
     linux_env do
-      puts "this is a test #{OS.linux?}"
+      puts "is this linux? #{OS.linux?}"
       puts "is this cygwin? #{OS.cygwin?}"
       copy
     end
