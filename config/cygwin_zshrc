@@ -96,9 +96,13 @@ fi
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
+alias gpg="gpg2"
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias tmuxr='tmux -S ~/.tmp'
 alias lsc="colorls"
 alias ls='ls -G'
 alias ls='ls --color=auto'
+alias gaa="git add -A"
+alias gcm="git commit -m"
+alias gp="git push"
