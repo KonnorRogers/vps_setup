@@ -46,11 +46,6 @@ task :install do
   sh('sudo apt-get autoremove -y')
 end
 
-task :example do
-  name = gets.chomp
-  Rake.sh("echo #{name}")
-end
-
 task :setup do
   VpsSetup::Setup.full
 end
