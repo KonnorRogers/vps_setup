@@ -40,6 +40,8 @@
       sudo chmod -R go= ~/.ssh
       sudo chown -R $USER:$USER ~/.ssh
       
+* ssh directory permissions can be set via ./scripts/ssh_perms
+      
       
 ## Updating ubuntu instances
 
