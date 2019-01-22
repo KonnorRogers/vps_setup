@@ -34,6 +34,7 @@ linux_prereqs(){
   add_chruby_to_profile_d
   set_ruby_version
 
+  restart_shell
   install_gems
 }
 

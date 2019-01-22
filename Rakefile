@@ -36,7 +36,7 @@ task :make, %i[backup_dir dest_dir] do |_t, args|
   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
 
   # reloads the shell
-  sh('source ~/.zshenv')
+  # sh(%(source "~/.zshenv"))
   # will set the appropriately file restrictions for you .ssh dir
   sh(%(source "scripts/ssh_perms.bash"))
   VpsSetup::Setup.git_config
@@ -52,3 +52,6 @@ task :setup do
   VpsSetup::Setup.full
 end
 
+task :try do
+  Rake.sh("source ~/.zshenv")
+end
