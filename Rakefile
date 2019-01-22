@@ -35,10 +35,10 @@ task :make, %i[backup_dir dest_dir] do |_t, args|
 
   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
 
-  # reloads the shell
-  # sh(%(source "~/.zshenv"))
-  # will set the appropriately file restrictions for you .ssh dir
-  sh(%(source "scripts/ssh_perms.bash"))
+  Rake::Task['login'].invoke
+end
+
+task :login do
   VpsSetup::Setup.git_config
   VpsSetup::Setup.heroku_login
 end
