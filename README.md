@@ -172,6 +172,15 @@
     
 * Adding docker support via images
 
+## Utilities used
+
+* GNUPG2
+* RAKE
+* THOR
+* RUBY
+* RDOC
+* SOPS
+
 
 ## Things learned:
 
@@ -184,3 +193,4 @@
 * Testing apt-get install / apt install etc is nearly impossible unless i were to go through and do a $(command -v) for everything which is not feasible
 * My original, non extensible, less easily tested version is available here: 
   [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_setup/tree/deprecated_bash_scripting)
+* NEVER USE A PASSWORD AS A COMMAND LINE ARGUMENT
