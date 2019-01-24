@@ -104,7 +104,7 @@ fi"
 }
 
 set_ruby_version(){
-  echo "ruby latest" > ~/.ruby-version
+  chruby ruby latest
 }
 
 # Will create an empty .bash_profile or .zshenv so that it can be source
