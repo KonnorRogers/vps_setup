@@ -117,8 +117,8 @@ restart_shell(){
     fi
     source ~/.bash_profile
   elif [[ "$SHELL" == '/bin/zsh' ]]; then
-    if [[ ! -e "~/.zshenv" ]]; then
-      touch "~/.zshenv"
+    if [[ ! -e ~/.zshenv ]]; then
+      touch ~/.zshenv
     fi
     source ~/.zshenv
   fi

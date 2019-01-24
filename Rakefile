@@ -34,8 +34,6 @@ task :make, %i[backup_dir dest_dir] do |_t, args|
   params = tilde_to_home_hash(args)
 
   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
-
-  Rake::Task['login'].invoke
 end
 
 task :login do
