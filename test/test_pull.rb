@@ -148,7 +148,7 @@ class TestPull < Minitest::Test
     Pull.pull_gnome_term_settings(local_term, config_term)
 
     config_file = File.new(config_term, 'r+')
-    assert FileUtils.identical?(config_file, copy__file)
+    assert FileUtils.identical?(config_file, copy_file)
   end
 
   def test_pull_all_cygwin
