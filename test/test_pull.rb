@@ -24,39 +24,39 @@ TEST_LINUX_CFG_DOTFILES = %w[zshrc pryrc tmux.conf vimrc].freeze
 
 PULL_CONFIG_DIR = File.join(TEST_ROOT, 'pull_config')
 PULL_LOCAL_DIR = File.join(TEST_ROOT, 'pull_test')
-mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+# mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
 
 def new_file(dir, file_name)
   File.new(File.join(dir, file_name), 'w+')
 end
 
-TEST_CONFIG_FILES.each { |file| new_file(PULL_CONFIG_DIR, file) }
+# TEST_CONFIG_FILES.each { |file| new_file(PULL_CONFIG_DIR, file) }
 
 class TestPull < Minitest::Test
   include VpsSetup
 
-  # def setup
+  def setup
     ###########################
     # DOES NOT WORK IN CYGWIN #
     ###########################
-    # rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
-    # mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+    rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+    mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
 
-    # TEST_CONFIG_FILES.each do |file|
-    #   new_file(PULL_CONFIG_DIR, file)
-    # end
-  # end
+    TEST_CONFIG_FILES.each do |file|
+      new_file(PULL_CONFIG_DIR, file)
+    end
+  end
 
 
   def dir_files(dir)
     Dir.entries(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
   end
 
- # def teardown
- #    rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
- #  end
+  def teardown
+    rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
+  end
 
-  Minitest.after_run { rm_dirs(PULL_LOCAL_DIR, PULL_CONFIG_DIR) }
+  # Minitest.after_run { rm_dirs(PULL_LOCAL_DIR, PULL_CONFIG_DIR) }
 
   def test_linux_config_dotfiles_ary
     ary = Pull.linux_config_dotfiles_ary(PULL_CONFIG_DIR)
@@ -132,12 +132,23 @@ class TestPull < Minitest::Test
   else
     ## ONLY WORKS IF DCONF IS INSTALLED
     capture_io do
-      Pull.pull_gnome_term_settings(config_term, local_term)
+      Pull.pull_gnome_term_settings(local_term, config_term)
     end
 
     assert File.exist?(config_term)
     # refute File.empty?(config_term)
     ## if you dont have a /org/gnome/terminal/settings key, this file may be empty
+  end
+
+  def test_gnome_settings_not_altered
+    local_term = 'non_existant'
+    config_term = File.join(CONFIG_DIR, 'gnome_terminal_settings')
+
+    copy_file = File.new(config_term, 'r+')
+    Pull.pull_gnome_term_settings(local_term, config_term)
+
+    config_file = File.new(config_term, 'r+')
+    assert FileUtils.identical?(config_file, copy__file)
   end
 
   def test_pull_all_cygwin
