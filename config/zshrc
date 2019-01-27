@@ -140,3 +140,4 @@ source /usr/local/share/chruby/auto.sh
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/snap/bin
+export PATH=$PATH:$HOME/.local/bin
