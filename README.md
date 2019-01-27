@@ -16,42 +16,61 @@
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
-      ~/backup_config/vimrc.orig
-      ~/backup_config/tmux.conf.orig
-      ~/backup_config/zshrc.orig
-      
+```bash
+~/backup_config/vimrc.orig
+~/backup_config/tmux.conf.orig
+~/backup_config/zshrc.orig
+```
+
 ## Prerequisites
 * None as far as I can tell, it should pull in everything you need.
 * Ensure to add a user
 
-      adduser username
-      adduser username sudo
+```bash
+adduser username
+adduser username sudo
+```
+
 * Ensure that you have ssh keys added. I have disabled clear text passwords.
 * Easiest way when logged into a new DigitalOcean droplet via ssh and logged in as username:
 
-      username@localhost:~ $ sudo cp -R /root/.ssh ~/.ssh
-      username@localhost:~ $ sudo chown -R username:username ~/.ssh
-      
+```bash
+username@localhost:~ $ sudo cp -R /root/.ssh ~/.ssh
+username@localhost:~ $ sudo chown -R username:username ~/.ssh
+```    
+
 * Or by simply adding your SSH public key to ~/.ssh/authorized_keys
 
-      mdkir ~/.ssh
-      touch ~/.ssh/authorized_keys
-      echo "MYSSHKEY" >> ~/.ssh/authorized_keys
-      sudo chmod -R go= ~/.ssh
-      sudo chown -R $USER:$USER ~/.ssh
-      
+```bash
+mdkir ~/.ssh
+touch ~/.ssh/authorized_keys
+echo "MYSSHKEY" >> ~/.ssh/authorized_keys
+sudo chmod -R go= ~/.ssh
+sudo chown -R $USER:$USER ~/.ssh
+```
+
+* ssh directory permissions can be set via:
+
+```bash
+./scripts/ssh_perms
+```
       
 ## Updating ubuntu instances
 
 * ### If you run this command as root / sudo, it will prompt you to make a user to use the script as
 * ### This will continuously error out if you try to run as root / sudo
 
-      git clone https://github.com/ParamagicDev/vps_setup.git ~/vps_setup
-      cd ~/vps_setup
-      bash install.bash
+```bash
+git clone https://github.com/ParamagicDev/vps_setup.git ~/vps_setup
+cd ~/vps_setup
+bash install.bash
+```
+
 * or
-         
-      ./install.bash
+
+```bash
+./install.bash
+```
       
 * This will run heroku login & git config --global user.name & user.email
 
@@ -99,19 +118,25 @@
 * Ensure you go into your server and secure it properly
 
 * For viewing apps over ssh, ensure to use
-        
-      ssh -L <localport>:localhost:<remoteport> user@ssh.com
-      
+   
+```bash
+ssh -L <localport>:localhost:<remoteport> user@ssh.com
+```
+
 * At full speed it should look like: 
        
-      ssh -L 9000:localhost:3000 user@remoteserver.com
-      
+```bash
+ssh -L 9000:localhost:3000 user@remoteserver.com
+```
+
 * Then you can visit <strong>localhost:9000</strong> in your browser and view your web app
 * Alternatively, ngrok is installed via linode.bash 
-      
-      ngrok http <localport>
-      ngrok http 3000 
-      
+
+```bash      
+ngrok http <localport>
+ngrok http 3000 
+```
+
 * This will bring up a CLI to connect to for example localhost:3000 on the web  
 
 ## Rake Tasks
@@ -131,19 +156,27 @@
 
 * copies files from vps_setup/config to ~/backup_config:
 
-      rake config:copy
+```bash
+rake config:copy
+```
 
 * This can be specified with either both or one of the arguments:
 
-      rake "config:copy[/path/to/backup_dir, /path/to/dest_dir]"
-      
+```bash
+rake "config:copy[/path/to/backup_dir, /path/to/dest_dir]"
+```
+
 * The following command lets you specify where you would like your backup directory to be
 
-      rake "config:copy[/path/to/backup_dir]"
-      
+```bash
+rake "config:copy[/path/to/backup_dir]"
+```
+
 * The following command lets you specify where you would like to put your dotfiles
 
-      rake "config:copy[nil, /path/to/dest_dir]"
+```bash
+rake "config:copy[nil, /path/to/dest_dir]"
+```
 
 ### $ rake config:pull[:config_dir, :local_dir]
 
@@ -151,24 +184,41 @@
 
 * copies files from home dir (~) to your vps_setup repo (./vps_setup/config)
 
-      rake config:pull
+```bash
+rake config:pull
+```
 
 * Alternatively, you can specify where you would like files to be pulled from and to
 
-      rake "config:pull[/path/to/config_dir, /path/to/local_dotfiles_dir]"
-      
+```bash
+rake "config:pull[/path/to/config_dir, /path/to/local_dotfiles_dir]"
+```
+
 * The following command will allow you to show what will be pulled to the repo:
 
-      rake "config:pull[/path/to/config_dir]"
+```bash
+rake "config:pull[/path/to/config_dir]"
+```
 
 * The following command will let you leave the default config dir, and specify where to pull dotfiles from
 
-      rake "config:pull[nil, /path/to/dotfiles_dir]"
 
+```bash
+rake "config:pull[nil, /path/to/dotfiles_dir]"
+```
 
 ## Updates for the future?
     
 * Adding docker support via images
+
+## Utilities used
+
+* GNUPG2
+* RAKE
+* THOR
+* RUBY
+* RDOC
+* SOPS
 
 
 ## Things learned:
@@ -182,3 +232,4 @@
 * Testing apt-get install / apt install etc is nearly impossible unless i were to go through and do a $(command -v) for everything which is not feasible
 * My original, non extensible, less easily tested version is available here: 
   [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_setup/tree/deprecated_bash_scripting)
+* NEVER USE A PASSWORD AS A COMMAND LINE ARGUMENT

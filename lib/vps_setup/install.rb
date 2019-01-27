@@ -53,7 +53,6 @@ module VpsSetup
     def self.other_tools
       # update npm, there are some issues with ubuntu 18.10 removing npm
       # and then being unable to update it
-      Rake.sh('sudo apt-get install npm -y')
       Rake.sh('sudo npm install -g npm')
 
       # add heroku

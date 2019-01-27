@@ -8,7 +8,7 @@ module VpsSetup
 
     TOOLS = %w[curl tmux git vim zsh sqlite3
                openssh-client openssh-server
-               postgresql pry rubygems fail2ban].freeze
+               postgresql pry rubygems fail2ban node-gyp].freeze
 
     ADDED_REPOS = %w[neovim asciinema docker-ce mosh yarn].freeze
 

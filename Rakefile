@@ -34,9 +34,9 @@ task :make, %i[backup_dir dest_dir] do |_t, args|
   params = tilde_to_home_hash(args)
 
   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
+end
 
-  # reloads the shell
-  sh('source ~/.zshenv')
+task :login do
   VpsSetup::Setup.git_config
   VpsSetup::Setup.heroku_login
 end
@@ -46,12 +46,10 @@ task :install do
   sh('sudo apt-get autoremove -y')
 end
 
-task :example do
-  name = gets.chomp
-  Rake.sh("echo #{name}")
-end
-
 task :setup do
   VpsSetup::Setup.full
 end
 
+task :try do
+  Rake.sh("source ~/.zshenv")
+end
