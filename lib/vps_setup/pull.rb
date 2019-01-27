@@ -22,6 +22,7 @@ module VpsSetup
     def self.pull_all_linux(attr = {})
       attr[:cfg_dir] ||= CONFIG_DIR
       attr[:local_dir] ||= Dir.home
+      attr[:gnome_local] ||= '/org/gnome/terminal/'
 
       linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
         linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
@@ -33,12 +34,17 @@ module VpsSetup
 
           # Covers the case of .config
           if File.directory?(local_file)
-            # ie: .config/nvim
-            Dir.foreach(local_file) do |file|
-              next if file =~ /\.{1,2}/
-              file = File.join(local_file, file)
+            # currently only pulling nvim
+            Dir.foreach(local_file) do |l_file|
+              next if l_file =~ /\.{1,2}/
 
-              Rake.cp_r(file, cfg_file)
+              Dir.foreach(cfg_file) do |c_file|
+                next if c_file =~ /\.{1,2}/
+                next unless l_file == c_file
+                file = File.join(local_file, l_file)
+
+                Rake.cp_r(file, File.expand_path(c_file))
+              end
             end
           else
             Rake.cp(local_file, cfg_file)
@@ -136,14 +142,15 @@ module VpsSetup
       Rake.cp(sshd_local_path, sshd_config_path)
     end
 
-    def self.pull_gnome_term_settings(config_term = nil, local_term = nil)
+    def self.pull_gnome_term_settings(local_term = nil, config_term = nil)
       local_term ||= '/org/gnome/terminal/'
-      config_term ||= File.join(CONFIG_DIR, 'gnome_terminal_settings')
+      config_term ||= File.join(CONFIG_DIR)
+      config_term = File.join(CONFIG_DIR, 'gnome_terminal_settings')
 
-      gnome_dump(config_term, local_term)
+      gnome_dump(local_term, config_term)
     end
 
-    def self.gnome_dump(config_term = nil, local_term = nil)
+    def self.gnome_dump(local_term = nil, config_term = nil)
       local_term ||= '/org/gnome/terminal/'
       config_term ||= File.join(CONFIG_DIR, 'gnome_terminal_settings')
 

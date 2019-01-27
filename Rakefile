@@ -49,7 +49,3 @@ end
 task :setup do
   VpsSetup::Setup.full
 end
-
-task :try do
-  Rake.sh("source ~/.zshenv")
-end
