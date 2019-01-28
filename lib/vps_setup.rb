@@ -23,4 +23,10 @@ module VpsSetup
   # Files you do not want to be copied to Linux environment
   NON_LINUX_DOTFILES = %w[cygwin_zshrc minttyrc].concat(NON_DOTFILES)
 
+  def blank_file?(file)
+    return true if file =~ /\A\.{1,2}\Z/
+
+    false
+  end
 end
+

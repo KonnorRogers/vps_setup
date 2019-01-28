@@ -112,7 +112,9 @@ module VpsSetup
 
     def self.plug_install_vim_neovim
       Rake.sh(%(vim +'PlugInstall --sync' +qa))
+      Rake.sh(%(vim +'PlugUpdate --sync' +qa))
       Rake.sh(%(nvim +'PlugInstall --sync' +qa))
+      Rake.sh(%(nvim +'PlugUpdate --sync' +qa))
     end
   end
 end

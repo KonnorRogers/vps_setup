@@ -6,6 +6,8 @@ require 'os' # returns users OS
 module VpsSetup
   # Copies config from /vps-setup/config to your home dir
   class Copy
+    extend VpsSetup # pulls in the blank_file?(file) method
+
     def self.copy(backup_dir: nil, dest_dir: nil, ssh_dir: nil)
       raise 'Please run from a posix platform' unless OS.posix?
 
@@ -35,7 +37,7 @@ module VpsSetup
       Dir.foreach(CONFIG_DIR).each do |file|
         # Explanation of this regexp in test/test_copy_confib.rb
         # .for_each returns '.' and '..' which we dont want
-        next if file =~ /\A\.{1,2}\Z/
+        next if blank_file?(file)
         next if NON_DOTFILES.include?(file)
 
         config = File.join(CONFIG_DIR, file)
@@ -138,7 +140,7 @@ module VpsSetup
       Rake.mkdir_p(dot_file) unless Dir.exist?(dot_file)
 
       Dir.foreach(config_file) do |c_file|
-        next if c_file =~ /\.{1,2}/
+        next if blank_file?(c_file)
         c_file = File.join(config_file, c_file)
         # mkdir_p(c_file) unless Dir.exist?(dot_file)
         Rake.cp_r(c_file, dot_file)

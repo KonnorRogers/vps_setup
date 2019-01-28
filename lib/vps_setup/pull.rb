@@ -9,6 +9,8 @@ module VpsSetup
   # Pull changes from local dir into config dir
   # to be able to push changes up to the config dir
   class Pull
+    extend VpsSetup # pulls in the blank_file?(file) method
+
     def self.pull_all(attr = {})
       cfg_dir = attr[:cfg_dir]
       Rake.mkdir_p(File.expand_path(cfg_dir)) unless cfg_dir.nil? || Dir.exist?(cfg_dir)
@@ -32,8 +34,6 @@ module VpsSetup
           cfg_file = File.join(File.expand_path(attr[:cfg_dir]), config)
           local_file = File.join(File.expand_path(attr[:local_dir]), local)
 
-          puts cfg_file
-          puts local_file
           # Covers the case of .config
           if File.directory?(local_file)
             # only pulls whatever is present inside of vps_setup/config/config
@@ -71,7 +71,7 @@ module VpsSetup
       dir ||= CONFIG_DIR
 
       Dir.entries(dir).reject do |file|
-        NON_LINUX_DOTFILES.include?(file) || file =~ /\A\.{1,2}\Z/
+        NON_LINUX_DOTFILES.include?(file) || blank_file?(file)
       end
       # only returns dotfiles for linux
     end
@@ -81,7 +81,7 @@ module VpsSetup
 
       Dir.entries(dir).reject do |file|
         # removes '.' && '..'
-        NON_CYGWIN_DOTFILES.include?(file) || file =~ /\A\.{1,2}\Z/
+        NON_CYGWIN_DOTFILES.include?(file) || blank_file?(file)
       end
       # returns cygwin dotfiles
     end
@@ -98,7 +98,7 @@ module VpsSetup
         next unless file.start_with?('.')
 
         # removes pesky '.' & '..'
-        next if file =~ /\A\.{1,2}\Z/
+        next if blank_file?(file)
 
         # removes the . at the beginning of a dotfile
         config_file = file[1, file.length]
@@ -116,7 +116,7 @@ module VpsSetup
 
       Dir.entries(local_dir).select do |file|
         next unless file.start_with?('.')
-        next if file =~ /\A\.{1,2}\Z/
+        next if blank_file?(file)
 
         config_file = file[1, file.length]
         config_files.include?(config_file)
@@ -177,11 +177,11 @@ module VpsSetup
 
     def self.copy_directory(local_file, cfg_file)
       Dir.foreach(local_file) do |l_dir|
-        next if l_dir =~ /\.{1,2}/
+        next if blank_file?(l_dir)
         local_dir = File.join(local_file, l_dir)
 
         Dir.foreach(cfg_file) do |c_dir|
-          next if c_dir =~ /\.{1,2}/
+          next if blank_file?(c_dir)
           next unless c_dir == l_dir
           puts local_dir
           Rake.cp_r(local_dir, cfg_file)
