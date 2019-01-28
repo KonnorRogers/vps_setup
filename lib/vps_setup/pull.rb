@@ -161,7 +161,7 @@ module VpsSetup
     rescue RuntimeError
       dconf_error
       # if dconf errors, it will erase the config file contents
-      reset_gnome_settings(config_term, orig_config_contents)
+      reset_to_original(config_term, orig_config_contents)
       false
     else
       puts "Gnome settings successfully dumped into #{config_term}"
@@ -176,7 +176,7 @@ module VpsSetup
     end
 
     def self.reset_to_original(new_file, old_file_contents)
-      return if File.zero?(old_file) # Ensures its copying a file with contents
+      return if old_file_contents.empty? # Ensures its copying a file with contents
       return unless File.zero?(new_file) # checks that the new file is empty
 
       # old_file_contents should be in string form
