@@ -14,6 +14,7 @@ run(){
     apt-cyg install ruby
     apt-cyg install gnupg2 # allows gpg -v 2.1>
     apt-cyg install make gcc-core gcc-g++ libcrypt-devel # ruby dependencies
+    install_sops_cygwin
     gem install bundler
   fi
 
@@ -137,6 +138,11 @@ install_gems(){
   for item in $GEMS; do
     gem install $item
   done
+}
+
+install_sops_cygwin(){
+  curl -L -o /bin/sops.exe https://github.com/mozilla/sops/releases/download/3.2.0/sops-3.2.0.exe
+  chmod 700 /bin/sops.exe
 }
 
 run
