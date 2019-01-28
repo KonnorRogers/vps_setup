@@ -3,7 +3,7 @@
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent.
 * ### Supported OS'es:
   - Ubuntu 18.10 - DigitalOcean
-  - Babun on windows, simply pulls dotfiles, pact installs ruby, and bundle installs
+  - Cygwin on windows, simply pulls dotfiles, apt-cyg installs ruby, and bundle installs
   - Ubuntu 18.04 LTS on personal laptop
   
 * Ideally, you should brush over the contents of each file
