@@ -40,12 +40,14 @@ module VpsSetup
             puts "DEBUGGING"
             Dir.foreach(local_file) do |l_dir|
               next if l_dir =~ /\.{1,2}/
-              l_dir = File.expand_path(l_dir)
+              puts l_dir
+              local_dir = File.join(local_file, l_dir)
 
               Dir.foreach(cfg_file) do |c_dir|
                 next if c_dir =~ /\.{1,2}/
                 next unless c_dir == l_dir
-                Rake.cp_r(l_dir, cfg_file)
+                puts local_dir
+                Rake.cp_r(local_dir, cfg_file)
               end
             end
 
