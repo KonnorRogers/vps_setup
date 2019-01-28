@@ -154,14 +154,14 @@ module VpsSetup
       local_term ||= '/org/gnome/terminal/'
       config_term ||= File.join(CONFIG_DIR, 'gnome_terminal_settings')
 
-      orig_config_file = File.new(config_term, 'r+') if File.exist?(config_term)
-      return unless File.exist?(local_term)
+
+      orig_config_contents = File.read(config_term) if File.exist?(config_term)
 
       Rake.sh("dconf dump #{local_term} > #{config_term}")
     rescue RuntimeError
       dconf_error
       # if dconf errors, it will erase the config file contents
-      reset_gnome_settings(orig_config_file, config_file)
+      reset_gnome_settings(config_term, orig_config_contents)
       false
     else
       puts "Gnome settings successfully dumped into #{config_term}"
@@ -175,6 +175,12 @@ module VpsSetup
       puts 'sudo apt-get install dconf-tools'
     end
 
-    def self.reset_
+    def self.reset_to_original(new_file, old_file_contents)
+      return if File.zero?(old_file) # Ensures its copying a file with contents
+      return unless File.zero?(new_file) # checks that the new file is empty
+
+      # old_file_contents should be in string form
+      File.write(new_file, old_file_contents)
+    end
   end
 end
