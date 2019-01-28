@@ -116,5 +116,9 @@ module VpsSetup
       Rake.sh(%(nvim +'PlugInstall --sync' +qa))
       Rake.sh(%(nvim +'PlugUpdate --sync' +qa))
     end
-  end
+
+    ## This needs to be called after golang and zsh have been sourced
+    def self.install_sops
+      Rake.sh(%(go get -u go.mozilla.org/sops/cmd/sops))
+    end
 end
