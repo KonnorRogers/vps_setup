@@ -35,17 +35,20 @@ module VpsSetup
           # Covers the case of .config
           if File.directory?(local_file)
             # currently only pulling nvim
-            Dir.foreach(local_file) do |l_file|
-              next if l_file =~ /\.{1,2}/
+            puts "DEBUGGING"
+            Dir.foreach(local_file) do |l_dir|
+              next if l_dir =~ /\.{1,2}/
 
-              Dir.foreach(cfg_file) do |c_file|
-                next if c_file =~ /\.{1,2}/
-                next unless l_file == c_file
-                file = File.join(local_file, l_file)
-
-                Rake.cp_r(file, File.expand_path(c_file))
+              Dir.foreach(cfg_file) do |c_dir|
+                next if c_dir =~ /\.{1,2}/
+                puts c_dir
+                puts l_dir
+                next unless c_dir == l_dir
+                Rake.cp_r(l_dir, cfg_file)
               end
             end
+
+            puts "END DEBUGGING"
           else
             Rake.cp(local_file, cfg_file)
           end
