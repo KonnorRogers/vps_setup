@@ -36,22 +36,8 @@ module VpsSetup
           puts local_file
           # Covers the case of .config
           if File.directory?(local_file)
-            # currently only pulling nvim
-            puts "DEBUGGING"
-            Dir.foreach(local_file) do |l_dir|
-              next if l_dir =~ /\.{1,2}/
-              puts l_dir
-              local_dir = File.join(local_file, l_dir)
-
-              Dir.foreach(cfg_file) do |c_dir|
-                next if c_dir =~ /\.{1,2}/
-                next unless c_dir == l_dir
-                puts local_dir
-                Rake.cp_r(local_dir, cfg_file)
-              end
-            end
-
-            puts "END DEBUGGING"
+            # only pulls whatever is present inside of vps_setup/config/config
+            copy_directory(local_file, cfg_file)
           else
             Rake.cp(local_file, cfg_file)
           end
@@ -187,6 +173,20 @@ module VpsSetup
 
       # old_file_contents should be in string form
       File.write(new_file, old_file_contents)
+    end
+
+    def self.copy_directory(local_file, cfg_file)
+      Dir.foreach(local_file) do |l_dir|
+        next if l_dir =~ /\.{1,2}/
+        local_dir = File.join(local_file, l_dir)
+
+        Dir.foreach(cfg_file) do |c_dir|
+          next if c_dir =~ /\.{1,2}/
+          next unless c_dir == l_dir
+          puts local_dir
+          Rake.cp_r(local_dir, cfg_file)
+        end
+      end
     end
   end
 end
