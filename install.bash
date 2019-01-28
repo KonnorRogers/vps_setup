@@ -11,8 +11,9 @@ run(){
   if [[ $OSTYPE == 'linux-gnu' ]]; then
     linux_prereqs
   elif [[ $OSTYPE == 'cygwin' ]]; then
-    pact install ruby
-    pact install gnupg2 # allows gpg -v 2.1>
+    apt-cyg install ruby
+    apt-cyg install gnupg2 # allows gpg -v 2.1>
+    apt-cyg install make gcc-core gcc-g++ libcrypt-devel # ruby dependencies
     gem install bundler
   fi
 
