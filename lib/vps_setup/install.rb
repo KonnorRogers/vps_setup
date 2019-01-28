@@ -34,7 +34,6 @@ module VpsSetup
       omz_full_install
       Setup.ufw_setup
       plug_install_vim_neovim
-      export_golang
       install_sops
     end
 
@@ -122,15 +121,6 @@ module VpsSetup
     ## This needs to be called after golang and zsh have been sourced or export usr/bin/go
     def self.install_sops
       Rake.sh(%(go get -u go.mozilla.org/sops/cmd/sops))
-    end
-
-    def self.export_golang
-      go_home = '/usr/bin/go'
-      Rake.sh(%(
-              if [[ ! $(command -v go) ]]; then
-                export #{go_home}
-              fi
-             ))
     end
   end
 end
