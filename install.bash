@@ -7,15 +7,11 @@ fi
 
 # to pass all command line arguments use
 # "$@"
-run(){
+main(){
   if [[ $OSTYPE == 'linux-gnu' ]]; then
     linux_prereqs
   elif [[ $OSTYPE == 'cygwin' ]]; then
-    apt-cyg install ruby
-    apt-cyg install gnupg2 # allows gpg -v 2.1>
-    apt-cyg install make gcc-core gcc-g++ libcrypt-devel # ruby dependencies
-    install_sops_cygwin
-    gem install bundler
+    cygwin_prereqs
   fi
 
   bundle install
@@ -28,6 +24,12 @@ run(){
 
   # Currently logs in for git & heroku
   rake login
+}
+
+cygwin_prereqs(){
+    apt-cyg install make gcc-core gcc-g++ libcrypt-devel ruby gnupg2
+    install_sops_cygwin
+    gem install bundled
 }
 
 # Nice little bundle of apt_setup, setting the ruby version & sourcing the chruby script
@@ -145,4 +147,4 @@ install_sops_cygwin(){
   chmod 700 /bin/sops.exe
 }
 
-run
+main
