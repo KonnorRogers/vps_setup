@@ -27,9 +27,9 @@ main(){
 }
 
 cygwin_prereqs(){
-    apt-cyg install make gcc-core gcc-g++ libcrypt-devel ruby gnupg2
-    install_sops_cygwin
-    gem install bundled
+  apt-cyg install make gcc-core gcc-g++ libcrypt-devel ruby gnupg2
+  install_sops_cygwin
+  gem install bundler
 }
 
 # Nice little bundle of apt_setup, setting the ruby version & sourcing the chruby script
