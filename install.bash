@@ -14,6 +14,10 @@ main(){
     cygwin_prereqs
   fi
 
+  # creates a user bin to be able to run cli commands
+  mkdir -p bin
+  export PATH="$HOME/bin:$PATH"
+
   bundle install
 
   rake make # add parameters with thor
