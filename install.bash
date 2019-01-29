@@ -17,7 +17,7 @@ main(){
   # creates a user bin to be able to run cli commands
   mkdir -p "$HOME/bin"
   export PATH="$HOME/bin:$PATH"
-  ln -fs $PWD
+  ln -fs "$PWD/install.bash"
 
   bundle install
 
