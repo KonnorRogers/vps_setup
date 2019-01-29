@@ -229,7 +229,10 @@ rake "config:pull[nil, /path/to/dotfiles_dir]"
 * It works, its not pretty, but it gets the job done.
 * Mixing command line and Ruby is not easy
 * Thor does args well
-* Testing apt-get install / apt install etc is nearly impossible unless i were to go through and do a $(command -v) for everything which is not feasible
+* Testing apt-get install / apt install etc is nearly impossible unless i were to go through and do a File.exist? for everything which is not feasible
 * My original, non extensible, less easily tested version is available here: 
   [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_setup/tree/deprecated_bash_scripting)
 * NEVER USE A PASSWORD AS A COMMAND LINE ARGUMENT
+* How to remove a file with sensitive information from your commit history via git rebase
+* As this project grows, RDoc is a great way to have an easy view of what everything does
+
