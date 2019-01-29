@@ -207,6 +207,8 @@ rake "config:pull[/path/to/config_dir]"
 rake "config:pull[nil, /path/to/dotfiles_dir]"
 ```
 
+## Contents of credentials.yaml
+
 ## Updates for the future?
     
 * Adding docker support via images

@@ -15,8 +15,9 @@ main(){
   fi
 
   # creates a user bin to be able to run cli commands
-  mkdir -p bin
+  mkdir -p "$HOME/bin"
   export PATH="$HOME/bin:$PATH"
+  ln -fs $PWD
 
   bundle install
 
