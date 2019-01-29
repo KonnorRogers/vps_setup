@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'fileutils'
+require 'rake'
 require 'os' # returns users OS
 
 module VpsSetup
   # Copies config from /vps-setup/config to your home dir
   class Copy
+    extend VpsSetup # pulls in the blank_file?(file) method
+
     def self.copy(backup_dir: nil, dest_dir: nil, ssh_dir: nil)
       raise 'Please run from a posix platform' unless OS.posix?
 
@@ -18,8 +20,11 @@ module VpsSetup
       mkdirs(backup_dir, dest_dir)
 
       copy_config_dir(backup_dir, dest_dir)
-      copy_gnome_settings(backup_dir)
-      copy_sshd_config(backup_dir, ssh_dir)
+
+      if OS.linux?
+        copy_gnome_settings(backup_dir)
+        copy_sshd_config(backup_dir, ssh_dir)
+      end
 
       puts "dotfiles copied to #{dest_dir}"
       puts "backups created @ #{backup_dir}"
@@ -28,19 +33,18 @@ module VpsSetup
     def self.copy_config_dir(backup_dir, dest_dir)
       # Dir.children(CONFIG_DIR).each do |file|, released in ruby 2.5.1
       # in 2.3.3 which is shipped with babun
-      linux = OS.linux?
 
       Dir.foreach(CONFIG_DIR).each do |file|
         # Explanation of this regexp in test/test_copy_confib.rb
         # .for_each returns '.' and '..' which we dont want
-        next if file =~ /\A\.{1,2}\Z/
+        next if blank_file?(file)
         next if NON_DOTFILES.include?(file)
 
         config = File.join(CONFIG_DIR, file)
         dot = File.join(dest_dir, ".#{file}")
         backup = File.join(backup_dir, "#{file}.orig")
 
-        copy_unix_files(config, dot, backup) if linux || OS.mac?
+        copy_unix_files(config, dot, backup) if OS.linux? || OS.mac?
         copy_cygwin_files(config, dot, backup) if OS.cygwin?
       end
     end
@@ -88,15 +92,13 @@ module VpsSetup
 
     # helper method to run within a file list
     def self.copy_unix_files(config_file, dot_file, backup_file)
-      non_unix_files = %w[cygwin_zshrc minttyrc]
-      return if non_unix_files.include?(File.basename(config_file))
+      return if NON_LINUX_DOTFILES.include?(File.basename(config_file))
 
       copy_all(config_file, dot_file, backup_file)
     end
 
     def self.copy_cygwin_files(config_file, dot_file, backup_file)
-      non_cygwin_files = %w[zshrc config]
-      return if non_cygwin_files.include?(File.basename(config_file))
+      return if NON_CYGWIN_DOTFILES.include?(File.basename(config_file))
 
       if File.basename(config_file) == 'cygwin_zshrc'
         # Converts cygwin_zshrc to .zshrc for cygwin environment use
@@ -128,11 +130,17 @@ module VpsSetup
       Rake.cp_r(dot_file, backup_file) if create_backup?(dot_file, backup_file)
 
       # To deal with access issues, done after creating a backup
-      Rake.sh(%(sudo chown -R "$USER":"$USER" #{dot_file})) unless File.writable?(dot_file)
+      # ENV['test'] = true Set inside minitest due to file permissions issues
+      if !(File.writable?(dot_file)) && ENV['test'].nil?
+        user = Process.uid
+        Rake.sh(%(sudo chmod 700 -R #{dot_file}))
+        Rake.sh(%(sudo chown -R #{user} #{dot_file}))
+      end
+
       Rake.mkdir_p(dot_file) unless Dir.exist?(dot_file)
 
       Dir.foreach(config_file) do |c_file|
-        next if c_file =~ /\.{1,2}/
+        next if blank_file?(c_file)
         c_file = File.join(config_file, c_file)
         # mkdir_p(c_file) unless Dir.exist?(dot_file)
         Rake.cp_r(c_file, dot_file)
@@ -153,7 +161,8 @@ module VpsSetup
     def self.copy_gnome_settings(backup_dir)
       backup = "#{backup_dir}/gnome_terminal_settings.orig"
       Rake.sh("dconf dump /org/gnome/terminal/ > #{backup}")
-      Rake.sh('dconf reset -f /org/gnome/terminal/')
+      # not necessary according to docs
+      #Rake.sh('dconf reset -f /org/gnome/terminal/')
       Rake.sh("dconf load /org/gnome/terminal/ < #{CONFIG_DIR}/gnome_terminal_settings")
     rescue RuntimeError => error
       warn error.message

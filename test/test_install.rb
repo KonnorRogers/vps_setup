@@ -31,7 +31,7 @@ class TestInstall < Minitest::Test
 
   def test_returns_installed_with_no_errors
     VpsSetup::Install.stub(:all_install, true) do
-      assert_equal(VpsSetup::Install.full, :installed)
+      linux { assert_equal(VpsSetup::Install.full, :installed) }
     end
   end
 end

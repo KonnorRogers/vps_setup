@@ -1,0 +1,26 @@
+[legacy/profiles:]		
+ list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9']		
+ default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'		
+
+   [legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]		
+ foreground-color='rgb(188,188,188)'		
+ cjk-utf8-ambiguous-width='narrow'		
+ visible-name='apprentice'		
+ login-shell=true		
+ palette=['rgb(28,28,28)', 'rgb(175,95,95)', 'rgb(95,135,95)', 'rgb(135,135,95)', 'rgb(95,135,175)', 'rgb(95,95,135)', 'rgb(95,135,135)', 'rgb(108,108,108)', 'rgb(68,68,68)', 'rgb(255,135,0)', 'rgb(135,175,135)', 'rgb(255,255,175)', 'rgb(143,175,215)', 'rgb(135,135,175)', 'rgb(95,175,175)', 'rgb(255,255,255)']		
+ default-size-rows=26		
+ default-size-columns=80		
+ cursor-shape='underline'		
+ use-custom-command=false		
+ use-theme-colors=false		
+ use-system-font=false		
+ font='DejaVu Sans Mono 12'		
+ use-theme-transparency=false		
+ bold-color-same-as-fg=true		
+ cursor-blink-mode='off'		
+ background-color='rgb(38,38,38)'		
+ audible-bell=false		
+ text-blink-mode='never'		
+
+   [legacy]		
+ schema-version=uint32 3

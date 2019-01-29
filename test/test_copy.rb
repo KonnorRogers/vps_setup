@@ -12,12 +12,14 @@ class TestCopy < Minitest::Test
   include VpsSetup
 
   def setup
+    ENV['test'] = 'true'
     LOGGER.info("#{class_name}::#{name}")
     @console = capture_console
     rm_dirs(BACKUP_DIR, DEST_DIR)
   end
 
   def teardown
+    ENV['test'] = nil
     LOGGER.info(@console[:fake_out].string)
     LOGGER.error(@console[:fake_err].string)
 

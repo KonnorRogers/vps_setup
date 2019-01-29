@@ -34,6 +34,7 @@ module VpsSetup
       omz_full_install
       Setup.ufw_setup
       plug_install_vim_neovim
+      install_sops
     end
 
     def self.prep
@@ -53,7 +54,6 @@ module VpsSetup
     def self.other_tools
       # update npm, there are some issues with ubuntu 18.10 removing npm
       # and then being unable to update it
-      Rake.sh('sudo apt-get install npm -y')
       Rake.sh('sudo npm install -g npm')
 
       # add heroku
@@ -113,7 +113,14 @@ module VpsSetup
 
     def self.plug_install_vim_neovim
       Rake.sh(%(vim +'PlugInstall --sync' +qa))
+      Rake.sh(%(vim +'PlugUpdate --sync' +qa))
       Rake.sh(%(nvim +'PlugInstall --sync' +qa))
+      Rake.sh(%(nvim +'PlugUpdate --sync' +qa))
+    end
+
+    ## This needs to be called after golang and zsh have been sourced or export usr/bin/go
+    def self.install_sops
+      Rake.sh(%(go get -u go.mozilla.org/sops/cmd/sops))
     end
   end
 end

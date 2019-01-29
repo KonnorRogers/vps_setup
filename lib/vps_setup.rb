@@ -13,8 +13,20 @@ module VpsSetup
 
   # Non dotfiles specified to allow easier adding of dotfiles
   # may make seperate dirs in the future
+
+  # files that are NOT dotfiles
   NON_DOTFILES = %w[gnome_terminal_settings sshd_config].freeze
-  NON_CYGWIN_DOTFILES = %w[zshrc config].concat(NON_DOTFILES)
+
+  # Files you do not want to be copied to Cygwin environment
+  NON_CYGWIN_DOTFILES = %w[zshrc config zshenv].concat(NON_DOTFILES)
+
+  # Files you do not want to be copied to Linux environment
   NON_LINUX_DOTFILES = %w[cygwin_zshrc minttyrc].concat(NON_DOTFILES)
 
+  def blank_file?(file)
+    return true if file =~ /\A\.{1,2}\Z/
+
+    false
+  end
 end
+

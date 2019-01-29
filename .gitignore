@@ -3,3 +3,4 @@ tests/logs
 \.bundle
 bin
 /.tmp
+credentials.yaml
