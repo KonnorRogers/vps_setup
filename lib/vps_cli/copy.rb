@@ -3,10 +3,10 @@
 require 'rake'
 require 'os' # returns users OS
 
-module VpsSetup
+module VpsCli
   # Copies config from /vps-setup/config to your home dir
   class Copy
-    extend VpsSetup # pulls in the blank_file?(file) method
+    extend VpsCli # pulls in the blank_file?(file) method
 
     def self.copy(backup_dir: nil, dest_dir: nil, ssh_dir: nil)
       raise 'Please run from a posix platform' unless OS.posix?

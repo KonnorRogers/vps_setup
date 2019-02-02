@@ -21,6 +21,6 @@ or with arguments:
 
     puts hash[:backup_dir]
     puts hash[:dest_dir]
-    VpsSetup::Copy.copy(backup_dir: hash[:backup_dir], dest_dir: hash[:dest_dir])
+    VpsCli::Copy.copy(backup_dir: hash[:backup_dir], dest_dir: hash[:dest_dir])
   end
 end

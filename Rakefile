@@ -37,15 +37,15 @@ task :make, %i[backup_dir dest_dir] do |_t, args|
 end
 
 task :login do
-  VpsSetup::Setup.git_config
-  VpsSetup::Setup.heroku_login
+  VpsCli::Setup.git_config
+  VpsCli::Setup.heroku_login
 end
 
 task :install do
-  VpsSetup::Install.full
+  VpsCli::Install.full
   sh('sudo apt-get autoremove -y')
 end
 
 task :setup do
-  VpsSetup::Setup.full
+  VpsCli::Setup.full
 end

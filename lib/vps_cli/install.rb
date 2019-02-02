@@ -3,7 +3,7 @@
 # require 'packages'
 require 'os'
 
-module VpsSetup
+module VpsCli
   OMZ_DIR = File.join(Dir.home, '.oh-my-zsh')
   OMZ_PLUGINS = File.join(OMZ_DIR, 'custom', 'plugins')
   # Installes the required packages

@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'vps_setup/copy'
-require 'vps_setup/pull'
-require 'vps_setup/setup'
-require 'vps_setup/packages'
-require 'vps_setup/install'
+require 'vps_cli/copy'
+require 'vps_cli/pull'
+require 'vps_cli/setup'
+require 'vps_cli/packages'
+require 'vps_cli/install'
 # Used for setting up a linux + cygwin environment for ssh purposes
-module VpsSetup
+module VpsCli
   # top level constants
   ROOT = File.expand_path(File.expand_path('../', __dir__))
   CONFIG_DIR = File.join(ROOT, 'config')

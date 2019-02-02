@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module VpsSetup
+module VpsCli
   class Setup
     def self.privileged_user?
       Process.uid.zero?

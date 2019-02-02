@@ -5,11 +5,11 @@ require 'rake'
 
 # NON_DOTFILES & variation constants defined in lib/vps_setup.rb
 
-module VpsSetup
+module VpsCli
   # Pull changes from local dir into config dir
   # to be able to push changes up to the config dir
   class Pull
-    extend VpsSetup # pulls in the blank_file?(file) method
+    extend VpsCli # pulls in the blank_file?(file) method
 
     def self.pull_all(attr = {})
       cfg_dir = attr[:cfg_dir]

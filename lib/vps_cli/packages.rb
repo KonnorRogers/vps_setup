@@ -1,6 +1,6 @@
 ## frozen_string_literal: true
 
-module VpsSetup
+module VpsCli
   class Packages
     LANGUAGES = %w[python3 python3-pip python-dev
                    python3-dev python-pip python3-neovim
