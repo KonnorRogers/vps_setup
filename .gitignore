@@ -4,3 +4,4 @@ tests/logs
 bin
 /.tmp
 credentials.yaml
+Gemfile.lock
