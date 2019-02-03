@@ -8,11 +8,7 @@ fi
 # to pass all command line arguments use
 # "$@"
 main(){
-  if [[ $OSTYPE == 'linux-gnu' ]]; then
-    linux_prereqs
-  elif [[ $OSTYPE == 'cygwin' ]]; then
-    cygwin_prereqs
-  fi
+  linux_prereqs
 
   # creates a user bin to be able to run cli commands
   mkdir -p "$HOME/bin"
@@ -29,12 +25,6 @@ main(){
 
   # Currently logs in for git & heroku
   rake login
-}
-
-cygwin_prereqs(){
-  apt-cyg install make gcc-core gcc-g++ libcrypt-devel ruby gnupg2
-  install_sops_cygwin
-  gem install bundler
 }
 
 # Nice little bundle of apt_setup, setting the ruby version & sourcing the chruby script

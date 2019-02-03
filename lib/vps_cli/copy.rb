@@ -45,7 +45,6 @@ module VpsCli
         backup = File.join(backup_dir, "#{file}.orig")
 
         copy_unix_files(config, dot, backup) if OS.linux? || OS.mac?
-        copy_cygwin_files(config, dot, backup) if OS.cygwin?
       end
     end
 
@@ -93,18 +92,6 @@ module VpsCli
     # helper method to run within a file list
     def self.copy_unix_files(config_file, dot_file, backup_file)
       return if NON_LINUX_DOTFILES.include?(File.basename(config_file))
-
-      copy_all(config_file, dot_file, backup_file)
-    end
-
-    def self.copy_cygwin_files(config_file, dot_file, backup_file)
-      return if NON_CYGWIN_DOTFILES.include?(File.basename(config_file))
-
-      if File.basename(config_file) == 'cygwin_zshrc'
-        # Converts cygwin_zshrc to .zshrc for cygwin environment use
-        dot_file = File.join(File.dirname(dot_file), '.zshrc')
-        backup_file = File.join(File.dirname(backup_file), '.zshrc.orig')
-      end
 
       copy_all(config_file, dot_file, backup_file)
     end

@@ -9,7 +9,7 @@ LOG_FILE = File.new(LOG_PATH, 'w+')
 LOGGER = Logger.new(LOG_FILE)
 
 class TestCopy < Minitest::Test
-  include VpsSetup
+  include VpsCli
 
   def setup
     ENV['test'] = 'true'

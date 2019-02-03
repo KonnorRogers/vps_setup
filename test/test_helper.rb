@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 require 'minitest/autorun'
-require 'vps_setup'
+require 'vps_cli'
 require 'fileutils'
 
 TEST_ROOT = File.expand_path(__dir__)

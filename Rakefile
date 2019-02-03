@@ -25,10 +25,8 @@ end
 
 task :make, %i[backup_dir dest_dir] do |_t, args|
   # Not necessary for babun
-  if OS.linux?
-    Rake::Task['setup'].invoke
-    Rake::Task['install'].invoke
-  end
+  Rake::Task['setup'].invoke
+  Rake::Task['install'].invoke
 
   args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
   params = tilde_to_home_hash(args)

@@ -18,7 +18,6 @@ module VpsCli
       attr[:cfg_dir] = CONFIG_DIR if Dir.entries(cfg_dir).size == 2
 
       pull_all_linux(attr) if OS.linux?
-      pull_all_cygwin(attr) if OS.cygwin?
     end
 
     def self.pull_all_linux(attr = {})
@@ -48,24 +47,6 @@ module VpsCli
       pull_gnome_term_settings(attr[:gnome_local], attr[:cfg_dir])
     end
 
-    def self.pull_all_cygwin(attr = {})
-      attr[:cfg_dir] ||= CONFIG_DIR
-      attr[:local_dir] ||= Dir.home
-
-      cygwin_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
-        cygwin_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
-          cyg_zshrc = (config == 'cygwin_zshrc' && local == '.zshrc')
-          next unless local == ".#{config}" || cyg_zshrc
-
-          cfg_file = File.join(attr[:cfg_dir], config)
-          local_file = File.join(attr[:local_dir], local)
-
-          Rake.cp(local_file, cfg_file)
-          puts "copying #{local_file} to #{cfg_file}"
-        end
-      end
-    end
-
     # Must use foreach due to not having Dir.children in 2.3.3 for babun
     def self.linux_config_dotfiles_ary(dir = nil)
       dir ||= CONFIG_DIR
@@ -74,38 +55,6 @@ module VpsCli
         NON_LINUX_DOTFILES.include?(file) || blank_file?(file)
       end
       # only returns dotfiles for linux
-    end
-
-    def self.cygwin_config_dotfiles_ary(dir = nil)
-      dir ||= CONFIG_DIR
-
-      Dir.entries(dir).reject do |file|
-        # removes '.' && '..'
-        NON_CYGWIN_DOTFILES.include?(file) || blank_file?(file)
-      end
-      # returns cygwin dotfiles
-    end
-
-    # *local_dotfiles_ary returns the files w/ a '.', ex: .vimrc
-    def self.cygwin_local_dotfiles_ary(config_dir = nil, local_dir = nil)
-      local_dir ||= Dir.home
-      config_dir ||= CONFIG_DIR
-
-      config_files = cygwin_config_dotfiles_ary(config_dir)
-
-      Dir.entries(local_dir).select do |file|
-        # checks that its a dotfile
-        next unless file.start_with?('.')
-
-        # removes pesky '.' & '..'
-        next if blank_file?(file)
-
-        # removes the . at the beginning of a dotfile
-        config_file = file[1, file.length]
-        config_file = 'cygwin_zshrc' if file == '.zshrc'
-
-        config_files.include?(config_file)
-      end
     end
 
     def self.linux_local_dotfiles_ary(config_dir = nil, local_dir = nil)

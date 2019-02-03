@@ -7,9 +7,7 @@ require 'fileutils'
 require 'rake'
 
 TEST_CONFIG_FILES =
-  %w[cygwin_zshrc
-     gnome_terminal_settings
-     minttyrc
+  %w[gnome_terminal_settings
      pryrc
      sshd_config
      tmux.conf
@@ -17,9 +15,7 @@ TEST_CONFIG_FILES =
      zshrc].freeze
 
 TEST_LINUX_LOCAL_DOTFILES = %w[.zshrc .pryrc .tmux.conf .vimrc].freeze
-TEST_CYGWIN_LOCAL_DOTFILES = %w[.zshrc .minttyrc .pryrc .tmux.conf .vimrc].freeze
 
-TEST_CYGWIN_CFG_DOTFILES = %w[cygwin_zshrc minttyrc pryrc tmux.conf vimrc].freeze
 TEST_LINUX_CFG_DOTFILES = %w[zshrc pryrc tmux.conf vimrc].freeze
 
 PULL_CONFIG_DIR = File.join(TEST_ROOT, 'pull_config')
@@ -30,15 +26,10 @@ def new_file(dir, file_name)
   File.new(File.join(dir, file_name), 'w+')
 end
 
-# TEST_CONFIG_FILES.each { |file| new_file(PULL_CONFIG_DIR, file) }
-
 class TestPull < Minitest::Test
-  include VpsSetup
+  include VpsCli
 
   def setup
-    ###########################
-    # DOES NOT WORK IN CYGWIN #
-    ###########################
     rm_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
     mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
 
@@ -65,23 +56,6 @@ class TestPull < Minitest::Test
     # sorting doesnt matter, only used to ensure equality
     # alternatively
     # ary.each { |file| assert_includes(LINUX_CFG_DOTFILES, file) }
-  end
-
-  def test_cygwin_config_dotfiles_ary
-    ary = Pull.cygwin_config_dotfiles_ary(PULL_CONFIG_DIR)
-
-    assert_equal(ary.sort, TEST_CYGWIN_CFG_DOTFILES.sort)
-  end
-
-  def test_cygwin_local_dotfiles_ary
-    TEST_CYGWIN_LOCAL_DOTFILES.each do |file|
-      path = File.join(File.expand_path(PULL_LOCAL_DIR), file)
-      File.new(path, 'w+')
-    end
-
-    ary = Pull.cygwin_local_dotfiles_ary(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
-
-    assert_equal(ary.sort, TEST_CYGWIN_LOCAL_DOTFILES.sort)
   end
 
   def test_linux_local_dotfiles_ary
