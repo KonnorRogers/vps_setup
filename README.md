@@ -1,6 +1,6 @@
 # WARNING
 
-* I have transitioned this project from being a simple one command install to a full fledged CLI. During the transition, updates can be found on the <strong>thor</strong> branch.
+* ## I have transitioned this project from being a simple one command install to a full fledged CLI. During the transition, updates can be found on the <strong>thor</strong> branch.
 
 # Purpose
 * To be able to spin up multiple development environments without having to reconfigure all the time
