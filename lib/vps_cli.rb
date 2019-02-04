@@ -13,11 +13,12 @@ module VpsCli
   ROOT = File.expand_path(File.expand_path('../', __dir__))
   CONFIG_DIR = File.join(ROOT, 'config')
 
-  # Non dotfiles specified to allow easier adding of dotfiles
-  # may make seperate dirs in the future
-
-  # files that are NOT dotfiles
-  NON_DOTFILES = %w[gnome_terminal_settings sshd_config].freeze
+  ##
+  # Checks for "." and ".." files in Dir.entries
+  # This is a work around for Dir.entries due to Dir.children not existing prior to Ruby 2.5
+  #
+  # @param file [String] The name of the file
+  # @return [Boolean] true or false depending on the file name
 
   def blank_file?(file)
     return true if file =~ /\A\.{1,2}\Z/

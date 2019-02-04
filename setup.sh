@@ -4,7 +4,6 @@ VPS_CLI="$PWD/lib/vps_cli.rb"
 
 main(){
   check_if_root
-  sudo apt install ruby
   mkdir -p "$BIN"
   symlink_vps_cli
   export PATH="$PATH:$BIN"
