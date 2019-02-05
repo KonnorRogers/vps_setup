@@ -7,6 +7,7 @@ require 'vps_cli/pull'
 require 'vps_cli/setup'
 require 'vps_cli/packages'
 require 'vps_cli/install'
+require 'vps_cli/cli'
 # Used for setting up a linux + cygwin environment for ssh purposes
 module VpsCli
   # @!group  Top Level Constants
