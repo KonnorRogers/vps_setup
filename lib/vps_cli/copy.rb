@@ -6,7 +6,8 @@ require 'os' # returns users OS
 module VpsCli
   # Copies config from /vps-setup/config to your home dir
   class Copy
-    extend VpsCli # pulls in the blank_file?(file) method
+    # pulls in the blank_file?(file) method
+    extend VpsCli
 
     def self.copy(backup_dir: nil, dest_dir: nil, ssh_dir: nil)
       raise 'Please run from a posix platform' unless OS.posix?

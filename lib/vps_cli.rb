@@ -9,17 +9,20 @@ require 'vps_cli/packages'
 require 'vps_cli/install'
 # Used for setting up a linux + cygwin environment for ssh purposes
 module VpsCli
-  # top level constants
-  ROOT = File.expand_path(File.expand_path('../', __dir__))
-  CONFIG_DIR = File.join(ROOT, 'config')
+  # @!group  Top Level Constants
 
-  ##
+  # Project's Root Directory
+  ROOT = File.expand_path(File.expand_path('../', __dir__))
+
+  # Project's Config directory containing configuration files
+  CONFIG_DIR = File.join(ROOT, 'config')
+  # @!endgroup
+
   # Checks for "." and ".." files in Dir.entries
   # This is a work around for Dir.entries due to Dir.children not existing prior to Ruby 2.5
   #
   # @param file [String] The name of the file
   # @return [Boolean] true or false depending on the file name
-
   def blank_file?(file)
     return true if file =~ /\A\.{1,2}\Z/
 
@@ -27,3 +30,5 @@ module VpsCli
   end
 end
 
+
+VpsCli::CLI.start(ARGV)
