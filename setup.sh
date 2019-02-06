@@ -10,6 +10,7 @@ main(){
   # sources chruby
   restart_shell
 
+  gem install bundler
   bundle install
 }
 
