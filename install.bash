@@ -27,38 +27,38 @@ main(){
   rake login
 }
 
-# Nice little bundle of apt_setup, setting the ruby version & sourcing the chruby script
+# nice little bundle of apt_setup, setting the ruby version & sourcing the chruby script
 linux_prereqs(){
   apt_setup 
 
   install_chruby_and_ruby
 
-  # This will update profile
+  # this will update profile
   make_chruby_usable
 
   install_gems
 }
 
-# This will do a few things:
-# It will run update, upgrade & dist-upgrade. dist-upgrade will upgrade the 
+# this will do a few things:
+# it will run update, upgrade & dist-upgrade. dist-upgrade will upgrade the 
 # ubuntu distro.
-# Additionally, it will fetch the inital packages needed prior to running 
-# the Rakefile
+# additionally, it will fetch the inital packages needed prior to running 
+# the rakefile
 apt_setup(){
   sudo apt-get update
   sudo apt-get upgrade -y
   yes "\n" | sudo apt-get dist-upgrade -y
 
-  LIBS="software-properties-common gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby"
+  libs="software-properties-common gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby"
 
-  for lib in $LIBS; do
+  for lib in $libs; do
     sudo apt-get install $lib -y
   done
 
   sudo apt-get update
 }
 
-# This installs ruby & chruby under the .tmp folder within the repo
+# this installs ruby & chruby under the .tmp folder within the repo
 install_chruby_and_ruby(){
   mkdir -p .tmp
   cd .tmp
@@ -68,7 +68,7 @@ install_chruby_and_ruby(){
 }
 
 install_ruby(){
-  wget -O ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz .tmp
+  wget -o ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz .tmp
   tar -xzvf ruby-install-0.7.0.tar.gz
   cd ruby-install-0.7.0
   sudo make install
@@ -78,7 +78,7 @@ install_ruby(){
 }
 
 install_chruby(){
-  wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+  wget -o chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
   tar -xzvf chruby-0.3.9.tar.gz
   cd chruby-0.3.9
   sudo ./scripts/setup.sh
@@ -91,7 +91,7 @@ add_chruby_to_profile_d(){
 
   mkdir -p $dirname
 
-  add_chruby="if [ -n "\$BASH_VERSION" ] || [ -n "\$ZSH_VERSION" ]; then
+  add_chruby="if [ -n "\$bash_version" ] || [ -n "\$zsh_version" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
 fi" 
@@ -107,16 +107,16 @@ set_ruby_version(){
   chruby ruby latest
 }
 
-# Will create an empty .bash_profile or .zshenv so that it can be source
-# Creation of the profile only happens if the file is not detected in the
-# homedir && depending on the value of $SHELL
+# will create an empty .bash_profile or .zshenv so that it can be source
+# creation of the profile only happens if the file is not detected in the
+# homedir && depending on the value of $shell
 restart_shell(){
-  if [[ "$SHELL" == '/bin/bash' ]]; then
+  if [[ "$shell" == '/bin/bash' ]]; then
     if [[ ! -e "~/.bash_profile" ]]; then
       touch "~/.bash_profile"
     fi
     source ~/.bash_profile
-  elif [[ "$SHELL" == '/bin/zsh' ]]; then
+  elif [[ "$shell" == '/bin/zsh' ]]; then
     if [[ ! -e ~/.zshenv ]]; then
       touch ~/.zshenv
     fi
@@ -131,8 +131,8 @@ make_chruby_usable(){
 }
 
 install_gems(){
-  GEMS="bundler colorls neovim rake pry"
-  for item in $GEMS; do
+  gems="bundler colorls neovim rake pry"
+  for item in $gems; do
     gem install $item
   done
 }
