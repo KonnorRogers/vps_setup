@@ -12,7 +12,8 @@ module VpsCli
 
     ADDED_REPOS = %w[neovim asciinema docker-ce mosh yarn].freeze
 
-    # Does not include gems
-    UBUNTU = LANGUAGES.dup.concat(TOOLS).concat(ADDED_REPOS)
+    GEMS = %w[colorls neovim rake pry]
+
+    UBUNTU = LANGUAGES.dup.concat(TOOLS).concat(ADDED_REPOS).concat(GEMS)
   end
 end
