@@ -1,6 +1,9 @@
-#!/usr/bin/env ruby
+#!/usr/bin/ruby
 
 # frozen_string_literal: true
+
+lib = File.expand_path(__dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'vps_cli/copy'
 require 'vps_cli/pull'
@@ -8,7 +11,8 @@ require 'vps_cli/setup'
 require 'vps_cli/packages'
 require 'vps_cli/install'
 require 'vps_cli/cli'
-# Used for setting up a linux + cygwin environment for ssh purposes
+
+# Used for setting up a ubuntu environment
 module VpsCli
   # @!group  Top Level Constants
 
