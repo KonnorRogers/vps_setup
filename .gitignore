@@ -4,7 +4,7 @@ tests/logs
 
 # Bundler files
 \.bundle
-bin/
+bin
 Gemfile.lock
 
 # Temp files
@@ -14,7 +14,7 @@ Gemfile.lock
 credentials.yaml
 
 # Ctags
-tags/
+tags
 
 # YARD documentation
-docs/
+docs
