@@ -1,4 +1,4 @@
-## frozen_string_literal: true
+# frozen_string_literal: true
 
 module VpsCli
   class Packages
@@ -12,7 +12,7 @@ module VpsCli
 
     ADDED_REPOS = %w[neovim asciinema docker-ce mosh yarn].freeze
 
-    GEMS = %w[colorls neovim rake pry]
+    GEMS = %w[colorls neovim rake pry rubocop].freeze
 
     UBUNTU = LANGUAGES.dup.concat(TOOLS).concat(ADDED_REPOS).concat(GEMS)
   end

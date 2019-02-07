@@ -6,7 +6,10 @@ VPS_CLI="$PWD/lib/vps_cli.rb"
 main(){
   check_if_root
   add_to_bin
-  linux_prereqs
+
+  apt_setup
+  install_chruby_and_ruby
+  make_chruby_usable
 
   # sources chruby
   restart_shell
@@ -35,14 +38,6 @@ check_if_root(){
 
 make_executable(){
   chmod +x "$VPS_CLI" || sudo chmod +x "$VPS_CLI"
-}
-
-# nice little bundle of apt_setup, setting the ruby version & sourcing the chruby script
-linux_prereqs(){
-  apt_setup
-  install_chruby_and_ruby
-  # this will update profile
-  make_chruby_usable
 }
 
 # this will do a few things:
@@ -91,13 +86,14 @@ install_chruby(){
   cd ..
 }
 
+# Appends chruby to /etc/profile.d for use by bash / zsh
 add_chruby_to_profile_d(){
   dirname="/etc/profile.d"
   filename="$dirname/chruby.sh"
 
   mkdir -p $dirname
 
-  add_chruby="if [ -n "\$bash_version" ] || [ -n "\$zsh_version" ]; then
+  add_chruby="if [ -n \"\$BASH_VERSION\" ] || [ -n \"\$ZSH_VERSION\" ]; then
   source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh
 fi" 
@@ -135,11 +131,3 @@ make_chruby_usable(){
   set_ruby_version                             
   restart_shell                                
 }
-
-# install_gems(){
-#   gems="bundler colorls neovim rake pry"
-#   for item in $gems; do
-#     gem install $item
-#   done
-# }
-
