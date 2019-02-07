@@ -10,15 +10,15 @@
 
 ## Warnings
 * ### This will update your /etc/ssh/sshd_config file.
-* ### Your original can be obtained at ~/backup_config/sshd_config.orig
+* ### Your original can be obtained at ~/backup_files/sshd_config.orig
 
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
 ```bash
-~/backup_config/vimrc.orig
-~/backup_config/tmux.conf.orig
-~/backup_config/zshrc.orig
+~/backup_files/vimrc.orig
+~/backup_files/tmux.conf.orig
+~/backup_files/zshrc.orig
 ```
 
 ## Prerequisites
@@ -60,8 +60,8 @@ sudo chown -R $USER:$USER ~/.ssh
 * ### This will continuously error out if you try to run as root / sudo
 
 ```bash
-git clone https://github.com/ParamagicDev/vps_setup.git ~/vps_setup
-cd ~/vps_setup
+git clone https://github.com/ParamagicDev/vps_cli.git ~/vps_cli
+cd ~/vps_cli
 bash install.bash
 ```
 
@@ -78,7 +78,7 @@ bash install.bash
 ## Dependencies Installed
 
 * There are many dependencies installed, a large list can be located in 
-* /path/to/vps-setup/lib/vps_setup/packages.rb
+* /path/to/vps-setup/lib/vps_cli/packages.rb
 
 ## Tools installed
 
@@ -148,12 +148,12 @@ ngrok http 3000
 * The main function called by install.bash
 * will call rake config:copy
 * accepts the same arguments as config:copy
-* defaults backup_dir to ~/backup_config
+* defaults backup_dir to ~/backup_files
 * defaults dest_dir to ~
 
 ### $ rake config:copy[:backup_dir, dest_dir]
 
-* copies files from vps_setup/config to ~/backup_config:
+* copies files from vps_cli/dotfiles & vps_cli/misc_files to ~/backup_files:
 
 ```bash
 rake config:copy
@@ -179,9 +179,9 @@ rake "config:copy[nil, /path/to/dest_dir]"
 
 ### $ rake config:pull[:config_dir, :local_dir]
 
-* #### This is merely to pull local files into your vps_setup repo
+* #### This is merely to pull local files into your vps_cli repo
 
-* copies files from home dir (~) to your vps_setup repo (./vps_setup/config)
+* copies files from home dir (~) to your vps_cli repo (./vps_cli/config)
 
 ```bash
 rake config:pull
@@ -231,7 +231,7 @@ rake "config:pull[nil, /path/to/dotfiles_dir]"
 * Thor does args well
 * Testing apt-get install / apt install etc is nearly impossible unless i were to go through and do a File.exist? for everything which is not feasible
 * My original, non extensible, less easily tested version is available here: 
-  [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_setup/tree/deprecated_bash_scripting)
+  [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_cli/tree/deprecated_bash_scripting)
 * NEVER USE A PASSWORD AS A COMMAND LINE ARGUMENT
 * How to remove a file with sensitive information from your commit history via git rebase
 * As this project grows, RDoc / YARD is a great way to have an easy view of what everything does
