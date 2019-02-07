@@ -22,7 +22,7 @@ module VpsCli
 
   # Project's files directory containing configuration files to include
   #   Dotfiles and non dotfiles
-  FILES_DIR = File.join(ROOT, 'files')
+  FILES_DIR = File.join(ROOT, 'config_files')
 
   # Projects Dotfiles directory
   DOTFILES_DIR = File.join(FILES_DIR, 'dotfiles')
