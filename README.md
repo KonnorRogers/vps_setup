@@ -3,7 +3,6 @@
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent.
 * ### Supported OS'es:
   - Ubuntu 18.10 - DigitalOcean
-  - Cygwin on windows, simply pulls dotfiles, apt-cyg installs ruby, and bundle installs
   - Ubuntu 18.04 LTS on personal laptop
   
 * Ideally, you should brush over the contents of each file
@@ -215,12 +214,11 @@ rake "config:pull[nil, /path/to/dotfiles_dir]"
 
 ## Utilities used
 
-* GNUPG2
-* RAKE
-* THOR
-* RUBY
-* RDOC
-* SOPS
+* [RAKE](https://github.com/ruby/rake) For various command line tasks
+* [THOR](https://github.com/erikhuda/thor) For command line options via ruby
+* [YARD](https://yardoc.org/) For documentation of code
+* [GNUPG2](https://www.gnupg.org/) For GPG keys to be used with sops
+* [SOPS](https://github.com/mozilla/sops) For secret management via YAML files
 
 
 ## Things learned:
@@ -236,5 +234,7 @@ rake "config:pull[nil, /path/to/dotfiles_dir]"
   [Deprecated Bash Scripting Branch](https://github.com/ParamagicDev/vps_setup/tree/deprecated_bash_scripting)
 * NEVER USE A PASSWORD AS A COMMAND LINE ARGUMENT
 * How to remove a file with sensitive information from your commit history via git rebase
-* As this project grows, RDoc is a great way to have an easy view of what everything does
+* As this project grows, RDoc / YARD is a great way to have an easy view of what everything does
+* Created calls to the web via Curl / Net:HTTP provided by Ruby
+* Proper storage of secrets such as API keys, SSH keys, etc
 
