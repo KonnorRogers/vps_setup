@@ -5,9 +5,6 @@ require 'rake'
 module VpsCli
   # Copies config from /vps_cli/dotfiles & vps_cli/miscfiles to your home dir
   class Copy
-    # pulls in the blank_file?(file) method
-    extend VpsCli
-
     # Top level method for copying all files
     # @param [Hash] Provides options for copying files
     # @option opts [Dir] :dest_dir ('Dir.home') Where to save the dotfiles to
@@ -20,7 +17,8 @@ module VpsCli
     #   Will raise this error if you run this method as root or sudo
     def self.copy(opts = {})
       root = (Process.uid.zero? || Dir.home == '/root')
-      raise RunAsRootError, 'Do not run this as root or sudo. Run as a normal user' if root == true
+      root_msg = 'Do not run this as root or sudo. Run as a normal user'
+      raise RunAsRootError, root_msg if root == true
 
       opts[:backup_dir] ||= File.join(Dir.home, 'backup_files')
       opts[:dest_dir] ||= Dir.home
@@ -37,15 +35,13 @@ module VpsCli
       puts "backups created @ #{opts[:backup_dir]}"
     end
 
-    # Copies files from 'dotfiles' directory
+    # Copies files from 'dotfiles' directory via the copy_all method
+    # (see ::copy_all)
     # @param backup_dir [Directory] Directory to place your original dotfiles.
     #   Defaults to $HOME/backup_files
     # @param dest_dir [Directory] Where to place the dotfiles.
     #   Defaults to $HOME/
     def self.copy_dotfiles(backup_dir, dest_dir)
-      # Dir.children(DOTFILES_DIR).each do |file|, released in ruby 2.5.1
-      # in 2.3.3 which is shipped with babun, although babun is no longer used
-
       Dir.each_child(DOTFILES_DIR) do |file|
         config = File.join(DOTFILES_DIR, file)
         dot = File.join(dest_dir, ".#{file}")
@@ -82,7 +78,7 @@ module VpsCli
 
       return unless sshd_copyable?(ssh_dir)
 
-      sshd_cfg_path = File.join(MISC_DIR, 'sshd_config')
+      sshd_cfg_path = File.join(FILES_DIR, 'sshd_config')
       sshd_backup = File.join(backup_dir, 'sshd_config.orig')
       sshd_path = File.join(ssh_dir, 'sshd_config')
 
@@ -196,7 +192,7 @@ module VpsCli
 
       Rake.sh("dconf dump #{gnome_path} > #{backup}")
 
-      Rake.sh("dconf load #{gnome_path} < #{MISC_DIR}/gnome_terminal_settings")
+      Rake.sh("dconf load #{gnome_path} < #{FILES_DIR}/gnome_terminal_settings")
     rescue RuntimeError => error
       VpsCli.errors << error.message
       puts 'something went wrong with gnome, continuing on'

@@ -20,9 +20,12 @@ module VpsCli
   # Project's Root Directory
   ROOT = File.expand_path(File.expand_path('../', __dir__))
 
-  # Project's Config directory containing configuration files
-  DOTFILES_DIR = File.join(ROOT, 'dotfiles')
-  MISC_DIR = File.join(ROOT, 'miscfiles')
+  # Project's files directory containing configuration files to include
+  #   Dotfiles and non dotfiles
+  FILES_DIR = File.join(ROOT, 'files')
+
+  # Projects Dotfiles directory
+  DOTFILES_DIR = File.join(FILES_DIR, 'dotfiles')
   # @!endgroup
 
   class << self

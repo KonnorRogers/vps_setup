@@ -9,8 +9,6 @@ module VpsCli
   # Pull changes from local dir into config dir
   # to be able to push changes up to the config dir
   class Pull
-    extend VpsCli # pulls in the blank_file?(file) method
-
     def self.pull_all(attr = {})
       cfg_dir = attr[:cfg_dir]
       Rake.mkdir_p(File.expand_path(cfg_dir)) unless cfg_dir.nil? || Dir.exist?(cfg_dir)
