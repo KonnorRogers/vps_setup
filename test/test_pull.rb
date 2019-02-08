@@ -38,7 +38,6 @@ class TestPull < Minitest::Test
     end
   end
 
-
   def dir_files(dir)
     Dir.entries(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
   end
@@ -97,11 +96,10 @@ class TestPull < Minitest::Test
     local_term = '/org/gnome/terminal/'
     config_term = File.join(PULL_CONFIG_DIR, 'gnome_terminal_settings')
 
-
     capture_io do
       Rake.sh(%(command -v dconf >/dev/null 2>&1 || { echo >&2 "I require dconf but it's not installed.  Aborting."; exit 1; }))
     end
-  rescue
+  rescue StandardError
     skip('This test skipped. You do not have dconf installed.')
   else
     ## ONLY WORKS IF DCONF IS INSTALLED

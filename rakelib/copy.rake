@@ -16,7 +16,6 @@ or with arguments:
   task :copy, [:backup_dir, :dest_dir] do |_t, args|
     args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
 
-
     hash = tilde_to_home_hash(args)
 
     puts hash[:backup_dir]

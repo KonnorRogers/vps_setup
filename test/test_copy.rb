@@ -7,7 +7,7 @@ class TestCopy < Minitest::Test
 
   def setup
     rm_dirs(BACKUP_DIR, DEST_DIR)
-    mkdirs(BACKUP_DIR,)
+    mkdirs(BACKUP_DIR)
   end
 
   def teardown
@@ -59,7 +59,7 @@ class TestCopy < Minitest::Test
   end
 
   def copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, ssh_dir: nil)
-      # stub sshd_config so you dont mess up someones local settings
+    # stub sshd_config so you dont mess up someones local settings
     Copy.stub(:copy_gnome_settings, true) do
       Copy.stub(:copy_sshd_config, true) do
         Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir, ssh_dir: ssh_dir)

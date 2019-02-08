@@ -21,7 +21,7 @@ module VpsCli
         @errors << exception.message
       end
 
-      puts "The following errors were encountered:"
+      puts 'The following errors were encountered:'
       @errors.each { |error| puts error }
     end
 

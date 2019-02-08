@@ -7,7 +7,8 @@ class TestPackages < Minitest::Test
     packages = [
       VpsSetup::Packages::LANGUAGES,
       VpsSetup::Packages::TOOLS,
-      VpsSetup::Packages::ADDED_REPOS
+      VpsSetup::Packages::ADDED_REPOS,
+      VpsSetup::Packages::GEMS
     ]
 
     packages.each { |pkg_ary| refute_empty(pkg_ary) }

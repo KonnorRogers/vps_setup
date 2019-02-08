@@ -93,7 +93,6 @@ module VpsCli
       local_term ||= '/org/gnome/terminal/'
       config_term ||= File.join(CONFIG_DIR, 'gnome_terminal_settings')
 
-
       orig_config_contents = File.read(config_term) if File.exist?(config_term)
 
       Rake.sh("dconf dump #{local_term} > #{config_term}")
@@ -125,11 +124,13 @@ module VpsCli
     def self.copy_directory(local_file, cfg_file)
       Dir.foreach(local_file) do |l_dir|
         next if blank_file?(l_dir)
+
         local_dir = File.join(local_file, l_dir)
 
         Dir.foreach(cfg_file) do |c_dir|
           next if blank_file?(c_dir)
           next unless c_dir == l_dir
+
           puts local_dir
           Rake.cp_r(local_dir, cfg_file)
         end

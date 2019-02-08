@@ -86,15 +86,14 @@ module VpsCli
       Rake.sh("git config --global user.email #{email}")
 
       puts "Git config complete.\n"
-
-    rescue
-      "something went wrong. make sure to set your git config"
+    rescue StandardError
+      'something went wrong. make sure to set your git config'
     end
 
     def self.heroku_login
       puts 'Please login to heroku:'
       Rake.sh('heroku login --interactive')
-    rescue
+    rescue StandardError
       puts 'you did not login to heroku. To login, use heroku login'
     end
   end
