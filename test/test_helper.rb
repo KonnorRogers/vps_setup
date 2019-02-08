@@ -7,7 +7,6 @@ require 'vps_cli'
 require 'fileutils'
 
 TEST_ROOT = File.expand_path(__dir__)
-
 BACKUP_DIR = File.join(TEST_ROOT, 'backup_dir')
 DEST_DIR = File.join(TEST_ROOT, 'dest_dir')
 
