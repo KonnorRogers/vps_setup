@@ -1,21 +1,13 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'stringio'
-require 'logger'
-
-LOG_PATH = File.join(LOGS_DIR, "#{File.basename(__FILE__, '.rb')}.log")
-LOG_FILE = File.new(LOG_PATH, 'w+')
-LOGGER = Logger.new(LOG_FILE)
 
 class TestCopy < Minitest::Test
   include VpsCli
 
   def setup
-    ENV['test'] = 'true'
-    LOGGER.info("#{class_name}::#{name}")
-    @console = capture_console
     rm_dirs(BACKUP_DIR, DEST_DIR)
+    mkdirs(BACKUP_DIR,)
   end
 
   def teardown
