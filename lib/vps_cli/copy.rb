@@ -13,20 +13,16 @@ module VpsCli
     # @option opts [Dir] :ssh_dir ('/etc/ssh') directory containing sshd_config
     # @option opts [Boolean] :verbose (false)
     #   Whether or not to print additional info
-    # @raise [RunAsRootError]
+    # @raise [RuntimeError]
     #   Will raise this error if you run this method as root or sudo
     def self.copy(opts = {})
       root = (Process.uid.zero? || Dir.home == '/root')
       root_msg = 'Do not run this as root or sudo. Run as a normal user'
-      raise RunAsRootError, root_msg if root == true
-
-      opts[:backup_dir] ||= File.join(Dir.home, 'backup_files')
-      opts[:dest_dir] ||= Dir.home
-      opts[:ssh_dir] ||= '/etc/ssh'
+      raise root_msg if root == true
 
       mkdirs(opts[:backup_dir], opts[:dest_dir])
 
-      copy_dotfiles(opts[:backup_dir], opts[:dest_dir], opts[:verbose])
+      copy_dotfiles(opts[:backup_dir], opts[:dest_dir], opts[:dotfiles_dir])
 
       copy_gnome_settings(opts[:backup_dir])
       copy_sshd_config(opts[:backup_dir], opts[:ssh_dir])
@@ -37,22 +33,22 @@ module VpsCli
 
     # Copies files from 'dotfiles' directory via the copy_all method
     # (see ::copy_all)
-    # @param backup_dir [Directory] Directory to place your original dotfiles.
-    #   Defaults to $HOME/backup_files
-    # @param dest_dir [Directory] Where to place the dotfiles.
-    #   Defaults to $HOME/
-    def self.copy_dotfiles(backup_dir, dest_dir)
-      Dir.each_child(DOTFILES_DIR) do |file|
-        config = File.join(DOTFILES_DIR, file)
+    # @param backup_dir [Dir] Directory to place your original dotfiles.
+    # @param dest_dir [Dir] Where to place the dotfiles
+    # @param dotfiles_dir [Dir] Location of files to be copied
+    #   Defaults to /path/to/vps_cli/config_files
+    def self.copy_dotfiles(backup_dir, dest_dir, dotfiles_dir, verbose = false)
+      Dir.each_child(dotfiles_dir) do |file|
+        config = File.join(dotfiles_dir, file)
         dot = File.join(dest_dir, ".#{file}")
         backup = File.join(backup_dir, "#{file}.orig")
 
-        copy_all(config, dot, backup)
+        copy_all(config, dot, backup, verbose)
       end
     end
 
     # Checks that sshd_config is able to be copied
-    # @param ssh_dir [Directory] Directory containing your original sshd_config
+    # @param ssh_dir [Dir] Directory containing your original sshd_config
     #   Defaults to /etc/ssh
     # @return [Boolean] Returns true if the ssh_dir exists
     def self.sshd_copyable?(ssh_dir = nil)
@@ -68,10 +64,10 @@ module VpsCli
     #   This is slightly different from other copy methods in this file
     #   It uses Rake.sh("sudo cp")
     #   Due to copying to /etc/ssh requiring root permissions
-    # @param backup_dir [Directory]
+    # @param backup_dir [Dir]
     #   Directory for backing up your original sshd_config file
     #   Defaults to $HOME/backup_files
-    # @param ssh_dir [Directory] Directory containing your sshd_config file
+    # @param ssh_dir [Dir] Directory containing your sshd_config file
     #   Defaults to /etc/ssh
     def self.copy_sshd_config(backup_dir, ssh_dir = nil)
       ssh_dir ||= '/etc/ssh'
@@ -118,11 +114,11 @@ module VpsCli
     # @param dot_file [File] The file that is currently present locally
     # @param backup_file [File]
     #   The file to which to save the currently present local file
-    def self.copy_all(config_file, dot_file, backup_file)
+    def self.copy_all(config_file, dot_file, backup_file, verbose = false)
       if File.directory?(config_file)
-        copy_dirs(config_file, dot_file, backup_file)
+        copy_dirs(config_file, dot_file, backup_file, verbose)
       else
-        copy_files(config_file, dot_file, backup_file)
+        copy_files(config_file, dot_file, backup_file, verbose)
       end
     end
 
@@ -197,5 +193,13 @@ module VpsCli
       VpsCli.errors << error.message
       puts 'something went wrong with gnome, continuing on'
     end
+  end
+
+  def self.set_options(opts)
+    opts[:backup_dir] ||= File.join(Dir.home, 'backup_files')
+    opts[:dest_dir] ||= Dir.home
+    opts[:dotfiles_dir] ||= DOTFILES_DIR
+    opts[:ssh_dir] ||= '/etc/ssh'
+    opts[:verbose] ||= false
   end
 end

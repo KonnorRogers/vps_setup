@@ -5,7 +5,7 @@ require 'rake/testtask'
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'vps_setup'
+require 'vps_cli'
 
 def tilde_to_home_hash(rake_args)
   # Rake::TaskArguments.to_hash equivalent
