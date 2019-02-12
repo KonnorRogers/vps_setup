@@ -6,12 +6,10 @@ require 'fileutils'
 # The goal of testing all of this is to not touch the base config_files
 # And to keep the test suite entirely independent
 class TestCopy < Minitest::Test
-
-
-  @logger = create_logger(__FILE__)
-
+  # @logger = create_logger(__FILE__)
 
   def setup
+    @logger = create_logger(__FILE__)
     rm_dirs(BACKUP_DIR, DEST_DIR, TEST_DOTFILES)
     mk_dirs(BACKUP_DIR, DEST_DIR, TEST_DOTFILES)
   end

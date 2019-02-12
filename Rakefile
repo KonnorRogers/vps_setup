@@ -47,3 +47,7 @@ end
 task :setup do
   VpsCli::Setup.full
 end
+
+task :example do
+  puts "example"
+end
