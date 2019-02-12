@@ -33,18 +33,22 @@ def create_logger(filename)
 
   # Creates a new logfile and removes the old logfile
   file = File.open(logfile, File::WRONLY | File::APPEND | File::CREAT)
-  puts "creating logger"
   Logger.new(file)
 end
 
-def log_methods(logger, &block)
+##
+# Logs the methods given into the log file
+# @param [Logger] The logger with which to write to
+# @param [Block] This must be given a block to run the method
+# @return [Logger] Returns the logger file
+def log_methods(logger)
   out, err = capture_io do
     yield
   end
 
-  puts logger.class
   logger.error { err }
   logger.info { out }
+  logger
 end
 
 def add_file(dir, name)

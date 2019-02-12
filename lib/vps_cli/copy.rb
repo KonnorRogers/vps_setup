@@ -33,17 +33,20 @@ module VpsCli
 
     # Copies files from 'dotfiles' directory via the copy_all method
     # (see ::copy_all)
+    # @options
     # @param backup_dir [Dir] Directory to place your original dotfiles.
     # @param dest_dir [Dir] Where to place the dotfiles
     # @param dotfiles_dir [Dir] Location of files to be copied
     #   Defaults to /path/to/vps_cli/config_files
-    def self.copy_dotfiles(backup_dir, dest_dir, dotfiles_dir, verbose = false)
-      Dir.each_child(dotfiles_dir) do |file|
-        config = File.join(dotfiles_dir, file)
-        dot = File.join(dest_dir, ".#{file}")
-        backup = File.join(backup_dir, "#{file}.orig")
+    def self.copy_dotfiles(opts = {})
+      opts = create_options(opts)
 
-        copy_all(config, dot, backup, verbose)
+      Dir.each_child(opts[:dotfiles_dir]) do |file|
+        config = File.join(opts[:dotfiles_dir], file)
+        dot = File.join(opts[:dest_dir], ".#{file}")
+        backup = File.join(opts[:backup_dir], "#{file}.orig")
+
+        copy_all(config, dot, backup, opts[:verbose])
       end
     end
 
@@ -172,6 +175,17 @@ module VpsCli
       true
     end
 
+    # @return [Hash] Returns the options hash
+    def self.create_options(opts)
+      opts[:backup_dir] ||= File.join(Dir.home, 'backup_files')
+      opts[:dest_dir] ||= Dir.home
+      opts[:dotfiles_dir] ||= DOTFILES_DIR
+      opts[:ssh_dir] ||= '/etc/ssh'
+      opts[:verbose] ||= false
+
+      opts
+    end
+
     # Helper method for making multiple directories
     # @param [Dir, Array<Dir>] Creates either one, or multiple directories
     def self.mkdirs(*dirs)
@@ -193,13 +207,5 @@ module VpsCli
       VpsCli.errors << error.message
       puts 'something went wrong with gnome, continuing on'
     end
-  end
-
-  def self.set_options(opts)
-    opts[:backup_dir] ||= File.join(Dir.home, 'backup_files')
-    opts[:dest_dir] ||= Dir.home
-    opts[:dotfiles_dir] ||= DOTFILES_DIR
-    opts[:ssh_dir] ||= '/etc/ssh'
-    opts[:verbose] ||= false
   end
 end
