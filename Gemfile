@@ -2,12 +2,11 @@
 
 source 'https://rubygems.org'
 
-gem 'bundler'
-gem 'os' # reports what os someone is using
 gem 'rake'
 gem 'thor' # CLI gem
 
-group :test do
+group :development do
   gem 'guard'
   gem 'guard-minitest'
+  gem 'yard' # documentation gem
 end
