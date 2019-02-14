@@ -13,6 +13,7 @@ module VpsCli
     # @option opts [Dir] :ssh_dir ('/etc/ssh') directory containing sshd_config
     # @option opts [Boolean] :verbose (false)
     #   Whether or not to print additional info
+    # @option opts [Boolean] :testing (false) used internally for minitest
     # @raise [RuntimeError]
     #   Will raise this error if you run this method as root or sudo
     def self.copy(opts = {})
@@ -32,12 +33,15 @@ module VpsCli
     end
 
     # Copies files from 'dotfiles' directory via the copy_all method
+    # Defaults are provided in the create_options method
+    # (see ::create_options)
     # (see ::copy_all)
-    # @options
-    # @param backup_dir [Dir] Directory to place your original dotfiles.
-    # @param dest_dir [Dir] Where to place the dotfiles
-    # @param dotfiles_dir [Dir] Location of files to be copied
-    #   Defaults to /path/to/vps_cli/config_files
+    # @param [Hash] Options hash
+    # @option opts [Dir] :backup_dir ('$HOME/backup_files)
+    #   Directory to place your original dotfiles.
+    # @option opts [Dir] :dest_dir ('$HOME') Where to place the dotfiles,
+    # @option opts [Dir] :dotfiles_dir ('/path/to/vps_cli/config_files')
+    #   Location of files to be copied
     def self.copy_dotfiles(opts = {})
       opts = create_options(opts)
 
@@ -67,12 +71,14 @@ module VpsCli
     #   This is slightly different from other copy methods in this file
     #   It uses Rake.sh("sudo cp")
     #   Due to copying to /etc/ssh requiring root permissions
-    # @param backup_dir [Dir]
+    # @options opts [Hash] Set of options for files
+    # @option opts [Dir] :backup_dir
     #   Directory for backing up your original sshd_config file
     #   Defaults to $HOME/backup_files
-    # @param ssh_dir [Dir] Directory containing your sshd_config file
+    # @option opts [Dir] :ssh_dir Directory containing your sshd_config file
     #   Defaults to /etc/ssh
     def self.copy_sshd_config(opts = {})
+      opts = create_options(opts)
       opts[:ssh_dir] ||= '/etc/ssh'
 
 
