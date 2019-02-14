@@ -20,12 +20,12 @@ module VpsCli
       root_msg = 'Do not run this as root or sudo. Run as a normal user'
       raise root_msg if root == true
 
-      mkdirs(opts[:backup_dir], opts[:dest_dir])
+      mkdirs(opts[:dest_dir], opts[:backup_dir])
 
-      copy_dotfiles(opts[:backup_dir], opts[:dest_dir], opts[:dotfiles_dir])
+      copy_dotfiles(opts)
 
-      copy_gnome_settings(opts[:backup_dir])
-      copy_sshd_config(opts[:backup_dir], opts[:ssh_dir])
+      copy_gnome_settings(opts)
+      copy_sshd_config(opts)
 
       puts "dotfiles copied to #{opts[:dest_dir]}"
       puts "backups created @ #{opts[:backup_dir]}"
@@ -72,22 +72,28 @@ module VpsCli
     #   Defaults to $HOME/backup_files
     # @param ssh_dir [Dir] Directory containing your sshd_config file
     #   Defaults to /etc/ssh
-    def self.copy_sshd_config(backup_dir, ssh_dir = nil)
-      ssh_dir ||= '/etc/ssh'
+    def self.copy_sshd_config(opts = {})
+      opts[:ssh_dir] ||= '/etc/ssh'
 
-      return unless sshd_copyable?(ssh_dir)
 
-      sshd_cfg_path = File.join(FILES_DIR, 'sshd_config')
-      sshd_backup = File.join(backup_dir, 'sshd_config.orig')
-      sshd_path = File.join(ssh_dir, 'sshd_config')
+      return unless sshd_copyable?(opts[:ssh_dir])
 
-      if File.exist?(sshd_path) && !File.exist?(sshd_backup)
-        Rake.cp(sshd_path, sshd_backup)
+      opts[:sshd_cfg_path] ||= File.join(FILES_DIR, 'sshd_config')
+      opts[:sshd_backup] ||= File.join(opts[:backup_dir], 'sshd_config.orig')
+      opts[:sshd_path] ||= File.join(opts[:ssh_dir], 'sshd_config')
+
+      if File.exist?(opts[:sshd_path]) && !File.exist?(opts[:sshd_backup])
+        Rake.cp(opts[:sshd_path], opts[:sshd_backup])
       else
-        puts "#{sshd_backup} already exists. no backup created"
+        puts "#{opts[:sshd_backup]} already exists. no backup created"
       end
 
-      Rake.sh("sudo cp #{sshd_cfg_path} #{sshd_path}")
+      if opts[:testing]
+        Rake.cp(opts[:sshd_cfg_path], opts[:sshd_path])
+      else
+        # This method must be run this way due to it requiring root privileges
+        Rake.sh("sudo cp #{opts[:sshd_cfg_path]} #{opts[:sshd_path]}")
+      end
     end
 
     # Default way of checking if the dotfile already exists
@@ -189,23 +195,27 @@ module VpsCli
     # Helper method for making multiple directories
     # @param [Dir, Array<Dir>] Creates either one, or multiple directories
     def self.mkdirs(*dirs)
-      dirs.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
+      dirs.flatten.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
     end
 
     # Copies gnome terminal via dconf
     # @param backup_dir [File] Where to save the current gnome terminal settings
     # @note This method will raise an error if dconf errors out
     #   The error will be saved to VpsCli.errors
-    def self.copy_gnome_settings(backup_dir)
-      backup = "#{backup_dir}/gnome_terminal_settings.orig"
+    def self.copy_gnome_settings(opts = {})
+      backup = "#{opts[:backup_dir]}/gnome_terminal_settings.orig"
+
+      # This is the ONLY spot for gnome terminal
       gnome_path = '/org/gnome/terminal/'
+
+      raise RuntimeError if opts[:testing]
 
       Rake.sh("dconf dump #{gnome_path} > #{backup}")
 
       Rake.sh("dconf load #{gnome_path} < #{FILES_DIR}/gnome_terminal_settings")
     rescue RuntimeError => error
-      VpsCli.errors << error.message
-      puts 'something went wrong with gnome, continuing on'
+      puts 'something went wrong with gnome, continuing on' if opts[:verbose]
+      VpsCli.errors << error
     end
   end
 end

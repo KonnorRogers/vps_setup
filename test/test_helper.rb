@@ -12,15 +12,16 @@ TEST_ROOT = File.expand_path(__dir__)
 BACKUP_DIR = File.join(TEST_ROOT, 'backup_dir')
 DEST_DIR = File.join(TEST_ROOT, 'dest_dir')
 TEST_DOTFILES = File.join(TEST_ROOT, 'dotfiles')
+TEST_CONFIGFILES = File.join(TEST_ROOT, 'configfiles')
 LOG_DIR = File.join(TEST_ROOT, 'logs')
 
 ## HELPER METHODS ##
 def mk_dirs(*args)
-  args.each { |dir| FileUtils.mkdir_p(dir) }
+  args.flatten.each { |dir| FileUtils.mkdir_p(dir) }
 end
 
 def rm_dirs(*args)
-  args.each { |dir| FileUtils.rm_rf(dir) }
+  args.flatten.each { |dir| FileUtils.rm_rf(dir) }
 end
 
 # @return [Logger] Returns a log file
@@ -32,7 +33,8 @@ def create_logger(filename)
   logfile = File.join(LOG_DIR, logname)
 
   # Creates a new logfile and removes the old logfile
-  file = File.open(logfile, File::WRONLY | File::APPEND | File::CREAT)
+  # file = File.open(logfile, File::WRONLY | File::APPEND | File::CREAT)
+  file = File.new(logfile, 'w+')
   Logger.new(file)
 end
 
@@ -42,32 +44,42 @@ end
 # @param [Block] This must be given a block to run the method
 # @return [Logger] Returns the logger file
 def log_methods(logger)
+  # provides better performance than caller[0]
+  # returns the test_method
+  calling_method = caller(1..1).first.split('`').last
+  logger.debug { calling_method }
+
   out, err = capture_io do
     yield
   end
 
-  logger.error { err }
   logger.info { out }
+  logger.error { err }
   logger
 end
 
-def add_file(dir, name)
-  File.new(File.join(dir, name), 'w+')
-end
-
-def add_files_to_dotfiles(*args)
-  args.each do |name|
-    add_file(TEST_DOTFILES, name)
+def add_files(dir, *files)
+  FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
+  files.flatten.each do |file|
+    File.new(File.join(dir, file), 'w+')
   end
 end
 
-def add_dir(dir, name)
-  Dir.new(File.join(dir, name))
+def add_files_to_dotfiles(*args)
+  args.flatten.each do |name|
+    add_files(TEST_DOTFILES, name)
+  end
 end
 
-def add_dir_to_dotfiles(*args)
-  args.each do |name|
-    add_dir(TEST_DOTFILES, name)
+def add_dirs(dir, *dirs)
+  dirs.flatten.each do |name|
+    FileUtils.mkdir_p(File.join(dir, name))
+  end
+end
+
+def add_dirs_to_dotfiles(*args)
+  args.flatten.each do |name|
+    add_dirs(TEST_DOTFILES, name)
   end
 end
 
