@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module VpsCli
+  # Various setup to include ufw firewalls, adding repos, adding fonts etc
   class Setup
     def self.privileged_user?
       Process.uid.zero?
@@ -21,21 +22,27 @@ module VpsCli
       Rake.sh('sudo ufw default allow outgoing')
       # allows ssh & mosh connections
       Rake.sh('sudo ufw allow 60000:61000/tcp')
+
+      # Typical ssh port
       Rake.sh('sudo ufw allow 22')
+
+      # Should you use Bastillion, the port used by the service
+      Rake.sh('sudo ufw allo 8443')
       Rake.sh('yes | sudo ufw enable')
       Rake.sh('yes | sudo systemctl restart sshd')
     end
 
     def self.add_repos
-      # add neovim
-      # sudo add-apt-repository ppa:neovim-ppa/stable
-      # asciinema repo for recording the terminal
-      # Rake.sh('sudo apt-add-repository -y ppa:zanchey/asciinema')
-      # Above repos already available in cosmic release
+      add_docker_repo
+      add_yarn_repo
 
-      # mosh repo
-      # Rake.sh(%(yes "\n" | sudo add-apt-repository ppa:keithw/mosh))
+      ## Now part of cosmic release for Ubuntu 18.10
+      add_neovim_repo
+      add_mosh_repo
+      add_asciinema_repo
+    end
 
+    def self.add_docker_repo
       # Instructions straight from https://docs.docker.com/install/linux/docker-ce/ubuntu/#set-up-the-repository
       # Docker repo
       Rake.sh('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
@@ -44,11 +51,31 @@ module VpsCli
           "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
              $(lsb_release -cs) \
              stable"})
-      # yarn repo
+    end
 
+    def self.add_yarn_repo
+      # yarn repo
       Rake.sh(%( curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -))
       Rake.sh(%(echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list))
       Rake.sh('sudo apt update')
+    end
+
+    # @deprecated
+    def self.add_neovim_repo
+      # add neovim
+      Rake.sh('sudo add-apt-repository ppa:neovim-ppa/stable')
+    end
+
+    # @deprecated
+    def self.add_mosh_repo
+      # mosh repo
+      Rake.sh(%(yes "\n" | sudo add-apt-repository ppa:keithw/mosh))
+    end
+
+    # @deprecated
+    def self.add_asciinema_repo
+      # asciinema repo for recording the terminal
+      Rake.sh('sudo apt-add-repository -y ppa:zanchey/asciinema')
     end
 
     def self.add_dejavu_sans_mono_font
@@ -69,9 +96,11 @@ module VpsCli
 
         Rake.sh("git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git #{ultisnips_dir}")
       end
-    rescue RuntimeError
-      puts 'something went wrong adding snippets, ensure everything is okay'
-      puts 'by running ~/ParamagicianUltiSnips'
+    rescue RuntimeError => error
+
+      message = 'something went wrong adding snippets, ensure everything is okay
+      by running ~/ParamagicianUltiSnips'
+      VpsCli.errors << error.exception("#{error}\n\n#{message}")
 
       Dir.chdir(Dir.home)
     end
@@ -86,15 +115,18 @@ module VpsCli
       Rake.sh("git config --global user.email #{email}")
 
       puts "Git config complete.\n"
-    rescue StandardError
-      'something went wrong. make sure to set your git config'
+    rescue RuntimeError => error
+      message = "Something went wrong. Make sure to set your git config manually"
+
+      VpsCli.errors << error.exception("#{error}\n\n#{message}")
     end
 
     def self.heroku_login
       puts 'Please login to heroku:'
       Rake.sh('heroku login --interactive')
-    rescue StandardError
-      puts 'you did not login to heroku. To login, use heroku login'
+    rescue RuntimeError => error
+      message = "\n\nUnable not login to heroku. To login, type: 'heroku login'"
+      VpsCli.errors << error.exception("#{error}\n\n#{message}")
     end
   end
 end
