@@ -17,6 +17,10 @@ module VpsCli
       add_snippets
     end
 
+    ##
+    # Sets up ufw for you to be able to have certain firewalls in place
+    # Must be run after installing ufw
+    # via sudo apt install ufw
     def self.ufw_setup
       Rake.sh('sudo ufw default deny incoming')
       Rake.sh('sudo ufw default allow outgoing')
@@ -27,19 +31,25 @@ module VpsCli
       Rake.sh('sudo ufw allow 22')
 
       # Should you use Bastillion, the port used by the service
-      Rake.sh('sudo ufw allo 8443')
+      Rake.sh('sudo ufw allow 8443')
       Rake.sh('yes | sudo ufw enable')
       Rake.sh('yes | sudo systemctl restart sshd')
     end
 
+    ##
+    # Adds repos to the package manager to be tracked
+    # Adds the following repos:
+    # docker, yarn
+    # This method used to add neovim, asciinema, and mosh as well
+    # But they are all part of the base ubuntu 18.10 release
     def self.add_repos
       add_docker_repo
       add_yarn_repo
 
       ## Now part of cosmic release for Ubuntu 18.10
-      add_neovim_repo
-      add_mosh_repo
-      add_asciinema_repo
+      # add_neovim_repo
+      # add_mosh_repo
+      # add_asciinema_repo
     end
 
     def self.add_docker_repo
@@ -97,7 +107,6 @@ module VpsCli
         Rake.sh("git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git #{ultisnips_dir}")
       end
     rescue RuntimeError => error
-
       message = 'something went wrong adding snippets, ensure everything is okay
       by running ~/ParamagicianUltiSnips'
       VpsCli.errors << error.exception("#{error}\n\n#{message}")
@@ -116,7 +125,7 @@ module VpsCli
 
       puts "Git config complete.\n"
     rescue RuntimeError => error
-      message = "Something went wrong. Make sure to set your git config manually"
+      message = 'Something went wrong. Make sure to set your git config manually'
 
       VpsCli.errors << error.exception("#{error}\n\n#{message}")
     end
