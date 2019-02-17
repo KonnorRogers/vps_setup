@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 lib = File.expand_path(__dir__)
-$LOAD_PATH.unshift(lib, root) unless $LOAD_PATH.include?(lib)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'vps_cli/access'
 require 'vps_cli/cli'
@@ -37,5 +37,3 @@ module VpsCli
 
   @errors ||= []
 end
-
-# VpsCli::CLI.start(ARGV)

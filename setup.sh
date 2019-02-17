@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BIN="$HOME/bin"
-VPS_CLI="$PWD/lib/vps_cli.rb"
+VPS_CLI="$PWD/vps-cli.rb"
 
 main(){
   check_if_root
