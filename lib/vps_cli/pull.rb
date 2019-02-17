@@ -1,35 +1,35 @@
 # frozen_string_literal: true
 
-require 'os'
 require 'rake'
-
-# NON_DOTFILES & variation constants defined in lib/vps_setup.rb
 
 module VpsCli
   # Pull changes from local dir into config dir
   # to be able to push changes up to the config dir
   class Pull
-    def self.pull_all(attr = {})
-      cfg_dir = attr[:cfg_dir]
+    ##
+    # Base pull method
+    # @param opts [Hash] opts various options for running the pull method
+    def self.pull_all(opts = {})
+      cfg_dir = opts[:cfg_dir]
       Rake.mkdir_p(File.expand_path(cfg_dir)) unless cfg_dir.nil? || Dir.exist?(cfg_dir)
       # checks for a blank dir, allows for pulling from vps_setup/config for testing output
-      attr[:cfg_dir] = CONFIG_DIR if Dir.entries(cfg_dir).size == 2
+      opts[:cfg_dir] = CONFIG_DIR if Dir.entries(cfg_dir).size == 2
 
-      pull_all_linux(attr) if OS.linux?
+      pull_all_linux(opts) if OS.linux?
     end
 
-    def self.pull_all_linux(attr = {})
-      attr[:cfg_dir] ||= CONFIG_DIR
-      attr[:local_dir] ||= Dir.home
-      attr[:gnome_local] ||= '/org/gnome/terminal/'
+    def self.pull_all_linux(opts = {})
+      opts[:cfg_dir] ||= CONFIG_DIR
+      opts[:local_dir] ||= Dir.home
+      opts[:gnome_local] ||= '/org/gnome/terminal/'
 
-      linux_config_dotfiles_ary(attr[:cfg_dir]).each do |config|
-        linux_local_dotfiles_ary(attr[:cfg_dir], attr[:local_dir]).each do |local|
+      linux_config_dotfiles_ary(opts[:cfg_dir]).each do |config|
+        linux_local_dotfiles_ary(opts[:cfg_dir], opts[:local_dir]).each do |local|
           # IE: .vimrc .tmux.conf
           next unless local == ".#{config}"
 
-          cfg_file = File.join(File.expand_path(attr[:cfg_dir]), config)
-          local_file = File.join(File.expand_path(attr[:local_dir]), local)
+          cfg_file = File.join(File.expand_path(opts[:cfg_dir]), config)
+          local_file = File.join(File.expand_path(opts[:local_dir]), local)
 
           # Covers the case of .config
           if File.directory?(local_file)
@@ -41,8 +41,8 @@ module VpsCli
         end
       end
 
-      pull_sshd_config(attr[:sshd_local], attr[:cfg_dir])
-      pull_gnome_term_settings(attr[:gnome_local], attr[:cfg_dir])
+      pull_sshd_config(opts[:sshd_local], opts[:cfg_dir])
+      pull_gnome_term_settings(opts[:gnome_local], opts[:cfg_dir])
     end
 
     # Must use foreach due to not having Dir.children in 2.3.3 for babun
