@@ -2,7 +2,6 @@
 
 source 'https://rubygems.org'
 
-gem 'rake'
 gem 'thor' # CLI gem
 
 group :development do
