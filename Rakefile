@@ -49,5 +49,5 @@ task :setup do
 end
 
 task :example do
-  puts "example"
+  puts 'example'
 end

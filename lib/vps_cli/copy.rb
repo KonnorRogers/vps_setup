@@ -81,7 +81,6 @@ module VpsCli
       opts = create_options(opts)
       opts[:ssh_dir] ||= '/etc/ssh'
 
-
       return unless sshd_copyable?(opts[:ssh_dir])
 
       opts[:sshd_cfg_path] ||= File.join(FILES_DIR, 'sshd_config')
