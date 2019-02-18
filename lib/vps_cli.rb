@@ -21,26 +21,23 @@ module VpsCli
   # Project's Root Directory
   ROOT = File.expand_path(File.expand_path('../', __dir__))
 
-  ##
+
   # Project's files directory containing configuration files to include
   #   Dotfiles and non dotfiles
   FILES_DIR = File.join(ROOT, 'config_files')
 
-  ##
   # Projects Dotfiles directory
   DOTFILES_DIR = File.join(FILES_DIR, 'dotfiles')
 
-  ##
   # Miscellaneous files like sshd_config
   MISC_FILES_DIR = File.join(FILES_DIR, 'miscfiles')
 
-  ##
   # Directory of backup files
   BACKUP_FILES_DIR = File.join(Dir.home, 'backup_files')
   # @!endgroup
 
   class << self
-    ##
+
     # Used for loggings errors
     # same as self.errors && self.errors=(errors)
     # VpsCli.errors now accessible module wide
@@ -50,7 +47,6 @@ module VpsCli
   # Creates an empty array of errors to push to
   @errors ||= []
 
-  ##
   # Base set of options, will set the defaults for the various options
   # Take a hash due to people being able to set their own directories
   # @param [Hash] Takes the hash to modify
