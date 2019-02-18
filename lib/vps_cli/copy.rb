@@ -36,8 +36,8 @@ module VpsCli
     end
 
     # Copies files from 'dotfiles' directory via the copy_all method
-    # Defaults are provided in the create_options method
-    # @see #create_options
+    # Defaults are provided in the VpsCli.create_options method
+    # @see #VpsCli.create_options
     # @see #copy_all
     # @param [Hash] Options hash
     # @option opts [Dir] :backup_dir ('$HOME/backup_files)
@@ -46,7 +46,7 @@ module VpsCli
     # @option opts [Dir] :dotfiles_dir ('/path/to/vps_cli/config_files')
     #   Location of files to be copied
     def self.copy_dotfiles(opts = {})
-      opts = create_options(opts)
+      opts = VpsCli.create_options(opts)
 
       Dir.each_child(opts[:dotfiles_dir]) do |file|
         config = File.join(opts[:dotfiles_dir], file)
@@ -81,7 +81,7 @@ module VpsCli
     # @option opts [Dir] :ssh_dir Directory containing your sshd_config file
     #   Defaults to /etc/ssh
     def self.copy_sshd_config(opts = {})
-      opts = create_options(opts)
+      opts = VpsCli.create_options(opts)
       opts[:ssh_dir] ||= '/etc/ssh'
 
       return unless sshd_copyable?(opts[:ssh_dir])
@@ -119,19 +119,6 @@ module VpsCli
       end
     end
 
-    ##
-    # @param [Hash] Takes the hash to modify
-    # @return [Hash] Returns the options hash
-    def self.create_options(opts)
-      opts[:backup_dir] ||= BACKUP_FILES_DIR
-      opts[:dest_dir] ||= Dir.home
-      opts[:dotfiles_dir] ||= DOTFILES_DIR
-      opts[:misc_files_dir] ||= MISC_FILES_DIR
-      opts[:ssh_dir] ||= '/etc/ssh'
-      opts[:verbose] ||= false
-
-      opts
-    end
 
     ##
     # Copies gnome terminal via dconf

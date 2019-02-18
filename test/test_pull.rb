@@ -15,12 +15,10 @@ TEST_CONFIG_FILES =
      zshrc].freeze
 
 TEST_LINUX_LOCAL_DOTFILES = %w[.zshrc .pryrc .tmux.conf .vimrc].freeze
-
 TEST_LINUX_CFG_DOTFILES = %w[zshrc pryrc tmux.conf vimrc].freeze
 
 PULL_CONFIG_DIR = File.join(TEST_ROOT, 'pull_config')
 PULL_LOCAL_DIR = File.join(TEST_ROOT, 'pull_test')
-# mk_dirs(PULL_CONFIG_DIR, PULL_LOCAL_DIR)
 
 def new_file(dir, file_name)
   File.new(File.join(dir, file_name), 'w+')

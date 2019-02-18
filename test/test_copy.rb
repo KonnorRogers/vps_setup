@@ -6,7 +6,7 @@ require 'fileutils'
 LOGGER = create_logger(__FILE__)
 TEST_FILES = %w[vimrc pryrc zshrc].freeze
 TEST_DIRS = %w[config dir2].freeze
-BASE_DIRS = [BACKUP_DIR, DEST_DIR, TEST_DOTFILES, TEST_CONFIGFILES].freeze
+BASE_DIRS = [BACKUP_DIR, DEST_DIR, TEST_DOTFILES, TEST_MISC_FILES].freeze
 # The goal of testing all of this is to not touch the base config_files
 # And to keep the test suite entirely independent
 class TestCopy < Minitest::Test
@@ -33,7 +33,7 @@ class TestCopy < Minitest::Test
 
   def options
     ssh_dir = File.join(DEST_DIR, 'ssh')
-    sshd_cfg_path = File.join(TEST_CONFIGFILES, 'sshd_config')
+    sshd_cfg_path = File.join(TEST_MISC_FILES, 'sshd_config')
 
     {
       backup_dir: BACKUP_DIR,
@@ -109,7 +109,7 @@ class TestCopy < Minitest::Test
 
   def test_copy_sshd_config_works_in_testing_environment
     add_files(options[:ssh_dir], 'sshd_config')
-    add_files(TEST_CONFIGFILES, 'sshd_config')
+    add_files(TEST_MISC_FILES, 'sshd_config')
 
     assert_empty Dir.children(options[:backup_dir])
 

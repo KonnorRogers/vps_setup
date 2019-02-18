@@ -11,8 +11,10 @@ TEST_ROOT = File.expand_path(__dir__)
 
 BACKUP_DIR = File.join(TEST_ROOT, 'backup_dir')
 DEST_DIR = File.join(TEST_ROOT, 'dest_dir')
-TEST_DOTFILES = File.join(TEST_ROOT, 'dotfiles')
-TEST_CONFIGFILES = File.join(TEST_ROOT, 'configfiles')
+TEST_CONFIG_FILES = File.join(TEST_ROOT, 'config_files')
+TEST_DOTFILES = File.join(TEST_CONFIG_FILES, 'dotfiles')
+TEST_MISC_FILES = File.join(TEST_CONFIG_FILES, 'miscfiles')
+
 LOG_DIR = File.join(TEST_ROOT, 'logs')
 
 ## HELPER METHODS ##

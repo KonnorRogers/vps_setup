@@ -40,6 +40,7 @@ module VpsCli
   # @!endgroup
 
   class << self
+    ##
     # Used for loggings errors
     # same as self.errors && self.errors=(errors)
     # VpsCli.errors now accessible module wide
@@ -48,4 +49,20 @@ module VpsCli
 
   # Creates an empty array of errors to push to
   @errors ||= []
+
+  ##
+  # Base set of options, will set the defaults for the various options
+  # Take a hash due to people being able to set their own directories
+  # @param [Hash] Takes the hash to modify
+  # @return [Hash] Returns the options hash with the various options
+  def self.create_options(opts)
+    opts[:backup_dir] ||= BACKUP_FILES_DIR
+    opts[:dest_dir] ||= Dir.home
+    opts[:dotfiles_dir] ||= DOTFILES_DIR
+    opts[:misc_files_dir] ||= MISC_FILES_DIR
+    opts[:ssh_dir] ||= '/etc/ssh'
+    opts[:verbose] ||= false
+
+    opts
+  end
 end
