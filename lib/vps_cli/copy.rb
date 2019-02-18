@@ -19,17 +19,17 @@ module VpsCli
     # @option opts [Boolean] :testing (false) used internally for minitest
     # @raise [RuntimeError]
     #   Will raise this error if you run this method as root or sudo
-    def self.copy(opts = {})
+    def self.all(opts = {})
       root = (Process.uid.zero? || Dir.home == '/root')
       root_msg = 'Do not run this as root or sudo. Run as a normal user'
       raise root_msg if root == true
 
       FileHelper.mkdirs(opts[:dest_dir], opts[:backup_dir])
 
-      copy_dotfiles(opts)
+      dotfiles(opts)
 
-      copy_gnome_settings(opts)
-      copy_sshd_config(opts)
+      gnome_settings(opts)
+      sshd_config(opts)
 
       puts "dotfiles copied to #{opts[:dest_dir]}"
       puts "backups created @ #{opts[:backup_dir]}"
@@ -38,14 +38,14 @@ module VpsCli
     # Copies files from 'dotfiles' directory via the copy_all method
     # Defaults are provided in the VpsCli.create_options method
     # @see #VpsCli.create_options
-    # @see #copy_all
+    # @see #all
     # @param [Hash] Options hash
     # @option opts [Dir] :backup_dir ('$HOME/backup_files)
     #   Directory to place your original dotfiles.
     # @option opts [Dir] :dest_dir ('$HOME') Where to place the dotfiles,
     # @option opts [Dir] :dotfiles_dir ('/path/to/vps_cli/config_files')
     #   Location of files to be copied
-    def self.copy_dotfiles(opts = {})
+    def self.dotfiles(opts = {})
       opts = VpsCli.create_options(opts)
 
       Dir.each_child(opts[:dotfiles_dir]) do |file|
@@ -53,7 +53,7 @@ module VpsCli
         dot = File.join(opts[:dest_dir], ".#{file}")
         backup = File.join(opts[:backup_dir], "#{file}.orig")
 
-        copy_all(config, dot, backup, opts[:verbose])
+        files_and_dirs(config, dot, backup, opts[:verbose])
       end
     end
 
@@ -81,7 +81,7 @@ module VpsCli
     # @option opts [Dir] :local_ssh_dir Directory containing your sshd_config file
     #   Defaults to /etc/ssh
     # @option opts [File] :misc_files_dir Directory to pull misc files from
-    def self.copy_sshd_config(opts = {})
+    def self.sshd_config(opts = {})
       opts = VpsCli.create_options(opts)
       opts[:local_ssh_dir] ||= '/etc/ssh'
 
@@ -114,7 +114,7 @@ module VpsCli
     # @param local_file [File] The file that is currently present locally
     # @param backup_file [File]
     #   The file to which to save the currently present local file
-    def self.copy_all(config_file, local_file, backup_file, verbose = false)
+    def self.files_and_dirs(config_file, local_file, backup_file, verbose = false)
       if File.directory?(config_file)
         FileHelper.copy_dirs(config_file, local_file, backup_file, verbose)
       else
@@ -129,7 +129,7 @@ module VpsCli
     # @param backup_dir [File] Where to save the current gnome terminal settings
     # @note This method will raise an error if dconf errors out
     #   The error will be saved to VpsCli.errors
-    def self.copy_gnome_settings(opts = {})
+    def self.gnome_settings(opts = {})
       backup = "#{opts[:backup_dir]}/gnome_terminal_settings.orig"
 
       # This is the ONLY spot for gnome terminal

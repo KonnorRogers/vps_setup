@@ -24,7 +24,7 @@ class TestCopy < Minitest::Test
 
   def test_copy_dotfiles_does_not_make_a_backup_and_copies_files
     log_methods(LOGGER) do
-      VpsCli::Copy.copy_dotfiles(test_options)
+      VpsCli::Copy.dotfiles(test_options)
     end
 
     # No backup should exist
@@ -46,7 +46,7 @@ class TestCopy < Minitest::Test
       assert_includes Dir.children(test_config_dir), file
     end
 
-    log_methods(LOGGER) { VpsCli::Copy.copy_dotfiles(test_options) }
+    log_methods(LOGGER) { VpsCli::Copy.dotfiles(test_options) }
 
     # No backups should be created
     assert Dir.children(BACKUP_DIR).empty?
@@ -73,7 +73,7 @@ class TestCopy < Minitest::Test
 
     refute_empty Dir.children(DEST_DIR)
 
-    log_methods(LOGGER) { VpsCli::Copy.copy_dotfiles(test_options) }
+    log_methods(LOGGER) { VpsCli::Copy.dotfiles(test_options) }
 
     refute_empty Dir.children(BACKUP_DIR)
 
@@ -90,7 +90,7 @@ class TestCopy < Minitest::Test
 
     assert_empty Dir.children(test_options[:backup_dir])
 
-    log_methods(LOGGER) { VpsCli::Copy.copy_sshd_config(test_options) }
+    log_methods(LOGGER) { VpsCli::Copy.sshd_config(test_options) }
 
     refute_empty Dir.children(test_options[:backup_dir])
     assert_includes Dir.children(test_options[:backup_dir]), 'sshd_config.orig'
@@ -100,7 +100,7 @@ class TestCopy < Minitest::Test
   def test_copy_gnome_settings_properly_errors
     errors = nil
     log_methods(LOGGER) do
-      errors = VpsCli::Copy.copy_gnome_settings(test_options)
+      errors = VpsCli::Copy.gnome_settings(test_options)
       refute_empty VpsCli.errors
       refute_empty errors
     end
@@ -110,7 +110,7 @@ class TestCopy < Minitest::Test
     # Stubbing process and dir mimic running as root
     Process.stub :uid, 0 do
       Dir.stub :home, '/root' do
-        assert_raises(RuntimeError) { VpsCli::Copy.copy }
+        assert_raises(RuntimeError) { VpsCli::Copy.all }
       end
     end
   end
@@ -121,7 +121,7 @@ class TestCopy < Minitest::Test
 
     add_files(TEST_DOTFILES, TEST_FILES)
     add_dirs(TEST_DOTFILES, TEST_DIRS)
-    log_methods(LOGGER) { VpsCli::Copy.copy(test_options) }
+    log_methods(LOGGER) { VpsCli::Copy.all(test_options) }
 
     assert_empty Dir.children(BACKUP_DIR)
     dotfiles.each { |file| assert_includes Dir.children(DEST_DIR), file }
@@ -133,7 +133,7 @@ class TestCopy < Minitest::Test
     add_dirs(TEST_DOTFILES, TEST_DIRS)
     add_files(DEST_DIR, convert_to_dotfiles(TEST_FILES))
     add_dirs(DEST_DIR, convert_to_dotfiles(TEST_DIRS))
-    log_methods(LOGGER) { VpsCli::Copy.copy(test_options) }
+    log_methods(LOGGER) { VpsCli::Copy.all(test_options) }
 
     refute_empty Dir.children(BACKUP_DIR)
     backupfiles.each { |file| assert_includes Dir.children(BACKUP_DIR), file }

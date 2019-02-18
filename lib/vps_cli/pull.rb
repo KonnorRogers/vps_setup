@@ -10,7 +10,7 @@ module VpsCli
     # Base pull method
     # @param opts [Hash] opts various options for running the pull method
     # @option
-    def pull_all(opts = {})
+    def all(opts = {})
     end
   end
 end
