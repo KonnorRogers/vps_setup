@@ -2,9 +2,12 @@
 
 require 'rake'
 
+require_relative 'file_helper.rb'
+
 module VpsCli
   # Copies config from /vps_cli/dotfiles & vps_cli/miscfiles to your home dir
   class Copy
+    extend FileHelper
     # Top level method for copying all files
     # @param [Hash] Provides options for copying files
     # @option opts [Dir] :dest_dir ('Dir.home') Where to save the dotfiles to
@@ -120,7 +123,7 @@ module VpsCli
     # @param [Hash] Takes the hash to modify
     # @return [Hash] Returns the options hash
     def self.create_options(opts)
-      opts[:backup_dir] ||= File.join(Dir.home, 'backup_files')
+      opts[:backup_dir] ||= BACKUP_FILES_DIR
       opts[:dest_dir] ||= Dir.home
       opts[:dotfiles_dir] ||= DOTFILES_DIR
       opts[:misc_files_dir] ||= MISC_FILES_DIR
