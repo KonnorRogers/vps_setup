@@ -12,9 +12,11 @@ require 'vps_cli/install'
 require 'vps_cli/packages'
 require 'vps_cli/pull'
 require 'vps_cli/setup'
+require 'vps_cli/file_helper'
 
 # Used for setting up a ubuntu environment
 module VpsCli
+  extend FileHelper
   # @!group Top Level Constants
 
   # Project's Root Directory
@@ -26,6 +28,8 @@ module VpsCli
 
   # Projects Dotfiles directory
   DOTFILES_DIR = File.join(FILES_DIR, 'dotfiles')
+  # Miscellaneous files like sshd_config
+  MISC_FILES_DIR = File.join(FILES_DIR, 'miscfiles')
   # @!endgroup
 
   class << self
@@ -35,5 +39,6 @@ module VpsCli
     attr_accessor :errors
   end
 
+  # Creates an empty array of errors to push to
   @errors ||= []
 end

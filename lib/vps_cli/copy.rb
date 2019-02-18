@@ -21,7 +21,7 @@ module VpsCli
       root_msg = 'Do not run this as root or sudo. Run as a normal user'
       raise root_msg if root == true
 
-      mkdirs(opts[:dest_dir], opts[:backup_dir])
+      FileHelper.mkdirs(opts[:dest_dir], opts[:backup_dir])
 
       copy_dotfiles(opts)
 
@@ -34,8 +34,8 @@ module VpsCli
 
     # Copies files from 'dotfiles' directory via the copy_all method
     # Defaults are provided in the create_options method
-    # (see ::create_options)
-    # (see ::copy_all)
+    # @see #create_options
+    # @see #copy_all
     # @param [Hash] Options hash
     # @option opts [Dir] :backup_dir ('$HOME/backup_files)
     #   Directory to place your original dotfiles.
@@ -101,109 +101,38 @@ module VpsCli
       end
     end
 
-    # Default way of checking if the dotfile already exists
-    # @param file [File] File to be searched for
-    # @param verbose [Boolean] Will print to console if verbose == true
-    # @return [Boolean] Returns true if the file exists
-    def self.dot_file_found?(file, verbose = false)
-      return true if File.exist?(file)
 
-      puts "#{file} does not exist. No backup created." if verbose
-      false
-    end
-
-    # Checks that a backup file does not exist
-    # @param file [File] File to be searched for
-    # @param verbose [Boolean] Will print to console if verbose == true
-    # @return [Boolean] Returns true if the file is not found
-    def self.backup_file_not_found?(file, verbose = false)
-      return true unless File.exist?(file)
-
-      puts "#{file} exists already. No backup created." if verbose
-      false
-    end
-
+    ##
     # Deciphers between files & directories
     # @param config_file [File] The file from the repo to be copied locally
-    # @param dot_file [File] The file that is currently present locally
+    # @param local_file [File] The file that is currently present locally
     # @param backup_file [File]
     #   The file to which to save the currently present local file
-    def self.copy_all(config_file, dot_file, backup_file, verbose = false)
+    def self.copy_all(config_file, local_file, backup_file, verbose = false)
       if File.directory?(config_file)
-        copy_dirs(config_file, dot_file, backup_file, verbose)
+        FileHelper.copy_dirs(config_file, local_file, backup_file, verbose)
       else
-        copy_files(config_file, dot_file, backup_file, verbose)
+        FileHelper.copy_files(config_file, local_file, backup_file, verbose)
       end
     end
 
-    # Copies files, called by copy_all
-    # @param config_file [File] The file from the repo to be copied locally
-    # @param dot_file [File] The file that is currently present locally
-    # @param backup_file [File]
-    #   The file to which to save the currently present local file
-    # @param verbose [Boolean] Will print more info to terminal if true
-    def self.copy_files(config_file, dot_file, backup_file, verbose = false)
-      # if there is an original dot file & no backup file in the backupdir
-      # Copy the dot file to the backup dir
-      if create_backup?(dot_file, backup_file, verbose)
-        Rake.cp(dot_file, backup_file)
-      end
-
-      # Copies from vps_cli/dotfiles to the location of the dot_file
-      Rake.cp(config_file, dot_file)
-    end
-
-    # Copies directories instead of file
-    # @param config_file [Dir] The Dir from the repo to be copied locally
-    # @param dot_file [Dir] The Dir that is currently present locally
-    # @param backup_file [Dir]
-    #   The Dir to which to save the currently present local file
-    # @param verbose [Boolean] Will print additional info to terminal if true
-    def self.copy_dirs(config_dir, dot_dir, backup_dir, verbose = false)
-      if create_backup?(dot_dir, backup_dir, verbose)
-        Rake.cp_r(dot_dir, backup_dir)
-      end
-
-      Rake.mkdir_p(dot_dir) unless Dir.exist?(dot_dir)
-
-      Dir.each_child(config_dir) do |c_dir|
-        c_dir = File.join(config_dir, c_dir)
-
-        Rake.cp_r(c_dir, dot_dir)
-      end
-    end
-
-    # Helper method for determining whether or not to create a backup file
-    # @param dot_file [File] current dot file
-    # @param backup_file [File] Where to back the dot file up to
-    # @param verbose [Boolean] Will print to terminal if verbose == true
-    # @return [Boolean] Returns true if there is a dotfile that exists
-    #   And there is no current backup_file found
-    def self.create_backup?(dot_file, backup_file, verbose = false)
-      return false unless dot_file_found?(dot_file, verbose)
-      return false unless backup_file_not_found?(backup_file, verbose)
-
-      true
-    end
-
+    ##
+    # @param [Hash] Takes the hash to modify
     # @return [Hash] Returns the options hash
     def self.create_options(opts)
       opts[:backup_dir] ||= File.join(Dir.home, 'backup_files')
       opts[:dest_dir] ||= Dir.home
       opts[:dotfiles_dir] ||= DOTFILES_DIR
+      opts[:misc_files_dir] ||= MISC_FILES_DIR
       opts[:ssh_dir] ||= '/etc/ssh'
       opts[:verbose] ||= false
 
       opts
     end
 
-    # Helper method for making multiple directories
-    # @param [Dir, Array<Dir>] Creates either one, or multiple directories
-    def self.mkdirs(*dirs)
-      dirs.flatten.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
-    end
-
+    ##
     # Copies gnome terminal via dconf
+    # @see https://wiki.gnome.org/Projects/dconf dconf wiki
     # @param backup_dir [File] Where to save the current gnome terminal settings
     # @note This method will raise an error if dconf errors out
     #   The error will be saved to VpsCli.errors
