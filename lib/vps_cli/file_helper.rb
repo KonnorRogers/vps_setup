@@ -85,4 +85,8 @@ module FileHelper
     puts "#{file} does not exist. No backup created." if verbose
     false
   end
+
+  def self.retrieve_file(directory, name)
+    Dir.children(directory).select { |file| name == file }
+  end
 end

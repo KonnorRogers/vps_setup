@@ -60,7 +60,8 @@ module VpsCli
     opts[:dest_dir] ||= Dir.home
     opts[:dotfiles_dir] ||= DOTFILES_DIR
     opts[:misc_files_dir] ||= MISC_FILES_DIR
-    opts[:ssh_dir] ||= '/etc/ssh'
+    opts[:local_ssh_dir] ||= '/etc/ssh'
+    opts[:local_sshd_path] ||= '/etc/ssh/sshd_config'
     opts[:verbose] ||= false
 
     opts

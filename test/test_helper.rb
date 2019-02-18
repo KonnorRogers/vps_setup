@@ -14,6 +14,7 @@ DEST_DIR = File.join(TEST_ROOT, 'dest_dir')
 TEST_CONFIG_FILES = File.join(TEST_ROOT, 'config_files')
 TEST_DOTFILES = File.join(TEST_CONFIG_FILES, 'dotfiles')
 TEST_MISC_FILES = File.join(TEST_CONFIG_FILES, 'miscfiles')
+TEST_LOCAL_SSH_DIR = File.join(DEST_DIR, 'ssh')
 
 LOG_DIR = File.join(TEST_ROOT, 'logs')
 
@@ -24,6 +25,27 @@ end
 
 def rm_dirs(*args)
   args.flatten.each { |dir| FileUtils.rm_rf(dir) }
+end
+
+def convert_to_dotfiles(*files)
+  files.flatten.map { |file| ".#{file}" }
+end
+
+def convert_to_origfiles(*files)
+  files.flatten.map { |file| "#{file}.orig" }
+end
+
+# @return [Hash] Hash of base options to be used for testing
+def test_options
+  {
+    backup_dir: BACKUP_DIR,
+    dest_dir: DEST_DIR,
+    dotfiles_dir: TEST_DOTFILES,
+    misc_files_dir: TEST_MISC_FILES,
+    local_ssh_dir: TEST_LOCAL_SSH_DIR,
+    verbose: true,
+    testing: true
+  }
 end
 
 # @return [Logger] Returns a log file
