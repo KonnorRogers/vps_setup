@@ -21,11 +21,14 @@ module VpsCli
   # Project's Root Directory
   ROOT = File.expand_path(File.expand_path('../', __dir__))
 
+  # Projects config_files directory
+  FILES_DIR = File.join(ROOT, 'config_files')
+
   # Projects Dotfiles directory
-  DOTFILES_DIR = File.join(ROOT, 'dotfiles')
+  DOTFILES_DIR = File.join(FILES_DIR, 'dotfiles')
 
   # Miscellaneous files like sshd_config
-  MISC_FILES_DIR = File.join(ROOT, 'miscfiles')
+  MISC_FILES_DIR = File.join(FILES_DIR, 'miscfiles')
 
   # Directory of backup files
   BACKUP_FILES_DIR = File.join(Dir.home, 'backup_files')
