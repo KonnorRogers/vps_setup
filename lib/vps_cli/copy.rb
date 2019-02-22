@@ -5,7 +5,8 @@ require 'rake'
 require_relative 'file_helper.rb'
 
 module VpsCli
-  # Copies config from /vps_cli/dotfiles & vps_cli/miscfiles to your home dir
+  # Copies config from /vps_cli/config_files/dotfiles
+  #   & vps_cli/config_files/miscfiles to your home dir
   class Copy
     extend FileHelper
     # Top level method for copying all files
@@ -13,7 +14,7 @@ module VpsCli
     # @option opts [Dir] :dest_dir ('Dir.home') Where to save the dotfiles to
     # @option opts [Dir] :backup_dir ('$HOME/backup_files') Where to backup
     #   currently existing dotfiles
-    # @option opts [Dir] :local_ssh_dir ('/etc/ssh')
+    # @option opts [File] :local_sshd_config ('/etc/ssh/sshd_config')
     #   directory containing sshd_config
     # @option opts [Boolean] :verbose (false)
     #   Whether or not to print additional info
@@ -36,7 +37,7 @@ module VpsCli
       puts "backups created @ #{opts[:backup_dir]}"
     end
 
-    # Copies files from 'dotfiles' directory via the copy_all method
+    # Copies files from 'config_files/dotfiles' directory via the copy_all method
     # Defaults are provided in the VpsCli.create_options method
     # @see #VpsCli.create_options
     # @see #all
@@ -59,50 +60,53 @@ module VpsCli
     end
 
     # Checks that sshd_config is able to be copied
-    # @param ssh_dir [Dir] Directory containing your original sshd_config
-    #   Defaults to /etc/ssh
-    # @return [Boolean] Returns true if the ssh_dir exists
-    def self.sshd_copyable?(ssh_dir = nil)
-      ssh_dir ||= '/etc/ssh'
+    # @param sshd_config [File] File containing your original sshd_config
+    #   Defaults to /etc/ssh/sshd_config
+    # @return [Boolean] Returns true if the sshd_config exists
+    def self.sshd_copyable?(sshd_config = nil)
+      sshd_config ||= '/etc/ssh/sshd_config'
 
-      no_ssh_dir = 'No ssh dir found. sshd_config not copied'
-      return puts no_ssh_dir unless Dir.exist?(ssh_dir)
+      no_sshd_config = 'No sshd_config found. sshd_config not copied'
 
-      true
+      return true if File.exist?(sshd_config)
+
+      VpsCli.errors << no_sshd_config
     end
 
-    # Copies sshd_config to the ssh_dir [/etc/ssh]
+    # Copies sshd_config to the local_sshd_config location
+    #   Defaults to [/etc/ssh/sshd_config]
     #   This is slightly different from other copy methods in this file
     #   It uses Rake.sh("sudo cp")
-    #   Due to copying to /etc/ssh requiring root permissions
+    #   Due to copying to /etc/ssh/sshd_config requiring root permissions
     # @options opts [Hash] Set of options for files
-    # @option opts [Dir] :backup_dir
+    # @option opts [Dir] :backup_dir ($HOME/backup_files)
     #   Directory for backing up your original sshd_config file
-    #   Defaults to $HOME/backup_files
-    # @option opts [Dir] :local_ssh_dir Directory containing your sshd_config file
-    #   Defaults to /etc/ssh
-    # @option opts [File] :misc_files_dir Directory to pull misc files from
+    # @option opts [File] :local_sshd_config (/etc/ssh/sshd_config)
+    #   File containing your original sshd_config file
+    # @option opts [File] :misc_files_dir
+    #   (/path/to/vps_cli/config_files/miscfiles)
+    #   Directory to pull sshd_config from
     def self.sshd_config(opts = {})
       opts = VpsCli.create_options(opts)
-      opts[:local_ssh_dir] ||= '/etc/ssh'
 
-      return unless sshd_copyable?(opts[:local_ssh_dir])
+      p opts[:local_sshd_config].to_s + "TESTING123"
+      opts[:local_sshd_config] ||= File.join('/etc', 'ssh', 'sshd_config')
+      return unless sshd_copyable?(opts[:local_sshd_config])
 
       opts[:sshd_backup] ||= File.join(opts[:backup_dir], 'sshd_config.orig')
-      local_sshd_path = File.join(opts[:local_ssh_dir], 'sshd_config')
 
       misc_sshd_path = File.join(opts[:misc_files_dir], 'sshd_config')
 
-      if File.exist?(local_sshd_path) && !File.exist?(opts[:sshd_backup])
-        Rake.cp(local_sshd_path, opts[:sshd_backup])
+      if File.exist?(opts[:local_sshd_config]) && !File.exist?(opts[:sshd_backup])
+        Rake.cp(opts[:local_sshd_config], opts[:sshd_backup])
       else
         puts "#{opts[:sshd_backup]} already exists. no backup created"
       end
 
-      return Rake.cp(misc_sshd_path, local_sshd_path) if opts[:testing]
+      return Rake.cp(misc_sshd_path, opts[:local_sshd_config]) if opts[:testing]
 
       # This method must be run this way due to it requiring root privileges
-      Rake.sh("sudo cp #{misc_sshd_path} #{local_sshd_path}")
+      Rake.sh("sudo cp #{misc_sshd_path} #{opts[:local_sshd_config]}")
     end
 
     # Deciphers between files & directories

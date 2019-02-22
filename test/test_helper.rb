@@ -14,7 +14,7 @@ DEST_DIR = File.join(TEST_ROOT, 'dest_dir')
 TEST_CONFIG_FILES = File.join(TEST_ROOT, 'config_files')
 TEST_DOTFILES = File.join(TEST_CONFIG_FILES, 'dotfiles')
 TEST_MISC_FILES = File.join(TEST_CONFIG_FILES, 'miscfiles')
-TEST_LOCAL_SSH_DIR = File.join(DEST_DIR, 'ssh')
+TEST_LOCAL_SSHD_CONFIG = File.join(DEST_DIR, 'sshd_config')
 
 LOG_DIR = File.join(TEST_ROOT, 'logs')
 
@@ -42,12 +42,13 @@ def test_options
     dest_dir: DEST_DIR,
     dotfiles_dir: TEST_DOTFILES,
     misc_files_dir: TEST_MISC_FILES,
-    local_ssh_dir: TEST_LOCAL_SSH_DIR,
+    local_sshd_config: TEST_LOCAL_SSHD_CONFIG,
     verbose: true,
     testing: true
   }
 end
 
+# @param [File] Name of log file
 # @return [Logger] Returns a log file
 def create_logger(filename)
   FileUtils.mkdir_p(LOG_DIR) unless File.exist?(LOG_DIR)

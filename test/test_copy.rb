@@ -84,8 +84,7 @@ class TestCopy < Minitest::Test
   end
 
   def test_copy_sshd_config_works_in_testing_environment
-    add_dirs(DEST_DIR, test_options[:local_ssh_dir])
-    add_files(test_options[:local_ssh_dir], 'sshd_config')
+    add_files(DEST_DIR, 'sshd_config')
     add_files(TEST_MISC_FILES, 'sshd_config')
 
     assert_empty Dir.children(test_options[:backup_dir])
@@ -94,7 +93,7 @@ class TestCopy < Minitest::Test
 
     refute_empty Dir.children(test_options[:backup_dir])
     assert_includes Dir.children(test_options[:backup_dir]), 'sshd_config.orig'
-    assert_includes Dir.children(test_options[:local_ssh_dir]), 'sshd_config'
+    assert_includes Dir.children(test_options[:dest_dir]), 'sshd_config'
   end
 
   def test_copy_gnome_settings_properly_errors
@@ -120,11 +119,28 @@ class TestCopy < Minitest::Test
     dotfiles = convert_to_dotfiles(TEST_FILES, TEST_DIRS)
 
     add_files(TEST_DOTFILES, TEST_FILES)
-    add_dirs(TEST_DOTFILES, TEST_DIRS)
+    add_files(TEST_MISC_FILES, 'sshd_config')
+
     log_methods(LOGGER) { VpsCli::Copy.all(test_options) }
 
     assert_empty Dir.children(BACKUP_DIR)
     dotfiles.each { |file| assert_includes Dir.children(DEST_DIR), file }
+
+    # reset
+    rm_dirs(BASE_DIRS)
+    mk_dirs(BASE_DIRS)
+
+    add_files(TEST_DOTFILES, TEST_FILES)
+    add_files(TEST_MISC_FILES, 'sshd_config')
+    add_files(DEST_DIR, 'sshd_config')
+    add_dirs(TEST_DOTFILES, TEST_DIRS)
+
+    log_methods(LOGGER) { VpsCli::Copy.all(test_options) }
+
+    # Will create a backup due to sshd_config having to exist
+    assert_includes Dir.children(BACKUP_DIR), 'sshd_config.orig'
+    assert_equal Dir.children(BACKUP_DIR).size, 1
+
 
     rm_dirs(BASE_DIRS)
     mk_dirs(BASE_DIRS)
@@ -133,6 +149,9 @@ class TestCopy < Minitest::Test
     add_dirs(TEST_DOTFILES, TEST_DIRS)
     add_files(DEST_DIR, convert_to_dotfiles(TEST_FILES))
     add_dirs(DEST_DIR, convert_to_dotfiles(TEST_DIRS))
+    add_files(TEST_MISC_FILES, 'sshd_config')
+    add_files(DEST_DIR, 'sshd_config')
+
     log_methods(LOGGER) { VpsCli::Copy.all(test_options) }
 
     refute_empty Dir.children(BACKUP_DIR)
