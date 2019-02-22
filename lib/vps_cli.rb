@@ -21,16 +21,11 @@ module VpsCli
   # Project's Root Directory
   ROOT = File.expand_path(File.expand_path('../', __dir__))
 
-
-  # Project's files directory containing configuration files to include
-  #   Dotfiles and non dotfiles
-  FILES_DIR = File.join(ROOT, 'config_files')
-
   # Projects Dotfiles directory
-  DOTFILES_DIR = File.join(FILES_DIR, 'dotfiles')
+  DOTFILES_DIR = File.join(ROOT, 'dotfiles')
 
   # Miscellaneous files like sshd_config
-  MISC_FILES_DIR = File.join(FILES_DIR, 'miscfiles')
+  MISC_FILES_DIR = File.join(ROOT, 'miscfiles')
 
   # Directory of backup files
   BACKUP_FILES_DIR = File.join(Dir.home, 'backup_files')
@@ -57,7 +52,6 @@ module VpsCli
     opts[:dotfiles_dir] ||= DOTFILES_DIR
     opts[:misc_files_dir] ||= MISC_FILES_DIR
     opts[:local_ssh_dir] ||= '/etc/ssh'
-    opts[:local_sshd_path] ||= '/etc/ssh/sshd_config'
     opts[:verbose] ||= false
 
     opts

@@ -13,7 +13,8 @@ module VpsCli
     # @option opts [Dir] :dest_dir ('Dir.home') Where to save the dotfiles to
     # @option opts [Dir] :backup_dir ('$HOME/backup_files') Where to backup
     #   currently existing dotfiles
-    # @option opts [Dir] :local_ssh_dir ('/etc/ssh') directory containing sshd_config
+    # @option opts [Dir] :local_ssh_dir ('/etc/ssh')
+    #   directory containing sshd_config
     # @option opts [Boolean] :verbose (false)
     #   Whether or not to print additional info
     # @option opts [Boolean] :testing (false) used internally for minitest
@@ -43,7 +44,7 @@ module VpsCli
     # @option opts [Dir] :backup_dir ('$HOME/backup_files)
     #   Directory to place your original dotfiles.
     # @option opts [Dir] :dest_dir ('$HOME') Where to place the dotfiles,
-    # @option opts [Dir] :dotfiles_dir ('/path/to/vps_cli/config_files')
+    # @option opts [Dir] :dotfiles_dir ('/path/to/vps_cli/dotfiles')
     #   Location of files to be copied
     def self.dotfiles(opts = {})
       opts = VpsCli.create_options(opts)
@@ -88,7 +89,6 @@ module VpsCli
       return unless sshd_copyable?(opts[:local_ssh_dir])
 
       opts[:sshd_backup] ||= File.join(opts[:backup_dir], 'sshd_config.orig')
-      # local_sshd_path ||= File.join(opts[:local_ssh_dir], 'sshd_config')
       local_sshd_path = File.join(opts[:local_ssh_dir], 'sshd_config')
 
       misc_sshd_path = File.join(opts[:misc_files_dir], 'sshd_config')
@@ -99,16 +99,12 @@ module VpsCli
         puts "#{opts[:sshd_backup]} already exists. no backup created"
       end
 
-      if opts[:testing]
-        Rake.cp(misc_sshd_path, local_sshd_path)
-      else
-        # This method must be run this way due to it requiring root privileges
-        Rake.sh("sudo cp #{misc_sshd_path} #{local_sshd_path}")
-      end
+      return Rake.cp(misc_sshd_path, local_sshd_path) if opts[:testing]
+
+      # This method must be run this way due to it requiring root privileges
+      Rake.sh("sudo cp #{misc_sshd_path} #{local_sshd_path}")
     end
 
-
-    ##
     # Deciphers between files & directories
     # @param config_file [File] The file from the repo to be copied locally
     # @param local_file [File] The file that is currently present locally
@@ -122,8 +118,6 @@ module VpsCli
       end
     end
 
-
-    ##
     # Copies gnome terminal via dconf
     # @see https://wiki.gnome.org/Projects/dconf dconf wiki
     # @param backup_dir [File] Where to save the current gnome terminal settings
