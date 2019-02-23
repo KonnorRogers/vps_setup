@@ -93,7 +93,7 @@ class TestCopy < Minitest::Test
 
     refute_empty Dir.children(test_options[:backup_dir])
     assert_includes Dir.children(test_options[:backup_dir]), 'sshd_config.orig'
-    assert_includes Dir.children(test_options[:dest_dir]), 'sshd_config'
+    assert_includes Dir.children(test_options[:local_dir]), 'sshd_config'
   end
 
   def test_copy_gnome_settings_properly_errors
