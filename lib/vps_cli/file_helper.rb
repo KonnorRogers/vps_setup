@@ -3,7 +3,7 @@
 require 'rake'
 
 # Used for copying files, making directories, copying directories etc
-module FileHelper
+module CopyHelper
   # Helper method for making multiple directories
   # @param [Dir, Array<Dir>] Creates either one, or multiple directories
   def self.mkdirs(*dirs)

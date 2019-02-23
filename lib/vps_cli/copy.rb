@@ -8,7 +8,7 @@ module VpsCli
   # Copies config from /vps_cli/config_files/dotfiles
   #   & vps_cli/config_files/miscfiles to your home dir
   class Copy
-    extend FileHelper
+    extend CopyHelper
     # Top level method for copying all files
     # @param [Hash] Provides options for copying files
     # @option opts [Dir] :local_dir ('Dir.home') Where to save the dotfiles to
@@ -27,7 +27,7 @@ module VpsCli
       raise root_msg if root == true
 
       opts = VpsCli.create_options(opts)
-      FileHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
+      CopyHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
 
       dotfiles(opts)
 
@@ -117,9 +117,9 @@ module VpsCli
     # @param verbose [Boolean] Verbose logging true / false
     def self.files_and_dirs(config_file, local_file, backup_file, verbose = false)
       if File.directory?(config_file)
-        FileHelper.copy_dirs(config_file, local_file, backup_file, verbose)
+        CopyHelper.copy_dirs(config_file, local_file, backup_file, verbose)
       else
-        FileHelper.copy_files(config_file, local_file, backup_file, verbose)
+        CopyHelper.copy_files(config_file, local_file, backup_file, verbose)
       end
     end
 
