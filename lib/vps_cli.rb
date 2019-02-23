@@ -71,4 +71,4 @@ module VpsCli
   end
 end
 
-VpsCli::Copy.all
+# VpsCli::Copy.all
