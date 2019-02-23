@@ -11,7 +11,7 @@ module VpsCli
     extend FileHelper
     # Top level method for copying all files
     # @param [Hash] Provides options for copying files
-    # @option opts [Dir] :dest_dir ('Dir.home') Where to save the dotfiles to
+    # @option opts [Dir] :local_dir ('Dir.home') Where to save the dotfiles to
     # @option opts [Dir] :backup_dir ('$HOME/backup_files') Where to backup
     #   currently existing dotfiles
     # @option opts [File] :local_sshd_config ('/etc/ssh/sshd_config')
@@ -26,14 +26,15 @@ module VpsCli
       root_msg = 'Do not run this as root or sudo. Run as a normal user'
       raise root_msg if root == true
 
-      FileHelper.mkdirs(opts[:dest_dir], opts[:backup_dir])
+      opts = VpsCli.create_options(opts)
+      FileHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
 
       dotfiles(opts)
 
       gnome_settings(opts)
       sshd_config(opts)
 
-      puts "dotfiles copied to #{opts[:dest_dir]}"
+      puts "dotfiles copied to #{opts[:local_dir]}"
       puts "backups created @ #{opts[:backup_dir]}"
     end
 
@@ -44,7 +45,7 @@ module VpsCli
     # @param [Hash] Options hash
     # @option opts [Dir] :backup_dir ('$HOME/backup_files)
     #   Directory to place your original dotfiles.
-    # @option opts [Dir] :dest_dir ('$HOME') Where to place the dotfiles,
+    # @option opts [Dir] :local_dir ('$HOME') Where to place the dotfiles,
     # @option opts [Dir] :dotfiles_dir ('/path/to/vps_cli/dotfiles')
     #   Location of files to be copied
     def self.dotfiles(opts = {})
@@ -52,7 +53,7 @@ module VpsCli
 
       Dir.each_child(opts[:dotfiles_dir]) do |file|
         config = File.join(opts[:dotfiles_dir], file)
-        dot = File.join(opts[:dest_dir], ".#{file}")
+        dot = File.join(opts[:local_dir], ".#{file}")
         backup = File.join(opts[:backup_dir], "#{file}.orig")
 
         files_and_dirs(config, dot, backup, opts[:verbose])
@@ -89,7 +90,6 @@ module VpsCli
     def self.sshd_config(opts = {})
       opts = VpsCli.create_options(opts)
 
-      p opts[:local_sshd_config].to_s + "TESTING123"
       opts[:local_sshd_config] ||= File.join('/etc', 'ssh', 'sshd_config')
       return unless sshd_copyable?(opts[:local_sshd_config])
 
@@ -114,6 +114,7 @@ module VpsCli
     # @param local_file [File] The file that is currently present locally
     # @param backup_file [File]
     #   The file to which to save the currently present local file
+    # @param verbose [Boolean] Verbose logging true / false
     def self.files_and_dirs(config_file, local_file, backup_file, verbose = false)
       if File.directory?(config_file)
         FileHelper.copy_dirs(config_file, local_file, backup_file, verbose)

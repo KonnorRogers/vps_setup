@@ -39,7 +39,7 @@ end
 def test_options
   {
     backup_dir: BACKUP_DIR,
-    dest_dir: DEST_DIR,
+    local_dir: DEST_DIR,
     dotfiles_dir: TEST_DOTFILES,
     misc_files_dir: TEST_MISC_FILES,
     local_sshd_config: TEST_LOCAL_SSHD_CONFIG,

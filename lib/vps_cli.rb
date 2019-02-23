@@ -28,10 +28,11 @@ module VpsCli
   DOTFILES_DIR = File.join(FILES_DIR, 'dotfiles')
 
   # Miscellaneous files like sshd_config
-  MISC_FILES_DIR = File.join(FILES_DIR, 'miscfiles')
+  MISC_FILES_DIR = File.join(FILES_DIR, 'misc_files')
 
   # Directory of backup files
   BACKUP_FILES_DIR = File.join(Dir.home, 'backup_files')
+
   # @!endgroup
 
   class << self
@@ -49,14 +50,25 @@ module VpsCli
   # Take a hash due to people being able to set their own directories
   # @param [Hash] Takes the hash to modify
   # @return [Hash] Returns the options hash with the various options
+  # Possible options:
+  #   :backup_dir
+  #   :local_dir
+  #   :dotfiles_dir
+  #   :misc_files_dir
+  #   :local_sshd_config
+  #   :verbose
+  #   :testing
   def self.create_options(opts)
     opts[:backup_dir] ||= BACKUP_FILES_DIR
-    opts[:dest_dir] ||= Dir.home
+    opts[:local_dir] ||= Dir.home
     opts[:dotfiles_dir] ||= DOTFILES_DIR
     opts[:misc_files_dir] ||= MISC_FILES_DIR
     opts[:local_sshd_config] ||= '/etc/ssh/sshd_config'
     opts[:verbose] ||= false
+    opts[:testing] ||= false
 
     opts
   end
 end
+
+VpsCli::Copy.all
