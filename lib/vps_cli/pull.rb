@@ -42,8 +42,11 @@ module VpsCli
     def self.dotfiles(opts = {})
       opts = VpsCli.create_options(opts)
 
-      Dir.each_child(opts[:dotfiles_dir]) do
-|file|
+      convert_to_dotfile = proc { |file| ".#{file}" }
+
+      Dir.each_child(opts[:dotfiles_dir]) do |file|
+        dotfile = convert_to_dotfile.call(file)
+
 
       end
     end

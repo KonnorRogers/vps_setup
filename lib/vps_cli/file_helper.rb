@@ -27,7 +27,6 @@ module FileHelper
     Rake.cp(config_file, dot_file)
   end
 
-  ##
   # Copies directories instead of file
   # @param config_file [Dir] The Dir from the repo to be copied locally
   # @param dot_file [Dir] The Dir that is currently present locally
@@ -48,7 +47,6 @@ module FileHelper
     end
   end
 
-  ##
   # Checks that a backup file does not exist
   # @param file [File] File to be searched for
   # @param verbose [Boolean] Will print to console if verbose == true
@@ -60,7 +58,6 @@ module FileHelper
     false
   end
 
-  ##
   # Helper method for determining whether or not to create a backup file
   # @param local_file [File] current dot file
   # @param backup_file [File] Where to back the dot file up to
@@ -74,7 +71,6 @@ module FileHelper
     true
   end
 
-  ##
   # Default way of checking if the dotfile already exists
   # @param file [File] File to be searched for
   # @param verbose [Boolean] Will print to console if verbose == true
