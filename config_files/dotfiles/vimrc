@@ -13,39 +13,31 @@ endif
 
     
 call plug#begin("~/.vim/plugged")
-    "Fugitive Vim Github Wrapper
-    Plug 'tpope/vim-fugitive'
-    "add lightline
-    Plug 'itchyny/lightline.vim'
-    Plug 'flazz/vim-colorschemes'
+  " colorscheme
+  Plug 'tyrannicaltoucan/vim-quantum'
 
-    if has('nvim')
-        "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
-        Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-        "linting
-        Plug 'w0rp/ale'
-        "nerdtree file explorer
-        Plug 'scrooloose/nerdtree'
-        "tpope plugins
-        Plug 'vim-ruby/vim-ruby'
-        Plug 'tpope/vim-bundler'
-        Plug 'tpope/vim-endwise'
-        Plug 'tpope/vim-rails'
-        Plug 'tpope/vim-commentary'
-        Plug 'tpope/vim-surround'
-        Plug 'tpope/vim-ragtag'
+  "tpope plugins
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-bundler'
+  Plug 'tpope/vim-endwise'
+  Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-ragtag'
 
-        Plug 'jiangmiao/auto-pairs'
-        Plug 'ngmy/vim-rubocop'
+  Plug 'ngmy/vim-rubocop'
 
-        " Snippets are separated from the engine. Add this if you want them:
-        " Track the engine.
-        Plug 'SirVer/ultisnips'
+  " Snippets are separated from the engine. Add this if you want them:
+  " Track the engine.
+  Plug 'SirVer/ultisnips'
 
-        "Devicons for nerdtree
-        Plug 'ryanoasis/vim-devicons'
-        Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-    endif
+  if has('nvim')
+    "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    "linting
+    Plug 'w0rp/ale'
+  endif
 call plug#end()
 
 set expandtab       "expand tabs into spaces
@@ -79,11 +71,14 @@ set hidden
 set lazyredraw
 set guifont=DejavuSansMono\ Nerd\ Font\ 12
 
+" Turn on omnicompletion
+set omnifunc=syntaxcomplete#Complete
+
+set tags=./tags
+
 if has('nvim') || has('termguicolors')
   set termguicolors
 endif
-
-set t_Co=256
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -111,35 +106,39 @@ autocmd BufWritePre *.rb :%s/\s\+$//e
 " set spacing on ruby files
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
-colorscheme apprentice
-let g:lightline = { 
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \    'left': [ [ 'mode', 'paste' ],
-      \              [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
-      \  },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \   }
-      \ }
+let g:quantum_black=1
+colorscheme quantum
 
-" loading the plugin
-let g:webdevicons_enable = 1
-" adding the flags to NERDTree
-let g:webdevicons_enable_nerdtree = 1
+" use default
+set laststatus=2
+set statusline=
+set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 
-" ctrl-n for nerdtree toggle
-map <C-n> :NERDTreeToggle<CR>
-map <Leader>r :NERDTreeRefreshRoot<Esc>
-let NERDTreeShowHidden = 1
+" Using splits
+map <Leader>s :split<CR>
+
+" netrw explore
+map <C-e> :Explore<CR>
+
+" editing vim
+map <Leader>ev :split $HOME/.vimrc<CR>
+map <Leader>rv :source $MYVIMRC<CR>
+
+" saving made eaiser
+map <Leader>ww :w!<CR>
+map <Leader>wq :wq!<CR>
+
+" quit
+map <Leader>qq :q!<CR>
 
 "fzf mapping
-map <Leader>t :FZF <Esc>
-set laststatus=2
+map <Leader>f :FZF <Esc>
 
 " rubocop mapping
+nmap <Leader>rr :RuboCop<CR>
 nmap <Leader>ra :RuboCop -a<CR>
 
 " ragtag recommended keybinding
@@ -147,8 +146,11 @@ inoremap <M-o> <Esc>o
 inoremap <C-j> <Down>
 let g:ragtag_global_maps = 1 "available globally
 
-" Rebinds omnicomplete to ctrl-x ctrl-k to not interfere with snippet jumping
-inoremap <c-x><c-k> <c-x><c-k>
+" Rebinds ctrl-x ctrl-k to not interfere with snippet jumping
+inoremap <c-x><c-k> <c-k><c-x>
+
+" tag comletion
+inoremap <c-x><c-]> <c-]>
 
 " Ultisnips config
 let g:UltiSnipsSnippetDirectories=[$HOME.'/ParamagicianUltiSnips']
