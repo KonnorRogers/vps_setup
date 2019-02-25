@@ -16,10 +16,9 @@ module VpsCli
     #   ('/path/to/vps_cli/config_files/dotfiles') Where to save the dotfiles to
     # @option opts [Dir] :misc_files_dir
     #   ('/path/to/vps_cli/config_files/misc_files')
-    # @option opts [Dir] :backup_dir ('$HOME/backup_files') Where to backup
-    #   currently existing dotfiles
+    #   Location of misc_files in remote directory IE: git repo
     # @option opts [File] :local_sshd_config ('/etc/ssh/sshd_config')
-    #   directory containing sshd_config
+    #   local directory containing sshd_config that currently exists
     # @option opts [Boolean] :verbose (false)
     #   Whether or not to print additional info
 
@@ -47,20 +46,38 @@ module VpsCli
     def self.dotfiles(opts = {})
       opts = VpsCli.create_options(opts)
 
-      Dir.each_child(opts[:dotfiles_dir]) do |remote_file|
-        Dir.each_child(opts[:local_dir]) do |local_file|
-          # keep iterating until the remote_file and local file are the same
+      common_dotfiles(opts[:dotfiles_dir],
+                      opts[:local_dir]) do |remote_file, local_file|
+        copy_file_or_dir(remote_file, local_file, opts[:verbose])
+      end
+    end
+
+    # Puts you at the point of a directory where the
+    # local file and dotfile are the same allowing you to
+    # copy them
+    def self.common_dotfiles(dotfiles_dir, local_dir)
+      Dir.each_child(dotfiles_dir) do |remote_file|
+        Dir.each_child(local_dir) do |local_file|
           next unless local_file == ".#{remote_file}"
 
-          if File.directory?(remote_file)
-            Rake.cp_r(local_file, remote_file)
-          else
-            Rake.cp(local_file, remote_file)
-          end
-
-          puts "Copying #{local_file} to #{remote_file}"
+          yield(remote_file, local_file)
         end
       end
+    end
+
+    # Differentiates between files and dirs to appropriately copy them
+    # Uses Rake.cp_r for directories, uses Rake.cp for simple files
+    # @param orig_file [File, Dir] File or Dir you're copying from
+    # @param new_file [File, Dir] File or Dir you're copying to
+    # @param verbose [Boolean]
+    def self.copy_file_or_dir(orig_file, new_file, verbose)
+      if File.directory?(orig_file) && File.directory?(new_file)
+        Rake.cp_r(orig_file, new_file)
+      else
+        Rake.cp(orig_file, new_file)
+      end
+
+      puts "Copying #{orig_file} to #{new_file}" if verbose
     end
 
     # @see VpsCli#create_options for the defaults
@@ -75,8 +92,10 @@ module VpsCli
     def self.sshd_config(opts = {})
       opts = VpsCli.create_options(opts)
 
-      Rake.cp(opts[:local_sshd_config], opts[:misc_files_dir])
-      puts "Copied #{opts[:local_sshd_config]} to #{opts[:misc_files_dir]}"
+      local = opts[:local_sshd_config]
+      remote = opts[:misc_files_dir]
+
+      copy_file_or_dir(remote, local, opts[:verbose])
     end
 
     # @see VpsCli#create_options for defaults

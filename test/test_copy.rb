@@ -5,7 +5,7 @@ require 'test_helper'
 LOGGER = create_logger(__FILE__)
 TEST_FILES = %w[vimrc pryrc zshrc].freeze
 TEST_DIRS = %w[config dir2].freeze
-BASE_DIRS = [BACKUP_DIR, DEST_DIR, TEST_DOTFILES, TEST_MISC_FILES].freeze
+BASE_DIRS = [BACKUP_DIR, LOCAL_DIR, TEST_DOTFILES, TEST_MISC_FILES].freeze
 # The goal of testing all of this is to not touch the base config_files
 # And to keep the test suite entirely independent
 class TestCopy < Minitest::Test
@@ -32,10 +32,10 @@ class TestCopy < Minitest::Test
 
     # Test that dirs and files were copied
     dotfiles = convert_to_dotfiles(TEST_FILES)
-    dotfiles.each { |file| assert_includes Dir.children(DEST_DIR), file }
+    dotfiles.each { |file| assert_includes Dir.children(LOCAL_DIR), file }
 
     dotdirs = convert_to_dotfiles(TEST_DIRS)
-    dotdirs.each { |dir| assert_includes Dir.children(DEST_DIR), dir }
+    dotdirs.each { |dir| assert_includes Dir.children(LOCAL_DIR), dir }
   end
 
   def test_copy_dotfiles_copies_directories_properly
@@ -51,12 +51,12 @@ class TestCopy < Minitest::Test
     # No backups should be created
     assert Dir.children(BACKUP_DIR).empty?
 
-    dest_config_dir = File.join(DEST_DIR, ".#{TEST_DIRS[0]}")
+    dest_config_dir = File.join(LOCAL_DIR, ".#{TEST_DIRS[0]}")
 
     TEST_DIRS.each do |dir|
       # Config turns to .config etc
       dot_dir = ".#{dir}"
-      assert_includes Dir.children(DEST_DIR), dot_dir
+      assert_includes Dir.children(LOCAL_DIR), dot_dir
 
       next unless dir == TEST_DIRS[0]
 
@@ -69,9 +69,9 @@ class TestCopy < Minitest::Test
 
   def test_creates_backups_of_dotfiles
     dotfiles = convert_to_dotfiles(TEST_FILES)
-    add_files(DEST_DIR, dotfiles)
+    add_files(LOCAL_DIR, dotfiles)
 
-    refute_empty Dir.children(DEST_DIR)
+    refute_empty Dir.children(LOCAL_DIR)
 
     log_methods(LOGGER) { VpsCli::Copy.dotfiles(test_options) }
 
@@ -84,7 +84,7 @@ class TestCopy < Minitest::Test
   end
 
   def test_copy_sshd_config_works_in_testing_environment
-    add_files(DEST_DIR, 'sshd_config')
+    add_files(LOCAL_DIR, 'sshd_config')
     add_files(TEST_MISC_FILES, 'sshd_config')
 
     assert_empty Dir.children(test_options[:backup_dir])
@@ -124,7 +124,7 @@ class TestCopy < Minitest::Test
     log_methods(LOGGER) { VpsCli::Copy.all(test_options) }
 
     assert_empty Dir.children(BACKUP_DIR)
-    dotfiles.each { |file| assert_includes Dir.children(DEST_DIR), file }
+    dotfiles.each { |file| assert_includes Dir.children(LOCAL_DIR), file }
 
     # reset
     rm_dirs(BASE_DIRS)
@@ -132,7 +132,7 @@ class TestCopy < Minitest::Test
 
     add_files(TEST_DOTFILES, TEST_FILES)
     add_files(TEST_MISC_FILES, 'sshd_config')
-    add_files(DEST_DIR, 'sshd_config')
+    add_files(LOCAL_DIR, 'sshd_config')
     add_dirs(TEST_DOTFILES, TEST_DIRS)
 
     log_methods(LOGGER) { VpsCli::Copy.all(test_options) }
@@ -147,10 +147,10 @@ class TestCopy < Minitest::Test
 
     add_files(TEST_DOTFILES, TEST_FILES)
     add_dirs(TEST_DOTFILES, TEST_DIRS)
-    add_files(DEST_DIR, convert_to_dotfiles(TEST_FILES))
-    add_dirs(DEST_DIR, convert_to_dotfiles(TEST_DIRS))
+    add_files(LOCAL_DIR, convert_to_dotfiles(TEST_FILES))
+    add_dirs(LOCAL_DIR, convert_to_dotfiles(TEST_DIRS))
     add_files(TEST_MISC_FILES, 'sshd_config')
-    add_files(DEST_DIR, 'sshd_config')
+    add_files(LOCAL_DIR, 'sshd_config')
 
     log_methods(LOGGER) { VpsCli::Copy.all(test_options) }
 

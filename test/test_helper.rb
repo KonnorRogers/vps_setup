@@ -10,11 +10,11 @@ require 'logger'
 TEST_ROOT = File.expand_path(__dir__)
 
 BACKUP_DIR = File.join(TEST_ROOT, 'backup_dir')
-DEST_DIR = File.join(TEST_ROOT, 'dest_dir')
+LOCAL_DIR = File.join(TEST_ROOT, 'local_dir')
 TEST_CONFIG_FILES = File.join(TEST_ROOT, 'config_files')
 TEST_DOTFILES = File.join(TEST_CONFIG_FILES, 'dotfiles')
 TEST_MISC_FILES = File.join(TEST_CONFIG_FILES, 'miscfiles')
-TEST_LOCAL_SSHD_CONFIG = File.join(DEST_DIR, 'sshd_config')
+TEST_LOCAL_SSHD_CONFIG = File.join(LOCAL_DIR, 'sshd_config')
 
 LOG_DIR = File.join(TEST_ROOT, 'logs')
 
@@ -39,7 +39,7 @@ end
 def test_options
   {
     backup_dir: BACKUP_DIR,
-    local_dir: DEST_DIR,
+    local_dir: LOCAL_DIR,
     dotfiles_dir: TEST_DOTFILES,
     misc_files_dir: TEST_MISC_FILES,
     local_sshd_config: TEST_LOCAL_SSHD_CONFIG,
