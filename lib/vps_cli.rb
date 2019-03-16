@@ -70,6 +70,3 @@ module VpsCli
     opts
   end
 end
-
-# VpsCli::Copy.all
-VpsCli::Pull.all
