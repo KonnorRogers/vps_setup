@@ -72,3 +72,4 @@ module VpsCli
 end
 
 # VpsCli::Copy.all
+VpsCli::Pull.all

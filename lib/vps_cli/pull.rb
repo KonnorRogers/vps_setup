@@ -48,7 +48,9 @@ module VpsCli
 
       common_dotfiles(opts[:dotfiles_dir],
                       opts[:local_dir]) do |remote_file, local_file|
-        copy_file_or_dir(remote_file, local_file, opts[:verbose])
+        p remote_file
+        p local_file
+        copy_file_or_dir(local_file, remote_file, opts[:verbose])
       end
     end
 
@@ -60,6 +62,8 @@ module VpsCli
         Dir.each_child(local_dir) do |local_file|
           next unless local_file == ".#{remote_file}"
 
+          remote_file = File.join(dotfiles_dir, remote_file)
+          local_file = File.join(local_dir, local_file)
           yield(remote_file, local_file)
         end
       end
@@ -70,14 +74,19 @@ module VpsCli
     # @param orig_file [File, Dir] File or Dir you're copying from
     # @param new_file [File, Dir] File or Dir you're copying to
     # @param verbose [Boolean]
-    def self.copy_file_or_dir(orig_file, new_file, verbose)
+    def self.copy_file_or_dir(orig_file, new_file)
       if File.directory?(orig_file) && File.directory?(new_file)
-        Rake.cp_r(orig_file, new_file)
+        # Rake.cp_r(orig_file, new_file)
+        Dir.each_child(orig_file) do |o_file|
+          Dir.each_child(new_file) do |n_file|
+            next unless o_file == n_file
+
+            Rake.cp(o_file, n_file)
+          end
+        end
       else
         Rake.cp(orig_file, new_file)
       end
-
-      puts "Copying #{orig_file} to #{new_file}" if verbose
     end
 
     # @see VpsCli#create_options for the defaults
@@ -95,7 +104,7 @@ module VpsCli
       local = opts[:local_sshd_config]
       remote = opts[:misc_files_dir]
 
-      copy_file_or_dir(remote, local, opts[:verbose])
+      copy_file_or_dir(local, remote, opts[:verbose])
     end
 
     # @see VpsCli#create_options for defaults
