@@ -48,9 +48,7 @@ module VpsCli
 
       common_dotfiles(opts[:dotfiles_dir],
                       opts[:local_dir]) do |remote_file, local_file|
-        p remote_file
-        p local_file
-        copy_file_or_dir(local_file, remote_file, opts[:verbose])
+        copy_file_or_dir(local_file, remote_file)
       end
     end
 
@@ -81,7 +79,13 @@ module VpsCli
           Dir.each_child(new_file) do |n_file|
             next unless o_file == n_file
 
-            Rake.cp(o_file, n_file)
+
+            o_file = File.join(File.expand_path(orig_file), o_file)
+            n_file = File.expand_path(new_file)
+
+            p o_file
+            p n_file
+            Rake.cp_r(o_file, n_file)
           end
         end
       else
@@ -104,7 +108,7 @@ module VpsCli
       local = opts[:local_sshd_config]
       remote = opts[:misc_files_dir]
 
-      copy_file_or_dir(local, remote, opts[:verbose])
+      copy_file_or_dir(local, remote)
     end
 
     # @see VpsCli#create_options for defaults
