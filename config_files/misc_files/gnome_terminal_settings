@@ -1,26 +1,44 @@
-[legacy/profiles:]			
- list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9']			
- default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'			
+[legacy/profiles:]
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27']
+default='7f232c7e-e785-4e40-88aa-a9e585ee1f27'
 
-    [legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]			
- foreground-color='rgb(188,188,188)'			
- cjk-utf8-ambiguous-width='narrow'			
- visible-name='apprentice'			
- login-shell=true			
- palette=['rgb(28,28,28)', 'rgb(175,95,95)', 'rgb(95,135,95)', 'rgb(135,135,95)', 'rgb(95,135,175)', 'rgb(95,95,135)', 'rgb(95,135,135)', 'rgb(108,108,108)', 'rgb(68,68,68)', 'rgb(255,135,0)', 'rgb(135,175,135)', 'rgb(255,255,175)', 'rgb(143,175,215)', 'rgb(135,135,175)', 'rgb(95,175,175)', 'rgb(255,255,255)']			
- default-size-rows=26			
- default-size-columns=80			
- cursor-shape='underline'			
- use-custom-command=false			
- use-theme-colors=false			
- use-system-font=false			
- font='DejaVu Sans Mono 12'			
- use-theme-transparency=false			
- bold-color-same-as-fg=true			
- cursor-blink-mode='off'			
- background-color='rgb(38,38,38)'			
- audible-bell=false			
- text-blink-mode='never'			
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+foreground-color='rgb(188,188,188)'
+cjk-utf8-ambiguous-width='narrow'
+visible-name='apprentice'
+login-shell=true
+palette=['rgb(28,28,28)', 'rgb(175,95,95)', 'rgb(95,135,95)', 'rgb(135,135,95)', 'rgb(95,135,175)', 'rgb(95,95,135)', 'rgb(95,135,135)', 'rgb(108,108,108)', 'rgb(68,68,68)', 'rgb(255,135,0)', 'rgb(135,175,135)', 'rgb(255,255,175)', 'rgb(143,175,215)', 'rgb(135,135,175)', 'rgb(95,175,175)', 'rgb(255,255,255)']
+default-size-rows=26
+default-size-columns=80
+cursor-shape='underline'
+use-custom-command=false
+use-theme-colors=false
+use-system-font=false
+font='DejaVu Sans Mono 13'
+use-theme-transparency=false
+bold-color-same-as-fg=true
+cursor-blink-mode='off'
+background-color='rgb(38,38,38)'
+audible-bell=false
+text-blink-mode='never'
 
-    [legacy]			
- schema-version=uint32 3
+[legacy/profiles:/:7f232c7e-e785-4e40-88aa-a9e585ee1f27]
+foreground-color='rgb(188,190,192)'
+visible-name='quantum'
+login-shell=true
+palette=['rgb(71,70,70)', 'rgb(221,113,134)', 'rgb(135,187,124)', 'rgb(213,184,117)', 'rgb(112,172,229)', 'rgb(164,138,221)', 'rgb(105,197,206)', 'rgb(188,190,192)', 'rgb(106,108,108)', 'rgb(237,132,153)', 'rgb(151,213,137)', 'rgb(233,203,136)', 'rgb(135,191,245)', 'rgb(185,160,239)', 'rgb(123,219,228)', 'rgb(208,210,211)']
+bold-is-bright=true
+cursor-background-color='rgb(208,210,211)'
+cursor-shape='underline'
+cursor-colors-set=true
+use-theme-colors=false
+use-system-font=false
+cursor-foreground-color='rgb(208,210,211)'
+font='DejaVu Sans Mono 13'
+cursor-blink-mode='off'
+background-color='rgb(33,33,33)'
+audible-bell=false
+text-blink-mode='never'
+
+[legacy]
+schema-version=uint32 3
