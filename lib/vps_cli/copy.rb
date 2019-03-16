@@ -138,7 +138,7 @@ module VpsCli
 
       Rake.sh("dconf dump #{gnome_path} > #{backup}")
 
-      Rake.sh("dconf load #{gnome_path} < #{FILES_DIR}/gnome_terminal_settings")
+      Rake.sh("dconf load #{gnome_path} < #{MISC_FILES_DIR}/gnome_terminal_settings")
     rescue RuntimeError => error
       puts 'something went wrong with gnome, continuing on' if opts[:verbose]
       VpsCli.errors << error

@@ -70,3 +70,5 @@ module VpsCli
     opts
   end
 end
+
+VpsCli::Copy.all(local_dir: File.join(Dir.home, "test_home_dir"))
