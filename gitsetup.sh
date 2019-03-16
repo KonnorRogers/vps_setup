@@ -1,3 +1,5 @@
+## This is taken from Tpope for merging tags ##
+
 set -e
 PATH="/usr/local/bin:$PATH"
 dir="`git rev-parse --git-dir`"
