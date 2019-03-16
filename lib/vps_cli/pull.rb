@@ -136,5 +136,14 @@ module VpsCli
     else
       puts "Successfully dumped Gnome into #{remote_settings}" if opts[:verbose]
     end
+
+    # Method intended for dealing with the way dconf will automatically
+    # rewrite a file and make it empty
+    # @param remote_settings [File] File located in your repo
+    # @param orig_remote_contents [String] The String to be written to
+    # remote settings
+    def self.reset_to_original(remote_settings, orig_remote_contents)
+      File.write(remote_settings, orig_remote_contents)
+    end
   end
 end
