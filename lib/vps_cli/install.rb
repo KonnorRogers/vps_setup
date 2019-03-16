@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # require 'packages'
-require 'os'
 
 module VpsCli
   OMZ_DIR = File.join(Dir.home, '.oh-my-zsh')

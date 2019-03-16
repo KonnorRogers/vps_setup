@@ -5,16 +5,16 @@ require 'test_helper'
 class TestPackages < Minitest::Test
   def test_each_constant_exists
     packages = [
-      VpsSetup::Packages::LANGUAGES,
-      VpsSetup::Packages::TOOLS,
-      VpsSetup::Packages::ADDED_REPOS,
-      VpsSetup::Packages::GEMS
+      VpsCli::Packages::LANGUAGES,
+      VpsCli::Packages::TOOLS,
+      VpsCli::Packages::ADDED_REPOS,
+      VpsCli::Packages::GEMS
     ]
 
     packages.each { |pkg_ary| refute_empty(pkg_ary) }
 
     packages_size = proc { |ary| ary.inject(0) { |sum, pkg| sum + pkg.size } }
 
-    assert_equal(VpsSetup::Packages::UBUNTU.size, packages_size.call(packages))
+    assert_equal(VpsCli::Packages::UBUNTU.size, packages_size.call(packages))
   end
 end

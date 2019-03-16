@@ -23,31 +23,31 @@ task :test do
   end
 end
 
-task :make, %i[backup_dir dest_dir] do |_t, args|
-  # Not necessary for babun
-  Rake::Task['setup'].invoke
-  Rake::Task['install'].invoke
+# task :make, %i[backup_dir dest_dir] do |_t, args|
+#   # Not necessary for babun
+#   Rake::Task['setup'].invoke
+#   Rake::Task['install'].invoke
 
-  args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
-  params = tilde_to_home_hash(args)
+#   args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
+#   params = tilde_to_home_hash(args)
 
-  Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
-end
+#   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
+# end
 
-task :login do
-  VpsCli::Setup.git_config
-  VpsCli::Setup.heroku_login
-end
+# task :login do
+#   VpsCli::Setup.git_config
+#   VpsCli::Setup.heroku_login
+# end
 
-task :install do
-  VpsCli::Install.full
-  sh('sudo apt-get autoremove -y')
-end
+# task :install do
+#   VpsCli::Install.full
+#   sh('sudo apt-get autoremove -y')
+# end
 
-task :setup do
-  VpsCli::Setup.full
-end
+# task :setup do
+#   VpsCli::Setup.full
+# end
 
-task :example do
-  puts 'example'
-end
+# task :example do
+#   puts 'example'
+# end
