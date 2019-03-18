@@ -1,8 +1,9 @@
+#!/usr/bin/ruby
 # frozen_string_literal: true
 
-require 'thor'
+lib = File.expand_path('lib')
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-module VpsCli
-  class CLI < Thor
-  end
-end
+require 'vps_cli'
+
+VpsCli::Cli.start(ARGV)

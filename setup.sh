@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BIN="$HOME/bin"
-VPS_CLI="$PWD/vps-cli.rb"
+VPS_CLI="$PWD/lib/vps_cli/cli.rb"
 
 main(){
   check_if_root
@@ -114,15 +114,30 @@ set_ruby_version(){
 # homedir && depending on the value of $shell
 restart_shell(){
   if [[ "$shell" == '/bin/bash' ]]; then
-    if [[ ! -e "~/.bash_profile" ]]; then
-      touch "~/.bash_profile"
+    BASH_PROFILE="$HOME/.bash_profile"
+
+    if [[ ! -e "$BASH_PROFILE" ]]; then
+      touch "$BASH_PROFILE"
     fi
-    source ~/.bash_profile
+
+    source "$BASH_PROFILE"
+
   elif [[ "$shell" == '/bin/zsh' ]]; then
-    if [[ ! -e ~/.zshenv ]]; then
-      touch ~/.zshenv
+    ZSHENV="$HOME/.zshenv"
+
+    if [[ ! -e "$ZSHENV" ]]; then
+      touch "$ZSHENV"
     fi
-    source ~/.zshenv
+
+    source "$ZSHENV"
+
+  els
+    PROFILE="$HOME/.profile"
+    if [[ ! -e "$PROFILE" ]]; then
+      touch "$PROFILE"
+    fi
+
+    source "$PROFILE"
   fi
 }
 
