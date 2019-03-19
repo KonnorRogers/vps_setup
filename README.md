@@ -12,6 +12,10 @@
 * ### This will update your /etc/ssh/sshd_config file.
 * ### Your original can be obtained at ~/backup_files/sshd_config.orig
 
+* This will add "chruby ruby latest" to your .bashrc or .zshrc file
+* This will also source chruby in .bashrc or .zshrc file
+* This is done during setup.sh
+
 * This will also update your dotfiles
 * dotfiles should be able to be restored by appending a .orig to the file like so
 
