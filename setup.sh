@@ -4,8 +4,8 @@ BIN="$HOME/bin"
 VPS_CLI="$PWD/lib/vps_cli/cli.rb"
 
 main(){
-  check_if_root
-  add_to_bin
+  # check_if_root
+  # add_to_bin
 
   apt_setup
   install_chruby_and_ruby
@@ -105,8 +105,15 @@ fi"
   fi
 }
 
+# Accepts a file as a parameter
+# If the file does not contain the string "chruby ruby latest"
+# Then append it to the end of the file
 set_ruby_version(){
-  chruby ruby latest
+  chruby="chruby ruby latest"
+
+  if [[ $(! grep -q "$chruby" "$1") ]]; then
+    echo "$chruby" >> $1 
+  fi
 }
 
 # will create an empty .bash_profile or .zshenv so that it can be source
@@ -120,6 +127,7 @@ restart_shell(){
       touch "$BASH_PROFILE"
     fi
 
+    set_ruby_version "$BASH_PROFILE"
     source "$BASH_PROFILE"
 
   elif [[ "$shell" == '/bin/zsh' ]]; then
@@ -129,6 +137,7 @@ restart_shell(){
       touch "$ZSHENV"
     fi
 
+    set_ruby_version "$ZSHENV"
     source "$ZSHENV"
 
   els
@@ -137,6 +146,7 @@ restart_shell(){
       touch "$PROFILE"
     fi
 
+    set_ruby_version "$PROFILE"
     source "$PROFILE"
   fi
 }
@@ -146,3 +156,6 @@ make_chruby_usable(){
   set_ruby_version                             
   restart_shell                                
 }
+
+# runs the main method
+main
