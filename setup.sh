@@ -118,9 +118,9 @@ set_ruby_version(){
 
 # will create an empty .bash_profile or .zshenv so that it can be source
 # creation of the profile only happens if the file is not detected in the
-# homedir && depending on the value of $shell
+# homedir && depending on the value of $SHELL
 restart_shell(){
-  if [[ "$shell" == '/bin/bash' ]]; then
+  if [[ "$SHELL" == '/bin/bash' ]]; then
     BASH_PROFILE="$HOME/.bash_profile"
 
     if [[ ! -e "$BASH_PROFILE" ]]; then
@@ -130,7 +130,7 @@ restart_shell(){
     set_ruby_version "$BASH_PROFILE"
     source "$BASH_PROFILE"
 
-  elif [[ "$shell" == '/bin/zsh' ]]; then
+  elif [[ "$SHELL" == '/bin/zsh' ]]; then
     ZSHENV="$HOME/.zshenv"
 
     if [[ ! -e "$ZSHENV" ]]; then
