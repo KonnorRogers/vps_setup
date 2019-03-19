@@ -4,8 +4,8 @@ BIN="$HOME/bin"
 VPS_CLI="$PWD/lib/vps_cli/cli.rb"
 
 main(){
-  # check_if_root
-  # add_to_bin
+  check_if_root
+  add_to_bin
 
   apt_setup
   install_chruby_and_ruby
