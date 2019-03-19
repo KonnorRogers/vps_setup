@@ -69,9 +69,18 @@ install_chruby_and_ruby(){
 }
 
 install_ruby(){
-  wget -o ruby-install-0.7.0.tar.gz https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz .tmp
-  tar -xzvf ruby-install-0.7.0.tar.gz
-  cd ruby-install-0.7.0
+  RUBY_INSTALL_TAR="ruby-install-0.7.0.tar.gz"
+  RUBY_INSTALL_DIR="ruby-install-0.7.0/"
+
+  if [[ ! -e "$RUBY_INSTALL_TAR" ]]; then
+    wget -O "$RUBY_INSTALL_TAR" https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
+  fi
+
+  if [[ ! -e "$RUBY_INSTALL_DIR" ]]; then
+    tar -xzvf "$RUBY_INSTALL_TAR"
+  fi
+
+  cd "$RUBY_INSTALL_DIR"
   sudo make install
 
   ruby-install --latest ruby --no-reinstall
@@ -79,14 +88,23 @@ install_ruby(){
 }
 
 install_chruby(){
-  wget -o chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
-  tar -xzvf chruby-0.3.9.tar.gz
-  cd chruby-0.3.9
+  CHRUBY_TAR="chruby-0.3.9.tar.gz"
+  CHRUBY_DIR="chruby-0.3.9"
+  if [[ ! -e "$CHRUBY_TAR" ]]; then
+    wget -O "$CHRUBY_TAR" https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+  fi
+
+  if [[ ! -e "$CHRUBY_DIR" ]]; then
+    tar -xzvf "$CHRUBY_TAR"
+  fi
+
+  cd "$CHRUBY_DIR"
   sudo ./scripts/setup.sh
   cd ..
 }
 
 # Appends chruby to /etc/profile.d for use by bash / zsh
+# This allows use system wide
 add_chruby_to_profile_d(){
   dirname="/etc/profile.d"
   filename="$dirname/chruby.sh"
@@ -98,7 +116,7 @@ add_chruby_to_profile_d(){
   source /usr/local/share/chruby/auto.sh
 fi" 
 
-  if [[ $(! grep -q "$add_chruby" "$filename") ]]; then
+  if ! grep -q "$add_chruby" "$filename"; then
     echo "$add_chruby" | sudo tee -a "$filename"
   else
     echo "chruby already added"	
@@ -110,9 +128,18 @@ fi"
 # Then append it to the end of the file
 set_ruby_version(){
   chruby="chruby ruby latest"
+  source_chruby="source /usr/local/share/chruby/chruby.sh
+  source /usr/local/share/chruby/auto.sh"
+  file="$1"
 
-  if [[ $(! grep -q "$chruby" "$1") ]]; then
-    echo "$chruby" >> $1 
+  if ! grep -q "$source_chruby" "$file"; then
+    echo "$source_chruby" >> "$file"
+  fi
+
+  # Checks that $chruby hasnt alreay been set in the file
+  if ! grep -q "$chruby" "$file"; then
+    echo "$chruby" >> "$file"
+    echo "Setting chruby in $file"
   fi
 }
 
@@ -120,40 +147,34 @@ set_ruby_version(){
 # creation of the profile only happens if the file is not detected in the
 # homedir && depending on the value of $SHELL
 restart_shell(){
-  if [[ "$SHELL" == '/bin/bash' ]]; then
-    BASH_PROFILE="$HOME/.bash_profile"
+  if [[ "$SHELL" == *"bash" ]]; then
+    BASH_RC="$HOME/.bashrc"
 
-    if [[ ! -e "$BASH_PROFILE" ]]; then
+    if [[ ! -e "$BASH_RC" ]]; then
       touch "$BASH_PROFILE"
     fi
 
     set_ruby_version "$BASH_PROFILE"
     source "$BASH_PROFILE"
 
-  elif [[ "$SHELL" == '/bin/zsh' ]]; then
-    ZSHENV="$HOME/.zshenv"
+  elif [[ "$SHELL" == *"zsh" ]]; then
+    ZSHRC="$HOME/.zshrc"
 
-    if [[ ! -e "$ZSHENV" ]]; then
-      touch "$ZSHENV"
+    if [[ ! -e "$ZSHRC" ]]; then
+      touch "$ZSHRC"
     fi
 
-    set_ruby_version "$ZSHENV"
-    source "$ZSHENV"
+    set_ruby_version "$ZSHRC"
+    source "$ZSHRC"
 
-  els
-    PROFILE="$HOME/.profile"
-    if [[ ! -e "$PROFILE" ]]; then
-      touch "$PROFILE"
-    fi
-
-    set_ruby_version "$PROFILE"
-    source "$PROFILE"
+  else
+    echo "Make sure to set your chruby version by adding"
+    echo "chruby ruby latest to your *.rc file"
   fi
 }
 
 make_chruby_usable(){
   add_chruby_to_profile_d                      
-  set_ruby_version                             
   restart_shell                                
 }
 
