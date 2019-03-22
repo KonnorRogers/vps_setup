@@ -242,3 +242,17 @@ rake "config:pull[nil, /path/to/dotfiles_dir]"
 * Created calls to the web via Curl / Net:HTTP provided by Ruby
 * Proper storage of secrets such as API keys, SSH keys, etc
 
+## ISSUES
+
+* You may encounter the following issue if you have oh-my-zsh already on your machine and running the setup.bash script
+
+```bash
+/home/paramagician/.oh-my-zsh/oh-my-zsh.sh: line 23: autoload: command not found
+/home/paramagician/.oh-my-zsh/oh-my-zsh.sh: line 34: syntax error near unexpected token `('
+/home/paramagician/.oh-my-zsh/oh-my-zsh.sh: line 34: `for config_file ($ZSH/lib/*.zsh); do'
+/home/paramagician/.oh-my-zsh/oh-my-zsh.sh: line 23: autoload: command not found
+/home/paramagician/.oh-my-zsh/oh-my-zsh.sh: line 34: syntax error near unexpected token `('
+/home/paramagician/.oh-my-zsh/oh-my-zsh.sh: line 34: `for config_file ($ZSH/lib/*.zsh); do'
+```
+
+* This is because the script is run via bash instead of ZSH, this should not affect anything
