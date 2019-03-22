@@ -57,6 +57,7 @@ apt_setup(){
   done
 
   sudo apt-get update
+  sudo apt-get autoremove
 }
 
 # this installs ruby & chruby under the .tmp folder within the repo
@@ -132,12 +133,12 @@ set_ruby_version(){
   source /usr/local/share/chruby/auto.sh"
   file="$1"
 
-  if ! grep -q "$source_chruby" "$file"; then
+  if ! grep -q "^$source_chruby$" "$file"; then
     echo "$source_chruby" >> "$file"
   fi
 
   # Checks that $chruby hasnt alreay been set in the file
-  if ! grep -q "$chruby" "$file"; then
+  if ! grep -q "^$chruby$" "$file"; then
     echo "$chruby" >> "$file"
     echo "Setting chruby in $file"
   fi
