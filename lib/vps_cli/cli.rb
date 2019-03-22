@@ -1,9 +1,5 @@
-#!/usr/bin/ruby
-# frozen_string_literal: true
+module VpsCli
+  class Cli
 
-lib = File.expand_path('lib')
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
-require 'vps_cli'
-
-VpsCli::Cli.start(ARGV)
+  end
+end
