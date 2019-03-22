@@ -57,7 +57,7 @@ apt_setup(){
   done
 
   sudo apt-get update
-  sudo apt-get autoremove
+  sudo apt-get autoremove -y
 }
 
 # this installs ruby & chruby under the .tmp folder within the repo
