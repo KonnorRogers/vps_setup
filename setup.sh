@@ -169,7 +169,7 @@ restart_shell(){
 
   else
     echo "Make sure to set your chruby version by adding"
-    echo "chruby ruby latest to your *.rc file"
+    echo "add 'chruby ruby latest' to your *.rc file"
   fi
 }
 
