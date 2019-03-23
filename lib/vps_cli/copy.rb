@@ -2,7 +2,7 @@
 
 require 'rake'
 
-require 'vps_cli/copy_helper'
+require 'vps_cli/file_helper'
 
 module VpsCli
   # Copies config from /vps_cli/config_files/dotfiles
@@ -32,6 +32,7 @@ module VpsCli
       opts = VpsCli.create_options(opts)
       FileHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
 
+      p opts
       dotfiles(opts)
 
       gnome_settings(opts)
@@ -59,7 +60,6 @@ module VpsCli
         dot = File.join(opts[:local_dir], ".#{file}")
         backup = File.join(opts[:backup_dir], "#{file}.orig")
 
-        files_and_dirs(config, dot, backup, opts[:verbose])
         files_and_dirs(config_file: config,
                        local_file: dot,
                        backup_file: backup,

@@ -44,7 +44,8 @@ def test_options
     misc_files_dir: TEST_MISC_FILES,
     local_sshd_config: TEST_LOCAL_SSHD_CONFIG,
     verbose: true,
-    testing: true
+    testing: true,
+    interactive: false
   }
 end
 

@@ -26,7 +26,7 @@ module FileHelper
     copy_file(opts[:local_file], opts[:backup_file]) if create_backup?(opts)
 
     # Copies from vps_cli/dotfiles to the location of the dot_file
-    copy_file(opts[:config_file], opts[:dot_file])
+    copy_file(opts[:config_file], opts[:local_file])
   end
 
   # Copies directories instead of files, called by copy_all
@@ -40,17 +40,17 @@ module FileHelper
   #   Will prompt yes or no for each file it creates
   # @option opts [Boolean] :verbose Will print more info to terminal if true
   def self.copy_dirs(opts = {})
-    Rake.mkdir_p(opts[:local_dir]) unless Dir.exist?(opts[:local_dir])
+    Rake.mkdir_p(opts[:local_file]) unless Dir.exist?(opts[:local_file])
 
     Dir.each_child(opts[:config_file]) do |dir|
-      dir = File.join(opts[:config_dir], dir)
+      dir = File.join(opts[:config_file], dir)
 
       if create_backup?(opts)
-        copy_dir(opts[:local_dir], opts[:backup_file], opts[:interactive])
+        copy_dir(opts[:local_file], opts[:backup_file], opts[:interactive])
       end
 
       # copies to local dir
-      copy_dir(dir, opts[:local_dir], opts[:interactive])
+      copy_dir(dir, opts[:local_file], opts[:interactive])
     end
   end
 
@@ -99,10 +99,11 @@ module FileHelper
   # base method to copy a file and ask for permission prior to copying
   # @see copy_files
   # @see ask_permission
-  # @param from [Dir] Directory to copy from
-  # @param to [Dir] Directory to copy to
+  # @param from [File] File to copy from
+  # @param to [File] File to copy to
   # @param interactive [Boolean] (false) asks whether or not to create the file
   def self.copy_file(from, to, interactive = false)
+    # return if from.nil? || to.nil?
     Rake.cp(from, to) if ask_permission(to, interactive) == :yes
   end
 
