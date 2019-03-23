@@ -83,8 +83,6 @@ module VpsCli
             o_file = File.join(File.expand_path(orig_file), o_file)
             n_file = File.expand_path(new_file)
 
-            p o_file
-            p n_file
             Rake.cp_r(o_file, n_file)
           end
         end
