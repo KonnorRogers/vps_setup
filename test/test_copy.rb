@@ -154,8 +154,11 @@ class TestCopy < Minitest::Test
     add_files(TEST_MISC_FILES, 'sshd_config')
     add_files(LOCAL_DIR, 'sshd_config')
 
+    p Dir.children LOCAL_DIR
+    p Dir.children TEST_MISC_FILES
     log_methods(@logger) { VpsCli::Copy.all(test_options) }
 
+    p Dir.children BACKUP_DIR
     refute_empty Dir.children(BACKUP_DIR)
     backupfiles.each { |file| assert_includes Dir.children(BACKUP_DIR), file }
   end
