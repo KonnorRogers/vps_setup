@@ -128,7 +128,7 @@ fi"
 # If the file does not contain the string "chruby ruby latest"
 # Then append it to the end of the file
 set_ruby_version(){
-  chruby="chruby ruby latest"
+  chruby="chruby $(ruby-install --latest)"
   source_chruby="source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh"
   file="$1"
