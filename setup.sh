@@ -143,7 +143,7 @@ set_ruby_version(){
   fi
 }
 
-# will create an empty .bash_profile or .zshenv so that it can be source
+# will create an empty .bashrc or .zshrc so that it can be source
 # creation of the profile only happens if the file is not detected in the
 # homedir && depending on the value of $SHELL
 restart_shell(){
@@ -151,11 +151,11 @@ restart_shell(){
     BASH_RC="$HOME/.bashrc"
 
     if [[ ! -e "$BASH_RC" ]]; then
-      touch "$BASH_PROFILE"
+      touch "$BASH_RC"
     fi
 
-    set_ruby_version "$BASH_PROFILE"
-    source "$BASH_PROFILE"
+    set_ruby_version "$BASH_RC"
+    source "$BASH_RC"
 
   elif [[ "$SHELL" == *"zsh" ]]; then
     ZSHRC="$HOME/.zshrc"
