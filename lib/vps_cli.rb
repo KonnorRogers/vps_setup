@@ -58,15 +58,16 @@ module VpsCli
   #   :local_sshd_config
   #   :verbose
   #   :testing
-  def self.create_options(opts)
+  def self.create_options(opts = {})
     opts[:backup_dir] ||= BACKUP_FILES_DIR
     opts[:local_dir] ||= Dir.home
     opts[:dotfiles_dir] ||= DOTFILES_DIR
     opts[:misc_files_dir] ||= MISC_FILES_DIR
     opts[:local_sshd_config] ||= '/etc/ssh/sshd_config'
-    opts[:verbose] ||= false
-    opts[:interactive] ||= true
-    opts[:testing] ||= false
+
+    opts[:verbose] = false if opts[:verbose].nil?
+    opts[:interactive] = true if opts[:interactive].nil?
+    opts[:testing] = false if opts[:testing].nil?
 
     opts
   end

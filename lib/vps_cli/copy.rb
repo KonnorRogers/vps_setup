@@ -32,7 +32,6 @@ module VpsCli
       opts = VpsCli.create_options(opts)
       FileHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
 
-      p opts
       dotfiles(opts)
 
       gnome_settings(opts)
@@ -57,11 +56,12 @@ module VpsCli
 
       Dir.each_child(opts[:dotfiles_dir]) do |file|
         config = File.join(opts[:dotfiles_dir], file)
-        dot = File.join(opts[:local_dir], ".#{file}")
+        local = File.join(opts[:local_dir], ".#{file}")
         backup = File.join(opts[:backup_dir], "#{file}.orig")
 
+
         files_and_dirs(config_file: config,
-                       local_file: dot,
+                       local_file: local,
                        backup_file: backup,
                        verbose: opts[:verbose],
                        interactive: opts[:interactive])
@@ -121,11 +121,16 @@ module VpsCli
     # @see VpsCli::FileHelper#copy_dirs
     # @see VpsCli::FileHelper#copy_files
     def self.files_and_dirs(opts = {})
+      puts "Options:"
+      p opts
       if File.directory?(opts[:config_file])
+        puts "Calling copy_dirs"
         FileHelper.copy_dirs(opts)
       else
+        puts "Calling copy_files"
         FileHelper.copy_files(opts)
       end
+      puts ""
     end
 
     # Copies gnome terminal via dconf
