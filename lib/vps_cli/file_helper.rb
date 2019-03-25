@@ -134,11 +134,11 @@ module FileHelper
 
     mkdirs(to)
 
-    Dir.each_child(from) do |dir|
-      dir = File.join(from, dir)
+    #Dir.each_child(from) do |dir|
+    #  dir = File.join(from, dir)
 
       Rake.cp_r(dir, to) if overwrite?(to, interactive)
-    end
+   # end
   end
 
   # asks permission to copy a file
