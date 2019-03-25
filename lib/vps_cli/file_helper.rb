@@ -10,22 +10,6 @@ module FileHelper
     dirs.flatten.each { |dir| Rake.mkdir_p(dir) unless Dir.exist?(dir) }
   end
 
-  # Creates local and backup dirs if they dont exist
-  def self.create_dirs(opts)
-    dirnames = proc do |array|
-      array.map do |filename|
-        File.dirname(filename)
-      end
-    end
-
-    filenames = [
-      opts[:local_file],
-      opts[:backup_dir]
-    ]
-
-    mkdirs(dirnames.call(filenames))
-  end
-
   # Copies files, called by copy_all
   # @see VpsCli::Copy#all
   # @param [Hash] opts The options to copy with
@@ -147,17 +131,13 @@ module FileHelper
       # from_file = File.join(from, from_file)
       # Rake.cp_r(from_file, to)
     #end
-    
-    if create_backup?(opts)
-      Rake.cp(opts[:local_file], opts[:backup_file]) if overwrite?(opts[:backup_file])
-    end
 
-    mkdirs(opts[:local_dir])
+    mkdirs(to)
 
-    Dir.each_child(opts[:config_file]) do |dir|
-      dir = File.join(opts[:config_file], dir)
+    Dir.each_child(from) do |dir|
+      dir = File.join(from, dir)
 
-      Rake.cp_r(dir, opts[:local_file])
+      Rake.cp_r(dir, to) if overwrite?(to, interactive)
     end
   end
 
