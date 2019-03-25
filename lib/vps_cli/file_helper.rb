@@ -60,12 +60,12 @@ module FileHelper
   def self.copy_dirs(opts = {})
     mkdirs(opts[:local_file])
 
-      if create_backup?(opts)
-        copy_dir(opts[:local_file], opts[:backup_file], opts[:interactive])
-      end
+    if create_backup?(opts)
+      copy_dir(opts[:local_file], opts[:backup_file], opts[:interactive])
+    end
+
     Dir.each_child(opts[:config_file]) do |dir|
       dir = File.join(opts[:config_file], dir)
-
 
       # copies to local dir
       copy_dir(dir, opts[:local_file], opts[:interactive])
@@ -132,16 +132,19 @@ module FileHelper
   # @param to [Dir] Directory to copy to
   # @param interactive [Boolean] (false) asks whether or not to create the file
   def self.copy_dir(from, to, interactive = false)
+    # return if File.directory?(from) || File.directory?(to)
     Dir.each_child(from) do |from_file|
       Dir.each_child(to) do |to_file|
         next unless from_file == to_file
 
-        from_file = file.join(File.expand_path(from_file))
+        from_file = File.join(File.expand_path(from_file))
         to_file = File.expand_path(to_file)
 
         # cp_r used just in case its a directory
         Rake.cp_r(from_file, to_file) if overwrite?(to_file, interactive)
       end
+      # from_file = File.join(from, from_file)
+      # Rake.cp_r(from_file, to)
     end
   end
 
