@@ -120,7 +120,7 @@ module FileHelper
   # @param interactive [Boolean] (false) asks whether or not to create the file
   def self.copy_file(from, to, interactive = false)
     # return if from.nil? || to.nil?
-    Rake.cp(from, to) if overwrite(to, interactive) == :yes
+    Rake.cp(from, to) if overwrite?(to, interactive) == :yes
   end
 
   # base method to copy a dir and ask for permission prior to copying
@@ -138,14 +138,14 @@ module FileHelper
         to_file = File.expand_path(to_file)
 
         # cp_r used just in case its a directory
-        Rake.cp_r(from_file, to_file) if ask_permission(to_file, interactive)
+        Rake.cp_r(from_file, to_file) if overwrite?(to_file, interactive)
       end
     end
   end
 
   # asks permission to copy a file
-  def self.overwrite(file, interactive)
-    return :yes if interactive == false
+  def self.overwrite?(file, interactive)
+    return true if interactive == false
 
     puts "Attempting to create file #{file}"
     puts 'Is this okay? (Y/N)'
@@ -153,8 +153,8 @@ module FileHelper
     loop do
       input = gets.chomp.downcase.to_sym
 
-      return :yes if input == :y
-      return :no if input == :n
+      return true if input == :y
+      return false if input == :n
 
       puts "Please enter (y/n) if you would like to create #{file}"
     end
