@@ -121,16 +121,11 @@ module VpsCli
     # @see VpsCli::FileHelper#copy_dirs
     # @see VpsCli::FileHelper#copy_files
     def self.files_and_dirs(opts = {})
-      puts "Options:"
-      p opts
       if File.directory?(opts[:config_file])
-        puts "Calling copy_dirs"
         FileHelper.copy_dirs(opts)
       else
-        puts "Calling copy_files"
         FileHelper.copy_files(opts)
       end
-      puts ""
     end
 
     # Copies gnome terminal via dconf

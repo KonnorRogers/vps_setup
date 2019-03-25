@@ -31,7 +31,7 @@ class TestCopy < Minitest::Test
     end
 
     # No backup should exist
-    assert Dir.children(BACKUP_DIR).empty?
+    assert_equal Dir.children(BACKUP_DIR).size, 2
 
     # Test that dirs and files were copied
     dotfiles = convert_to_dotfiles(@test_files)
@@ -49,13 +49,10 @@ class TestCopy < Minitest::Test
       assert_includes Dir.children(test_config_dir), file
     end
 
-    puts "is vimrc a directory?"
-    puts File.directory?(@test_files[0])
-    VpsCli::Copy.dotfiles(test_options)
     log_methods(@logger) { VpsCli::Copy.dotfiles(test_options) }
 
-    # No backups should be created
-    assert Dir.children(BACKUP_DIR).empty?
+    # directory backups only
+    assert_equal Dir.children(BACKUP_DIR).size, 2
 
     dest_config_dir = File.join(LOCAL_DIR, ".#{@test_dirs[0]}")
 
@@ -79,8 +76,7 @@ class TestCopy < Minitest::Test
 
     refute_empty Dir.children(LOCAL_DIR)
 
-    # log_methods(@logger) { VpsCli::Copy.dotfiles(test_options) }
-    VpsCli::Copy.dotfiles(test_options)
+    log_methods(@logger) { VpsCli::Copy.dotfiles(test_options) }
     refute_empty Dir.children(BACKUP_DIR)
 
     origfiles = convert_to_origfiles(@test_files)
@@ -129,7 +125,7 @@ class TestCopy < Minitest::Test
 
     log_methods(@logger) { VpsCli::Copy.all(test_options) }
 
-    assert_empty Dir.children(BACKUP_DIR)
+    assert_equal Dir.children(BACKUP_DIR).size, 2
     dotfiles.each { |file| assert_includes Dir.children(LOCAL_DIR), file }
 
     # reset
@@ -145,7 +141,7 @@ class TestCopy < Minitest::Test
 
     # Will create a backup due to sshd_config having to exist
     assert_includes Dir.children(BACKUP_DIR), 'sshd_config.orig'
-    assert_equal Dir.children(BACKUP_DIR).size, 1
+    assert_equal Dir.children(BACKUP_DIR).size, 3
 
     rm_dirs(@base_dirs)
     mk_dirs(@base_dirs)
@@ -158,10 +154,6 @@ class TestCopy < Minitest::Test
     add_files(LOCAL_DIR, 'sshd_config')
 
     log_methods(@logger) { VpsCli::Copy.all(test_options) }
-
-    puts "LOCAL DIR"
-    p Dir.children(LOCAL_DIR)
-    p Dir.children(dotfiles)
 
     refute_empty Dir.children(BACKUP_DIR)
     backupfiles.each { |file| assert_includes Dir.children(BACKUP_DIR), file }
