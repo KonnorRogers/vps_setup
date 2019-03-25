@@ -2,39 +2,39 @@
 
 require 'test_helper'
 
-LOGGER = create_logger(__FILE__)
-
-TEST_FILES = %w[vimrc pryrc zshrc].freeze
-TEST_DIRS = %w[config dir2].freeze
-SSHD_CONFIG = 'sshd_config'
-GNOME_TERMINAL = 'gnome_terminal_settings'
-# backup files not needed when pulling. Youre pulling into a git managed repo
-BASE_DIRS = [LOCAL_DIR, TEST_DOTFILES, TEST_MISC_FILES].freeze
 
 class TestPull < Minitest::Test
+  @@logger = create_logger(__FILE__)
+  @@test_files = %w[vimrc pryrc zshrc].freeze
+  @@test_dirs = %w[config dir2].freeze
+  @@sshd_config = 'sshd_config'
+  @@gnome_terminal = 'gnome_terminal_settings'
+  # backup files not needed when pulling. Youre pulling into a git managed repo
+  @@base_dirs = [LOCAL_DIR, TEST_DOTFILES, TEST_MISC_FILES].freeze
+
   def setup
-    rm_dirs(BASE_DIRS)
-    mk_dirs(BASE_DIRS)
+    rm_dirs(@@base_dirs)
+    mk_dirs(@@base_dirs)
   end
 
   def teardown
-    rm_dirs(BASE_DIRS)
+    rm_dirs(@@base_dirs)
   end
 
   def create_local_and_remote_files
     # dotfiles
-    add_files(LOCAL_DIR, TEST_FILES)
-    add_dirs(LOCAL_DIR, TEST_DIRS)
+    add_files(LOCAL_DIR, @@test_files)
+    add_dirs(LOCAL_DIR, @@test_dirs)
 
-    add_files(TEST_DOTFILES, TEST_FILES)
-    add_dirs(TEST_DOTFILES, TEST_DIRS)
+    add_files(TEST_DOTFILES, @@test_files)
+    add_dirs(TEST_DOTFILES, @@test_dirs)
 
     # miscfiles
-    add_files(LOCAL_DIR, SSHD_CONFIG)
-    add_files(LOCAL_DIR, GNOME_TERMINAL)
+    add_files(LOCAL_DIR, @@sshd_config)
+    add_files(LOCAL_DIR, @@gnome_terminal)
 
-    add_files(LOCAL_DIR, SSHD_CONFIG)
-    add_files(LOCAL_DIR, GNOME_TERMINAL)
+    add_files(LOCAL_DIR, @@sshd_config)
+    add_files(LOCAL_DIR, @@gnome_terminal)
   end
 
   def write_to_file(file, string)
@@ -56,7 +56,7 @@ class TestPull < Minitest::Test
   def test_pulls_dotfiles_properly
     create_local_and_remote_files
 
-    log_methods(LOGGER) do
+    log_methods(@@logger) do
       VpsCli::Pull.dotfiles(test_options)
     end
   end

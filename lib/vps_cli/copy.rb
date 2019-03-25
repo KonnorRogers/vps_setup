@@ -2,13 +2,13 @@
 
 require 'rake'
 
-require 'vps_cli/copy_helper'
+require 'vps_cli/file_helper'
 
 module VpsCli
   # Copies config from /vps_cli/config_files/dotfiles
   #   & vps_cli/config_files/miscfiles to your home dir
   class Copy
-    extend CopyHelper
+    extend FileHelper
     # Top level method for copying all files
     # @param [Hash] Provides options for copying files
     # @option opts [Dir] :local_dir ('Dir.home') Where to save the dotfiles to
@@ -18,6 +18,9 @@ module VpsCli
     #   directory containing sshd_config
     # @option opts [Boolean] :verbose (false)
     #   Whether or not to print additional info
+    # @option opts [Boolean] :interactive (true)
+    #   Before overwriting any file, it will ask permission to overwrite.
+    #   It will also still create the backup
     # @option opts [Boolean] :testing (false) used internally for minitest
     # @raise [RuntimeError]
     #   Will raise this error if you run this method as root or sudo
@@ -27,8 +30,9 @@ module VpsCli
       raise root_msg if root == true
 
       opts = VpsCli.create_options(opts)
-      CopyHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
+      FileHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
 
+      p opts
       dotfiles(opts)
 
       gnome_settings(opts)
@@ -38,7 +42,7 @@ module VpsCli
       puts "backups created @ #{opts[:backup_dir]}"
     end
 
-    # Copies files from 'config_files/dotfiles' directory via the copy_all method
+    # Copy files from 'config_files/dotfiles' directory via the copy_all method
     # Defaults are provided in the VpsCli.create_options method
     # @see #VpsCli.create_options
     # @see #all
@@ -56,7 +60,11 @@ module VpsCli
         dot = File.join(opts[:local_dir], ".#{file}")
         backup = File.join(opts[:backup_dir], "#{file}.orig")
 
-        files_and_dirs(config, dot, backup, opts[:verbose])
+        files_and_dirs(config_file: config,
+                       local_file: dot,
+                       backup_file: backup,
+                       verbose: opts[:verbose],
+                       interactive: opts[:interactive])
       end
     end
 
@@ -110,16 +118,13 @@ module VpsCli
     end
 
     # Deciphers between files & directories
-    # @param config_file [File] The file from the repo to be copied locally
-    # @param local_file [File] The file that is currently present locally
-    # @param backup_file [File]
-    #   The file to which to save the currently present local file
-    # @param verbose [Boolean] Verbose logging true / false
-    def self.files_and_dirs(config_file, local_file, backup_file, verbose = false)
-      if File.directory?(config_file)
-        CopyHelper.copy_dirs(config_file, local_file, backup_file, verbose)
+    # @see VpsCli::FileHelper#copy_dirs
+    # @see VpsCli::FileHelper#copy_files
+    def self.files_and_dirs(opts = {})
+      if File.directory?(opts[:config_file])
+        FileHelper.copy_dirs(opts)
       else
-        CopyHelper.copy_files(config_file, local_file, backup_file, verbose)
+        FileHelper.copy_files(opts)
       end
     end
 
