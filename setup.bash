@@ -128,7 +128,6 @@ fi"
 # If the file does not contain the string "chruby ruby latest"
 # Then append it to the end of the file
 set_ruby_version(){
-  chruby="chruby $(ruby-install --latest)"
   source_chruby="source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh"
   file="$1"
@@ -137,10 +136,14 @@ set_ruby_version(){
     echo "$source_chruby" >> "$file"
   fi
 
-  # Checks that $chruby hasnt alreay been set in the file
-  if ! grep -q "^$chruby$" "$file"; then
-    echo "$chruby" >> "$file"
-    echo "Setting chruby in $file"
+  current_ruby_version="ruby-2.6.2"
+  ruby_version="$HOME/.ruby-version"
+  if [[ -e "$ruby_version" ]]; then
+    touch "$ruby_version" 
+  fi
+
+  if ! grep -q "^$current_ruby_version$" "$ruby_version"; then
+    echo "$current_ruby_version" >> "$ruby_version" 
   fi
 }
 
