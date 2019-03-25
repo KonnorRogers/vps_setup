@@ -39,10 +39,12 @@ module FileHelper
   def self.copy_files(opts = {})
     # if there is an original dot file & no backup file in the backupdir
     # Copy the dot file to the backup dir
-    copy_file(opts[:local_file], opts[:backup_file]) if create_backup?(opts)
+    if create_backup?(opts)
+      copy_file(opts[:local_file], opts[:backup_file], opts[:interactive])
+    end
 
     # Copies from vps_cli/dotfiles to the location of the dot_file
-    copy_file(opts[:config_file], opts[:local_file])
+    copy_file(opts[:config_file], opts[:local_file], opts[:interactive])
   end
 
   # Copies directories instead of files, called by copy_all
@@ -58,12 +60,12 @@ module FileHelper
   def self.copy_dirs(opts = {})
     mkdirs(opts[:local_file])
 
-    Dir.each_child(opts[:config_file]) do |dir|
-      dir = File.join(opts[:config_file], dir)
-
       if create_backup?(opts)
         copy_dir(opts[:local_file], opts[:backup_file], opts[:interactive])
       end
+    Dir.each_child(opts[:config_file]) do |dir|
+      dir = File.join(opts[:config_file], dir)
+
 
       # copies to local dir
       copy_dir(dir, opts[:local_file], opts[:interactive])
