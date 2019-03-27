@@ -25,16 +25,20 @@ module VpsCli
     # @raise [RuntimeError]
     #   Will raise this error if you run this method as root or sudo
     def self.all(opts = {})
-      root = (Process.uid.zero? || Dir.home == '/root')
-      root_msg = 'Do not run this as root or sudo. Run as a normal user'
-      raise root_msg if root == true
+      # raises an error if the script is run as root
+      return unless root? == false
 
+      # fills in options that are not explicitly filled in
       opts = VpsCli.create_options(opts)
       FileHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
 
+      # copies dotfiles
       dotfiles(opts)
 
+      # copies gnome_settings
       gnome_settings(opts)
+
+      # copies sshd_config
       sshd_config(opts)
 
       puts "dotfiles copied to #{opts[:local_dir]}"
@@ -147,6 +151,14 @@ module VpsCli
     rescue RuntimeError => error
       puts 'something went wrong with gnome, continuing on' if opts[:verbose]
       VpsCli.errors << error
+    end
+
+    def self.root?
+      root = (Process.uid.zero? || Dir.home == '/root')
+      root_msg = 'Do not run this as root or sudo. Run as a normal user'
+      raise root_msg if root == true
+
+      false
     end
   end
 end
