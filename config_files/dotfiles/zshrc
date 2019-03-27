@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export TERM="xterm-256color"
 
 export ZSH=$HOME/.oh-my-zsh
@@ -113,10 +113,11 @@ alias gaa="git add -A"
 alias gdiff="git diff"
 alias gcm="git commit -m"
 alias gp="git push"
-alias gpu="git push -u"
+alias gpu="git push -u origin"
 alias gcob="git checkout -b"
 alias gco="git checkout"
 alias gm="git merge"
+alias gms="git merge --squash"
 alias gbr="git branch"
 alias gbrd="git branch -D"
 alias gst="git status"
@@ -131,8 +132,8 @@ alias h-rename="heroku git:remote -a"
 alias h-m:on="heroku maintenance:on"
 alias h-m:off="heroku maintenance:off"
 alias h-migrate="heroku run rails db:migrate"
-alias tag-gen="ctags -R --tag-relative -f .git/tags"
 
+alias tag-gen="ctags -R --tag-relative -f .git/tags"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 

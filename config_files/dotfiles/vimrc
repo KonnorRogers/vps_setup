@@ -121,7 +121,7 @@ set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 map <Leader>s :split<CR>
 
 " netrw explore
-map <C-n> :Explore<CR>
+map <C-e> :Explore<CR>
 
 " editing vim
 map <Leader>ev :split $HOME/.vimrc<CR>
