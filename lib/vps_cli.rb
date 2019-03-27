@@ -71,5 +71,3 @@ module VpsCli
     opts
   end
 end
-
-VpsCli::Pull.all
