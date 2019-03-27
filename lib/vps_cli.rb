@@ -64,8 +64,8 @@ module VpsCli
     opts[:dotfiles_dir] ||= DOTFILES_DIR
     opts[:misc_files_dir] ||= MISC_FILES_DIR
     opts[:local_sshd_config] ||= '/etc/ssh/sshd_config'
-    opts[:verbose] ||= false
-    opts[:testing] ||= false
+    opts[:verbose] = false if opts[:verbose].nil?
+    opts[:testing] = false if opts[:testing].nil?
 
     opts
   end
