@@ -67,7 +67,6 @@ module VpsCli
 
     opts[:verbose] = false if opts[:verbose].nil?
     opts[:interactive] = true if opts[:interactive].nil?
-    opts[:testing] = false if opts[:testing].nil?
 
     opts
   end
