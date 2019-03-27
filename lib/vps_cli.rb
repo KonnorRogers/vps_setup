@@ -71,3 +71,11 @@ module VpsCli
     opts
   end
 end
+
+if ARGV[0].to_sym == :pull_all
+  VpsCli::Pull.all
+end
+
+if ARGV[0].to_sym == :copy_all
+  VpsCli::Copy.all
+end
