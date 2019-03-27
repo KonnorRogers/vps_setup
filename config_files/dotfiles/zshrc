@@ -133,14 +133,21 @@ alias h-m:on="heroku maintenance:on"
 alias h-m:off="heroku maintenance:off"
 alias h-migrate="heroku run rails db:migrate"
 
+# misc
 alias tag-gen="ctags -R --tag-relative -f .git/tags"
+
+# chruby
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 
-# export JAVA="$JAVA_HOME"
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+
+# various bin locations
 export PATH=$PATH:/snap/bin
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/bin
