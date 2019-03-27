@@ -149,7 +149,7 @@ module FileHelper
     puts 'Is this okay? (Y/N)'
 
     loop do
-      input = gets.chomp.downcase.to_sym
+      input = $stdin.gets.chomp.downcase.to_sym
 
       return true if input == :y
       return false if input == :n
