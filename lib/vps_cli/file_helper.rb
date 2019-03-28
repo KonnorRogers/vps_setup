@@ -116,36 +116,16 @@ module FileHelper
   # @param to [Dir] Directory to copy to
   # @param interactive [Boolean] (false) asks whether or not to create the file
   def self.copy_dir(from, to, interactive = false)
-    # return if File.directory?(from) || File.directory?(to)
-
-    #  Dir.each_child(from) do |from_file|
-    # Dir.each_child(to) do |to_file|
-    # next unless from_file == to_file
-
-    # from_file = File.join(File.expand_path(from_file))
-    # to_file = File.expand_path(to_file)
-
-    # cp_r used just in case its a directory
-    #  Rake.cp_r(from_file, to_file) if overwrite?(to_file, interactive)
-    # end
-    # from_file = File.join(from, from_file)
-    # Rake.cp_r(from_file, to)
-    # end
-
     mkdirs(to)
 
-    # Dir.each_child(from) do |dir|
-    #  dir = File.join(from, dir)
-
     Rake.cp_r(from, to) if overwrite?(to, interactive)
-    # end
   end
 
   # asks permission to copy a file
   def self.overwrite?(file, interactive)
     return true if interactive == false
 
-    puts "Attempting to create file #{file}"
+    puts "Attempting to create / overwrite file #{file}"
     puts 'Is this okay? (Y/N)'
 
     loop do
@@ -154,7 +134,7 @@ module FileHelper
       return true if input == :y
       return false if input == :n
 
-      puts "Please enter (y/n) if you would like to create #{file}"
+      puts "Would like to overwrite / create #{file} (Y/N)"
     end
   end
 end
