@@ -12,7 +12,6 @@ def tilde_to_home_hash(rake_args)
   rake_args.to_hash.map { |k, v| [k, v.sub('~', Dir.home)] }.to_h
 end
 
-task default: %w[test]
 
 desc 'Runs tests'
 task :test do
@@ -22,6 +21,8 @@ task :test do
     t.test_files = FileList['test/test*.rb']
   end
 end
+
+task default: :test
 
 # task :make, %i[backup_dir dest_dir] do |_t, args|
 #   # Not necessary for babun

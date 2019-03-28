@@ -70,7 +70,3 @@ module VpsCli
     opts
   end
 end
-
-VpsCli::Pull.all if ARGV[0].to_sym == :pull_all
-
-VpsCli::Copy.all if ARGV[0].to_sym == :copy_all

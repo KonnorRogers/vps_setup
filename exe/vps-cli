@@ -1,2 +1,12 @@
-
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
+lib = File.expand_path('../lib', __dir__)
+puts lib
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'vps_cli'
+
+VpsCli::Pull.all if ARGV[0].to_sym == :pull_all
+
+VpsCli::Copy.all if ARGV[0].to_sym == :copy_all
