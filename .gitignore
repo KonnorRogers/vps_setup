@@ -4,7 +4,6 @@ tests/logs
 
 # Bundler files
 \.bundle
-bin
 Gemfile.lock
 
 # Temp files
