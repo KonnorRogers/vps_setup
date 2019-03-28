@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -euo pipefail
-IFS=$'\n\t'
-set -vx
 
 BIN="$HOME/bin"
 VPS_CLI="$PWD/bin/vps-cli"
