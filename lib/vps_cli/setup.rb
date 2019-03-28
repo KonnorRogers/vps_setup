@@ -14,7 +14,7 @@ module VpsCli
     def self.full
       add_repos
       add_dejavu_sans_mono_font
-      add_snippets
+      # add_snippets
     end
 
     ##
@@ -30,8 +30,6 @@ module VpsCli
       # Typical ssh port
       Rake.sh('sudo ufw allow 22')
 
-      # Should you use Bastillion, the port used by the service
-      Rake.sh('sudo ufw allow 8443')
       Rake.sh('yes | sudo ufw enable')
       Rake.sh('yes | sudo systemctl restart sshd')
     end
@@ -93,25 +91,25 @@ module VpsCli
       Rake.sh(%(cd ~/.local/share/fonts && curl -fLo "DejaVu Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf))
     end
 
-    def self.add_snippets
-      ultisnips_dir = File.join(Dir.home, 'ParamagicianUltiSnips')
+    # def self.add_snippets
+    #   ultisnips_dir = File.join(Dir.home, 'ParamagicianUltiSnips')
 
-      if Dir.exist?(ultisnips_dir)
-        Dir.chdir(ultisnips_dir)
-        ## Just in case anything is uncommitted
-        Rake.sh('git add -A')
-        Rake.sh("git commit -m 'commiting snippets'")
-        Rake.sh('git pull')
-      else
+    #   if Dir.exist?(ultisnips_dir)
+    #     Dir.chdir(ultisnips_dir)
+    #     ## Just in case anything is uncommitted
+    #     Rake.sh('git add -A')
+    #     Rake.sh("git commit -m 'commiting snippets'")
+    #     Rake.sh('git pull')
+    #   else
 
-        Rake.sh("git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git #{ultisnips_dir}")
-      end
-    rescue RuntimeError => error
-      message = 'something went wrong adding snippets, ensure everything is okay
-      by running ~/ParamagicianUltiSnips'
-      VpsCli.errors << error.exception("#{error}\n\n#{message}")
+    #     Rake.sh("git clone https://github.com/ParamagicDev/ParamagicianUltiSnips.git #{ultisnips_dir}")
+    #   end
+    # rescue RuntimeError => error
+    #   message = 'something went wrong adding snippets, ensure everything is okay
+    #   by running ~/ParamagicianUltiSnips'
+    #   VpsCli.errors << error.exception("#{error}\n\n#{message}")
 
-      Dir.chdir(Dir.home)
-    end
+    #   Dir.chdir(Dir.home)
+    # end
   end
 end
