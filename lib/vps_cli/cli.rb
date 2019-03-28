@@ -20,7 +20,7 @@ module VpsCli
     desc 'pull_all', 'Pulls files into your vps_cli repo'
     options [:dotfiles_dir, :misc_files_dir]
     def pull_all
-      VpsCli::Pull.all(options)
+      VpsCli::Pull.all(options.dup)
     end
   end
 end
