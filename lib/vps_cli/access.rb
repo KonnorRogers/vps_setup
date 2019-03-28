@@ -9,7 +9,7 @@ module VpsCli
     # @param file [File]
     #   The .yaml file encrypted with sops used to login to various accounts
 
-    def self.use_access_file(file)
+    def self.decrypt(file)
 
     end
 
