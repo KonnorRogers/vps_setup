@@ -73,7 +73,7 @@ module VpsCli
   def self.full_install(options = {})
     VpsCli::Setup.full
     VpsCli::Install.full
-    # VpsCli::Access.decrypt(options)
+    VpsCli::Access.provide_credentials(options)
     VpsCli::Copy.all(options)
   end
 end
