@@ -69,4 +69,11 @@ module VpsCli
 
     opts
   end
+
+  def self.full_install(options = {})
+    VpsCli::Setup.full
+    VpsCli::Install.full
+    VpsCli::Access.provide(options)
+    VpsCli::Copy.all(options)
+  end
 end

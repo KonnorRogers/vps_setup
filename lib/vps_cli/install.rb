@@ -8,7 +8,6 @@ module VpsCli
   # Installes the required packages
   class Install
     def self.full
-      @errors = []
       unless OS.linux?
         puts 'You are not running on linux. No packages installed.'
         return
@@ -17,11 +16,8 @@ module VpsCli
       begin
         all_install
       rescue RuntimeError => exception
-        @errors << exception.message
+        VpsCli.errors << exception
       end
-
-      puts 'The following errors were encountered:'
-      @errors.each { |error| puts error }
     end
 
     def self.all_install

@@ -25,5 +25,19 @@ module VpsCli
       puts options[:all]
       VpsCli::Pull.all(options.dup) if options[:all]
     end
+
+    desc 'install [OPTIONS]', 'installs based on the flag provided'
+    option :full, type: :boolean, aliases: :f, default: false
+    option :access_file, aliases: :af
+    def install
+      msg = puts 'Only full install has been implemented'
+      return msg unless options[:full]
+
+      VpsCli.full_install(options.dup)
+
+      return if VpsCli.errors.empty?
+
+      VpsCli.errors.each { |error| puts error.message }
+    end
   end
 end
