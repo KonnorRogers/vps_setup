@@ -16,6 +16,5 @@ module VpsCli
     # def copy_all
     #   VpsCli::Copy.all(options)
     # end
-
   end
 end
