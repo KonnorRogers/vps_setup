@@ -21,8 +21,6 @@ module VpsCli
 
     def self.file_login(yaml_file:)
 
-
-
     end
 
     def self.command_line_login

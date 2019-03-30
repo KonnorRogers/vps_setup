@@ -152,7 +152,15 @@ module FileHelper
     keys.map! { |key| "[\"#{key}\"]" }
     sops_cmd = "sops -d --extract '#{keys.join}' #{file}"
 
+    export_tty
     # this will return in the string form the value you were looking for
     Open3.capture3(sops_cmd)
+  end
+
+  # I noticed needing to export $(tty) while troubleshooting
+  # issues with gpg keys. It is here just in case its not in
+  # your zshrc / bashrc file
+  def self.export_tty
+    Rake.sh("export $(tty)")
   end
 end
