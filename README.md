@@ -145,6 +145,13 @@ ngrok http 3000
 
 ## vps-cli commands
 
+* if you have not run the setup script you can do the following:
+
+```bash
+cd exe
+./vps-cli [COMMAND] [OPTIONS]
+```
+
 ## Contents of credentials.yaml
 
 ## Updates for the future?
