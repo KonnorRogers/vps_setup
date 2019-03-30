@@ -143,68 +143,7 @@ ngrok http 3000
 ### $ rake test
 * Default rake task, runs the test suite
 
-### $ rake make[:backup_dir, dest_dir]
-
-* The main function called by install.bash
-* will call rake config:copy
-* accepts the same arguments as config:copy
-* defaults backup_dir to ~/backup_files
-* defaults dest_dir to ~
-
-### $ rake config:copy[:backup_dir, dest_dir]
-
-* copies files from vps_cli/dotfiles & vps_cli/misc_files to ~/backup_files:
-
-```bash
-rake config:copy
-```
-
-* This can be specified with either both or one of the arguments:
-
-```bash
-rake "config:copy[/path/to/backup_dir, /path/to/dest_dir]"
-```
-
-* The following command lets you specify where you would like your backup directory to be
-
-```bash
-rake "config:copy[/path/to/backup_dir]"
-```
-
-* The following command lets you specify where you would like to put your dotfiles
-
-```bash
-rake "config:copy[nil, /path/to/dest_dir]"
-```
-
-### $ rake config:pull[:config_dir, :local_dir]
-
-* #### This is merely to pull local files into your vps_cli repo
-
-* copies files from home dir (~) to your vps_cli repo (./vps_cli/config)
-
-```bash
-rake config:pull
-```
-
-* Alternatively, you can specify where you would like files to be pulled from and to
-
-```bash
-rake "config:pull[/path/to/config_dir, /path/to/local_dotfiles_dir]"
-```
-
-* The following command will allow you to show what will be pulled to the repo:
-
-```bash
-rake "config:pull[/path/to/config_dir]"
-```
-
-* The following command will let you leave the default config dir, and specify where to pull dotfiles from
-
-
-```bash
-rake "config:pull[nil, /path/to/dotfiles_dir]"
-```
+## vps-cli commands
 
 ## Contents of credentials.yaml
 
