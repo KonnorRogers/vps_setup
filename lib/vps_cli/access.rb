@@ -6,15 +6,26 @@ require 'open3'
 module VpsCli
   # Used for various things related to logins, ssh keys, etc
   class Access
+    extend FileHelper # provides acccess to the FileHelper.FileHelper.decrypt(file) method
+
     # logs into various things either via a .yaml file or via cmd line
-    # @param opts [Hash] Options hash
-    # @option opts [File] :yaml_file uses the given file and parses with sops
+    # @param yaml_file [File] The yaml file to be used. MUST BE ENCRYPTED VIA SOPS
     #   @see https://github.com/mozilla/sops
-    def provide_credentials(options = {}); end
+    #   @see VpsCli::FileHelper#FileHelper.decrypt
+    def self.provide_credentials(yaml_file: nil)
+      return file_login(yaml_file) unless yaml_file.nil?
 
-    def file_login; end
+      command_line_login
+    end
 
-    def command_line_login
+
+    def self.file_login(yaml_file:)
+
+
+
+    end
+
+    def self.command_line_login
       set_git_config
       heroku_login
     end
@@ -44,36 +55,21 @@ module VpsCli
     end
   end
 
-  def git_file_login(file)
-    github = ['github']
-    username_key = ['username'].unshift(github).flatten
-    email_key = ['email'].unshift(github).flatten
+  def self.git_file_login(yaml_file:)
+    github = 'github'
+    username_key = ['username'].unshift(github)
+    email_key = ['email'].unshift(github)
 
-    username = decrypt(file, username_key)
-    email = decrypt(file, email_key)
+    username = FileHelper.decrypt(yaml_file, username_key)
+    email = FileHelper.decrypt(yaml_file, email_key)
 
     set_git_config(username, email)
   end
 
-  def heroku_login(file, keys)
-    decrypt(file, keys)
-  end
-
-  # uses an access file via SOPS
-  # SOPS is an encryption tool
-  # @see https://github.com/mozilla/sops
-  # It will decrypt the file, please use a .yaml file
-  # @param file [File]
-  #   The .yaml file encrypted with sops used to login to various accounts
-  # @param keys [Array<String>] The keys of the value youre trying to decrypt
-  #   Example: ["github", "username"]
-  # @return [String] The value of key given in the .yaml file
-  def self.decrypt(file, keys)
-    # puts all keys into a ["key"] within the array
-    keys.map! { |key| "[\"#{key}\"]" }
-    sops_cmd = "sops -d --extract '#{keys.join}' #{file}"
-
-    # this will return in the string form the value you were looking for
-    Open3.capture3(sops_cmd)
+  # @todo create another method to pass the keys
+  def self.heroku_file_login(yaml_file:, keys:)
+    heroku = 'heroku'
+    api = ['api']
+    FileHelper.decrypt(yaml_file)
   end
 end
