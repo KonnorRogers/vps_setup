@@ -6,7 +6,7 @@ gem 'rake'
 gem 'thor' # CLI gem
 
 group :development do
-  gem 'guard'
-  gem 'guard-minitest'
+  gem 'guard' # testing
+  gem 'guard-minitest' # testing
   gem 'yard' # documentation gem
 end
