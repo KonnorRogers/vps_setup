@@ -5,14 +5,23 @@ BIN="$HOME/bin"
 VPS_CLI="$PWD/exe/vps-cli"
 
 main(){
+  # will error if running as root
   check_if_root
+
+  # symlinks /vps_cli/exe/vps-cli to $HOME/bin
   add_to_bin
 
+  # runs through the varios sudo apt installs required prior to
+  # installs
   apt_setup
+
+  # installs chruby & ruby-install
   install_chruby_and_ruby
+
+  # adds chruby to the appropriate files
   make_chruby_usable
 
-  # sources chruby
+  # sources zshrc or bashrc depending on what is being used
   restart_shell
 
   gem install bundler
