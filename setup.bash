@@ -2,7 +2,7 @@
 
 
 BIN="$HOME/bin"
-VPS_CLI="$PWD/bin/vps-cli"
+VPS_CLI="$PWD/exe/vps-cli"
 
 main(){
   check_if_root
