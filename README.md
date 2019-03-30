@@ -152,6 +152,25 @@ cd exe
 ./vps-cli [COMMAND] [OPTIONS]
 ```
 
+### Example commands
+
+* The following command will copy all files to $HOME directory from
+</path/to/vps_cli/config_files>. With the --interactive flag, it will
+prompt the user before overwriting any files.
+
+```bash
+vps-cli copy --all --interactive
+```
+
+* The following command will pull files from the local directory ($HOME)
+to </path/to/vps_cli/config_files>
+
+```bash
+vps-cli pull --all
+```
+
+* This is still a work in progress. More commands and flags will be added
+
 ## Contents of credentials.yaml
 
 ## Updates for the future?
