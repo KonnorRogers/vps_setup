@@ -5,15 +5,6 @@ require 'rake/testtask'
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'vps_cli'
-
-def tilde_to_home_hash(rake_args)
-  # Rake::TaskArguments.to_hash equivalent
-  rake_args.to_hash.map { |k, v| [k, v.sub('~', Dir.home)] }.to_h
-end
-
-task default: %w[test]
-
 desc 'Runs tests'
 task :test do
   Rake::TestTask.new do |t|
@@ -22,6 +13,13 @@ task :test do
     t.test_files = FileList['test/test*.rb']
   end
 end
+
+task default: :test
+
+# def tilde_to_home_hash(rake_args)
+#   # Rake::TaskArguments.to_hash equivalent
+#   rake_args.to_hash.map { |k, v| [k, v.sub('~', Dir.home)] }.to_h
+# end
 
 # task :make, %i[backup_dir dest_dir] do |_t, args|
 #   # Not necessary for babun
@@ -42,12 +40,4 @@ end
 # task :install do
 #   VpsCli::Install.full
 #   sh('sudo apt-get autoremove -y')
-# end
-
-# task :setup do
-#   VpsCli::Setup.full
-# end
-
-# task :example do
-#   puts 'example'
 # end

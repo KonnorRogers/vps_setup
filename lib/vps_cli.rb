@@ -36,7 +36,6 @@ module VpsCli
   # @!endgroup
 
   class << self
-
     # Used for loggings errors
     # same as self.errors && self.errors=(errors)
     # VpsCli.errors now accessible module wide
@@ -70,12 +69,11 @@ module VpsCli
 
     opts
   end
-end
 
-if ARGV[0].to_sym == :pull_all
-  VpsCli::Pull.all
-end
-
-if ARGV[0].to_sym == :copy_all
-  VpsCli::Copy.all
+  def self.full_install(options = {})
+    VpsCli::Setup.full
+    VpsCli::Install.full
+    VpsCli::Access.provide_credentials(options)
+    VpsCli::Copy.all(options)
+  end
 end

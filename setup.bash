@@ -1,7 +1,8 @@
 #!/bin/bash
 
+
 BIN="$HOME/bin"
-VPS_CLI="$PWD/lib/vps_cli/cli.rb"
+VPS_CLI="$PWD/bin/vps-cli"
 
 main(){
   check_if_root
@@ -62,11 +63,13 @@ apt_setup(){
 
 # this installs ruby & chruby under the .tmp folder within the repo
 install_chruby_and_ruby(){
-  mkdir -p .tmp
-  cd .tmp
+  temp_dir=".tmp"
+  mkdir -p "$temp_dir"
+  cd "$temp_dir"
   install_ruby
   install_chruby
   cd ..
+  rm -rf "$temp_dir"
 }
 
 install_ruby(){

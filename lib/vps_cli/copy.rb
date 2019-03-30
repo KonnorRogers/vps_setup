@@ -160,5 +160,9 @@ module VpsCli
 
       false
     end
+
+    def self.example
+      puts "example"
+    end
   end
 end
