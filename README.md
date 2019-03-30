@@ -75,14 +75,10 @@ bash setup.bash
 ./setup.bash
 ```
       
-* This will run heroku login & git config --global user.name & user.email
-
-* Also, ensure to secure your server via /etc/ssh/sshd_config should you not find my settings acceptable
-
 ## Dependencies Installed
 
 * There are many dependencies installed, a large list can be located in 
-* /path/to/vps-setup/lib/vps_cli/packages.rb
+* /path/to/vps-setup/setup.bash
 
 ## Tools installed
 
