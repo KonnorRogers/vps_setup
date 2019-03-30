@@ -31,7 +31,7 @@ symlink_vps_cli(){
 }
 
 check_if_root(){
-  if [[ `id -u` == 0 ]]; then 
+  if [[ $(id -u) == 0 ]]; then 
     echo "Do not run this as sudo / root. Rerun this script." 1>&2
     exit 1
   fi
@@ -54,7 +54,7 @@ apt_setup(){
   libs="software-properties-common gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby"
 
   for lib in $libs; do
-    sudo apt-get install $lib -y
+    sudo apt-get install "$lib" -y
   done
 
   sudo apt-get update
@@ -65,7 +65,7 @@ apt_setup(){
 install_chruby_and_ruby(){
   temp_dir=".tmp"
   mkdir -p "$temp_dir"
-  cd "$temp_dir"
+  cd "$temp_dir" || exit 2
   install_ruby
   install_chruby
   cd ..
@@ -84,7 +84,7 @@ install_ruby(){
     tar -xzvf "$RUBY_INSTALL_TAR"
   fi
 
-  cd "$RUBY_INSTALL_DIR"
+  cd "$RUBY_INSTALL_DIR" || exit 2
   sudo make install
 
   ruby-install --latest ruby --no-reinstall
@@ -102,7 +102,7 @@ install_chruby(){
     tar -xzvf "$CHRUBY_TAR"
   fi
 
-  cd "$CHRUBY_DIR"
+  cd "$CHRUBY_DIR" || exit 2
   sudo ./scripts/setup.sh
   cd ..
 }
@@ -113,7 +113,7 @@ add_chruby_to_profile_d(){
   dirname="/etc/profile.d"
   filename="$dirname/chruby.sh"
 
-  mkdir -p $dirname
+  mkdir -p "$dirname"
 
   add_chruby="if [ -n \"\$BASH_VERSION\" ] || [ -n \"\$ZSH_VERSION\" ]; then
   source /usr/local/share/chruby/chruby.sh
@@ -153,6 +153,7 @@ set_ruby_version(){
 # will create an empty .bashrc or .zshrc so that it can be source
 # creation of the profile only happens if the file is not detected in the
 # homedir && depending on the value of $SHELL
+
 restart_shell(){
   if [[ "$SHELL" == *"bash" ]]; then
     BASH_RC="$HOME/.bashrc"
@@ -162,6 +163,7 @@ restart_shell(){
     fi
 
     set_ruby_version "$BASH_RC"
+
     source "$BASH_RC"
 
   elif [[ "$SHELL" == *"zsh" ]]; then
