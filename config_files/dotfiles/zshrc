@@ -103,6 +103,7 @@ fi
 alias vim="nvim"
 alias zshrc="vim ~/.zshrc"
 alias omz="vim ~/.oh-my-zsh"
+alias vimrc="vim ~/.vimrc"
 alias ncfg="vim ~/.config/nvim/init.vim"
 alias tcfg="vim ~/.tmux.conf"
 alias lsc='colorls'

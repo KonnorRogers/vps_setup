@@ -14,7 +14,10 @@ endif
     
 call plug#begin("~/.vim/plugged")
   " colorscheme
+  Plug 'sheerun/vim-polyglot'
+  Plug 'trevordmiller/nova-vim'
   Plug 'tyrannicaltoucan/vim-quantum'
+  Plug 'arcticicestudio/nord-vim'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
@@ -62,14 +65,15 @@ filetype plugin indent on
 filetype on
 filetype indent on
 set backspace=indent,eol,start
-" 'matchit.vim' is built-in so let's enable it!
-" " Hit '%' on 'if' to jump to 'else'.
-runtime macros/matchit.vim
 set wildmenu
 set incsearch
 set hidden
 set lazyredraw
 set guifont=DejavuSansMono\ Nerd\ Font\ 12
+
+" 'matchit.vim' is built-in so let's enable it!
+" " Hit '%' on 'if' to jump to 'else'.
+runtime macros/matchit.vim 
 
 " Turn on omnicompletion
 set omnifunc=syntaxcomplete#Complete
@@ -110,7 +114,7 @@ autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
 let g:quantum_black=1
-colorscheme quantum
+colorscheme nord
 
 " use default
 set laststatus=2
@@ -153,7 +157,7 @@ inoremap <c-x><c-k> <c-k><c-x>
 inoremap <c-x><c-]> <c-]>
 
 " Ultisnips config
-let g:UltiSnipsSnippetDirectories=[$HOME.'/ParamagicianUltiSnips']
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"
