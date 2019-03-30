@@ -66,13 +66,13 @@ sudo chown -R $USER:$USER ~/.ssh
 ```bash
 git clone https://github.com/ParamagicDev/vps_cli.git ~/vps_cli
 cd ~/vps_cli
-bash install.bash
+bash setup.bash
 ```
 
 * or
 
 ```bash
-./install.bash
+./setup.bash
 ```
       
 * This will run heroku login & git config --global user.name & user.email
