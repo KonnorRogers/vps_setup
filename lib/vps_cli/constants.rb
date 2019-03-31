@@ -21,24 +21,27 @@ module VpsCli
   end
 
   class DecryptionConstants
-    HEROKU_HASH = {
-      heroku: {
-        api: '[heroku][api]',
-        api_login: '[heroku][,
-        api_password: :api_password,
-        git: :git,
-        git_login: :git_login,
-        git_password: :git_password
-      }
-    }
+    # @param keys [Array<Symbol>]
+    # @return [Hash<Symbol, String>] returns a hash easily decrypted
+    #   by FileHelper#decrypt
+    # @see VpsCli::FileHelper#decrypt
+    def self.create_hash(keys)
+      hash = Hash.new do |hash, key|
+        hash[key] = "[#{hash}][#{key}]"
+      end
 
-    GITHUB_HASH = {
-      github: {
-        username: :username,
-        email: :email,
-        password: :password,
-        api_token: :api_token
-      }
-    }
+      keys.each do |key|
+        hash[key]
+      end
+    end
+    HEROKU_KEYS = %i[
+    api api_login api_password
+    git git_login git_password
+    ]
+
+    GITHUB_KEYS = %i[username email password api_token]
+
+    HEROKU_HASH = create_hash(HEROKU_KEYS)
+    GITHUB_HASH = create_hash(GITHUB_KEYS)
   end
 end
