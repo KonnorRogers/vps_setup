@@ -14,8 +14,6 @@ endif
     
 call plug#begin("~/.vim/plugged")
   " colorscheme
-  Plug 'sheerun/vim-polyglot'
-  Plug 'trevordmiller/nova-vim'
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
 
@@ -112,6 +110,7 @@ autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
+" colorscheme stuff
 set background=dark
 let g:quantum_black=1
 colorscheme nord
