@@ -11,7 +11,6 @@ require 'vps_cli/install'
 require 'vps_cli/packages'
 require 'vps_cli/pull'
 require 'vps_cli/setup'
-require 'vps_cli/constants'
 
 # Used for setting up a ubuntu environment
 module VpsCli
