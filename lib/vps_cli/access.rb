@@ -8,12 +8,12 @@ module VpsCli
   # Used for various things related to logins, ssh keys, etc
   class Access
     extend FileHelper # provides acccess to the FileHelper.FileHelper.decrypt(file) method
-    include VpsConstants
 
-    # @see VpsConstants for further info on these constants
-    # They are defined in order to keep the file more concise
-    HEROKU_HASH = VpsConstants::HEROKU_HASH
-    GITHUB_HASH = VpsConstants::GITHUB_HASH
+    # @see DecryptionConstants
+    #   for further info on these constants
+    # They are defined elsewhere in order to keep the file more concise
+    HEROKU_HASH = DecryptionConstants::HEROKU_HASH
+    GITHUB_HASH = DecryptionConstants::GITHUB_HASH
 
     # logs into various things either via a .yaml file or via cmd line
     # @param yaml_file [File] The yaml file to be used. MUST BE ENCRYPTED VIA SOPS
@@ -60,10 +60,7 @@ module VpsCli
     end
 
     def self.git_file_login(yaml_file:)
-      github = 'github'
-      username_key = ['username'].unshift(github)
-      email_key = ['email'].unshift(github)
-
+      username_key = GITHUB_HASH[:github][:username]
       username = FileHelper.decrypt(yaml_file, username_key)
       email = FileHelper.decrypt(yaml_file, email_key)
 
@@ -75,6 +72,10 @@ module VpsCli
       heroku = 'heroku'
       api = 'api'
       FileHelper.decrypt(yaml_file)
+    end
+
+    def self.convert_hash_to_array
+
     end
   end
 end

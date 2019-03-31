@@ -23,8 +23,8 @@ module VpsCli
   class DecryptionConstants
     HEROKU_HASH = {
       heroku: {
-        api: :api,
-        api_login: :api_login,
+        api: '[heroku][api]',
+        api_login: '[heroku][,
         api_password: :api_password,
         git: :git,
         git_login: :git_login,
