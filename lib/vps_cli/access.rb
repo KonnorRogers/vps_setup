@@ -108,5 +108,4 @@ module VpsCli
     HEROKU_HASH = create_hash(:heroku, HEROKU_KEYS)
     GITHUB_HASH = create_hash(:github, GITHUB_KEYS)
   end
-  end
 end
