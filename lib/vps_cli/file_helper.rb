@@ -157,6 +157,13 @@ module FileHelper
     Open3.capture3(sops_cmd)
   end
 
+  # @see VpsCli::FileHelper#decrypt
+  def self.path_to_value(*path)
+    path.inject('') do |final_path, node|
+      final_path + "[#{node}]".to_json
+    end
+  end
+
   # I noticed needing to export $(tty) while troubleshooting
   # issues with gpg keys. It is here just in case its not in
   # your zshrc / bashrc file

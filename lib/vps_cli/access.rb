@@ -67,12 +67,6 @@ module VpsCli
       # FileHelper.decrypt(yaml_file)
     end
 
-    # @see VpsCli::FileHelper#decrypt
-    def self.path_to_value(*path)
-      path.inject('') do |final_path, node|
-        final_path + "[#{node}]".to_json
-      end
-    end
 
     # HEROKU_KEYS = %i[
     #   api api_login api_password
