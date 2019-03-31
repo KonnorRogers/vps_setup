@@ -11,8 +11,8 @@ module VpsCli
     # @see DecryptionConstants
     #   for further info on these constants
     # They are defined elsewhere in order to keep the file more concise
-    HEROKU_HASH = DecryptionConstants::HEROKU_HASH
-    GITHUB_HASH = DecryptionConstants::GITHUB_HASH
+    # HEROKU_HASH = DecryptionConstants::HEROKU_HASH
+    # GITHUB_HASH = DecryptionConstants::GITHUB_HASH
 
     # logs into various things either via a .yaml file or via cmd line
     # @param yaml_file [File] The yaml file to be used. MUST BE ENCRYPTED VIA SOPS
