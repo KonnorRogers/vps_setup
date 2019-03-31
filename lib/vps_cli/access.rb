@@ -2,7 +2,7 @@
 
 # @see https://ruby-doc.org/stdlib-2.6.0.preview2/libdoc/open3/rdoc/Open3.html
 require 'open3'
-require 'vps_constants'
+require 'vps_cli/constants'
 
 module VpsCli
   # Used for various things related to logins, ssh keys, etc
@@ -59,23 +59,20 @@ module VpsCli
       VpsCli.errors << error.exception("#{error}\n\n#{message}")
     end
 
+    # @todo fix this so that it uses VpsCli::DecryptionConstants
     def self.git_file_login(yaml_file:)
-      username_key = GITHUB_HASH[:github][:username]
-      username = FileHelper.decrypt(yaml_file, username_key)
-      email = FileHelper.decrypt(yaml_file, email_key)
+      # username_key = GITHUB_HASH[:github][:username]
+      # username = FileHelper.decrypt(yaml_file, username_key)
+      # email = FileHelper.decrypt(yaml_file, email_key)
 
-      set_git_config(username, email)
+      # set_git_config(username, email)
     end
 
     # @todo create another method to pass the keys
     def self.heroku_file_login(yaml_file:, keys:)
-      heroku = 'heroku'
-      api = 'api'
-      FileHelper.decrypt(yaml_file)
-    end
-
-    def self.convert_hash_to_array
-
+      # heroku = 'heroku'
+      # api = 'api'
+      # FileHelper.decrypt(yaml_file)
     end
   end
 end
