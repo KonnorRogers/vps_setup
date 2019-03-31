@@ -13,27 +13,21 @@ require 'vps_cli/install'
 require 'vps_cli/packages'
 require 'vps_cli/pull'
 require 'vps_cli/setup'
+require 'vps_cli/constants'
 
 # Used for setting up a ubuntu environment
 module VpsCli
-  # @!group Top Level Constants
+  include VpsConstants
 
-  # Project's Root Directory
-  ROOT = File.expand_path(File.expand_path('../', __dir__))
+  # All constants can be found in the constants.rb file
+  # @see VpsCli::FileConstants
+  # @see VpsCli::DecryptionConstants
+  ROOT = FileConstants::ROOT
+  FILES_DIR = FileConstants::FILES_DIR
+  DOTFILES_DIR = FileConstants::DOTFILES_DIR
+  MISC_FILES_DIR = FileConstants::MISC_FILES_DIR
+  BACKUP_FILES_DIR = FileConstants::BACKUP_FILES_DIR
 
-  # Projects config_files directory
-  FILES_DIR = File.join(ROOT, 'config_files')
-
-  # Projects Dotfiles directory
-  DOTFILES_DIR = File.join(FILES_DIR, 'dotfiles')
-
-  # Miscellaneous files like sshd_config
-  MISC_FILES_DIR = File.join(FILES_DIR, 'misc_files')
-
-  # Directory of backup files
-  BACKUP_FILES_DIR = File.join(Dir.home, 'backup_files')
-
-  # @!endgroup
 
   class << self
     # Used for loggings errors
