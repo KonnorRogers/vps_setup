@@ -87,13 +87,13 @@ module VpsCli
     #   by FileHelper#decrypt
     # @see VpsCli::FileHelper#decrypt
     def self.create_hash(hash_name, keys)
-      hash = Hash.new do |hash, key|
-        hash[key] = "[\"{hash_name}\"][\"#{hash[key]}\"]"
+      decryption_hash = Hash.new do |hash, key|
+        hash[key] = "[\"#{hash_name}\"][\"#{key}\"]"
       end
 
-      keys.each { |key| hash[key] }
+      keys.each { |key| decryption_hash[key] }
 
-      hash
+      decryption_hash
     end
 
     HEROKU_KEYS = %i[
