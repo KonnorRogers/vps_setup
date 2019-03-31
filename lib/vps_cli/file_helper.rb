@@ -157,10 +157,12 @@ module FileHelper
     Open3.capture3(sops_cmd)
   end
 
+  # @param [String, Symbol, Array<String>] The ordered path to traverse
+  # @return [String] Returns a path string to be able to traverse a yaml file
   # @see VpsCli::FileHelper#decrypt
   def self.path_to_value(*path)
-    path.inject('') do |final_path, node|
-      final_path + "[#{node}]".to_json
+    path.flatten.inject('') do |final_path, node|
+      final_path + "[#{node.to_json}]"
     end
   end
 
