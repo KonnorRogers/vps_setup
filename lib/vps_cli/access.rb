@@ -2,7 +2,6 @@
 
 # @see https://ruby-doc.org/stdlib-2.6.0.preview2/libdoc/open3/rdoc/Open3.html
 require 'open3'
-require 'vps_cli/constants'
 
 module VpsCli
   # Used for various things related to logins, ssh keys, etc
