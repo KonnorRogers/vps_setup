@@ -38,35 +38,57 @@ module VpsCli
 
       puts "Git config complete.\n"
     rescue RuntimeError => error
-      message = 'Something went wrong. Make sure to set your git config manually'
+      msg = 'Something went wrong. Make sure to set your .gitconfig manually'
 
-      VpsCli.errors << error.exception("#{error}\n\n#{message}")
+      VpsCli.errors << error.exception("#{error}\n\n#{msg}")
     end
 
     def self.heroku_login
       puts 'Please login to heroku:'
       Rake.sh('heroku login --interactive')
     rescue RuntimeError => error
-      message = "\n\nUnable not login to heroku. To login, type: 'heroku login'"
+      message = "\nUnable not login to heroku. To login, type: 'heroku login'"
       VpsCli.errors << error.exception("#{error}\n\n#{message}")
     end
 
-    # @todo fix this so that it uses VpsCli::DecryptionConstants
+    # Logs into git by setting it in your .gitconfig file
+    # @param yaml_file [File] Sets your git login via the values in your
+    #   yaml_file
+    # @return nil
     def self.git_file_login(yaml_file:)
-      # username_key = GITHUB_HASH[:github][:username]
-      # username = FileHelper.decrypt(yaml_file, username_key)
-      # email = FileHelper.decrypt(yaml_file, email_key)
+      username_key = FileHelper.path_to_value(:github, :username)
+      email_key = FileHelper.path_to_value(:github, :email)
 
-      # set_git_config(username, email)
+      username = FileHelper.decrypt(yaml_file, username_key)
+      email = FileHelper.decrypt(yaml_file, email_key)
+
+      set_git_config(username, email)
     end
 
     # @todo create another method to pass the keys
-    def self.heroku_file_login(yaml_file:, path:)
-      # heroku = 'heroku'
-      # api = 'api'
-      # FileHelper.decrypt(yaml_file)
+    def self.heroku_file_login(yaml_file:)
+      heroku_git = %i[heroku git]
+
+      write_to_netrc
     end
 
+    def self.heroku_api_values
+      heroku_api = %i[heroku api]
+      api_keys = %i[machine login password]
+
+      api_keys.each do |key|
+      end
+    end
+
+    def self.heroku_git_values
+      heroku_git = %i[heroku git]
+      git_keys = %i[machine login password]
+
+      git_keys.each do |key|
+      end
+    end
+
+    def self.write_to_netrc(hash); end
 
     # HEROKU_KEYS = %i[
     #   api api_login api_password
