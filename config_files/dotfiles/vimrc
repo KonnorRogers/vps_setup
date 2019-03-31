@@ -67,6 +67,7 @@ set wildmenu
 set incsearch
 set hidden
 set lazyredraw
+set relativenumber
 set guifont=DejavuSansMono\ Nerd\ Font\ 12
 
 " 'matchit.vim' is built-in so let's enable it!
