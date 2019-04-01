@@ -29,8 +29,17 @@ class TestAccess < Minitest::Test
     File.write(@@netrc_file, 'test')
     assert_equal File.read(@@netrc_file), 'test'
 
-    VpsCli::Access.write_to_netrc(netrc_file: @@netrc_file, string: 'test_string')
+    VpsCli::Access.write_to_netrc(netrc_file: @@netrc_file, string: 'testing')
 
     refute_equal File.read(@@netrc_file), 'test'
+  end
+
+  def test_adds_an_error_to_vps_cli_errors
+    assert_empty VpsCli.errors
+    FileUtils.touch(@@netrc_file)
+    FileUtils.chmod('-w', @@netrc_file)
+    VpsCli::Access.write_to_netrc(netrc_file: @@netrc_file, string: 'hi')
+    refute_empty VpsCli.errors
+    VpsCli.errors.each { |error| p error }
   end
 end

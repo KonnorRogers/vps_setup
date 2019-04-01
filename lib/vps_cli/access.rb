@@ -127,18 +127,17 @@ module VpsCli
     def self.write_to_netrc(netrc_file: nil, string:)
       Rake.mkdir_p(File.dirname(netrc_file))
       Rake.touch(netrc_file) unless File.exist?(netrc_file)
-      netrc_error(netrc_file) && return unless File.writable?(netrc_file)
 
       begin
         File.write(netrc_file, string)
-      rescue RuntimeError
-        netrc_error(netrc_file)
+      rescue Errno::EACCES => e
+        netrc_error(netrc_file: netrc_file, error: e)
       end
     end
 
-    def self.netrc_error(netrc_file)
+    def self.netrc_error(netrc_file:, error:)
       error_msg = "Unable to write to your #{netrc_file}."
-      VpsCli.errors << error_msg
+      VpsCli.errors << error.exception(error_msg)
     end
     # @!endgroup
   end
