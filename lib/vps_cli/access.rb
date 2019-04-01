@@ -125,6 +125,8 @@ module VpsCli
     end
 
     def self.write_to_netrc(netrc_file: nil, string:)
+      Rake.mkdir_p(File.dirname(netrc_file))
+      Rake.touch(netrc_file) unless File.exist?(netrc_file)
       netrc_error(netrc_file) && return unless File.writable?(netrc_file)
 
       begin

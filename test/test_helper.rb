@@ -37,16 +37,16 @@ end
 
 # @return [Hash] Hash of base options to be used for testing
 def test_options(opts = {})
-    opts[:backup_dir] = BACKUP_DIR
-    opts[:local_dir] = LOCAL_DIR
-    opts[:dotfiles_dir] = TEST_DOTFILES
-    opts[:misc_files_dir] = TEST_MISC_FILES
-    opts[:local_sshd_config] = TEST_LOCAL_SSHD_CONFIG
-    opts[:verbose] = true
-    opts[:testing] = true
-    opts[:interactive] = false
+  opts[:backup_dir] = BACKUP_DIR
+  opts[:local_dir] = LOCAL_DIR
+  opts[:dotfiles_dir] = TEST_DOTFILES
+  opts[:misc_files_dir] = TEST_MISC_FILES
+  opts[:local_sshd_config] = TEST_LOCAL_SSHD_CONFIG
+  opts[:verbose] = true
+  opts[:testing] = true
+  opts[:interactive] = false
 
-    opts
+  opts
 end
 
 # @param [File] Name of log file
