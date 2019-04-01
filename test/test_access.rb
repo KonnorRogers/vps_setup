@@ -35,11 +35,14 @@ class TestAccess < Minitest::Test
   end
 
   def test_adds_an_error_to_vps_cli_errors
-    assert_empty VpsCli.errors
     FileUtils.touch(@@netrc_file)
     FileUtils.chmod('-w', @@netrc_file)
+
+    VpsCli.errors = []
+    assert_empty VpsCli.errors
+
     VpsCli::Access.write_to_netrc(netrc_file: @@netrc_file, string: 'hi')
+
     refute_empty VpsCli.errors
-    VpsCli.errors.each { |error| p error }
   end
 end

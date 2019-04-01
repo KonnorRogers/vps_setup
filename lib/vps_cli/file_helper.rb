@@ -138,41 +138,4 @@ module FileHelper
     end
   end
 
-  # uses an access file via SOPS
-  # SOPS is an encryption tool
-  # @see https://github.com/mozilla/sops
-  # It will decrypt the file, please use a .yaml file
-  # @param file [File]
-  #   The .yaml file encrypted with sops used to login to various accounts
-  # @path [String] JSON formatted string to traverse
-  #   a yaml file tree
-  #   Example: "[\"github\"][\"username\"]"
-  # @return [String] The value of key given in the .yaml file
-  def self.decrypt(yaml_file:, path:)
-    # puts all keys into a ["key"] within the array
-    sops_cmd = "sops -d --extract '#{path}' #{yaml_file}"
-
-    export_tty
-    # this will return in the string form the value you were looking for
-    Open3.capture3(sops_cmd)
-  end
-
-  # @param [String, Symbol, Array<String>] The ordered path to traverse
-  # @return [String] Returns a path string to be able to traverse a yaml file
-  # @see VpsCli::FileHelper#decrypt
-  def self.dig_for_path(*path)
-    # just in case someone passes a hash etc
-    return unless path.is_a?(Array)
-
-    path.flatten.inject('') do |final_path, node|
-      final_path + "[#{node.to_json}]"
-    end
-  end
-
-  # I noticed needing to export $(tty) while troubleshooting
-  # issues with gpg keys. It is here just in case its not in
-  # your zshrc / bashrc file
-  def self.export_tty
-    Rake.sh('export $(tty)')
-  end
 end
