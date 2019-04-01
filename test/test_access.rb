@@ -94,7 +94,19 @@ class TestAccess < Minitest::Test
     refute_equal actual_login_string, test_string
   end
 
+  def test_my_inject_with_count
+    array = [:heroku, :api, :login]
+    value = Access.my_inject_with_count(array) do |accum, element, count|
+      # puts accum
+      # p element
+      p count
+    end
+
+    p value
+  end
+
   def test_heroku_api_values_returns_proper_string
+    skip
     machine = "machine api.heroku.com\n  "
     login = "login random_username\n  "
     password = "password blahblahblah"

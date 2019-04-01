@@ -104,14 +104,11 @@ module VpsCli
 
     # @todo document properly
     def self.my_inject_with_count(array, &block)
-      string = ''
       array.inject('') do |accum, element|
         1.upto(array.length) do |count|
-          string = block.call(accum, element, count)
+          block.call(accum, element, count)
         end
       end
-
-      string
     end
 
     # @todo document properly
@@ -122,7 +119,6 @@ module VpsCli
         path = dig_for_path(base, key)
 
         value = block.call(path)
-        binding.pry
         value += "\n  " if count < keys.length
         string + value
       end
