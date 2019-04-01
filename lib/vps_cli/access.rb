@@ -14,13 +14,16 @@ module VpsCli
     #   MUST BE ENCRYPTED VIA SOPS
     #   @see https://github.com/mozilla/sops
     #   @see VpsCli::FileHelper#decrypt
-    def self.provide_credentials(yaml_file: nil)
-      return file_login(yaml_file) unless yaml_file.nil?
+    def self.provide_credentials(yaml_file: nil, netrc_file: nil)
+      return file_login(yaml_file, netrc_file) unless yaml_file.nil?
 
       command_line_login
     end
 
-    def self.file_login(yaml_file:); end
+    def self.file_login(yaml_file:, netrc_file: nil)
+      git_file_login(yaml_file: yaml_file)
+      heroku_file_login(yaml_file: yaml_file, netrc_file: netrc_file)
+    end
 
     def self.command_line_login
       set_git_config
@@ -66,39 +69,75 @@ module VpsCli
     end
 
     # @todo create another method to pass the keys
-    def self.heroku_file_login(yaml_file:)
-      heroku_git = %i[heroku git]
+    def self.heroku_file_login(yaml_file:, netrc_file: nil)
+      api_string = heroku_api_string(yaml_file: yaml_file)
+      git_string = heroku_git_string(yaml_file: yaml_file)
 
-      write_to_netrc
+      netrc_string = api_string + "\n" + git_string
+
+      netrc_file ||= File.join(Dir.home, '.netrc')
+      write_to_netrc(netrc_file: netrc_file, string: netrc_string)
     end
 
-    def self.heroku_api_values
+    # retrieves the values of .netrc for heroku and creates a writable string
+    # @return [String] Returns the string to be written to netrc
+    def self.heroku_api_string(yaml_file:)
+      # initial tree traversal in the .yaml file
       heroku_api = %i[heroku api]
-      api_keys = %i[machine login password]
+      heroku_api_keys = %i[machine login password]
 
-      api_keys.each do |key|
+      make_string(base: heroku_api, keys: heroku_api_keys) do |path|
+        FileHelper.decrypt(yaml_file: yaml_file, path: path)
       end
     end
 
+    # retries the git values for heroku in your .yaml file
+    # @return [String] Returns the string to be written to your netrc file
     def self.heroku_git_values
       heroku_git = %i[heroku git]
-      git_keys = %i[machine login password]
+      heroku_git_keys = %i[machine login password]
 
-      git_keys.each do |key|
+      make_string(base: heroku_git, keys: heroku_git_keys) do |path|
+        FileHelper.decrypt(yaml_file: yaml_file, path: path)
       end
     end
 
-    def self.write_to_netrc(hash); end
+    # @!group Access Helper Methods
 
-    # HEROKU_KEYS = %i[
-    #   api api_login api_password
-    #   git git_login git_password
-    # ].freeze
+    def self.my_inject_with_count(array, &block)
+      1.up_to(array.length) do |count|
+        array.inject('') do |accum, element|
+          block.call(accum, element, count)
+        end
+      end
+    end
 
-    # GITHUB_KEYS = %i[username email password api_token].freeze
+    def self.make_string(base:, keys:, &block)
+      # iterates through the keys to provide a path to each array
+      # essentialy is the equivalent of Hash.dig(:heroku, :api, :key)
+      my_inject_with_count(keys) do |string, key, count|
+        path = FileHelper.dig_for_path(base, key)
 
-    # # @todo move this somewhere
-    # HEROKU_HASH = create_hash(:heroku, HEROKU_KEYS)
-    # GITHUB_HASH = create_hash(:github, GITHUB_KEYS)
+        value = block.call(path)
+        value += "\n  " if count < keys.length
+        string + value
+      end
+    end
+
+    def self.write_to_netrc(netrc_file: nil, string:)
+      netrc_error(netrc_file) && return unless File.writable?(netrc_file)
+
+      begin
+        File.write(netrc_file, string)
+      rescue RuntimeError
+        netrc_error(netrc_file)
+      end
+    end
+
+    def self.netrc_error(netrc_file)
+      error_msg = "Unable to write to your #{netrc_file}."
+      VpsCli.errors << error_msg
+    end
+    # @!endgroup
   end
 end

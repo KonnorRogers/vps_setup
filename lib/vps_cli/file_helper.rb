@@ -148,9 +148,9 @@ module FileHelper
   #   a yaml file tree
   #   Example: "[\"github\"][\"username\"]"
   # @return [String] The value of key given in the .yaml file
-  def self.decrypt(file:, path:)
+  def self.decrypt(yaml_file:, path:)
     # puts all keys into a ["key"] within the array
-    sops_cmd = "sops -d --extract '#{path}' #{file}"
+    sops_cmd = "sops -d --extract '#{path}' #{yaml_file}"
 
     export_tty
     # this will return in the string form the value you were looking for
@@ -160,7 +160,10 @@ module FileHelper
   # @param [String, Symbol, Array<String>] The ordered path to traverse
   # @return [String] Returns a path string to be able to traverse a yaml file
   # @see VpsCli::FileHelper#decrypt
-  def self.path_to_value(*path)
+  def self.dig_for_path(*path)
+    # just in case someone passes a hash etc
+    return unless path.is_a?(Array)
+
     path.flatten.inject('') do |final_path, node|
       final_path + "[#{node.to_json}]"
     end
@@ -170,6 +173,6 @@ module FileHelper
   # issues with gpg keys. It is here just in case its not in
   # your zshrc / bashrc file
   def self.export_tty
-    Rake.sh("export $(tty)")
+    Rake.sh('export $(tty)')
   end
 end
