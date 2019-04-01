@@ -97,9 +97,8 @@ class TestAccess < Minitest::Test
   def test_my_inject_with_count
     array = [:heroku, :api, :login]
     value = Access.my_inject_with_count(array) do |accum, element, count|
-      # puts accum
-      # p element
-      p count
+      element = element.to_s + count.to_s if count < array.size - 1
+      accum + element.to_s
     end
 
     p value

@@ -104,11 +104,13 @@ module VpsCli
 
     # @todo document properly
     def self.my_inject_with_count(array, &block)
+      value = nil
+      count = -1
       array.inject('') do |accum, element|
-        1.upto(array.length) do |count|
-          block.call(accum, element, count)
-        end
+        count += 1
+        value = block.call(accum, element, count)
       end
+      value
     end
 
     # @todo document properly
