@@ -91,7 +91,7 @@ module VpsCli
 
     # retries the git values for heroku in your .yaml file
     # @return [String] Returns the string to be written to your netrc file
-    def self.heroku_git_values
+    def self.heroku_git_string(yaml_file:)
       heroku_git = %i[heroku git]
       heroku_git_keys = %i[machine login password]
 
@@ -104,11 +104,14 @@ module VpsCli
 
     # @todo document properly
     def self.my_inject_with_count(array, &block)
-      1.up_to(array.length) do |count|
-        array.inject('') do |accum, element|
-          block.call(accum, element, count)
+      string = ''
+      array.inject('') do |accum, element|
+        1.upto(array.length) do |count|
+          string = block.call(accum, element, count)
         end
       end
+
+      string
     end
 
     # @todo document properly
@@ -119,6 +122,7 @@ module VpsCli
         path = dig_for_path(base, key)
 
         value = block.call(path)
+        binding.pry
         value += "\n  " if count < keys.length
         string + value
       end
@@ -155,18 +159,18 @@ module VpsCli
       # puts all keys into a ["key"] within the array
       sops_cmd = "sops -d --extract '#{path}' #{yaml_file}"
 
+      # this allows you to enter your passphrase
       export_tty
       # this will return in the string form the value you were looking for
-      Open3.capture3(sops_cmd)
+      stdout, _stderr, _status = Open3.capture3(sops_cmd)
+
+      stdout
     end
 
     # @param [String, Symbol, Array<String>] The ordered path to traverse
     # @return [String] Returns a path string to be able to traverse a yaml file
     # @see VpsCli::Access#decrypt
     def self.dig_for_path(*path)
-      # just in case someone passes a hash etc
-      return unless path.is_a?(Array)
-
       path.flatten.inject('') do |final_path, node|
         final_path + "[#{node.to_json}]"
       end
@@ -176,7 +180,7 @@ module VpsCli
     # issues with gpg keys. It is here just in case its not in
     # your zshrc / bashrc file
     def self.export_tty
-      Rake.sh('export $(tty)')
+      Rake.sh('GPG_TTY=$(tty) && export GPG_TTY')
     end
     # @!endgroup
   end
