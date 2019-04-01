@@ -145,7 +145,7 @@ ngrok http 3000
 added it into this repo for testing purposes.
 
 ```bash
-gpg --import sops_testing_key.asc
+gpg --import /path/to/vps_cli/sops_testing_key.asc
 ```
 
 * The test suite will fail if the testing key is not present, this is to be expected
