@@ -10,7 +10,7 @@ class TestPull < Minitest::Test
   @@sshd_config = 'sshd_config'
   @@gnome_terminal = 'gnome_terminal_settings'
   # backup files not needed when pulling. Youre pulling into a git managed repo
-  @@base_dirs = [LOCAL_DIR, TEST_DOTFILES, TEST_MISC_FILES].freeze
+  @@base_dirs = [LOCAL_DIR, TEST_DOTFILES, TEST_MISC_FILES, TEST_CONFIG_FILES].freeze
 
   def setup
     rm_dirs(@@base_dirs)

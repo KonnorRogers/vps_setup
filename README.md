@@ -91,6 +91,7 @@ bash setup.bash
 * Heroku CLI (--classic)
 * Ufw - Allows only certain people to connect
 * Httpie - for playing around with API requests
+* PGP / GPG - Public / Private key authentication
 
 ## Languages / Frameworks installed
 * Nodejs
@@ -138,10 +139,19 @@ ngrok http 3000
 
 * This will bring up a CLI to connect to for example localhost:3000 on the web  
 
-## Rake Tasks
+## Testing
 
-### $ rake test
-* Default rake task, runs the test suite
+* Import the gpg dev key, I just took the one from [The mozilla SOPS github](https://github.com/mozilla/sops#test-with-the-dev-pgp-key) and
+added it into this repo for testing purposes.
+
+```bash
+gpg --import /path/to/vps_cli/sops_testing_key.asc
+```
+
+* The test suite will fail if the testing key is not present, this is to be expected
+```bash
+rake test
+```
 
 ## vps-cli commands
 
@@ -173,6 +183,9 @@ vps-cli pull --all
 
 ## Contents of credentials.yaml
 
+* An example can be found of how to format your credentials.yaml file here:
+* [Example credentials.yaml file](https://github.com/ParamagicDev/vps_cli/blob/thor/example_credentials.yaml)
+
 ## Updates for the future?
     
 * Adding docker support via images
@@ -202,6 +215,9 @@ vps-cli pull --all
 * As this project grows, RDoc / YARD is a great way to have an easy view of what everything does
 * Created calls to the web via Curl / Net:HTTP provided by Ruby
 * Proper storage of secrets such as API keys, SSH keys, etc
+* Wrapping something such as sops with Ruby is not easy.
+* So much testing on things that are not easy to test
+* Scope creep is a real thing and ive experienced it with this project
 
 ## ISSUES
 

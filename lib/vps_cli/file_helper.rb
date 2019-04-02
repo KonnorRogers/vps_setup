@@ -138,29 +138,4 @@ module FileHelper
     end
   end
 
-  # uses an access file via SOPS
-  # SOPS is an encryption tool
-  # @see https://github.com/mozilla/sops
-  # It will decrypt the file, please use a .yaml file
-  # @param file [File]
-  #   The .yaml file encrypted with sops used to login to various accounts
-  # @param keys [Array<String>] The keys of the value youre trying to decrypt
-  #   Example: ["github", "username"]
-  # @return [String] The value of key given in the .yaml file
-  def self.decrypt(file, keys)
-    # puts all keys into a ["key"] within the array
-    keys.map! { |key| "[\"#{key}\"]" }
-    sops_cmd = "sops -d --extract '#{keys.join}' #{file}"
-
-    export_tty
-    # this will return in the string form the value you were looking for
-    Open3.capture3(sops_cmd)
-  end
-
-  # I noticed needing to export $(tty) while troubleshooting
-  # issues with gpg keys. It is here just in case its not in
-  # your zshrc / bashrc file
-  def self.export_tty
-    Rake.sh("export $(tty)")
-  end
 end
