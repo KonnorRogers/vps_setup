@@ -115,6 +115,9 @@ bash setup.bash
 
 ## Setup
 
+* If you have not setup PGP / GPG before, you can follow my guide:
+[My Guide to setting up PGP / GPG](https://github.com/ParamagicDev/vps_cli/issues/12)
+
 * Ensure you go into your server and secure it properly
 
 * For viewing apps over ssh, ensure to use

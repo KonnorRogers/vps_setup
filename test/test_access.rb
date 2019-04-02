@@ -100,8 +100,6 @@ class TestAccess < Minitest::Test
       element = element.to_s + count.to_s if count < array.size - 1
       accum + element.to_s
     end
-
-    p value
   end
 
   def test_heroku_api_values_returns_proper_string
