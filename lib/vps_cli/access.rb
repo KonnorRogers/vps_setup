@@ -102,12 +102,15 @@ module VpsCli
 
     # @!group Access Helper Methods
 
-    # my version of Enumerable#inject
+    # my version of Enumerable#inject intended to return a string
     # provides a count to know what # object youre on
-    # @param array [Array<Object>]
+    # @param array [Array<#to_s>]
     #   For each element in the array, yield to the block given.
-    # @yieldparam accum [Object] The value that will persist throughout the block
-    # @yieldparam element [Object] The current
+    # @yieldparam accum [String]
+    #   The value that will persist throughout the block
+    # @yieldparam element [String] The current element in the array
+    # @yield param count [Integer]
+    # @return [String] Returns the string returned by the block passed to it
     def self.my_inject_with_count(array, &block)
       value = nil
       count = 0
@@ -118,7 +121,10 @@ module VpsCli
       end
     end
 
-    # @todo document properly
+    # Creates a string to be used to write to .netrc
+    # @param base [String] Provides the base string from which to add to
+    # @param keys [Array<String>] An array of strings to append to base
+    # @return [String] Returns the string after concatenating them
     def self.make_string(base:, keys:, &block)
       # iterates through the keys to provide a path to each array
       # essentialy is the equivalent of Hash.dig(:heroku, :api, :key)
@@ -126,7 +132,7 @@ module VpsCli
         path = dig_for_path(base, key)
 
         value = block.call(path)
-        value += "\n  " if count < keys.length
+        value << "\n  " if count < keys.length - 1
         string + value
       end
     end

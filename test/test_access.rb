@@ -95,20 +95,20 @@ class TestAccess < Minitest::Test
   end
 
   def test_my_inject_with_count
-    array = [:heroku, :api, :login]
+    array = %i[heroku api login]
     value = Access.my_inject_with_count(array) do |accum, element, count|
       element = element.to_s + count.to_s if count < array.size - 1
       accum + element.to_s
     end
 
-    p value
+    actual_string = 'heroku0api1login'
+    assert_equal value, actual_string
   end
 
   def test_heroku_api_values_returns_proper_string
-    skip
     machine = "machine api.heroku.com\n  "
     login = "login random_username\n  "
-    password = "password blahblahblah"
+    password = 'password blahblahblah'
 
     final_string = "#{machine}#{login}#{password}"
 
