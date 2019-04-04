@@ -66,14 +66,18 @@ module VpsCli
       set_git_config(username, email)
     end
 
-    # @todo create another method to pass the keys
+    # Logs into heroku if given an encrypted yaml_file
+    # @param yaml_file [File] The yaml file to be decrypted
+    # @param netrc_file [File] The netrc file to write to
+    # @return void
     def self.heroku_file_login(yaml_file:, netrc_file: nil)
+      netrc_file ||= File.join(Dir.home, '.netrc')
+
       api_string = heroku_api_string(yaml_file: yaml_file)
       git_string = heroku_git_string(yaml_file: yaml_file)
 
       netrc_string = api_string + "\n" + git_string
 
-      netrc_file ||= File.join(Dir.home, '.netrc')
       write_to_netrc(netrc_file: netrc_file, string: netrc_string)
     end
 
@@ -154,6 +158,10 @@ module VpsCli
       end
     end
 
+    # Adds the error to VpsCli#errors array
+    # @param [File] Location of netrc_file
+    # @param [Exception] The error to write to the array
+    # @return void
     def self.netrc_error(netrc_file:, error:)
       error_msg = "Unable to write to your #{netrc_file}."
       VpsCli.errors << error.exception(error_msg)
