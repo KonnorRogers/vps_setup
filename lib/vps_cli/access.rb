@@ -12,22 +12,33 @@ module VpsCli
     #   MUST BE ENCRYPTED VIA SOPS
     #   @see https://github.com/mozilla/sops
     #   @see VpsCli::Access#decrypt
+    # @return void
     def self.provide_credentials(yaml_file: nil, netrc_file: nil)
       return file_login(yaml_file, netrc_file) unless yaml_file.nil?
 
       command_line_login
     end
 
+    # Provides all login credentials via a SOPS encrypted yaml file
+    # @param yaml_file [File] File formatted in yaml and encrypted with SOPS
+    # @param netrc_file [File] ($HOME/.netrc) Location of the .netrc for heroku
+    # @return void
     def self.file_login(yaml_file:, netrc_file: nil)
+      netrc_file ||= File.join(Dir.home, '.netrc')
       git_file_login(yaml_file: yaml_file)
       heroku_file_login(yaml_file: yaml_file, netrc_file: netrc_file)
     end
 
+    # Logs in via the command line if no yaml_file given
     def self.command_line_login
       set_git_config
       heroku_login
     end
 
+    # Sets the .gitconfig file
+    # @param username [String] Username to set in .gitconfig
+    # @param email [String] email to use for .gitconfig
+    # @return void
     def self.set_git_config(username = nil, email = nil)
       puts 'Please enter your git username:'
       username ||= $stdin.gets.chomp
@@ -44,6 +55,8 @@ module VpsCli
       VpsCli.errors << error.exception("#{error}\n\n#{msg}")
     end
 
+    # Command line heroku login
+    # @return void
     def self.heroku_login
       puts 'Please login to heroku:'
       Rake.sh('heroku login --interactive')

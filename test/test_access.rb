@@ -105,7 +105,7 @@ class TestAccess < Minitest::Test
     assert_equal value, actual_string
   end
 
-  def test_heroku_api_values_returns_proper_string
+  def test_heroku_api_string_returns_proper_string
     machine = "machine api.heroku.com\n  "
     login = "login random_username\n  "
     password = 'password blahblahblah'
@@ -118,5 +118,41 @@ class TestAccess < Minitest::Test
     end
 
     assert_equal final_string, test_string
+  end
+
+  def test_heroku_git_string_returns_proper_string
+    machine = "machine git.heroku.com\n  "
+    login = "login random_username\n  "
+    password = 'password more_random_stuff'
+
+    final_string = "#{machine}#{login}#{password}"
+
+    test_string = ''
+    log_methods(@logger) do
+      test_string = Access.heroku_git_string(yaml_file: @yaml_file)
+    end
+
+    assert_equal final_string, test_string
+  end
+
+  def test_heroku_file_login_works_properly
+    api_machine = "machine api.heroku.com\n  "
+    api_login = "login random_username\n  "
+    api_password = 'password blahblahblah'
+
+    git_machine = "machine git.heroku.com\n  "
+    git_login = "login random_username\n  "
+    git_password = 'password more_random_stuff'
+
+    final_string = "#{api_machine}#{api_login}#{api_password}\n"
+    final_string += "#{git_machine}#{git_login}#{git_password}"
+
+    log_methods(@logger) do
+      Access.heroku_file_login(netrc_file: @netrc_file, yaml_file: @yaml_file)
+    end
+
+    netrc_file_contents = File.read(@netrc_file)
+
+    assert_equal netrc_file_contents, final_string
   end
 end
