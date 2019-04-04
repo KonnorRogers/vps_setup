@@ -12,11 +12,18 @@ module VpsCli
     #   MUST BE ENCRYPTED VIA SOPS
     #   @see https://github.com/mozilla/sops
     #   @see VpsCli::Access#decrypt
+    #   @see https://github.com/settings/tokens
+    #     I prefer to use authentication tokens versus sending
+    #     regular access info
     # @return void
     def self.provide_credentials(yaml_file: nil, netrc_file: nil)
-      return file_login(yaml_file, netrc_file) unless yaml_file.nil?
+      if yaml_file
+        file_login(yaml_file, netrc_file)
+      else
+        command_line_login
+      end
 
-      command_line_login
+      add_ssh_key_to_github
     end
 
     # Provides all login credentials via a SOPS encrypted yaml file
