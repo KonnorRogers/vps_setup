@@ -102,15 +102,20 @@ module VpsCli
 
     # @!group Access Helper Methods
 
-    # @todo document properly
+    # my version of Enumerable#inject
+    # provides a count to know what # object youre on
+    # @param array [Array<Object>]
+    #   For each element in the array, yield to the block given.
+    # @yieldparam accum [Object] The value that will persist throughout the block
+    # @yieldparam element [Object] The current
     def self.my_inject_with_count(array, &block)
       value = nil
-      count = -1
+      count = 0
       array.inject('') do |accum, element|
-        count += 1
         value = block.call(accum, element, count)
+        count += 1
+        value # if not here, returns the value of count
       end
-      value
     end
 
     # @todo document properly
