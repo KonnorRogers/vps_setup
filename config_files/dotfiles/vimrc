@@ -153,8 +153,14 @@ let g:ragtag_global_maps = 1 "available globally
 " Rebinds ctrl-x ctrl-k to not interfere with snippet jumping
 inoremap <c-x><c-k> <c-k><c-x>
 
-" tag comletion
+" tag completion
 inoremap <c-x><c-]> <c-]>
+
+" Plug commands
+map <Leader>pi :PlugInstall<CR>
+map <Leader>pu :PlugUpdate<CR>
+map <Leader>pru :UpdateRemotePlugins<CR>
+map <Leader>pc :PlugClean<CR>
 
 " Ultisnips config
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
