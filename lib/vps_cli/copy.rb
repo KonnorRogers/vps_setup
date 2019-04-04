@@ -63,7 +63,6 @@ module VpsCli
         local = File.join(opts[:local_dir], ".#{file}")
         backup = File.join(opts[:backup_dir], "#{file}.orig")
 
-
         files_and_dirs(config_file: config,
                        local_file: local,
                        backup_file: backup,
@@ -83,7 +82,7 @@ module VpsCli
 
       return true if File.exist?(sshd_config)
 
-      VpsCli.errors << no_sshd_config
+      VpsCli.errors << Exception.new(no_sshd_config)
     end
 
     # Copies sshd_config to the local_sshd_config location
@@ -118,6 +117,10 @@ module VpsCli
       return Rake.cp(misc_sshd_path, opts[:local_sshd_config]) if opts[:testing]
 
       # This method must be run this way due to it requiring root privileges
+      unless FileHelper.overwrite?(opts[:local_sshd_config], opts[:interactive])
+        return
+      end
+
       Rake.sh("sudo cp #{misc_sshd_path} #{opts[:local_sshd_config]}")
     end
 
@@ -145,9 +148,10 @@ module VpsCli
 
       raise RuntimeError if opts[:testing]
 
-      Rake.sh("dconf dump #{gnome_path} > #{backup}")
+      overwrite = proc { |file| FileHelper.overwrite?(file, opts[:interactive]) }
+      Rake.sh("dconf dump #{gnome_path} > #{backup}") if overwrite.call(backup)
 
-      Rake.sh("dconf load #{gnome_path} < #{MISC_FILES_DIR}/gnome_terminal_settings")
+      Rake.sh("dconf load #{gnome_path} < #{MISC_FILES_DIR}/gnome_terminal_settings") if overwrite.call(gnome_path)
     rescue RuntimeError => error
       puts 'something went wrong with gnome, continuing on' if opts[:verbose]
       VpsCli.errors << error
@@ -159,10 +163,6 @@ module VpsCli
       raise root_msg if root == true
 
       false
-    end
-
-    def self.example
-      puts "example"
     end
   end
 end

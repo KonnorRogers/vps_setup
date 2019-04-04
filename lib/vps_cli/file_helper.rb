@@ -105,7 +105,6 @@ module FileHelper
   # @param to [File] File to copy to
   # @param interactive [Boolean] (false) asks whether or not to create the file
   def self.copy_file(from, to, interactive = false)
-    # return if from.nil? || to.nil?
     Rake.cp(from, to) if overwrite?(to, interactive)
   end
 
@@ -118,24 +117,30 @@ module FileHelper
   def self.copy_dir(from, to, interactive = false)
     mkdirs(to)
 
-    Rake.cp_r(from, to) if overwrite?(to, interactive)
+    to_path = File.join(to, File.basename(from))
+    Rake.cp_r(from, to) if overwrite?(to_path, interactive)
   end
 
   # asks permission to copy a file
-  def self.overwrite?(file, interactive)
+  # @param file [File] The file to copy to
+  # @param interactive [Boolean] (false) If interactive equals false
+  #   then automatically overwrite
+  # @return [Boolean]
+  #   Decides whether or not the file will be created / overwritted
+  def self.overwrite?(file, interactive = false)
     return true if interactive == false
 
-    puts "Attempting to create / overwrite file #{file}"
-    puts 'Is this okay? (Y/N)'
+    string = "Attempting to overwrite file #{file}" if File.exist?(file)
+    string ||= "Attempting to create file #{file}"
+
+    # +string is equivalent to string.dup
+    string = +string + ' Is this okay? (Y/N)'
 
     loop do
+      puts string
       input = $stdin.gets.chomp.downcase.to_sym
-
       return true if input == :y
       return false if input == :n
-
-      puts "Would like to overwrite / create #{file} (Y/N)"
     end
   end
-
 end
