@@ -137,8 +137,13 @@ module VpsCli
       end
     end
 
-    # @todo add the overwrite functionality
+    # Writes the value of string to netrc
+    # @param netrc_file [File] ($HOME/.netrc)
+    #   The location of your .netrc file to be read by heroku
+    # @param string [String] The String to write to the netrc file
+    # @return void
     def self.write_to_netrc(netrc_file: nil, string:)
+      netrc_file ||= File.join(Dir.home, '.netrc')
       Rake.mkdir_p(File.dirname(netrc_file))
       Rake.touch(netrc_file) unless File.exist?(netrc_file)
 
@@ -176,18 +181,19 @@ module VpsCli
       stdout
     end
 
-    # @param [String, Symbol, Array<String>] The ordered path to traverse
+    # @param [#to_s, Array<#to_s>] The ordered path to traverse
     # @return [String] Returns a path string to be able to traverse a yaml file
     # @see VpsCli::Access#decrypt
     def self.dig_for_path(*path)
       path.flatten.inject('') do |final_path, node|
-        final_path + "[#{node.to_json}]"
+        final_path + "[#{node.to_s.to_json}]"
       end
     end
 
     # I noticed needing to export $(tty) while troubleshooting
     # issues with gpg keys. It is here just in case its not in
     # your zshrc / bashrc file
+    # @return void
     def self.export_tty
       Rake.sh('GPG_TTY=$(tty) && export GPG_TTY')
     end
