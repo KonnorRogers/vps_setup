@@ -69,6 +69,7 @@ set hidden
 set lazyredraw
 set relativenumber
 set guifont=DejavuSansMono\ Nerd\ Font\ 12
+set clipboard=unnamed
 
 " 'matchit.vim' is built-in so let's enable it!
 " " Hit '%' on 'if' to jump to 'else'.
