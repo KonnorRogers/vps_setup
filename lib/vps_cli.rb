@@ -3,10 +3,11 @@
 lib = File.expand_path(__dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'vps_cli/file_helper'
 require 'vps_cli/access'
+require 'vps_cli/access_helper'
 require 'vps_cli/cli'
 require 'vps_cli/copy'
+require 'vps_cli/file_helper'
 require 'vps_cli/install'
 require 'vps_cli/packages'
 require 'vps_cli/pull'
