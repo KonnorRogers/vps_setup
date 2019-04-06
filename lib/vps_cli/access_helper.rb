@@ -130,6 +130,8 @@ module AccessHelper
     Rake.sh('GPG_TTY=$(tty) && export GPG_TTY')
   end
 
+  # Pushes your public key to github
+
   def github_write_key_request(token:, json_string:)
     uri = URI('https://api.github.com/user/keys')
 

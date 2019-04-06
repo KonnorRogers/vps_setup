@@ -16,6 +16,7 @@ call plug#begin("~/.vim/plugged")
   " colorscheme
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
+  Plug 'atelierbram/Base2Tone-vim'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
@@ -112,10 +113,14 @@ autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
-" colorscheme stuff
 set background=dark
 let g:quantum_black=1
 colorscheme nord
+" colorscheme Base2Tone_MorningDark
+" colorscheme Base2Tone_EveningDark
+" colorscheme Base2Tone_PoolDark
+" colorscheme Base2Tone_SeaDark
+" colorscheme Base2Tone_SpaceDark
 
 " use default
 set laststatus=2

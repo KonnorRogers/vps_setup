@@ -18,14 +18,18 @@ module VpsCli
     #     I prefer to use authentication tokens versus sending
     #     regular access info
     # @param netrc_file
+    # @param opts [Hash] For a full list of options view the following method:
+    #   @see VpsCli::Access#generate_ssh_key
     # @return void
-    def self.provide_credentials(yaml_file: nil, netrc_file: nil)
+    def self.provide_credentials(yaml_file: nil, netrc_file: nil, **opts)
       if yaml_file
         file_login(yaml_file, netrc_file)
       else
         command_line_login
       end
 
+      generate_ssh_key(opts)
+      push_ssh_key
     end
 
     # Provides all login credentials via a SOPS encrypted yaml file
@@ -52,9 +56,8 @@ module VpsCli
       write_key_to_git_from_file(api_token: api_token)
     end
 
-    def write_key_to_github(api_token: nil, basic_auth: nil)
+    def write_key_to_github(api_token: nil, basic_auth: nil); end
 
-    end
     # Sets the .gitconfig file
     # @param username [String] Username to set in .gitconfig
     # @param email [String] email to use for .gitconfig
@@ -114,8 +117,30 @@ module VpsCli
       write_to_netrc(netrc_file: netrc_file, string: netrc_string)
     end
 
-    def self.generate_ssh_key(path: nil, email: nil, file: nil)
-      Rake.sh(%(ssh-keygen -t rsa -b 4096 -C #{email}))
+    # Generates an ssh key with the given values for opts
+    # this has not been extensively tested by myself so proceed with caution
+
+    def self.generate_ssh_key(**opts)
+      type = opts[:type] ||= 'rsa'
+      bits = opts[:bits] ||= 4096
+      email = opts[:email] ||= 'konnor5456@gmail.com'
+      o_file = opts[:output_file] ||= File.join(Dir.home, '.ssh', 'id_rsa')
+
+      blank_pass = ' -P ""' unless opts[:create_password]
+
+      # if opts[:create_password] is false, make a blank password
+      # if its true, go through ssh-keygen
+      # this will also autoprompt overwrite as well
+      cmd = "ssh-keygen -t #{type} -b #{bits} -C #{email} -f #{o_file}#{blank_pass}"
+      Rake.sh(cmd)
+    end
+
+    def self.get_email
+      puts 'please enter an email:'
+      $stdin.gets.chomp
+    end
+
+    def self.send_key_to_github(**opts)
 
     end
   end
