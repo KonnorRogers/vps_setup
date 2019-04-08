@@ -131,7 +131,9 @@ module AccessHelper
   end
 
   # Pushes your public key to github
-
+  # @param token [String] The API token to be sent in the header to github
+  # @param json_string [String] The data to be sent
+  # @return void
   def github_write_key_request(token:, json_string:)
     uri = URI('https://api.github.com/user/keys')
 
