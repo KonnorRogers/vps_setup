@@ -131,6 +131,8 @@ module AccessHelper
   end
 
   # Pushes your public key to github
+  # utilizes @see #github_headers & #github_json_string
+  # to push your ssh key to the github
   # @param token [String] The API token to be sent in the header to github
   # @param json_string [String] The data to be sent
   # @return void

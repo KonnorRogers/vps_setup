@@ -17,9 +17,10 @@ module VpsCli
     #   @see https://github.com/settings/tokens
     #     I prefer to use authentication tokens versus sending
     #     regular access info
-    # @param netrc_file
+    # @param netrc_file [File] (~/.netrc) Default spot to write netrc
     # @param opts [Hash] For a full list of options view the following method:
-    #   @see VpsCli::Access#generate_ssh_key
+    #   @see #generate_ssh_key
+    #   @see #push_ssh_key_to_github
     # @return void
     def self.provide_credentials(yaml_file: nil, netrc_file: nil, **opts)
       if yaml_file
@@ -28,8 +29,9 @@ module VpsCli
         command_line_login
       end
 
+      opts[:yaml_file] = yaml_file
       generate_ssh_key(opts)
-      push_ssh_key
+      push_ssh_key_to_github(opts)
     end
 
     # Provides all login credentials via a SOPS encrypted yaml file
@@ -40,23 +42,13 @@ module VpsCli
       netrc_file ||= File.join(Dir.home, '.netrc')
       git_file_login(yaml_file: yaml_file)
       heroku_file_login(yaml_file: yaml_file, netrc_file: netrc_file)
-      add_ssh_key_to_github(yaml_file: yaml_file)
     end
 
     # Logs in via the command line if no yaml_file given
     def self.command_line_login
       set_git_config
       heroku_login
-      add_ssh_key_to_github
     end
-
-    def add_ssh_key_to_github(yaml_file: nil)
-      path = dig_to_path(:github, :api_token)
-      api_token = decrypt(yaml_file: yaml_file, path: path)
-      write_key_to_git_from_file(api_token: api_token)
-    end
-
-    def write_key_to_github(api_token: nil, basic_auth: nil); end
 
     # Sets the .gitconfig file
     # @param username [String] Username to set in .gitconfig
@@ -117,31 +109,43 @@ module VpsCli
       write_to_netrc(netrc_file: netrc_file, string: netrc_string)
     end
 
+    # Pushes your ssh key to your github account via v3 api
+    # @param opts [Hash] Options hash for how to send it
+    def self.push_ssh_key_to_github(**opts)
+      token = opts[:token]
+    end
+
     # Generates an ssh key with the given values for opts
     # this has not been extensively tested by myself so proceed with caution
 
+    # @param opts [Hash] Options hash
+    # @option opts [String] :type ('rsa') What kind of encryption
+    #   You want for your ssh key
+    # @option opts [Fixnum] :bits (4096) Strength of encryption
+    # @option opts [String] :email (#get_email) The email comment
+    #   to add to the end of the ssh key
+    # @option opts [String, File] :output_file (~/.ssh/id_rsa)
+    #   Where you want the key to be saved
+    # @option opts [Boolean] :create_password (nil)
+    #   if true, prompt to create a password
     def self.generate_ssh_key(**opts)
       type = opts[:type] ||= 'rsa'
       bits = opts[:bits] ||= 4096
-      email = opts[:email] ||= 'konnor5456@gmail.com'
+      email = opts[:email] ||= get_email
       o_file = opts[:output_file] ||= File.join(Dir.home, '.ssh', 'id_rsa')
 
-      blank_pass = ' -P ""' unless opts[:create_password]
+      no_pass = ' -P ""' unless opts[:create_password]
 
       # if opts[:create_password] is false, make a blank password
       # if its true, go through ssh-keygen
       # this will also autoprompt overwrite as well
-      cmd = "ssh-keygen -t #{type} -b #{bits} -C #{email} -f #{o_file}#{blank_pass}"
+      cmd = "ssh-keygen -t #{type} -b #{bits} -C #{email} -f #{o_file}#{no_pass}"
       Rake.sh(cmd)
     end
 
     def self.get_email
       puts 'please enter an email:'
       $stdin.gets.chomp
-    end
-
-    def self.send_key_to_github(**opts)
-
     end
   end
 end
