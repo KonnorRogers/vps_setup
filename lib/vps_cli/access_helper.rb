@@ -135,7 +135,7 @@ module AccessHelper
   # to push your ssh key to the github
   # @param token [String] The API token to be sent in the header to github
   # @param json_string [String] The data to be sent
-  # @return void
+  # @return Net::HTTPResponse
   def github_write_key_request(token:, json_string:)
     uri = URI('https://api.github.com/user/keys')
 
@@ -150,6 +150,7 @@ module AccessHelper
     end
 
     VpsCli.errors << response if response != Net::HTTPSuccess
+    response
   end
 
   # The headers need for authorization of a post request

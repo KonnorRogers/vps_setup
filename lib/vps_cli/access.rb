@@ -134,7 +134,9 @@ module VpsCli
 
       json = github_ssh_key_json_string(title: title, key_content: api_token)
 
-      github_write_key_request(token: api_token, json_string: json)
+      response = github_write_key_request(token: api_token, json_string: json)
+
+      puts response.value
     end
 
     # Generates an ssh key with the given values for opts
