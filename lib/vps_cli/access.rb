@@ -120,7 +120,7 @@ module VpsCli
     # Pushes your ssh key to your github account via v3 api
     # @param yaml_file [File] File path for your credentials yaml file
     # @param title [String] Name of the ssh key title for github
-    def self.push_ssh_key_to_github(yaml_file:, title: nil)
+    def self.push_ssh_key_to_github(yaml_file:, title: nil, ssh_file: nil)
       msg = 'No yaml file provided, manually push your ssh key to github'
       return puts msg unless yaml_file
 
@@ -132,7 +132,9 @@ module VpsCli
       api_token_key = dig_for_path(:github, :api_token)
       api_token = decrypt(yaml_file: yaml_file, path: api_token_key)
 
-      json = github_ssh_key_json_string(title: title, key_content: api_token)
+      ssh_file ||= File.join(Dir.home, '.ssh', 'id_rsa.pub')
+      ssh_key = File.read(ssh_file)
+      json = github_ssh_key_json_string(title: title, key_content: ssh_key)
 
       response = github_write_key_request(token: api_token, json_string: json)
 
