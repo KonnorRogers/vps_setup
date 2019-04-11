@@ -19,8 +19,17 @@ module VpsCli
     #     regular access info
     # @param netrc_file [File] (~/.netrc) Default spot to write netrc
     # @param opts [Hash] For a full list of options view the following method:
-    #   @see #generate_ssh_key
-    #   @see #push_ssh_key_to_github
+    # @param opts [String] :ssh_title (nil) the name for your ssh key
+    # The following values are pulled from: @see #generate_ssh_key
+    # @option opts [String] :type ('rsa') What kind of encryption
+    #   You want for your ssh key
+    # @option opts [Fixnum] :bits (4096) Strength of encryption
+    # @option opts [String] :email (#get_email) The email comment
+    #   to add to the end of the ssh key
+    # @option opts [String, File] :output_file (~/.ssh/id_rsa)
+    #   Where you want the key to be saved
+    # @option opts [Boolean] :create_password (nil)
+    #   if true, prompt to create a password
     # @return void
     def self.provide_credentials(yaml_file: nil, netrc_file: nil, **opts)
       if yaml_file
@@ -29,9 +38,8 @@ module VpsCli
         command_line_login
       end
 
-      opts[:yaml_file] = yaml_file
       generate_ssh_key(opts)
-      push_ssh_key_to_github(opts)
+      push_ssh_key_to_github(yaml_file: yaml_file, title: opts[:ssh_title])
     end
 
     # Provides all login credentials via a SOPS encrypted yaml file
@@ -110,9 +118,23 @@ module VpsCli
     end
 
     # Pushes your ssh key to your github account via v3 api
-    # @param opts [Hash] Options hash for how to send it
-    def self.push_ssh_key_to_github(**opts)
-      token = opts[:token]
+    # @param yaml_file [File] File path for your credentials yaml file
+    # @param title [String] Name of the ssh key title for github
+    def self.push_ssh_key_to_github(yaml_file:, title: nil)
+      msg = 'No yaml file provided, manually push your ssh key to github'
+      return puts msg unless yaml_file
+
+      unless title
+        puts 'You did not give this ssh key a title, please enter one now'
+        title = $stdin.gets.chomp
+      end
+
+      api_token_key = dig_for_path(:github, :api_token)
+      api_token = decrypt(yaml_file: yaml_file, path: api_token_key)
+
+      json = github_ssh_key_json_string(title: title, key_content: api_token)
+
+      github_write_key_request(token: api_token, json_string: json)
     end
 
     # Generates an ssh key with the given values for opts

@@ -16,28 +16,34 @@ module VpsCli
 
     desc 'copy [OPTIONS]', 'Copies files from <vps_cli/config_files>'
     def copy
-      VpsCli::Copy.all(options.dup) if options[:all]
+      Copy.all(options.dup) if options[:all]
     end
 
     desc 'pull [OPTIONS]', 'Pulls files into your vps_cli repo'
     options %i[dotfiles_dir misc_files_dir]
     def pull
       puts options[:all]
-      VpsCli::Pull.all(options.dup) if options[:all]
+      Pull.all(options.dup) if options[:all]
     end
 
     desc 'install [OPTIONS]', 'installs based on the flag provided'
     option :full, type: :boolean, aliases: :f, default: false
-    option :access_file, aliases: :af
+    option :yaml_file, aliases: :yf
     def install
       msg = puts 'Only full install has been implemented'
       return msg unless options[:full]
 
-      VpsCli.full_install(options.dup)
+      Install.full_install(options.dup)
 
       return if VpsCli.errors.empty?
 
       VpsCli.errors.each { |error| puts error.message }
+    end
+
+    desc 'push [OPTIONS]', 'pushes your ssh key to github'
+    option :yaml_file, aliases: :yf
+    def push
+      Access.push_ssh_key_to_github(yaml_file: File.join(Dir.home, '.credentials.yaml'), title: 'vps-cli')
     end
   end
 end

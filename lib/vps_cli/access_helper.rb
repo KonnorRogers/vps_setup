@@ -156,9 +156,9 @@ module AccessHelper
   # @param token [String] (nil) Your github API token
   #   @see https://github.com/settings/keys
   #   make sure your token has write:public_key access
-  # @return [Hash] Returns the hash of headers to be put in an POST request
-  def github_headers(token: nil)
-    token = "token #{token}" if token
+  # @return [String] Returns json_string for headers
+  def github_headers(token:)
+    token = "token #{token}"
     json = 'application/json'
 
     { 'Content-Type' => json,
@@ -174,6 +174,6 @@ module AccessHelper
     ssh_key_scope = '["admin:public_key", "write:public_key"]'
     { 'scopes' => ssh_key_scope,
       'title' => title,
-      'key' => key_content }
+      'key' => key_content }.to_json
   end
 end
