@@ -14,9 +14,10 @@ endif
     
 call plug#begin("~/.vim/plugged")
   " colorscheme
+  Plug 'rainglow/vim'
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
-  Plug 'atelierbram/Base2Tone-vim'
+  Plug 'haishanh/night-owl.vim'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
@@ -71,6 +72,8 @@ set lazyredraw
 set relativenumber
 set guifont=DejavuSansMono\ Nerd\ Font\ 12
 set clipboard=unnamed
+set cursorline
+set linespace=3
 
 " 'matchit.vim' is built-in so let's enable it!
 " " Hit '%' on 'if' to jump to 'else'.
@@ -116,11 +119,6 @@ autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 set background=dark
 let g:quantum_black=1
 colorscheme nord
-" colorscheme Base2Tone_MorningDark
-" colorscheme Base2Tone_EveningDark
-" colorscheme Base2Tone_PoolDark
-" colorscheme Base2Tone_SeaDark
-" colorscheme Base2Tone_SpaceDark
 
 " use default
 set laststatus=2
