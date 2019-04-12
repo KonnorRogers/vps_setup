@@ -134,6 +134,7 @@ module VpsCli
 
       ssh_file ||= File.join(Dir.home, '.ssh', 'id_rsa.pub')
       ssh_key = File.read(ssh_file)
+
       json = github_ssh_key_json_string(title: title, key_content: ssh_key)
 
       response = github_write_key_request(token: api_token, json_string: json)
