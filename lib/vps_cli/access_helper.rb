@@ -172,9 +172,7 @@ module AccessHelper
   # @param key_content [String] The value of your ssh public key for github
   # @return [String] Returns a json formatted string to write an ssh key
   def github_ssh_key_json_string(title:, key_content:)
-    ssh_key_scope = '["admin:public_key", "write:public_key"]'
-    { 'scopes' => ssh_key_scope,
-      'title' => title,
+    { 'title' => title,
       'key' => key_content }.to_json
   end
 end
