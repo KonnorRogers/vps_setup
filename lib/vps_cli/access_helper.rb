@@ -130,49 +130,4 @@ module AccessHelper
     Rake.sh('GPG_TTY=$(tty) && export GPG_TTY')
   end
 
-  # Pushes your public key to github
-  # utilizes @see #github_headers & #github_json_string
-  # to push your ssh key to the github
-  # @param token [String] The API token to be sent in the header to github
-  # @param json_string [String] The data to be sent
-  # @return Net::HTTPResponse
-  def github_write_key_request(token:, json_string:)
-    uri = URI('https://api.github.com/user/keys')
-
-    # puts the authorization token into the header for authorization
-    request = Net::HTTP::Post.new(uri, github_headers(token: token))
-
-    request.body = json_string
-
-    response = nil
-    Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-      response = http.request(request)
-    end
-
-    VpsCli.errors << response if response != Net::HTTPSuccess
-    response
-  end
-
-  # The headers need for authorization of a post request
-  # @param token [String] (nil) Your github API token
-  #   @see https://github.com/settings/keys
-  #   make sure your token has write:public_key access
-  # @return [String] Returns json_string for headers
-  def github_headers(token:)
-    token = "token #{token}"
-    json = 'application/json'
-
-    { 'Content-Type' => json,
-      'Accepts' => json,
-      'Authorization' => token }
-  end
-
-  # Returns the appropriate json string to write an ssh key
-  # @param title [String] The name you want your ssh key to have
-  # @param key_content [String] The value of your ssh public key for github
-  # @return [String] Returns a json formatted string to write an ssh key
-  def github_ssh_key_json_string(title:, key_content:)
-    { 'title' => title,
-      'key' => key_content }.to_json
-  end
 end
