@@ -14,7 +14,7 @@ module VpsCli
     def self.full
       add_repos
       add_dejavu_sans_mono_font
-      # add_snippets
+      ufw_setup
     end
 
     ##

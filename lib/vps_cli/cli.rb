@@ -42,7 +42,7 @@ module VpsCli
     option :yaml_file, aliases: :yf
     option :title, aliases: :t
     def push
-      Access.push_ssh_key_to_github(yaml_file: File.join(Dir.home, '.credentials.yaml'), title: 'DigitalOcean')
+
     end
   end
 end

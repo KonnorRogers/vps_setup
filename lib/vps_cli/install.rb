@@ -26,7 +26,7 @@ module VpsCli
       other_tools
       neovim_pip
       omz_full_install
-      Setup.ufw_setup
+      Setup.full
       plug_install_vim_neovim
       install_gems
     end
