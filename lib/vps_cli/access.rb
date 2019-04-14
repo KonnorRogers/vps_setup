@@ -119,7 +119,6 @@ module VpsCli
 
     # Generates an ssh key with the given values for opts
     # this has not been extensively tested by myself so proceed with caution
-
     # @param opts [Hash] Options hash
     # @option opts [String] :type ('rsa') What kind of encryption
     #   You want for your ssh key
@@ -145,8 +144,24 @@ module VpsCli
       Rake.sh(cmd)
     end
 
+    def self.post_github_ssh_key(**opts)
+      uri = URI('https://api.github.com/keys')
+      token = opts[:token]
+      ssh_key = opts[:ssh_file]
+      title = opts[:title] ||= get_title
+
+      github = GithubHttp.new(uri: uri, token: token,
+                              ssh_key: ssh_key, title: title)
+      github.push_ssh_key
+    end
+
     def self.get_email
       puts 'please enter an email:'
+      $stdin.gets.chomp
+    end
+
+    def self.get_title
+      puts 'please enter a title for your ssh key'
       $stdin.gets.chomp
     end
   end
