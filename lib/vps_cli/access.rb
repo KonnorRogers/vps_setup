@@ -145,14 +145,17 @@ module VpsCli
     end
 
     def self.post_github_ssh_key(opts = {})
-      uri = opts[:uri] ||= URI('https://api.github.com/keys')
+      uri = opts[:uri] ||= URI('https://api.github.com/user/keys')
 
       api_token = proc do |yaml, path|
         decrypt(yaml_file: yaml, path: path)
       end
 
       api_path = dig_for_path(:github, :api_token)
+
       token = opts[:api_token] ||= api_token.call(opts[:yaml_file], api_path)
+      p token
+      p api_path
       ssh_key = opts[:ssh_file] ||= File.join(Dir.home, '.ssh', 'id_rsa.pub')
       title = opts[:title] ||= get_title
 

@@ -43,6 +43,7 @@ module VpsCli
     option :ssh_file, aliases: :f
     option :title, aliases: :t
     option :uri, aliases: :u
+    option :yaml_file, aliases: :yf
     def push
       Access.post_github_ssh_key(options.dup)
     end
