@@ -4,6 +4,7 @@
 require 'open3'
 require 'json'
 require 'vps_cli/access_helper'
+require 'vps_cli/github_http'
 
 module VpsCli
   # Used for various things related to logins, ssh keys, etc
@@ -39,7 +40,6 @@ module VpsCli
       end
 
       generate_ssh_key(opts)
-      push_ssh_key_to_github(yaml_file: yaml_file, title: opts[:ssh_title])
     end
 
     # Provides all login credentials via a SOPS encrypted yaml file
@@ -117,34 +117,8 @@ module VpsCli
       write_to_netrc(netrc_file: netrc_file, string: netrc_string)
     end
 
-    # Pushes your ssh key to your github account via v3 api
-    # @param yaml_file [File] File path for your credentials yaml file
-    # @param title [String] Name of the ssh key title for github
-    def self.push_ssh_key_to_github(yaml_file:, title: nil, ssh_file: nil)
-      msg = 'No yaml file provided, manually push your ssh key to github'
-      return puts msg unless yaml_file
-
-      unless title
-        puts 'You did not give this ssh key a title, please enter one now'
-        title = $stdin.gets.chomp
-      end
-
-      api_token_key = dig_for_path(:github, :api_token)
-      api_token = decrypt(yaml_file: yaml_file, path: api_token_key)
-
-      ssh_file ||= File.join(Dir.home, '.ssh', 'id_rsa.pub')
-      ssh_key = File.read(ssh_file)
-
-      json = github_ssh_key_json_string(title: title, key_content: ssh_key)
-
-      response = github_write_key_request(token: api_token, json_string: json)
-
-      puts response.value
-    end
-
     # Generates an ssh key with the given values for opts
     # this has not been extensively tested by myself so proceed with caution
-
     # @param opts [Hash] Options hash
     # @option opts [String] :type ('rsa') What kind of encryption
     #   You want for your ssh key
@@ -170,8 +144,24 @@ module VpsCli
       Rake.sh(cmd)
     end
 
+    def self.post_github_ssh_key(**opts)
+      uri = URI('https://api.github.com/keys')
+      token = opts[:token]
+      ssh_key = opts[:ssh_file]
+      title = opts[:title] ||= get_title
+
+      github = GithubHttp.new(uri: uri, token: token,
+                              ssh_key: ssh_key, title: title)
+      github.push_ssh_key
+    end
+
     def self.get_email
       puts 'please enter an email:'
+      $stdin.gets.chomp
+    end
+
+    def self.get_title
+      puts 'please enter a title for your ssh key'
       $stdin.gets.chomp
     end
   end

@@ -24,6 +24,9 @@ main(){
   # sources zshrc or bashrc depending on what is being used
   restart_shell
 
+  # installs sops via go get -u
+  install_sops
+
   gem install bundler
   bundle install
 }
@@ -60,7 +63,10 @@ apt_setup(){
   sudo apt-get upgrade -y
   yes "\n" | sudo apt-get dist-upgrade -y
 
-  libs="software-properties-common gnupg2 less ufw ack-grep libfuse2 apt-transport-https ca-certificates build-essential bison zlib1g-dev libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc ruby"
+  libs="software-properties-common gnupg2 less ufw ack-grep libfuse2
+  apt-transport-https ca-certificates build-essential bison zlib1g-dev
+  libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc
+  ruby golang"
 
   for lib in $libs; do
     sudo apt-get install "$lib" -y
@@ -194,6 +200,13 @@ restart_shell(){
 make_chruby_usable(){
   add_chruby_to_profile_d                      
   restart_shell                                
+}
+
+install_sops(){
+  export GOPATH="$HOME/go"
+  export PATH="$PATH:$GOPATH/bin"
+  
+  go get -u go.mozilla.org/sops/cmd/sops
 }
 
 # runs the main method

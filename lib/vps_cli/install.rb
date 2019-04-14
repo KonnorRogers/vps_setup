@@ -28,7 +28,7 @@ module VpsCli
       omz_full_install
       Setup.ufw_setup
       plug_install_vim_neovim
-      install_sops
+      install_gems
     end
 
     def self.prep
@@ -112,9 +112,8 @@ module VpsCli
       Rake.sh(%(nvim +'PlugUpdate --sync' +qa))
     end
 
-    ## This needs to be called after golang and zsh have been sourced or export usr/bin/go
-    def self.install_sops
-      Rake.sh(%(go get -u go.mozilla.org/sops/cmd/sops))
+    def self.install_gems
+      Packages::GEMS.each { |g| Rake.sh("gem install #{g}") }
     end
   end
 end
