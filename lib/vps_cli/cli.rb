@@ -28,7 +28,6 @@ module VpsCli
 
     desc 'install [OPTIONS]', 'installs based on the flag provided'
     option :full, type: :boolean, aliases: :f, default: false
-    option :yaml_file, aliases: :yf
     def install
       msg = puts 'Only full install has been implemented'
       return msg unless options[:full]
