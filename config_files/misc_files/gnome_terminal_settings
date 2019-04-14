@@ -1,6 +1,6 @@
 [legacy/profiles:]
 list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace']
-default='e38213b0-26e4-4f04-898a-c14f65a7dace'
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
 
 [legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
 foreground-color='rgb(188,188,188)'
