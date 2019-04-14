@@ -7,7 +7,7 @@ module VpsCli
                    nodejs golang ruby ruby-dev].freeze
 
     TOOLS = %w[curl tmux git vim zsh sqlite3 ctags rdoc
-               openssh-client openssh-server
+               openssh-client openssh-server dconf-cli gnome-terminal
                postgresql pry rubygems fail2ban node-gyp].freeze
 
     ADDED_REPOS = %w[neovim asciinema docker-ce mosh yarn].freeze
