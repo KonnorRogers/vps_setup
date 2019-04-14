@@ -28,6 +28,7 @@ module VpsCli
       omz_full_install
       Setup.ufw_setup
       plug_install_vim_neovim
+      install_gems
     end
 
     def self.prep
@@ -109,6 +110,10 @@ module VpsCli
       Rake.sh(%(vim +'PlugUpdate --sync' +qa))
       Rake.sh(%(nvim +'PlugInstall --sync' +qa))
       Rake.sh(%(nvim +'PlugUpdate --sync' +qa))
+    end
+
+    def self.install_gems
+      Packages::GEMS.each { |g| Rake.sh("gem install #{g}") }
     end
   end
 end

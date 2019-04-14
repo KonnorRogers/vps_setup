@@ -14,7 +14,7 @@ class TestPackages < Minitest::Test
     packages.each { |pkg_ary| refute_empty(pkg_ary) }
 
     packages_size = proc { |ary| ary.inject(0) { |sum, pkg| sum + pkg.size } }
-
-    assert_equal(VpsCli::Packages::UBUNTU.size, packages_size.call(packages))
+    size = packages_size.call(packages) - packages[3].size
+    assert_equal(VpsCli::Packages::UBUNTU.size, size)
   end
 end
