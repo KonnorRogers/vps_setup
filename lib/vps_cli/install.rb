@@ -28,7 +28,6 @@ module VpsCli
       omz_full_install
       Setup.ufw_setup
       plug_install_vim_neovim
-      install_sops
     end
 
     def self.prep
