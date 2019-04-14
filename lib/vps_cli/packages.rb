@@ -10,7 +10,7 @@ module VpsCli
                openssh-client openssh-server dconf-cli gnome-terminal
                postgresql pry rubygems fail2ban node-gyp].freeze
 
-    ADDED_REPOS = %w[neovim asciinema docker-ce mosh yarn].freeze
+    ADDED_REPOS = %w[neovim asciinema docker mosh yarn].freeze
 
     GEMS = %w[colorls neovim rake pry rubocop gem-ctags].freeze
 

@@ -115,9 +115,8 @@ module FileHelper
   # @param to [Dir] Directory to copy to
   # @param interactive [Boolean] (false) asks whether or not to create the file
   def self.copy_dir(from, to, interactive = false)
-    mkdirs(to)
-
     to_path = File.join(to, File.basename(from))
+    mkdirs(to_path)
     Rake.cp_r(from, to) if overwrite?(to_path, interactive)
   end
 

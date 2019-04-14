@@ -44,9 +44,5 @@ module VpsCli
     def push
       Access.push_ssh_key_to_github(yaml_file: File.join(Dir.home, '.credentials.yaml'), title: 'DigitalOcean')
     end
-
-    def gnome_terminal
-      Setup.
-    end
   end
 end
