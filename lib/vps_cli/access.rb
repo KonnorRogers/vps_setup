@@ -144,7 +144,7 @@ module VpsCli
       Rake.sh(cmd)
     end
 
-    def self.post_github_ssh_key(**opts)
+    def self.post_github_ssh_key(opts = {})
       uri = opts[:uri] ||= URI('https://api.github.com/keys')
 
       api_token = proc do |yaml, path|
@@ -156,7 +156,7 @@ module VpsCli
       ssh_key = opts[:ssh_file] ||= File.join(Dir.home, '.ssh', 'id_rsa.pub')
       title = opts[:title] ||= get_title
 
-      github = GithubHttp.new(uri: uri, token: token,
+      github = GithubHTTP.new(uri: uri, token: token,
                               ssh_key: ssh_key, title: title)
       github.push_ssh_key
     end

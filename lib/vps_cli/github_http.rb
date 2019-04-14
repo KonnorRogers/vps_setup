@@ -94,7 +94,9 @@ module VpsCli
       # keys pulled from github will not have comments
       ssh_key = @ssh_key.split('==')[0].concat('==')
 
+      p json_string
       JSON.parse(json_string).any? do |data|
+        p data['key']
         data['key'] == ssh_key
       end
     end
