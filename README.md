@@ -73,8 +73,6 @@ cd ~/vps_cli
 
 * export your PGP key for use by sops
 
-6. Setup pgp keys
-
 ```bash
 export SOPS_PGP_FP="$KEY_ID"
 ```
