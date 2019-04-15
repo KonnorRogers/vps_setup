@@ -16,10 +16,12 @@ module VpsCli
 
     desc 'fresh_install', 'accepts not arguments, my own personal command'
     def fresh_install
-      Copy.all
+      Copy.all(options.dup)
       Install.all_install
 
       provide_credentials(options.dup)
+
+      VpsCli.errors.each { |error| puts error.message }
     end
 
     desc 'copy [OPTIONS]', 'Copies files from <vps_cli/config_files>'
