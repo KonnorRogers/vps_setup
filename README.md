@@ -35,8 +35,7 @@
 1. Ensure your ssh key is inside of your DigitalOcean droplet under
    security
    
-   ** If you have an existing droplet, consult digitalocean documents on adding
-   an ssh key
+* If you have an existing droplet, consult digitalocean documents on adding an ssh key
 
 2. Create your droplet
 
@@ -46,8 +45,7 @@
 ssh root@<ip_address>
 ```
 
-4. Create a new user, do not use root as your main user. Ensure to give your
-   user sudo permissions
+4. Create a new user, do not use root as your main user. Ensure to give your user sudo permissions
 
 ```bash
 adduser <username>
@@ -65,16 +63,16 @@ cd ~/vps_cli
 ```
 
 6. Setup pgp keys
-** If you have not setup PGP / GPG before, you can follow my guide:
-[My Guide to setting up PGP / GPG](https://github.com/ParamagicDev/vps_cli/issues/12)
 
-** export you PGP key for use by sops
+* If you have not setup PGP / GPG before, you can follow my guide: [My Guide to setting up PGP / GPG](https://github.com/ParamagicDev/vps_cli/issues/12)
+
+* export you PGP key for use by sops
 
 ```bash
 export SOPS_PGP_FP="$KEY_ID"
 ```
 
-** Your $KEY_ID can be obtained by running:
+* Your $KEY_ID can be obtained by running:
 
 ```bash
 gpg --list-keys
@@ -86,11 +84,11 @@ gpg --list-keys
 sops ~/.credentials.yaml
 ```
 
-** Follow the same layout as provided inside of this repo @ [example_credentials.yaml](https://github.com/ParamagicDev/vps_cli/blob/master/example_credentials.yaml)
-** ensure your github api token has read:public_key & write_public_key scope as
-well as in the format "token 123456789"
+* Follow the same layout as provided inside of this repo @ [example_credentials.yaml](https://github.com/ParamagicDev/vps_cli/blob/master/example_credentials.yaml)
 
-** You can either use scp to send the file from your local computer to your
+* ensure your github api token has read:public_key & write_public_key scope as well as in the format "token 123456789"
+
+* You can either use scp to send the file from your local computer to your
 server, or you can simply create a new one everytime.
 
 8. Run a fresh install, this will provide you with all my dotfiles,
@@ -118,9 +116,10 @@ vps-cli pull -a
 vps-cli copy -a
 ```
 
-** <strong>This will only pull / copy dotfiles already found within
+* <strong>This will only pull / copy dotfiles already found within
 config_files/misc_files & config_files/dotfiles</strong>
-** To add additional dotfiles, add them to config_files/dotfiles
+
+* To add additional dotfiles, add them to config_files/dotfiles
 
 ## Dependencies Installed
 
