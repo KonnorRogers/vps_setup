@@ -7,17 +7,18 @@ module VpsCli
   # An http wrapper for github api request
   class GithubHTTP
     attr_accessor :uri, :title
-    attr_writer :token, :ssh_key
+    attr_writer :token, :ssh_file
 
     # @param uri [URI] the url to hit
     # @param token [String] Github API token to use
-    # @param ssh_key [String] Your ssh key string IE: 'ssh-rsa <value>'
+    # @param ssh_key [String] Your ssh file IE: ~/.ssh/id_rsa.pub
     # @param title [String] The title of your ssh key
     #   Ensure it is in the format: "token 14942842859"
-    def initialize(uri:, token:, ssh_key:, title:)
+    def initialize(uri:, token:, ssh_file:, title:)
       @uri = uri
       @token = token
-      @ssh_key = ssh_key
+      @ssh_file = ssh_file
+      @ssh_key = File.read(ssh_file)
       @headers = headers(token: token)
       @title = title
     end

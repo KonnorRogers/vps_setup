@@ -144,6 +144,12 @@ module VpsCli
       Rake.sh(cmd)
     end
 
+    # the wrapper around the GithubHTTP class to be able to send the ssh key
+    # @param opts [Hash] Options parameter meant for cli usage
+    # @option opts [String] :uri (URI('https://api.github.com/user/keys'))
+    #   url of the api youd like to hit
+    # @option opts [File] :yaml_file (nil) the file to decrypt values with.
+    #
     def self.post_github_ssh_key(opts = {})
       uri = opts[:uri] ||= URI('https://api.github.com/user/keys')
 
@@ -154,13 +160,11 @@ module VpsCli
       api_path = dig_for_path(:github, :api_token)
 
       token = opts[:api_token] ||= api_token.call(opts[:yaml_file], api_path)
-      p token
-      p api_path
-      ssh_key = opts[:ssh_file] ||= File.join(Dir.home, '.ssh', 'id_rsa.pub')
+      ssh_file = opts[:ssh_file] ||= File.join(Dir.home, '.ssh', 'id_rsa.pub')
       title = opts[:title] ||= get_title
 
       github = GithubHTTP.new(uri: uri, token: token,
-                              ssh_key: ssh_key, title: title)
+                              ssh_file: ssh_file, title: title)
       github.push_ssh_key
     end
 

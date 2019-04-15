@@ -39,11 +39,11 @@ module VpsCli
     end
 
     desc 'push [OPTIONS]', 'pushes your ssh key to github'
-    option :api_token, aliases: :api
+    option :api_token
     option :ssh_file, aliases: :f
     option :title, aliases: :t
     option :uri, aliases: :u
-    option :yaml_file, aliases: :yf
+    option :yaml_file, aliases: :y
     def push
       Access.post_github_ssh_key(options.dup)
     end
