@@ -1,5 +1,8 @@
-
 # WARNING
+
+* Documentation can be found here, it is fairly incomplete but most methods are documented
+* [VpsCli
+documentation](https://www.rubydoc.info/github/paramagicdev/vps_cli/master)
 
 * ## I have transitioned this project from being a simple one command install to a full fledged CLI. During the transition, updates can be found on the <strong>thor</strong> branch.
 
