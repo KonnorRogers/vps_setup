@@ -1,6 +1,19 @@
+# Log files
 *.log*
 tests/logs
+
+# Bundler files
 \.bundle
-bin
+Gemfile.lock
+
+# Temp files
 /.tmp
+
+# sensitive info
 credentials.yaml
+
+# Ctags
+tags
+
+# YARD documentation
+docs

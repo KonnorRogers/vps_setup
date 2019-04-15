@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 # require 'packages'
-require 'os'
 
-module VpsSetup
+module VpsCli
   OMZ_DIR = File.join(Dir.home, '.oh-my-zsh')
   OMZ_PLUGINS = File.join(OMZ_DIR, 'custom', 'plugins')
   # Installes the required packages
@@ -11,18 +10,13 @@ module VpsSetup
     def self.full
       unless OS.linux?
         puts 'You are not running on linux. No packages installed.'
-        return :not_installed
+        return
       end
 
       begin
         all_install
       rescue RuntimeError => exception
-        warn exception.message
-        raise "The above error was raised.
-      Apt-get install (packages) / ruby and other tools not installed
-      Please ensure you are using the apt package manager."
-      else
-        :installed
+        VpsCli.errors << exception
       end
     end
 
@@ -32,9 +26,10 @@ module VpsSetup
       other_tools
       neovim_pip
       omz_full_install
-      Setup.ufw_setup
+      Setup.full
+      install_tmux_plugin_manager_and_plugins
       plug_install_vim_neovim
-      install_sops
+      install_gems
     end
 
     def self.prep
@@ -54,6 +49,7 @@ module VpsSetup
     def self.other_tools
       # update npm, there are some issues with ubuntu 18.10 removing npm
       # and then being unable to update it
+      Rake.sh('sudo apt-get install npm -y')
       Rake.sh('sudo npm install -g npm')
 
       # add heroku
@@ -118,9 +114,24 @@ module VpsSetup
       Rake.sh(%(nvim +'PlugUpdate --sync' +qa))
     end
 
-    ## This needs to be called after golang and zsh have been sourced or export usr/bin/go
-    def self.install_sops
-      Rake.sh(%(go get -u go.mozilla.org/sops/cmd/sops))
+    def self.install_tmux_plugin_manager_and_plugins
+      install_path = File.join(Dir.home, '.tmux', 'plugins', 'tpm')
+      unless File.exist?(install_path)
+        Rake.mkdir_p(install_path)
+        Rake.sh("git clone https://github.com/tmux-plugins/tpm #{instal_path}")
+      end
+      # start a server but don't attach to it
+      Rake.sh('tmux start-server')
+      # create a new session but don't attach to it either
+      Rake.sh('tmux new-session -d')
+      # install the plugins
+      Rake.sh('~/.tmux/plugins/tpm/scripts/install_plugins.sh')
+      # killing the server is not required, I guess
+      Rake.sh('tmux kill-server')
+    end
+
+    def self.install_gems
+      Packages::GEMS.each { |g| Rake.sh("gem install #{g}") }
     end
   end
 end

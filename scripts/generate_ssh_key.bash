@@ -1,7 +1,11 @@
 #!/bin/bash
 
-sudo apt-get update
-sudo apt-get install openssh -y
+if [[ ! $(command -v ssh) ]]; then
+  echo "ssh not found. Please install it."
+  sudo apt-get update
+  sudo apt-get install openssh-client -y
+fi
+
 MINPARAMS=1
 
 echo

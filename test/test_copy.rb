@@ -1,205 +1,161 @@
 # frozen_string_literal: true
 
 require 'test_helper'
-require 'stringio'
-require 'logger'
 
-LOG_PATH = File.join(LOGS_DIR, "#{File.basename(__FILE__, '.rb')}.log")
-LOG_FILE = File.new(LOG_PATH, 'w+')
-LOGGER = Logger.new(LOG_FILE)
-
+# The goal of testing all of this is to not touch the base config_files
+# And to keep the test suite entirely independent
 class TestCopy < Minitest::Test
-  include VpsSetup
-
   def setup
-    ENV['test'] = 'true'
-    LOGGER.info("#{class_name}::#{name}")
-    @console = capture_console
-    rm_dirs(BACKUP_DIR, DEST_DIR)
+    # These are all created prior to running the test
+    # It is important to have some testable files to copy
+    @logger = create_logger(__FILE__)
+    @test_files = %w[vimrc pryrc zshrc].freeze
+    @test_dirs = %w[config dir2].freeze
+    @base_dirs = [BACKUP_DIR, LOCAL_DIR, TEST_DOTFILES, TEST_MISC_FILES].freeze
+
+    rm_dirs(@base_dirs)
+    mk_dirs(@base_dirs)
+
+    # Creates a base from which to copy
+    add_files_to_dotfiles(@test_files)
+    add_dirs_to_dotfiles(@test_dirs)
   end
 
   def teardown
-    ENV['test'] = nil
-    LOGGER.info(@console[:fake_out].string)
-    LOGGER.error(@console[:fake_err].string)
-
-    restore_out_err(@console)
-    rm_dirs(BACKUP_DIR, DEST_DIR)
+    rm_dirs(@base_dirs)
   end
 
-  # HELPER METHODS #
-  def dir_children(dir)
-    # Reads as \A == beginning of string
-    # \. == '.' {1,2} means minimum 1, maximum 2 occurences
-    # \Z == end of string
-    Dir.foreach(dir).reject { |file| file =~ /\A\.{1,2}\Z/ }
+  def test_copy_dotfiles_does_not_make_a_backup_and_copies_files
+    log_methods(@logger) do
+      VpsCli::Copy.dotfiles(test_options)
+    end
+
+    # No backup should exist
+    assert_equal Dir.children(BACKUP_DIR).size, 2
+
+    # Test that dirs and files were copied
+    dotfiles = convert_to_dotfiles(@test_files)
+    dotfiles.each { |file| assert_includes Dir.children(LOCAL_DIR), file }
+
+    dotdirs = convert_to_dotfiles(@test_dirs)
+    dotdirs.each { |dir| assert_includes Dir.children(LOCAL_DIR), dir }
   end
 
-  def linux_env
-    OS.stub(:posix?, true) do
-      OS.stub(:linux?, true) do
-        OS.stub(:cygwin?, false) do
-          yield
-        end
+  def test_copy_dotfiles_copies_directories_properly
+    test_config_dir = File.join(TEST_DOTFILES, @test_dirs[0])
+    add_files(test_config_dir, @test_files)
+
+    @test_files.each do |file|
+      assert_includes Dir.children(test_config_dir), file
+    end
+
+    log_methods(@logger) { VpsCli::Copy.dotfiles(test_options) }
+
+    # directory backups only
+    assert_equal Dir.children(BACKUP_DIR).size, 2
+
+    dest_config_dir = File.join(LOCAL_DIR, ".#{@test_dirs[0]}")
+
+    @test_dirs.each do |dir|
+      # Config turns to .config etc
+      dot_dir = ".#{dir}"
+      assert_includes Dir.children(LOCAL_DIR), dot_dir
+
+      next unless dir == @test_dirs[0]
+
+      # checks for files embedded in the dir
+      @test_files.each do |file|
+        assert_includes Dir.children(dest_config_dir), file
       end
     end
   end
 
-  def process_uid_eql_zero
-    # mimics being a super user
-    Process.stub(:uid, 0) do
-      yield
+  def test_creates_backups_of_dotfiles
+    dotfiles = convert_to_dotfiles(@test_files)
+    add_files(LOCAL_DIR, dotfiles)
+
+    refute_empty Dir.children(LOCAL_DIR)
+
+    log_methods(@logger) { VpsCli::Copy.dotfiles(test_options) }
+    refute_empty Dir.children(BACKUP_DIR)
+
+    origfiles = convert_to_origfiles(@test_files)
+    origfiles.each do |file|
+      assert_includes Dir.children(BACKUP_DIR), file
     end
   end
 
-  def cygwin_env
-    OS.stub(:posix?, true) do
-      OS.stub(:linux?, false) do
-        OS.stub(:cygwin?, true) do
-          yield
-        end
+  def test_copy_sshd_config_works_in_testing_environment
+    add_files(LOCAL_DIR, 'sshd_config')
+    add_files(TEST_MISC_FILES, 'sshd_config')
+
+    assert_empty Dir.children(test_options[:backup_dir])
+
+    log_methods(@logger) { VpsCli::Copy.sshd_config(test_options) }
+
+    refute_empty Dir.children(test_options[:backup_dir])
+    assert_includes Dir.children(test_options[:backup_dir]), 'sshd_config.orig'
+    assert_includes Dir.children(test_options[:local_dir]), 'sshd_config'
+  end
+
+  def test_copy_gnome_settings_properly_errors
+    errors = nil
+    log_methods(@logger) do
+      errors = VpsCli::Copy.gnome_settings(test_options)
+      refute_empty VpsCli.errors
+      refute_empty errors
+    end
+  end
+
+  def test_raise_error_on_root_run
+    # Stubbing process and dir mimic running as root
+    Process.stub :uid, 0 do
+      Dir.stub :home, '/root' do
+        assert_raises(RuntimeError) { VpsCli::Copy.all }
       end
     end
   end
 
-  def non_posix_env
-    OS.stub(:posix?, false) { yield }
-  end
+  def test_copy_works_properly
+    backupfiles = convert_to_origfiles(@test_files, @test_dirs)
+    dotfiles = convert_to_dotfiles(@test_files, @test_dirs)
 
-  def copy(backup_dir: BACKUP_DIR, dest_dir: DEST_DIR, ssh_dir: nil)
-      # stub sshd_config so you dont mess up someones local settings
-    Copy.stub(:copy_gnome_settings, true) do
-      Copy.stub(:copy_sshd_config, true) do
-        Copy.copy(backup_dir: backup_dir, dest_dir: dest_dir, ssh_dir: ssh_dir)
-      end
-    end
-  end
+    add_files(TEST_DOTFILES, @test_files)
+    add_files(TEST_MISC_FILES, 'sshd_config')
 
-  # END OF HELPER METHODS #
+    log_methods(@logger) { VpsCli::Copy.all(test_options) }
 
-  def test_creates_backup_dir_and_dest_dir
-    refute(Dir.exist?(BACKUP_DIR))
-    refute(Dir.exist?(DEST_DIR))
+    assert_equal Dir.children(BACKUP_DIR).size, 2
+    dotfiles.each { |file| assert_includes Dir.children(LOCAL_DIR), file }
 
-    linux_env do
-      copy
-    end
+    # reset
+    rm_dirs(@base_dirs)
+    mk_dirs(@base_dirs)
 
-    assert(Dir.exist?(BACKUP_DIR))
-    assert(Dir.exist?(DEST_DIR))
-  end
+    add_files(TEST_DOTFILES, @test_files)
+    add_files(TEST_MISC_FILES, 'sshd_config')
+    add_files(LOCAL_DIR, 'sshd_config')
+    add_dirs(TEST_DOTFILES, @test_dirs)
 
-  def test_will_not_error_if_backup_dir_and_dest_dir_exist
-    FileUtils.mkdir_p(BACKUP_DIR)
-    FileUtils.mkdir_p(DEST_DIR)
-    assert(Dir.exist?(BACKUP_DIR))
-    assert(Dir.exist?(DEST_DIR))
+    log_methods(@logger) { VpsCli::Copy.all(test_options) }
 
-    linux_env do
-      copy
-    end
+    # Will create a backup due to sshd_config having to exist
+    assert_includes Dir.children(BACKUP_DIR), 'sshd_config.orig'
+    assert_equal Dir.children(BACKUP_DIR).size, 3
 
-    assert(Dir.exist?(BACKUP_DIR))
-    assert(Dir.exist?(DEST_DIR))
-  end
+    rm_dirs(@base_dirs)
+    mk_dirs(@base_dirs)
 
-  def test_backup_dir_empty_and_dest_dir_should_not_be_empty
-    # # Will not add files to the backup_dir if original dotfiles do not exist
-    # assert_equal dir_children(BACKUP_DIR).size, 1
-    # dconf automatically adds a file here, cannot stop this behavior without stubbing
-    linux_env do
-      copy
-    end
+    add_files(TEST_DOTFILES, @test_files)
+    add_dirs(TEST_DOTFILES, @test_dirs)
+    add_files(LOCAL_DIR, convert_to_dotfiles(@test_files))
+    add_dirs(LOCAL_DIR, convert_to_dotfiles(@test_dirs))
+    add_files(TEST_MISC_FILES, 'sshd_config')
+    add_files(LOCAL_DIR, 'sshd_config')
 
-    assert_empty(dir_children(BACKUP_DIR))
+    log_methods(@logger) { VpsCli::Copy.all(test_options) }
 
-    refute_empty(dir_children(DEST_DIR))
-    assert_includes(dir_children(DEST_DIR), '.vimrc')
-  end
-
-  def test_backup_dir_not_empty_if_orig_found
-    FileUtils.mkdir_p(DEST_DIR)
-    backup_file = File.join(BACKUP_DIR, 'vimrc.orig')
-    dest_file = File.join(DEST_DIR, '.vimrc')
-
-    File.open(dest_file, 'w+') { |file| file.puts 'test' }
-    dest_file_before_copy = File.read(dest_file)
-
-    linux_env do
-      copy
-    end
-
-    refute_empty(dir_children(BACKUP_DIR))
-    assert_includes(dir_children(BACKUP_DIR), 'vimrc.orig')
-
-    assert dest_file_before_copy == File.read(backup_file)
-    refute dest_file_before_copy == File.read(dest_file)
-  end
-
-  def test_backup_file_will_not_be_overwritten
-    FileUtils.mkdir_p(DEST_DIR)
-    FileUtils.mkdir_p(BACKUP_DIR)
-    f1 = File.join(DEST_DIR, '.vimrc')
-    f2 = File.join(BACKUP_DIR, '.vimrc.orig')
-    File.open(f1, 'w+') { |file| file.puts '1' }
-    File.open(f2, 'w+') { |file| file.puts '2' }
-    linux_env do
-      copy
-    end
-    refute File.read(f1) == File.read(f2)
-  end
-
-  def test_config_file_will_be_copied_to_dest_dir
-    config_file = File.join(CONFIG_DIR, 'vimrc')
-    dest_file = File.join(DEST_DIR, '.vimrc')
-
-    assert_raises(Errno::ENOENT) { File.read(config_file) == File.read(dest_file) }
-
-    FileUtils.mkdir_p(DEST_DIR)
-    File.open(dest_file, 'w+') { |file| file.puts 'test' }
-    refute File.read(config_file) == File.read(dest_file)
-
-    linux_env do
-      copy
-    end
-
-    assert File.read(config_file) == File.read(dest_file)
-  end
-
-  def test_cygwin_files_not_copied_in_unix
-    linux_env do
-      copy
-    end
-
-    refute File.exist?(File.join(DEST_DIR, '.minttyrc'))
-    refute File.exist?(File.join(DEST_DIR, '.cygwin_zshrc'))
-  end
-
-  def test_unix_files_not_copied_in_cygwin
-    cygwin_env do
-      copy
-    end
-
-    unix_zshrc = File.join(CONFIG_DIR, 'zshrc')
-    cygwin_zshrc = File.join(CONFIG_DIR, 'cygwin_zshrc')
-    dest_zshrc = File.join(DEST_DIR, '.zshrc')
-
-    assert File.exist?(dest_zshrc)
-    refute File.read(dest_zshrc) == File.read(unix_zshrc)
-    assert File.read(dest_zshrc) == File.read(cygwin_zshrc)
-  end
-
-  def test_raises_error_in_non_posix_env
-    non_posix_env do
-      assert_raises(RuntimeError) { copy }
-    end
-  end
-
-  def test_raises_error_when_running_as_root
-    process_uid_eql_zero do
-      Dir.stub(:home, '/root') do # simulates root on linux
-        assert_raises(RuntimeError) { copy }
-      end
-    end
+    refute_empty Dir.children(BACKUP_DIR)
+    backupfiles.each { |file| assert_includes Dir.children(BACKUP_DIR), file }
   end
 end

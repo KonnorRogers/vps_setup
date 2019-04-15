@@ -2,24 +2,24 @@
 
 require 'test_helper'
 
-# Tests VpsSetup::Setup
+# Tests VpsCli::Setup
 class TestSetup < Minitest::Test
   def test_privileged_user
     # If this returns true, you are running the test suite as sudo
-    refute VpsSetup::Setup.privileged_user?
+    refute VpsCli::Setup.privileged_user?
 
     Process.stub(:uid, 0) do
-      assert VpsSetup::Setup.privileged_user?
+      assert VpsCli::Setup.privileged_user?
     end
   end
 
   def test_root
     Process.stub(:uid, 0) do
       Dir.stub(:home, '/root') do
-        assert VpsSetup::Setup.root?
+        assert VpsCli::Setup.root?
       end
     end
 
-    refute VpsSetup::Setup.root?
+    refute VpsCli::Setup.root?
   end
 end
