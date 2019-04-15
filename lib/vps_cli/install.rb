@@ -115,7 +115,11 @@ module VpsCli
     end
 
     def self.install_tmux_plugin_manager_and_plugins
-      Rake.sh('git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm')
+      install_path = File.join(Dir.home, '.tmux', 'plugins', 'tpm')
+      unless File.exist?(install_path)
+        Rake.mkdir_p(install_path)
+        Rake.sh("git clone https://github.com/tmux-plugins/tpm #{instal_path}")
+      end
       # start a server but don't attach to it
       Rake.sh('tmux start-server')
       # create a new session but don't attach to it either
