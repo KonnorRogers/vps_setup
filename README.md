@@ -1,7 +1,5 @@
 
-
 # WARNING
-
 
 * ## I have transitioned this project from being a simple one command install to a full fledged CLI. During the transition, updates can be found on the <strong>thor</strong> branch.
 
@@ -70,41 +68,6 @@ cd ~/vps_cli
 ```
 
 6. Setup pgp keys
-<<<<<<< HEAD
-
-* If you have not setup PGP / GPG before, you can follow my guide: [My Guide to setting up PGP / GPG](https://github.com/ParamagicDev/vps_cli/issues/12)
-
-* export you PGP key for use by sops
-
-```bash
-export SOPS_PGP_FP="$KEY_ID"
-```
-
-* Your $KEY_ID can be obtained by running:
-
-```bash
-gpg --list-keys
-```
-
-7. Next step is to create a .credentials.yaml file in your home directory
-
-```bash
-sops ~/.credentials.yaml
-```
-
-* Follow the same layout as provided inside of this repo @ [example_credentials.yaml](https://github.com/ParamagicDev/vps_cli/blob/master/example_credentials.yaml)
-
-* ensure your github api token has read:public_key & write_public_key scope as well as in the format "token 123456789"
-
-* You can either use scp to send the file from your local computer to your
-server, or you can simply create a new one everytime.
-
-8. Run a fresh install, this will provide you with all my dotfiles,
-all the ways I like everything setup etc.
-
-```bash
-vps-cli fresh_install
-=======
 * If you have not setup PGP / GPG before, you can follow my guide:
 [My Guide to setting up PGP / GPG](https://github.com/ParamagicDev/vps_cli/issues/12)
 
@@ -142,27 +105,11 @@ all the ways I like everything setup etc.
 
 ```bash
 vps-cli pull -a
->>>>>>> b87618d8e20f80e49d25405d40c6aeaaa3e142f9
 ```
 
 10. To copy any changes from your repo to your local files, run: 
 
 ```bash
-<<<<<<< HEAD
-./exe/vps-cli fresh_install
-```
-
-9. To pull in any local changes into your repo run: 
-
-```bash
-vps-cli pull -a
-```
-
-10. To copy any changes from your repo to your local files, run: 
-
-```bash
-=======
->>>>>>> b87618d8e20f80e49d25405d40c6aeaaa3e142f9
 vps-cli copy -a
 ```
 
@@ -248,10 +195,6 @@ gpg --import /path/to/vps_cli/sops_testing_key.asc
 rake test
 ```
 
-<<<<<<< HEAD
-## vps-cli commands
-=======
->>>>>>> b87618d8e20f80e49d25405d40c6aeaaa3e142f9
 
 * if you have not run the setup script you can do the following:
 
@@ -265,7 +208,6 @@ cd exe
 * The following command will copy all files to $HOME directory from
 </path/to/vps_cli/config_files>. With the --interactive flag, it will
 prompt the user before overwriting any files.
-<<<<<<< HEAD
 
 ```bash
 vps-cli copy --all --interactive
@@ -282,24 +224,6 @@ vps-cli pull --all
 
 ## Contents of credentials.yaml
 
-=======
-
-```bash
-vps-cli copy --all --interactive
-```
-
-* The following command will pull files from the local directory ($HOME)
-to </path/to/vps_cli/config_files>
-
-```bash
-vps-cli pull --all
-```
-
-* This is still a work in progress. More commands and flags will be added
-
-## Contents of credentials.yaml
-
->>>>>>> b87618d8e20f80e49d25405d40c6aeaaa3e142f9
 * An example can be found of how to format your credentials.yaml file here:
 * [Example credentials.yaml file](https://github.com/ParamagicDev/vps_cli/blob/thor/example_credentials.yaml)
 
