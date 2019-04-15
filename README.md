@@ -13,7 +13,7 @@ documentation](https://www.rubydoc.info/github/paramagicdev/vps_cli/master)
 * .rc files located in config_files/dotfiles
 * config_files/misc_files contains non dotfiles such as sshd_config & gnome_terminal_settings
 
-## Warnings
+# Warnings
 * ### This will update your /etc/ssh/sshd_config file.
 * ### Your original can be obtained at ~/backup_files/sshd_config.orig
 
@@ -30,10 +30,10 @@ documentation](https://www.rubydoc.info/github/paramagicdev/vps_cli/master)
 ~/backup_files/zshrc.orig
 ```
 
-## Prerequisites
+# Prerequisites
 * None as far as I can tell, it should pull in everything you need.
 
-## How i use this script
+# How i use this script
 
 1. Ensure your ssh key is inside of your DigitalOcean droplet under
    security
@@ -114,13 +114,13 @@ config_files/misc_files & config_files/dotfiles</strong>
 
 * To add additional dotfiles, add them to config_files/dotfiles
 
-## Dependencies Installed
+# Dependencies Installed
 
 * There are many dependencies installed, a large list can be located in:
 * /path/to/vps_cli/setup.bash
 * /path/to/vps_cli/lib/vps_cli/packages.rb
 
-## Tools installed
+# Tools installed
 
 * Vim / Neovim
 * Zsh / OhMyZsh
@@ -134,7 +134,7 @@ config_files/misc_files & config_files/dotfiles</strong>
 * PGP / GPG - Public / Private key authentication
 * gnome-terminal - gnome terminal emulator
 
-## Languages / Frameworks installed
+# Languages / Frameworks installed
 * Nodejs
 * Yarn
 * Npm
@@ -146,7 +146,7 @@ config_files/misc_files & config_files/dotfiles</strong>
 * Ruby-Install
 * Rails
 
-## Gems
+# Gems
 * pry - Ruby debugger / IRB alternative
 * bundler - package manager
 * neovim - neovim support
@@ -154,7 +154,7 @@ config_files/misc_files & config_files/dotfiles</strong>
 * rake
 * rails
 
-## Viewing localhost of the server
+# Viewing localhost of the server
 * For viewing apps over ssh, ensure to use
 
 ```bash
@@ -177,7 +177,7 @@ ngrok http 3000
 
 * This will bring up a CLI to connect to for example localhost:3000 on the web  
 
-## Testing
+# Testing
 
 * Import the gpg dev key, I just took the one from [The mozilla SOPS github](https://github.com/mozilla/sops#test-with-the-dev-pgp-key) and
 added it into this repo for testing purposes.
@@ -199,7 +199,7 @@ cd exe
 ./vps-cli [COMMAND] [OPTIONS]
 ```
 
-### Example commands
+# Example commands
 
 * The following command will copy all files to $HOME directory from
 </path/to/vps_cli/config_files>. With the --interactive flag, it will
@@ -218,16 +218,16 @@ vps-cli pull --all
 
 * This is still a work in progress. More commands and flags will be added
 
-## Contents of credentials.yaml
+# Contents of credentials.yaml
 
 * An example can be found of how to format your credentials.yaml file here:
 * [Example credentials.yaml file](https://github.com/ParamagicDev/vps_cli/blob/thor/example_credentials.yaml)
 
-## Updates for the future?
+# Updates for the future?
     
 * Adding docker support via images
 
-## Utilities used
+# Utilities used
 
 * [RAKE](https://github.com/ruby/rake) For various command line tasks
 * [THOR](https://github.com/erikhuda/thor) For command line options via ruby
@@ -236,7 +236,7 @@ vps-cli pull --all
 * [SOPS](https://github.com/mozilla/sops) For secret management via YAML files
 
 
-## Things learned:
+# Things learned:
 
 * Configuration is hard. There is a reason things like chef, puppet, ansible etc exist.
 * How to create a logger. Example is in test/logs after running rake test
@@ -258,7 +258,7 @@ vps-cli pull --all
 * This projected ended up being way bigger than expected, I need to get back to
 web development
 
-## ISSUES
+# ISSUES
 
 * You may encounter the following issue if you have oh-my-zsh already on your machine and running the setup.bash script
 
