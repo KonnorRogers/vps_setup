@@ -14,7 +14,10 @@ endif
     
 call plug#begin("~/.vim/plugged")
   " colorscheme
+  Plug 'romainl/Apprentice'
   Plug 'tyrannicaltoucan/vim-quantum'
+  Plug 'arcticicestudio/nord-vim'
+  Plug 'haishanh/night-owl.vim'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
@@ -40,18 +43,37 @@ call plug#begin("~/.vim/plugged")
   endif
 call plug#end()
 
-set expandtab       "expand tabs into spaces
+let mapleader = " " "space is now \
+
+set autowrite
+
+"indentations
 set autoindent      "auto-indent new lines
 set smartindent     "return ending brackets to proper locations
+
+"tabs
+set expandtab       "expand tabs into spaces
+set tabstop=2 " when indenting with '>', use 4 spaces width
+set shiftwidth=2 " On pressing tab, insert 4 spaces
+set shiftround
+
+"Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+
+"Numbers
+set number
+set numberwidth=5
+
+"Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
 set showmatch       "show matching brackets
 set ruler           "show cursor position at all times
 set nohls           "don't highlight the previous search term
 set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
-set tabstop=2 " when indenting with '>', use 4 spaces width
-set shiftwidth=2 " On pressing tab, insert 4 spaces
-set expandtab
 set nofoldenable
 syntax on           "turn on syntax highlighting
 set nobackup        "no backups
@@ -59,21 +81,32 @@ set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
 set noundofile      "prevents extra files from being created
 filetype plugin indent on
-filetype on
-filetype indent on
-set backspace=indent,eol,start
+set backspace=indent,eol,start "fixes backspace in vim
+set wildmenu
+set incsearch "incremental searching
+set hidden
+set lazyredraw "Fixes files at the end of macros
+set relativenumber "if on line 5, line 4 will be 1 and line 6 will be 1 etc
+set guifont=DejavuSansMono\ Nerd\ Font\ 12
+set clipboard=unnamed "stupid clipboard crap
+set cursorline
+set linespace=3
+
+"Fixing splits to be more natural
+set splitbelow
+set splitright
+
+" Always use vertical diffs
+set diffopt+=vertical
+
 " 'matchit.vim' is built-in so let's enable it!
 " " Hit '%' on 'if' to jump to 'else'.
-runtime macros/matchit.vim
-set wildmenu
-set incsearch
-set hidden
-set lazyredraw
-set guifont=DejavuSansMono\ Nerd\ Font\ 12
+runtime macros/matchit.vim 
 
 " Turn on omnicompletion
 set omnifunc=syntaxcomplete#Complete
 
+" Tags searching
 set tags=./tags
 
 if has('nvim') || has('termguicolors')
@@ -110,7 +143,7 @@ autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
 let g:quantum_black=1
-colorscheme quantum
+colorscheme apprentice
 
 " use default
 set laststatus=2
@@ -149,11 +182,17 @@ let g:ragtag_global_maps = 1 "available globally
 " Rebinds ctrl-x ctrl-k to not interfere with snippet jumping
 inoremap <c-x><c-k> <c-k><c-x>
 
-" tag comletion
+" tag completion
 inoremap <c-x><c-]> <c-]>
 
+" Plug commands
+map <Leader>pi :PlugInstall<CR>
+map <Leader>pu :PlugUpdate<CR>
+map <Leader>pru :UpdateRemotePlugins<CR>
+map <Leader>pc :PlugClean<CR>
+
 " Ultisnips config
-let g:UltiSnipsSnippetDirectories=[$HOME.'/ParamagicianUltiSnips']
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-tab>"

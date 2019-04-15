@@ -2,13 +2,13 @@
 
 require 'rake'
 
-require 'vps_cli/copy_helper'
+require 'vps_cli/file_helper'
 
 module VpsCli
   # Copies config from /vps_cli/config_files/dotfiles
   #   & vps_cli/config_files/miscfiles to your home dir
   class Copy
-    extend CopyHelper
+    extend FileHelper
     # Top level method for copying all files
     # @param [Hash] Provides options for copying files
     # @option opts [Dir] :local_dir ('Dir.home') Where to save the dotfiles to
@@ -18,27 +18,34 @@ module VpsCli
     #   directory containing sshd_config
     # @option opts [Boolean] :verbose (false)
     #   Whether or not to print additional info
+    # @option opts [Boolean] :interactive (true)
+    #   Before overwriting any file, it will ask permission to overwrite.
+    #   It will also still create the backup
     # @option opts [Boolean] :testing (false) used internally for minitest
     # @raise [RuntimeError]
     #   Will raise this error if you run this method as root or sudo
     def self.all(opts = {})
-      root = (Process.uid.zero? || Dir.home == '/root')
-      root_msg = 'Do not run this as root or sudo. Run as a normal user'
-      raise root_msg if root == true
+      # raises an error if the script is run as root
+      return unless root? == false
 
+      # fills in options that are not explicitly filled in
       opts = VpsCli.create_options(opts)
-      CopyHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
+      FileHelper.mkdirs(opts[:local_dir], opts[:backup_dir])
 
+      # copies dotfiles
       dotfiles(opts)
 
+      # copies gnome_settings
       gnome_settings(opts)
+
+      # copies sshd_config
       sshd_config(opts)
 
       puts "dotfiles copied to #{opts[:local_dir]}"
       puts "backups created @ #{opts[:backup_dir]}"
     end
 
-    # Copies files from 'config_files/dotfiles' directory via the copy_all method
+    # Copy files from 'config_files/dotfiles' directory via the copy_all method
     # Defaults are provided in the VpsCli.create_options method
     # @see #VpsCli.create_options
     # @see #all
@@ -53,10 +60,14 @@ module VpsCli
 
       Dir.each_child(opts[:dotfiles_dir]) do |file|
         config = File.join(opts[:dotfiles_dir], file)
-        dot = File.join(opts[:local_dir], ".#{file}")
+        local = File.join(opts[:local_dir], ".#{file}")
         backup = File.join(opts[:backup_dir], "#{file}.orig")
 
-        files_and_dirs(config, dot, backup, opts[:verbose])
+        files_and_dirs(config_file: config,
+                       local_file: local,
+                       backup_file: backup,
+                       verbose: opts[:verbose],
+                       interactive: opts[:interactive])
       end
     end
 
@@ -71,7 +82,7 @@ module VpsCli
 
       return true if File.exist?(sshd_config)
 
-      VpsCli.errors << no_sshd_config
+      VpsCli.errors << Exception.new(no_sshd_config)
     end
 
     # Copies sshd_config to the local_sshd_config location
@@ -106,20 +117,21 @@ module VpsCli
       return Rake.cp(misc_sshd_path, opts[:local_sshd_config]) if opts[:testing]
 
       # This method must be run this way due to it requiring root privileges
+      unless FileHelper.overwrite?(opts[:local_sshd_config], opts[:interactive])
+        return
+      end
+
       Rake.sh("sudo cp #{misc_sshd_path} #{opts[:local_sshd_config]}")
     end
 
     # Deciphers between files & directories
-    # @param config_file [File] The file from the repo to be copied locally
-    # @param local_file [File] The file that is currently present locally
-    # @param backup_file [File]
-    #   The file to which to save the currently present local file
-    # @param verbose [Boolean] Verbose logging true / false
-    def self.files_and_dirs(config_file, local_file, backup_file, verbose = false)
-      if File.directory?(config_file)
-        CopyHelper.copy_dirs(config_file, local_file, backup_file, verbose)
+    # @see VpsCli::FileHelper#copy_dirs
+    # @see VpsCli::FileHelper#copy_files
+    def self.files_and_dirs(opts = {})
+      if File.directory?(opts[:config_file])
+        FileHelper.copy_dirs(opts)
       else
-        CopyHelper.copy_files(config_file, local_file, backup_file, verbose)
+        FileHelper.copy_files(opts)
       end
     end
 
@@ -136,12 +148,21 @@ module VpsCli
 
       raise RuntimeError if opts[:testing]
 
-      Rake.sh("dconf dump #{gnome_path} > #{backup}")
+      overwrite = proc { |file| FileHelper.overwrite?(file, opts[:interactive]) }
+      Rake.sh("dconf dump #{gnome_path} > #{backup}") if overwrite.call(backup)
 
-      Rake.sh("dconf load #{gnome_path} < #{FILES_DIR}/gnome_terminal_settings")
+      Rake.sh("dconf load #{gnome_path} < #{MISC_FILES_DIR}/gnome_terminal_settings") if overwrite.call(gnome_path)
     rescue RuntimeError => error
       puts 'something went wrong with gnome, continuing on' if opts[:verbose]
       VpsCli.errors << error
+    end
+
+    def self.root?
+      root = (Process.uid.zero? || Dir.home == '/root')
+      root_msg = 'Do not run this as root or sudo. Run as a normal user'
+      raise root_msg if root == true
+
+      false
     end
   end
 end
