@@ -69,9 +69,9 @@ module VpsCli
         http.request(post)
       end
 
-      VpsCli.errors << response if response != Net::HTTPSuccess
+      VpsCli.errors << response if response != Net::HTTPCreated
 
-      puts response
+      puts 'ssh key pushed to github' if response.class == Net::HTTPCreated
       response
     end
 
@@ -95,9 +95,7 @@ module VpsCli
       # keys pulled from github will not have comments
       ssh_key = @ssh_key.split('==')[0].concat('==')
 
-      p json_string
       JSON.parse(json_string).any? do |data|
-        p data['key']
         data['key'] == ssh_key
       end
     end
