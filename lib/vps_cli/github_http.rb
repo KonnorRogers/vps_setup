@@ -68,7 +68,6 @@ module VpsCli
 
         http.request(post)
       end
-      p json_string
 
       VpsCli.errors << response if response != Net::HTTPSuccess
 
