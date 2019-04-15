@@ -24,7 +24,9 @@ main(){
   # sources zshrc or bashrc depending on what is being used
   restart_shell
 
-  # installs sops via go get -u
+  # installs sops via go get -u 'sops'
+  SOPS="\\n\\nNow installing SOPS. This may take a bit, please wait\\n"
+  printf "$SOPS"
   install_sops
 
   gem install bundler

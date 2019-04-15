@@ -14,6 +14,14 @@ module VpsCli
 
     class_options %i[local_dir backup_dir local_sshd_config]
 
+    desc 'fresh_install', 'accepts not arguments, my own personal command'
+    def fresh_install
+      Copy.all
+      Install.all_install
+
+      provide_credentials(options.dup)
+    end
+
     desc 'copy [OPTIONS]', 'Copies files from <vps_cli/config_files>'
     def copy
       Copy.all(options.dup) if options[:all]
@@ -22,7 +30,6 @@ module VpsCli
     desc 'pull [OPTIONS]', 'Pulls files into your vps_cli repo'
     options %i[dotfiles_dir misc_files_dir]
     def pull
-      puts options[:all]
       Pull.all(options.dup) if options[:all]
     end
 

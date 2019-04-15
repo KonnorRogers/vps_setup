@@ -11,16 +11,9 @@ module VpsCli
   class Access
     extend AccessHelper
     # logs into various things either via a .yaml file or via cmd line
-    # @param yaml_file [File] (nil) The yaml file to be used.
-    #   MUST BE ENCRYPTED VIA SOPS
-    #   @see https://github.com/mozilla/sops
-    #   @see VpsCli::Access#decrypt
-    #   @see https://github.com/settings/tokens
-    #     I prefer to use authentication tokens versus sending
-    #     regular access info
-    # @param netrc_file [File] (~/.netrc) Default spot to write netrc
     # @param opts [Hash] For a full list of options view the following method:
-    # @param opts [String] :ssh_title (nil) the name for your ssh key
+    # @option opts [File] :netrc_file (~/.netrc) Default spot to write netrc
+    # @option opts [String] :ssh_title (nil) the name for your ssh key
     # The following values are pulled from: @see #generate_ssh_key
     # @option opts [String] :type ('rsa') What kind of encryption
     #   You want for your ssh key
@@ -31,6 +24,13 @@ module VpsCli
     #   Where you want the key to be saved
     # @option opts [Boolean] :create_password (nil)
     #   if true, prompt to create a password
+    # @option opts [File] :yaml_file (~/.credentials.yaml) The yaml file to be used.
+    #   MUST BE ENCRYPTED VIA SOPS
+    #   @see https://github.com/mozilla/sops
+    #   @see VpsCli::Access#decrypt
+    #   @see https://github.com/settings/tokens
+    #     I prefer to use authentication tokens versus sending
+    #     regular access info
     # @return void
     def self.provide_credentials(yaml_file: nil, netrc_file: nil, **opts)
       if yaml_file
@@ -40,6 +40,7 @@ module VpsCli
       end
 
       generate_ssh_key(opts)
+      post_github_ssh_key(opts)
     end
 
     # Provides all login credentials via a SOPS encrypted yaml file
@@ -153,13 +154,16 @@ module VpsCli
     def self.post_github_ssh_key(opts = {})
       uri = opts[:uri] ||= URI('https://api.github.com/user/keys')
 
+      default_yaml_file = File.join(Dir.home, '.credentials.yaml')
+      yaml_file = opts[:yaml_file] ||= default_yaml_file
+
       api_token = proc do |yaml, path|
         decrypt(yaml_file: yaml, path: path)
       end
 
       api_path = dig_for_path(:github, :api_token)
 
-      token = opts[:api_token] ||= api_token.call(opts[:yaml_file], api_path)
+      token = opts[:api_token] ||= api_token.call(yaml_file, api_path)
       ssh_file = opts[:ssh_file] ||= File.join(Dir.home, '.ssh', 'id_rsa.pub')
       title = opts[:title] ||= get_title
 
