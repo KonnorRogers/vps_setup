@@ -39,27 +39,11 @@
 1. Ensure your ssh key is inside of your DigitalOcean droplet under
    security
    
-<<<<<<< HEAD
-   ** If you have an existing droplet, consult digitalocean documents on adding
-   an ssh key
-=======
 * If you have an existing droplet, consult digitalocean documents on adding an ssh key
->>>>>>> development
 
 2. Create your droplet
 
 3. ssh into your server
-<<<<<<< HEAD
-
-```bash
-ssh root@<ip_address>
-```
-
-4. Create a new user, do not use root as your main user. Ensure to give your
-   user sudo permissions
-
-```bash
-=======
 
 ```bash
 ssh root@<ip_address>
@@ -68,7 +52,6 @@ ssh root@<ip_address>
 4. Create a new user, do not use root as your main user. Ensure to give your user sudo permissions
 
 ```bash
->>>>>>> development
 adduser <username>
 adduser <username> sudo
 ```
@@ -82,55 +65,26 @@ git clone https://github.com/ParamagicDev/vps_cli.git ~/vps_cli
 cd ~/vps_cli
 ./setup.bash
 ```
-<<<<<<< HEAD
 
 6. Setup pgp keys
-** If you have not setup PGP / GPG before, you can follow my guide:
+* If you have not setup PGP / GPG before, you can follow my guide:
 [My Guide to setting up PGP / GPG](https://github.com/ParamagicDev/vps_cli/issues/12)
 
-** export you PGP key for use by sops
-=======
+* export your PGP key for use by sops
 
 6. Setup pgp keys
-
-* If you have not setup PGP / GPG before, you can follow my guide: [My Guide to setting up PGP / GPG](https://github.com/ParamagicDev/vps_cli/issues/12)
-
-* export you PGP key for use by sops
->>>>>>> development
 
 ```bash
 export SOPS_PGP_FP="$KEY_ID"
 ```
 
-<<<<<<< HEAD
-** Your $KEY_ID can be obtained by running:
-=======
 * Your $KEY_ID can be obtained by running:
->>>>>>> development
 
 ```bash
 gpg --list-keys
 ```
 
 7. Next step is to create a .credentials.yaml file in your home directory
-<<<<<<< HEAD
-
-```bash
-sops ~/.credentials.yaml
-```
-
-** Follow the same layout as provided inside of this repo @ [example_credentials.yaml](https://github.com/ParamagicDev/vps_cli/blob/master/example_credentials.yaml)
-** ensure your github api token has read:public_key & write_public_key scope as
-well as in the format "token 123456789"
-
-** You can either use scp to send the file from your local computer to your
-server, or you can simply create a new one everytime.
-
-8. Run a fresh install, this will provide you with all my dotfiles,
-all the ways I like everything setup etc.
-
-```bash
-=======
 
 ```bash
 sops ~/.credentials.yaml
@@ -145,36 +99,6 @@ server, or you can simply create a new one everytime.
 
 8. Run a fresh install, this will provide you with all my dotfiles,
 all the ways I like everything setup etc.
-
-```bash
->>>>>>> development
-vps-cli fresh_install
-```
-
-* or
-
-```bash
-./exe/vps-cli fresh_install
-<<<<<<< HEAD
-```
-
-9. To pull in any local changes into your repo run: 
-
-```bash
-vps-cli pull -a
-```
-
-10. To copy any changes from your repo to your local files, run: 
-
-```bash
-vps-cli copy -a
-```
-
-** <strong>This will only pull / copy dotfiles already found within
-config_files/misc_files & config_files/dotfiles</strong>
-** To add additional dotfiles, add them to config_files/dotfiles
-=======
-```
 
 9. To pull in any local changes into your repo run: 
 
@@ -192,7 +116,6 @@ vps-cli copy -a
 config_files/misc_files & config_files/dotfiles</strong>
 
 * To add additional dotfiles, add them to config_files/dotfiles
->>>>>>> development
 
 ## Dependencies Installed
 
@@ -271,7 +194,6 @@ gpg --import /path/to/vps_cli/sops_testing_key.asc
 rake test
 ```
 
-## vps-cli commands
 
 * if you have not run the setup script you can do the following:
 
