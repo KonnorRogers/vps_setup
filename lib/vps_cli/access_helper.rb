@@ -129,5 +129,4 @@ module AccessHelper
   def export_tty
     Rake.sh('GPG_TTY=$(tty) && export GPG_TTY')
   end
-
 end

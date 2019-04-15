@@ -16,10 +16,12 @@ module VpsCli
 
     desc 'fresh_install', 'accepts not arguments, my own personal command'
     def fresh_install
-      Copy.all(options.dup)
+      opts = options.dup
+      opts[:yaml_file] = File.join(Dir.home, '.credentials.yaml')
+      Copy.all(opts)
       Install.all_install
 
-      provide_credentials(options.dup)
+      Access.provide_credentials(opts.dup)
 
       VpsCli.errors.each { |error| puts error.message }
     end

@@ -32,9 +32,9 @@ module VpsCli
     #     I prefer to use authentication tokens versus sending
     #     regular access info
     # @return void
-    def self.provide_credentials(yaml_file: nil, netrc_file: nil, **opts)
-      if yaml_file
-        file_login(yaml_file, netrc_file)
+    def self.provide_credentials(opts = {})
+      if opts[:yaml_file]
+        file_login(yaml_file: opts[:yaml_file], netrc_file: opts[:netrc_file])
       else
         command_line_login
       end
@@ -94,11 +94,11 @@ module VpsCli
     #   yaml_file
     # @return nil
     def self.git_file_login(yaml_file:)
-      username_key = path_to_value(:github, :username)
-      email_key = path_to_value(:github, :email)
+      username_key = dig_for_path(:github, :username)
+      email_key = dig_for_path(:github, :email)
 
-      username = decrypt(yaml_file, username_key)
-      email = decrypt(yaml_file, email_key)
+      username = decrypt(yaml_file: yaml_file, path: username_key)
+      email = decrypt(yaml_file: yaml_file, path: email_key)
 
       set_git_config(username, email)
     end
@@ -130,11 +130,14 @@ module VpsCli
     #   Where you want the key to be saved
     # @option opts [Boolean] :create_password (nil)
     #   if true, prompt to create a password
-    def self.generate_ssh_key(**opts)
+    def self.generate_ssh_key(opts = {})
+      o_file = opts[:output_file] ||= File.join(Dir.home, '.ssh', 'id_rsa')
+
+      return puts 'ssh key already exists' if File.exist?(o_file)
+
       type = opts[:type] ||= 'rsa'
       bits = opts[:bits] ||= 4096
       email = opts[:email] ||= get_email
-      o_file = opts[:output_file] ||= File.join(Dir.home, '.ssh', 'id_rsa')
 
       no_pass = ' -P ""' unless opts[:create_password]
 
@@ -173,11 +176,13 @@ module VpsCli
     end
 
     def self.get_email
-      puts 'please enter an email:'
+      puts "\n"
+      puts 'please enter an email for your ssh key:'
       $stdin.gets.chomp
     end
 
     def self.get_title
+      puts "\n"
       puts 'please enter a title for your ssh key'
       $stdin.gets.chomp
     end
