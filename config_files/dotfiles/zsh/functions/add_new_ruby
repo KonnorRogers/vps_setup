@@ -4,7 +4,7 @@
 function add_new_ruby(){
   RUBY_VERSION="$1"
 
-  ruby-install ruby "$RUBY_VERSION"
+  ruby-install ruby "$RUBY_VERSION" --no-reinstall
   source $HOME/.zshrc
 
   chruby ruby-"$RUBY_VERSION"
