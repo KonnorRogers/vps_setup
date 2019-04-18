@@ -3,6 +3,7 @@
 
 BIN="$HOME/bin"
 VPS_CLI="$PWD/exe/vps-cli"
+RUBY_VERSION="2.6.2"
 
 main(){
   # will error if running as root
@@ -60,7 +61,7 @@ make_executable(){
 apt_setup(){
   sudo apt-get update
   sudo apt-get upgrade -y
-  yes "\n" | sudo apt-get dist-upgrade -y
+  yes "\\n" | sudo apt-get dist-upgrade -y
 
   libs="software-properties-common gnupg2 less ufw ack-grep libfuse2
   apt-transport-https ca-certificates build-essential bison zlib1g-dev
@@ -102,7 +103,7 @@ install_ruby(){
   tar -xzvf "$RUBY_INSTALL_TAR"
   cd "$RUBY_INSTALL_DIR" || exit 2
   sudo make install
-
+  ruby-install ruby "$RUBY_VERSION" --no-reinstall
   cd ..
 }
 
@@ -145,7 +146,7 @@ fi"
 # Accepts a file as a parameter
 # If the file does not contain the string "chruby ruby latest"
 # Then append it to the end of the file
-set_ruby_version(){
+add_chruby_rc_file(){
   source_chruby="source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh"
   file="$1"
@@ -167,7 +168,7 @@ restart_shell(){
       touch "$BASH_RC"
     fi
 
-    set_ruby_version "$BASH_RC"
+    add_chruby_to_rc_file "$BASH_RC"
 
     source "$BASH_RC"
 
@@ -178,7 +179,7 @@ restart_shell(){
       touch "$ZSHRC"
     fi
 
-    set_ruby_version "$ZSHRC"
+    add_chruby_to_rc_file "$ZSHRC"
     source "$ZSHRC"
 
   else
@@ -190,8 +191,9 @@ restart_shell(){
 make_chruby_usable(){
   add_chruby_to_profile_d                      
   restart_shell                                
-  chruby system
+  chruby ruby-"$RUBY_VERSION"
 }
+
 
 install_sops(){
   export GOPATH="$HOME/go"
