@@ -21,9 +21,6 @@ main(){
   # adds chruby to the appropriate files
   make_chruby_usable
 
-  # sources zshrc or bashrc depending on what is being used
-  restart_shell
-
   # installs sops via go get -u 'sops'
   SOPS="\\n\\nNow installing SOPS. This may take a bit, please wait\\n"
   printf "$SOPS"
@@ -68,7 +65,7 @@ apt_setup(){
   libs="software-properties-common gnupg2 less ufw ack-grep libfuse2
   apt-transport-https ca-certificates build-essential bison zlib1g-dev
   libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc
-  ruby golang"
+  ruby ruby-dev golang"
 
   for lib in $libs; do
     sudo apt-get install "$lib" -y
@@ -101,10 +98,11 @@ install_ruby(){
     tar -xzvf "$RUBY_INSTALL_TAR"
   fi
 
+  echo "$PWD"
+  tar -xzvf "$RUBY_INSTALL_TAR"
   cd "$RUBY_INSTALL_DIR" || exit 2
   sudo make install
 
-  ruby-install --latest ruby --no-reinstall
   cd ..
 }
 
@@ -185,13 +183,14 @@ restart_shell(){
 
   else
     echo "Make sure to set your chruby version by adding"
-    echo "add 'chruby ruby latest' to your *.rc file"
+    echo "add 'chruby ruby-2.*.*' to your *.rc file"
   fi
 }
 
 make_chruby_usable(){
   add_chruby_to_profile_d                      
   restart_shell                                
+  chruby system
 }
 
 install_sops(){
