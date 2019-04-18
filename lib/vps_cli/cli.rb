@@ -26,6 +26,13 @@ module VpsCli
       VpsCli.errors.each { |error| puts error.message }
     end
 
+    desc 'install_gems', 'runs gem install on all gems in packages.rb'
+    def install_gems
+      Packages::GEMS.each do |g|
+        gem install g
+      end
+    end
+
     desc 'copy [OPTIONS]', 'Copies files from <vps_cli/config_files>'
     def copy
       Copy.all(options.dup) if options[:all]

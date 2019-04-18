@@ -155,16 +155,6 @@ set_ruby_version(){
   if ! grep -q "^$source_chruby$" "$file"; then
     echo "$source_chruby" >> "$file"
   fi
-
-  current_ruby_version="ruby-2.6.2"
-  ruby_version="$HOME/.ruby-version"
-  if [[ -e "$ruby_version" ]]; then
-    touch "$ruby_version" 
-  fi
-
-  if ! grep -q "^$current_ruby_version$" "$ruby_version"; then
-    echo "$current_ruby_version" >> "$ruby_version" 
-  fi
 }
 
 # will create an empty .bashrc or .zshrc so that it can be source
