@@ -91,7 +91,7 @@ gpg --list-keys
 sops ~/.credentials.yaml
 ```
 
-* Follow the same layout as provided inside of this repo @ [example_credentials.yaml](https://github.com/ParamagicDev/vps_cli/blob/master/example_credentials.yaml)
+* Follow the same layout as provided inside of this repo: [example_credentials.yaml](https://github.com/ParamagicDev/vps_cli/blob/master/example_credentials.yaml)
 
 * ensure your github api token has read:public_key & write_public_key scope as well as in the format "token 123456789"
 
@@ -101,13 +101,19 @@ server, or you can simply create a new one everytime.
 8. Run a fresh install, this will provide you with all my dotfiles,
 all the ways I like everything setup etc.
 
-9. To pull in any local changes into your repo run: 
+```bash
+vps-cli fresh_install
+```
+
+# Maintenance
+
+* To pull in any local changes into your repo run: 
 
 ```bash
 vps-cli pull -a
 ```
 
-10. To copy any changes from your repo to your local files, run: 
+* To copy any changes from your repo to your local files, run: 
 
 ```bash
 vps-cli copy -a
