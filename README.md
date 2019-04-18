@@ -131,6 +131,7 @@ config_files/misc_files & config_files/dotfiles</strong>
 ```bash
 ruby-install ruby --latest
 chruby ruby-*.*.*
+vps-cli install_gems
 ```
 
 * This will install the new ruby version
