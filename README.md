@@ -124,6 +124,20 @@ config_files/misc_files & config_files/dotfiles</strong>
 
 * To add additional dotfiles, add them to config_files/dotfiles
 
+## Ruby version
+
+* Should I want to change ruby versions I would do the following:
+
+```bash
+ruby-install ruby --latest
+chruby ruby-*.*.*
+```
+
+* This will install the new ruby version
+* Then it will switch to the new ruby version via chruby
+* The way the setup.bash script works, it only install ruby-install
+It does not install any ruby versions, it just uses system ruby
+
 # Dependencies Installed
 
 * There are many dependencies installed, a large list can be located in:
@@ -132,6 +146,8 @@ config_files/misc_files & config_files/dotfiles</strong>
 
 # Tools installed
 
+* Ruby-Install - installs various ruby versions
+* Chruby - lightweight ruby environment manager similar to rvm or rbenv
 * Vim / Neovim
 * Zsh / OhMyZsh
 * Tmux w/ tmux plugin manager - Terminal multiplexer
