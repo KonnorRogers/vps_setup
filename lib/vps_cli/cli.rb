@@ -33,18 +33,6 @@ module VpsCli
       end
     end
 
-    desc 'install_new_ruby [RUBY_VERSION]', 'installs the new ruby version'
-    def install_new_ruby(ruby_version)
-      Rake.sh("ruby-install ruby #{ruby_version} --no-reinstall")
-      puts "Ensure to run 'source ~/.zshrc' or equivalent to reload the shell"
-    end
-
-    desc 'setup_new_ruby [RUBY_VERSION]', 'sets up the new ruby in chruby'
-    def setup_new_ruby
-      Rake.sh("gem install thor")
-      install_gems
-    end
-
     desc 'copy [OPTIONS]', 'Copies files from <vps_cli/config_files>'
     def copy
       Copy.all(options.dup) if options[:all]
