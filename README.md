@@ -31,7 +31,11 @@ documentation](https://www.rubydoc.info/github/paramagicdev/vps_cli/master)
 ```
 
 # Prerequisites
-* None as far as I can tell, it should pull in everything you need.
+* have git installed
+
+```bash
+sudo apt[-get] install git
+```
 
 # How i use this script
 
