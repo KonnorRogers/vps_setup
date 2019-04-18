@@ -33,6 +33,13 @@ module VpsCli
       end
     end
 
+    desc 'install_new_ruby [RUBY_VERSION]', 'installs the new ruby version'
+    def install_new_ruby(ruby_version)
+      Rake.sh("ruby-install ruby #{ruby_version}")
+      Rake.sh("chruby ruby-#{ruby_version}")
+      install_gems
+    end
+
     desc 'copy [OPTIONS]', 'Copies files from <vps_cli/config_files>'
     def copy
       Copy.all(options.dup) if options[:all]

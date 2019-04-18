@@ -129,9 +129,15 @@ config_files/misc_files & config_files/dotfiles</strong>
 * Should I want to change ruby versions I would do the following:
 
 ```bash
-ruby-install ruby --latest
-chruby ruby-*.*.*
+ruby-install ruby 2.6.2
+chruby ruby-2.6.2
 vps-cli install_gems
+```
+
+* or simply the following will run the above
+
+```bash
+vps-cli install_new_ruby 2.6.2
 ```
 
 * This will install the new ruby version
@@ -168,9 +174,7 @@ It does not install any ruby versions, it just uses system ruby
 * sqlite3
 * Python3 / pip
 * Golang
-* Ruby 2.6.0
-* Chruby
-* Ruby-Install
+* Ruby
 * Rails
 
 # Gems
@@ -178,8 +182,9 @@ It does not install any ruby versions, it just uses system ruby
 * bundler - package manager
 * neovim - neovim support
 * colorls - colorful file display
-* rake
-* rails
+* rake - command runner
+* rails - web framework
+* thor - command line options parser
 
 # Viewing localhost of the server
 * For viewing apps over ssh, ensure to use
