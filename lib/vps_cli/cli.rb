@@ -29,14 +29,19 @@ module VpsCli
     desc 'install_gems', 'runs gem install on all gems in packages.rb'
     def install_gems
       Packages::GEMS.each do |g|
-        gem install g
+        Rake.sh("gem install #{g}")
       end
     end
 
     desc 'install_new_ruby [RUBY_VERSION]', 'installs the new ruby version'
     def install_new_ruby(ruby_version)
-      Rake.sh("ruby-install ruby #{ruby_version}")
-      Rake.sh("chruby ruby-#{ruby_version}")
+      Rake.sh("ruby-install ruby #{ruby_version} --no-reinstall")
+      puts "Ensure to run 'source ~/.zshrc' or equivalent to reload the shell"
+    end
+
+    desc 'setup_new_ruby [RUBY_VERSION]', 'sets up the new ruby in chruby'
+    def setup_new_ruby
+      Rake.sh("gem install thor")
       install_gems
     end
 

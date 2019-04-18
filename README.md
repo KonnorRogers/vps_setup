@@ -130,14 +130,10 @@ config_files/misc_files & config_files/dotfiles</strong>
 
 ```bash
 ruby-install ruby 2.6.2
+source ~/.zshrc
 chruby ruby-2.6.2
+gem install thor
 vps-cli install_gems
-```
-
-* or simply the following will run the above
-
-```bash
-vps-cli install_new_ruby 2.6.2
 ```
 
 * This will install the new ruby version

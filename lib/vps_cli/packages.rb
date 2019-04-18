@@ -6,7 +6,7 @@ module VpsCli
                    python3-dev python-pip python3-neovim
                    nodejs golang ruby ruby-dev].freeze
 
-    TOOLS = %w[curl tmux git vim zsh sqlite3 ctags rdoc
+    TOOLS = %w[curl tmux git vim zsh sqlite3 ctags rdoc libsqlite3-dev
                openssh-client openssh-server dconf-cli gnome-terminal
                postgresql pry rubygems fail2ban node-gyp].freeze
 
