@@ -36,5 +36,11 @@ alias h-m:on="heroku maintenance:on"
 alias h-m:off="heroku maintenance:off"
 alias h-migrate="heroku run rails db:migrate"
 
+# bundler
+
+alias bi="bundle install"
+alias b="bundle"
+alias be="bundle exec"
+
 # misc
 alias tag-gen="ctags -R --tag-relative -f .git/tags"
