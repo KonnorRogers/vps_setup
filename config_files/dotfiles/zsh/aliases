@@ -19,12 +19,14 @@ alias gco="git checkout"
 alias gm="git merge"
 alias gms="git merge --squash"
 alias gbr="git branch"
-alias gbrd="git branch -D"
+alias gdel="git branch -D"
 alias gst="git status"
+alias gset="git remote set-url"
 
 # tmux
 alias tm="tmux"
 alias tmd="tmux detach"
+
 # heroku
 alias h-="heroku"
 alias h-create="heroku create"
