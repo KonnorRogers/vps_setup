@@ -47,7 +47,7 @@ alias r="rails"
 alias rg="rails generate"
 alias rgc="rails generate controller"
 alias rgm="rails generate model"
-alias rgit="rails generate integration test"
+alias rgit="rails generate integration_test"
 alias rgm="rails generate migration"
 
 # misc
