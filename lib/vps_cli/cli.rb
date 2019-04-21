@@ -63,7 +63,9 @@ module VpsCli
 
     desc 'git_push', 'Automatically pushes changes to your remote repo'
     def git_push
-      Rake.sh('git add -A && git commit -m "auto push files" && git push')
+      Rake.sh('git add -A')
+      Rake.sh('git commit -m "auto push files"')
+      Rake.sh('git push')
     end
 
     desc 'git_status', 'provides the status of your repo'
