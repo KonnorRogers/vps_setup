@@ -56,14 +56,19 @@ module VpsCli
       VpsCli.errors.each { |error| puts error.message }
     end
 
-    desc 'push [OPTIONS]', 'pushes your ssh key to github'
-    option :api_token
-    option :ssh_file, aliases: :f
-    option :title, aliases: :t
-    option :uri, aliases: :u
-    option :yaml_file, aliases: :y
-    def push
-      Access.post_github_ssh_key(options.dup)
+    desc 'git_pull', 'Automatically pulls in changes from remote repo'
+    def git_pull
+      Rake.sh('git pull')
+    end
+
+    desc 'git_push', 'Automatically pushes changes to your remote repo'
+    def git_push
+      Rake.sh('git add -A && git commit -m "auto push files" && git push')
+    end
+
+    desc 'git_status', 'provides the status of your repo'
+    def git_status
+      Rake.sh('git status')
     end
   end
 end
