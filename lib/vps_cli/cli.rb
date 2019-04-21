@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'thor'
+require 'open3'
 
 module VpsCli
   # The CLI component of this library
   # Integrates Thor
   # @see http://whatisthor.com/
   class Cli < Thor
+    PROJECT_DIR = File.expand_path('../..', __dir__)
     # this is available as a flag for all methods
     class_option :verbose, type: :boolean, aliases: :v, default: false
     class_option :interactive, type: :boolean, aliases: :i, default: false
@@ -58,19 +60,31 @@ module VpsCli
 
     desc 'git_pull', 'Automatically pulls in changes from remote repo'
     def git_pull
-      Rake.sh('git pull')
+      swap_dir { Rake.sh('git pull') }
     end
 
-    desc 'git_push', 'Automatically pushes changes to your remote repo'
-    def git_push
-      Rake.sh('git add -A')
-      Rake.sh('git commit -m "auto push files"')
-      Rake.sh('git push')
+    desc 'git_push [message]', 'Automatically pushes changes to your remote repo'
+    def git_push(message = nil)
+
+      message ||= "auto push files"
+
+      swap_dir do
+        Rake.sh('git add -A')
+        Rake.sh("git commit -m \"#{message}\"")
+        Rake.sh('git push')
+      end
     end
 
     desc 'git_status', 'provides the status of your repo'
     def git_status
-      Rake.sh('git status')
+      swap_dir { Rake.sh('git status') }
+    end
+
+    no_commands do
+      def swap_dir
+        Rake.cd(PROJECT_DIR)
+        yield
+      end
     end
   end
 end
