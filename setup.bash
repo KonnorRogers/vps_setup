@@ -146,7 +146,7 @@ fi"
 # Accepts a file as a parameter
 # If the file does not contain the string "chruby ruby latest"
 # Then append it to the end of the file
-add_chruby_rc_file(){
+add_chruby_to_rc_file(){
   source_chruby="source /usr/local/share/chruby/chruby.sh
   source /usr/local/share/chruby/auto.sh"
   file="$1"
