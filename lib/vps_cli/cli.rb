@@ -71,6 +71,8 @@ module VpsCli
       swap_dir do
         Rake.sh('git add -A')
         Rake.sh("git commit -m \"#{message}\"")
+        # rescues any errors with git commit
+      rescue RuntimeError
         Rake.sh('git push')
       end
     end
