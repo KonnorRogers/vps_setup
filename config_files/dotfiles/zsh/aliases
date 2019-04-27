@@ -47,9 +47,9 @@ alias be='bundle exec'
 alias r='rails'
 alias rg='rails generate'
 alias rgc='rails generate controller'
-alias rgm='rails generate model'
+alias rgmo='rails generate model'
 alias rgit='rails generate integration_test'
-alias rgm='rails generate migration'
+alias rgmi='rails generate migration'
 
 # misc
 alias tag-gen="ctags -R --tag-relative -f .git/tags"
