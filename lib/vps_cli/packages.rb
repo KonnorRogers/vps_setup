@@ -8,7 +8,8 @@ module VpsCli
 
     TOOLS = %w[curl tmux git vim zsh sqlite3 ctags rdoc libsqlite3-dev
                openssh-client openssh-server dconf-cli gnome-terminal
-               postgresql pry rubygems fail2ban node-gyp].freeze
+               postgresql pry rubygems fail2ban node-gyp
+               libcurl4-openssl-dev libxml2-dev].freeze
 
     ADDED_REPOS = %w[neovim asciinema docker mosh yarn].freeze
 

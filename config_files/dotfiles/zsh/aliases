@@ -1,3 +1,4 @@
+alias dotzsh="vim ~/.zsh"
 alias aliases="vim ~/.zsh/aliases"
 alias vim='nvim'
 alias zshrc="vim ~/.zshrc"
