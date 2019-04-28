@@ -159,7 +159,9 @@ set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 map <Leader>s :split<CR>
 
 " netrw explore
-map <C-e> :Explore<CR>
+let g:netrw_winsize=30
+map <C-e> :Lexplore<CR>
+map <Leader>e :Lexplore<CR>
 
 " editing vim
 map <Leader>ev :split $HOME/.vimrc<CR>
@@ -202,7 +204,7 @@ map <Leader>pc :PlugClean<CR>
 
 " vim-test mappings
 nnoremap <silent> <Leader>t :TestFile<CR>
-nnoremap <silent> <Leader>s :TestNearest<CR>
+nnoremap <silent> <Leader>n :TestNearest<CR>
 nnoremap <silent> <Leader>l :TestLast<CR>
 nnoremap <silent> <Leader>a :TestSuite<CR>
 nnoremap <silent> <Leader>gt :TestVisit<CR>

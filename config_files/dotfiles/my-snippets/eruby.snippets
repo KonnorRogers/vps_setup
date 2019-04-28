@@ -23,13 +23,13 @@ snippet tmc "multiline tag w/ class" i
 endsnippet
 
 snippet tm "Multiline tag w/o class" i
-<${1:tag}>
+<${1:tag}$2>
 	${0:${VISUAL}}
 </$1>
 endsnippet
 
 snippet t "single line tag" i
-<${1:tag}>${0:${VISUAL}}</$1>
+<${1:tag}$2>${0:${VISUAL}}</$1>
 endsnippet
 
 snippet tc "single line tag w/ class" i
@@ -37,7 +37,7 @@ snippet tc "single line tag w/ class" i
 endsnippet
 
 snippet a. "anchor tag" i
-<a href="$1" $2>$3</a>
+<a href="$1"$2>$3</a>
 endsnippet
 
 snippet if "if statement"
