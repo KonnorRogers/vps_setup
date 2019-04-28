@@ -19,6 +19,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
   Plug 'haishanh/night-owl.vim'
+  Plug 'jaywilliams/vim-vwilight'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
