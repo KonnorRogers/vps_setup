@@ -185,6 +185,9 @@ inoremap <c-x><c-k> <c-k><c-x>
 " tag completion
 inoremap <c-x><c-]> <c-]>
 
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
 " Plug commands
 map <Leader>pi :PlugInstall<CR>
 map <Leader>pu :PlugUpdate<CR>
