@@ -11,7 +11,7 @@ module VpsCli
                postgresql pry rubygems fail2ban node-gyp
                libcurl4-openssl-dev libxml2-dev].freeze
 
-    ADDED_REPOS = %w[neovim asciinema docker mosh yarn].freeze
+    ADDED_REPOS = %w[neovim asciinema docker-ce mosh yarn].freeze
 
     GEMS = %w[colorls neovim rake pry
               rubocop gem-ctags rails yard

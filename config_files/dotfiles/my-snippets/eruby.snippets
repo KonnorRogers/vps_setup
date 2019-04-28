@@ -8,12 +8,12 @@ snippet .field ".x_field"
 .${1:text}_field :${2:<symbol>}${3:, class='$4'}
 endsnippet
 
-snippet = "erb.html"
-<%= $0 %>
+snippet = "erb.html" i
+<%= ${1:${VISUAL}} %>
 endsnippet
 
-snippet - "erb.html"
-<% $0 %>
+snippet - "erb.html" i
+<% ${1:${VISUAL}} %>
 endsnippet
 
 snippet tmc "multiline tag w/ class"
