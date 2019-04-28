@@ -233,7 +233,7 @@ map <Leader>rn :call RenameFile()<cr>
 
 function! Touch()
   let current_dir = expand('%:h')
-  let file_name = input('New file name:', current_dir . '/')
+  let file_name = input('New file name: ', current_dir . '/')
 
   exec ':e ' . file_name
 endfunction
