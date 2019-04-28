@@ -203,11 +203,11 @@ map <Leader>pru :UpdateRemotePlugins<CR>
 map <Leader>pc :PlugClean<CR>
 
 " vim-test mappings
-nnoremap <silent> <Leader>t :TestFile<CR>
-nnoremap <silent> <Leader>n :TestNearest<CR>
-nnoremap <silent> <Leader>l :TestLast<CR>
-nnoremap <silent> <Leader>a :TestSuite<CR>
-nnoremap <silent> <Leader>gt :TestVisit<CR>
+nnoremap <silent> <Leader>tf :TestFile<CR>
+nnoremap <silent> <Leader>tn :TestNearest<CR>
+nnoremap <silent> <Leader>tl :TestLast<CR>
+nnoremap <silent> <Leader>ts :TestSuite<CR>
+nnoremap <silent> <Leader>tv :TestVisit<CR>
 
 " Ultisnips config
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
@@ -230,3 +230,12 @@ function! RenameFile()
 endfunction
 
 map <Leader>rn :call RenameFile()<cr>
+
+function! Touch()
+  let current_dir = expand('%:h')
+  let file_name = input('New file name:', current_dir . '/')
+
+  exec ':e ' . file_name
+endfunction
+
+map <Leader>n :call Touch()<CR>
