@@ -1,3 +1,4 @@
+set encoding=utf-8
 set nocompatible    "run in vim mode
 " Will install plugins if not detected
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -30,6 +31,9 @@ call plug#begin("~/.vim/plugged")
   Plug 'tpope/vim-ragtag'
 
   Plug 'ngmy/vim-rubocop'
+
+  " runs your testing suite
+  Plug 'janko-m/vim-test'
 
   " Snippets are separated from the engine. Add this if you want them:
   " Track the engine.
@@ -193,6 +197,13 @@ map <Leader>pi :PlugInstall<CR>
 map <Leader>pu :PlugUpdate<CR>
 map <Leader>pru :UpdateRemotePlugins<CR>
 map <Leader>pc :PlugClean<CR>
+
+" vim-test mappings
+nnoremap <silent> <Leader>t :TestFile<CR>
+nnoremap <silent> <Leader>s :TestNearest<CR>
+nnoremap <silent> <Leader>l :TestLast<CR>
+nnoremap <silent> <Leader>a :TestSuite<CR>
+nnoremap <silent> <Leader>gt :TestVisit<CR>
 
 " Ultisnips config
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
