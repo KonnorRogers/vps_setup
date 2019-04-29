@@ -15,29 +15,3 @@ task :test do
 end
 
 task default: :test
-
-# def tilde_to_home_hash(rake_args)
-#   # Rake::TaskArguments.to_hash equivalent
-#   rake_args.to_hash.map { |k, v| [k, v.sub('~', Dir.home)] }.to_h
-# end
-
-# task :make, %i[backup_dir dest_dir] do |_t, args|
-#   # Not necessary for babun
-#   Rake::Task['setup'].invoke
-#   Rake::Task['install'].invoke
-
-#   args.with_defaults(backup_dir: BACKUP_DIR, dest_dir: Dir.home)
-#   params = tilde_to_home_hash(args)
-
-#   Rake::Task['config:copy'].invoke(params[:backup_dir], params[:dest_dir])
-# end
-
-# task :login do
-#   VpsCli::Setup.git_config
-#   VpsCli::Setup.heroku_login
-# end
-
-# task :install do
-#   VpsCli::Install.full
-#   sh('sudo apt-get autoremove -y')
-# end
