@@ -155,7 +155,6 @@ restart_shell(){
     fi
 
     add_chruby_to_rc_file "$BASH_RC"
-
     source "$BASH_RC"
 
   elif [[ "$SHELL" == *"zsh" ]]; then
