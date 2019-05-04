@@ -110,13 +110,13 @@ vps-cli fresh_install
 * To pull in any local changes into your repo run: 
 
 ```bash
-vps-cli pull -a
+vps-cli pull
 ```
 
 * To copy any changes from your repo to your local files, run: 
 
 ```bash
-vps-cli copy -a
+vps-cli copy
 ```
 
 * <strong>This will only pull / copy dotfiles already found within
@@ -234,14 +234,14 @@ cd exe
 prompt the user before overwriting any files.
 
 ```bash
-vps-cli copy --all --interactive
+vps-cli copy
 ```
 
 * The following command will pull files from the local directory ($HOME)
 to </path/to/vps_cli/config_files>
 
 ```bash
-vps-cli pull --all
+vps-cli pull
 ```
 
 * This is still a work in progress. More commands and flags will be added
@@ -283,8 +283,11 @@ vps-cli pull --all
 * Wrapping something such as sops with Ruby is not easy.
 * So much testing on things that are not easy to test
 * Scope creep is a real thing and ive experienced it with this project
-* This projected ended up being way bigger than expected, I need to get back to
+* This project ended up being way bigger than expected, I need to get back to
 web development
+* This project  has taken on a new life, it needs a lot of refactoring as well
+as some more documentation which I do not have time for, I will spend
+my efforts furthering learning ruby-on-rails
 
 # ISSUES
 
