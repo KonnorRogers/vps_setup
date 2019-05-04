@@ -9,9 +9,6 @@ main(){
   # will error if running as root
   check_if_root
 
-  # symlinks /vps_cli/exe/vps-cli to $HOME/bin
-  add_to_bin
-
   # runs through the varios sudo apt installs required prior to
   # installs
   apt_setup
@@ -29,17 +26,6 @@ main(){
 
   gem install bundler
   bundle install
-}
-
-add_to_bin(){
-  make_executable
-  mkdir -p "$BIN"
-  symlink_vps_cli
-  export PATH="$PATH:$BIN"
-}
-
-symlink_vps_cli(){
-  ln -fs "$VPS_CLI" "$BIN/vps-cli"
 }
 
 check_if_root(){
@@ -196,9 +182,11 @@ make_chruby_usable(){
 
 
 install_sops(){
-  export GOPATH="$HOME/go"
-  export PATH="$PATH:$GOPATH/bin"
-  
+  if [[ -z "$GOPATH" ]]; then
+    export GOPATH="$HOME/go"
+    export PATH="$PATH:$GOPATH/bin"
+  fi
+
   go get -u go.mozilla.org/sops/cmd/sops
 }
 
