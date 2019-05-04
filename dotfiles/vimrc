@@ -1,3 +1,4 @@
+set encoding=utf-8
 set nocompatible    "run in vim mode
 " Will install plugins if not detected
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
@@ -18,6 +19,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
   Plug 'haishanh/night-owl.vim'
+  Plug 'jaywilliams/vim-vwilight'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
@@ -30,6 +32,9 @@ call plug#begin("~/.vim/plugged")
   Plug 'tpope/vim-ragtag'
 
   Plug 'ngmy/vim-rubocop'
+
+  " runs your testing suite
+  Plug 'janko-m/vim-test'
 
   " Snippets are separated from the engine. Add this if you want them:
   " Track the engine.
@@ -154,7 +159,9 @@ set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 map <Leader>s :split<CR>
 
 " netrw explore
-map <C-e> :Explore<CR>
+let g:netrw_winsize=30
+map <C-e> :Lexplore<CR>
+map <Leader>e :Lexplore<CR>
 
 " editing vim
 map <Leader>ev :split $HOME/.vimrc<CR>
@@ -176,6 +183,7 @@ nmap <Leader>ra :RuboCop -a<CR>
 
 " ragtag recommended keybinding
 inoremap <M-o> <Esc>o 
+
 inoremap <C-j> <Down>
 let g:ragtag_global_maps = 1 "available globally
 
@@ -185,11 +193,21 @@ inoremap <c-x><c-k> <c-k><c-x>
 " tag completion
 inoremap <c-x><c-]> <c-]>
 
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
 " Plug commands
 map <Leader>pi :PlugInstall<CR>
 map <Leader>pu :PlugUpdate<CR>
 map <Leader>pru :UpdateRemotePlugins<CR>
 map <Leader>pc :PlugClean<CR>
+
+" vim-test mappings
+nnoremap <silent> <Leader>tf :TestFile<CR>
+nnoremap <silent> <Leader>tn :TestNearest<CR>
+nnoremap <silent> <Leader>tl :TestLast<CR>
+nnoremap <silent> <Leader>ts :TestSuite<CR>
+nnoremap <silent> <Leader>tv :TestVisit<CR>
 
 " Ultisnips config
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
@@ -212,3 +230,12 @@ function! RenameFile()
 endfunction
 
 map <Leader>rn :call RenameFile()<cr>
+
+function! Touch()
+  let current_dir = expand('%:h')
+  let file_name = input('New file name: ', current_dir . '/')
+
+  exec ':e ' . file_name
+endfunction
+
+map <Leader>n :call Touch()<CR>
