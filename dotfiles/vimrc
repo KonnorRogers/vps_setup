@@ -18,10 +18,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'romainl/Apprentice'
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
-  Plug 'twerth/ir_black'
-  Plug 'nanotech/jellybeans.vim'
-  Plug 'mhinz/vim-janah'
-  Plug 'zeis/vim-kolor'
+  Plug 'tpope/vim-vividchalk'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
