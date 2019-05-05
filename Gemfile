@@ -2,4 +2,4 @@
 
 source 'https://rubygems.org'
 
-gem 'vps_cli', github: 'ParamagicDev/vps_cli'
+gem 'vps_cli', '~> 0.1.1'
