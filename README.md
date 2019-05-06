@@ -1,6 +1,3 @@
-* Documentation can be found here, it is fairly incomplete but most methods are documented here: [VpsCli
-documentation](https://www.rubydoc.info/github/paramagicdev/vps_cli/master)
-
 # Purpose
 * To be able to spin up multiple development environments without having to reconfigure all the time
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent.
