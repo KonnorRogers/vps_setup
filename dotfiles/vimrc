@@ -14,7 +14,7 @@ endif
 
     
 call plug#begin("~/.vim/plugged")
-  " colorscheme
+  " Colorschemes
   Plug 'romainl/Apprentice'
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
@@ -33,6 +33,9 @@ call plug#begin("~/.vim/plugged")
   Plug 'tpope/vim-ragtag'
 
   Plug 'ngmy/vim-rubocop'
+
+  " runs your testing suite
+  Plug 'janko-m/vim-test'
 
   " Snippets are separated from the engine. Add this if you want them:
   " Track the engine.
@@ -144,11 +147,8 @@ autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
-set background=dark
 let g:quantum_black=1
-
-let ayucolor="light"
-colorscheme ayu
+colorscheme PaperColor
 
 " use default
 set laststatus=2
@@ -202,6 +202,13 @@ map <Leader>pu :PlugUpdate<CR>
 map <Leader>pru :UpdateRemotePlugins<CR>
 map <Leader>pc :PlugClean<CR>
 
+" vim-test mappings
+nnoremap <silent> <Leader>tf :TestFile<CR>
+nnoremap <silent> <Leader>tn :TestNearest<CR>
+nnoremap <silent> <Leader>tl :TestLast<CR>
+nnoremap <silent> <Leader>ts :TestSuite<CR>
+nnoremap <silent> <Leader>tv :TestVisit<CR>
+
 " Ultisnips config
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
 
@@ -232,3 +239,6 @@ function! Touch()
 endfunction
 
 map <Leader>n :call Touch()<CR>
+
+map <Leader>bl :set background=light<CR>
+map <Leader>bd :set background=dark<CR>
