@@ -1,6 +1,3 @@
-* Documentation can be found here, it is fairly incomplete but most methods are documented here: [VpsCli
-documentation](https://www.rubydoc.info/github/paramagicdev/vps_cli/master)
-
 # Purpose
 * To be able to spin up multiple development environments without having to reconfigure all the time
 * ### <strong>Note:</strong> This is a fragile process and currently is OS dependent.
@@ -65,7 +62,7 @@ adduser <username> sudo
 
 ```bash
 git clone https://github.com/ParamagicDev/vps_cli.git ~/vps_cli
-cd ~/vps_cli
+cd ~/vps_setup
 ./setup.bash
 ```
 
@@ -102,6 +99,7 @@ server, or you can simply create a new one everytime.
 all the ways I like everything setup etc.
 
 ```bash
+vps-cli init
 vps-cli fresh_install
 ```
 
@@ -203,34 +201,12 @@ ngrok http <localport>
 ngrok http 3000 
 ```
 
-* This will bring up a CLI to connect to for example localhost:3000 on the web  
-
-# Testing
-
-* Import the gpg dev key, I just took the one from [The mozilla SOPS github](https://github.com/mozilla/sops#test-with-the-dev-pgp-key) and
-added it into this repo for testing purposes.
-
-```bash
-gpg --import /path/to/vps_cli/sops_testing_key.asc
-```
-
-* The test suite will fail if the testing key is not present, this is to be expected
-```bash
-rake test
-```
-
-
-* if you have not run the setup script you can do the following:
-
-```bash
-cd exe
-./vps-cli [COMMAND] [OPTIONS]
-```
+* This will bring up a CLI to connect to for example localhost:3000 on the web
 
 # Example commands
 
 * The following command will copy all files to $HOME directory from
-</path/to/vps_cli/config_files>. With the --interactive flag, it will
+</path/to/vps_setup/[dotfiles, misc_files]>. With the --interactive flag, it will
 prompt the user before overwriting any files.
 
 ```bash
@@ -238,7 +214,7 @@ vps-cli copy
 ```
 
 * The following command will pull files from the local directory ($HOME)
-to </path/to/vps_cli/config_files>
+to </path/to/vps_setup/[dotfiles, misc_files]>
 
 ```bash
 vps-cli pull
