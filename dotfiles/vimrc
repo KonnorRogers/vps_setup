@@ -18,8 +18,9 @@ call plug#begin("~/.vim/plugged")
   Plug 'romainl/Apprentice'
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
-  Plug 'tpope/vim-vividchalk'
-
+  Plug 'twerth/ir_black'
+  Plug 'ayu-theme/ayu-vim'
+  Plug 'nlknguyen/papercolor-theme'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
@@ -148,7 +149,9 @@ autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
 let g:quantum_black=1
-colorscheme apprentice
+
+let ayucolor="light"
+colorscheme ayu
 
 " use default
 set laststatus=2
