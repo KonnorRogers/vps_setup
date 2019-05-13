@@ -148,8 +148,17 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 let g:quantum_black=1
-set background=light
-colorscheme PaperColor
+
+" Between 7am & 8pm use a light colorscheme
+if strftime("%H") > 7 && strftime("%H") < 20
+  set background=light
+  colorscheme PaperColor
+
+" from 8pm to 7am use a dark colorscheme
+else
+  set background=dark
+  colorscheme apprentice
+endif
 
 " use default
 set laststatus=2
