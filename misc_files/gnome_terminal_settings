@@ -5,7 +5,7 @@ schema-version=uint32 3
 new-tab='<Primary><Shift><Alt>t'
 
 [legacy/profiles:]
-list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1']
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69']
 default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
 
 [legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
@@ -29,25 +29,27 @@ bold-is-bright=true
 cursor-blink-mode='off'
 audible-bell=false
 
-[legacy/profiles:/:ef99b5e1-e056-4237-acb8-b3868255d9f2]
+[legacy/profiles:/:ab4797fe-4f5a-41dc-b3e9-f79dc2593f69]
 use-theme-transparency=false
 use-custom-command=false
-bold-color-same-as-fg=true
 text-blink-mode='never'
+bold-color-same-as-fg=true
 login-shell=true
-background-color='rgb(0,0,0)'
+background-color='rgb(10,15,20)'
 cursor-shape='underline'
-visible-name='ir_black'
+cursor-colors-set=false
 default-size-columns=80
 use-theme-colors=false
 font='DejaVuSansMono Nerd Font Mono 13'
 default-size-rows=26
 cjk-utf8-ambiguous-width='narrow'
 use-system-font=false
-palette=['rgb(0,0,0)', 'rgb(255,108,96)', 'rgb(168,255,96)', 'rgb(255,255,182)', 'rgb(150,203,254)', 'rgb(255,115,253)', 'rgb(198,197,254)', 'rgb(181,179,170)', 'rgb(108,108,102)', 'rgb(255,135,0)', 'rgb(168,255,96)', 'rgb(255,255,182)', 'rgb(150,203,254)', 'rgb(255,115,253)', 'rgb(198,197,254)', 'rgb(253,251,238)']
-foreground-color='rgb(181,179,170)'
-cursor-blink-mode='off'
+palette=['rgb(10,15,20)', 'rgb(195,48,39)', 'rgb(38,169,139)', 'rgb(237,181,75)', 'rgb(25,84,101)', 'rgb(78,81,101)', 'rgb(51,133,157)', 'rgb(152,209,206)', 'rgb(16,21,27)', 'rgb(210,105,57)', 'rgb(8,31,45)', 'rgb(36,83,97)', 'rgb(9,55,72)', 'rgb(136,139,165)', 'rgb(89,156,170)', 'rgb(211,235,233)']
+visible-name='gotham'
+foreground-color='rgb(152,209,206)'
+bold-is-bright=true
 audible-bell=false
+cursor-blink-mode='off'
 
 [legacy/profiles:/:efaab63f-0da0-4593-84c7-69aae156d9a1]
 use-theme-transparency=false
@@ -66,6 +68,26 @@ cjk-utf8-ambiguous-width='narrow'
 use-system-font=false
 palette=['rgb(237,237,237)', 'rgb(215,0,95)', 'rgb(113,140,0)', 'rgb(215,95,0)', 'rgb(66,113,174)', 'rgb(137,89,168)', 'rgb(62,153,159)', 'rgb(77,77,76)', 'rgb(150,150,148)', 'rgb(215,0,95)', 'rgb(113,140,0)', 'rgb(215,95,0)', 'rgb(66,113,174)', 'rgb(137,89,168)', 'rgb(62,153,159)', 'rgb(245,245,245)']
 foreground-color='rgb(77,77,76)'
+cursor-blink-mode='off'
+audible-bell=false
+
+[legacy/profiles:/:ef99b5e1-e056-4237-acb8-b3868255d9f2]
+use-theme-transparency=false
+use-custom-command=false
+bold-color-same-as-fg=true
+text-blink-mode='never'
+login-shell=true
+background-color='rgb(0,0,0)'
+cursor-shape='underline'
+visible-name='ir_black'
+default-size-columns=80
+use-theme-colors=false
+font='DejaVuSansMono Nerd Font Mono 13'
+default-size-rows=26
+cjk-utf8-ambiguous-width='narrow'
+use-system-font=false
+palette=['rgb(0,0,0)', 'rgb(255,108,96)', 'rgb(168,255,96)', 'rgb(255,255,182)', 'rgb(150,203,254)', 'rgb(255,115,253)', 'rgb(198,197,254)', 'rgb(181,179,170)', 'rgb(108,108,102)', 'rgb(255,135,0)', 'rgb(168,255,96)', 'rgb(255,255,182)', 'rgb(150,203,254)', 'rgb(255,115,253)', 'rgb(198,197,254)', 'rgb(253,251,238)']
+foreground-color='rgb(181,179,170)'
 cursor-blink-mode='off'
 audible-bell=false
 

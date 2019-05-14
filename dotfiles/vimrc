@@ -19,8 +19,8 @@ call plug#begin("~/.vim/plugged")
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
   Plug 'twerth/ir_black'
-  Plug 'ayu-theme/ayu-vim'
   Plug 'nlknguyen/papercolor-theme'
+  Plug 'whatyouhide/vim-gotham'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
@@ -157,6 +157,7 @@ if strftime("%H") > 7 && strftime("%H") < 20
 " from 8pm to 7am use a dark colorscheme
 else
   set background=dark
+  " colorscheme gotham
   colorscheme apprentice
 endif
 
