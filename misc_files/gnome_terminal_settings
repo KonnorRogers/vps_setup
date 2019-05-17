@@ -5,29 +5,8 @@ schema-version=uint32 3
 new-tab='<Primary><Shift><Alt>t'
 
 [legacy/profiles:]
-list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69']
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae']
 default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
-
-[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
-use-theme-transparency=false
-use-custom-command=false
-text-blink-mode='never'
-bold-color-same-as-fg=true
-login-shell=true
-background-color='rgb(38,38,38)'
-cursor-shape='underline'
-visible-name='apprentice'
-default-size-columns=80
-use-theme-colors=false
-font='DejaVuSansMono Nerd Font Mono 13'
-default-size-rows=26
-cjk-utf8-ambiguous-width='narrow'
-use-system-font=false
-palette=['rgb(28,28,28)', 'rgb(175,95,95)', 'rgb(95,135,95)', 'rgb(135,135,95)', 'rgb(95,135,175)', 'rgb(95,95,135)', 'rgb(95,135,135)', 'rgb(108,108,108)', 'rgb(68,68,68)', 'rgb(255,135,0)', 'rgb(135,175,135)', 'rgb(255,255,175)', 'rgb(143,175,215)', 'rgb(135,135,175)', 'rgb(95,175,175)', 'rgb(255,255,255)']
-foreground-color='rgb(188,188,188)'
-bold-is-bright=true
-cursor-blink-mode='off'
-audible-bell=false
 
 [legacy/profiles:/:ab4797fe-4f5a-41dc-b3e9-f79dc2593f69]
 use-theme-transparency=false
@@ -50,6 +29,27 @@ foreground-color='rgb(152,209,206)'
 bold-is-bright=true
 audible-bell=false
 cursor-blink-mode='off'
+
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+use-theme-transparency=false
+use-custom-command=false
+text-blink-mode='never'
+bold-color-same-as-fg=true
+login-shell=true
+background-color='rgb(38,38,38)'
+cursor-shape='underline'
+visible-name='apprentice'
+default-size-columns=80
+use-theme-colors=false
+font='DejaVuSansMono Nerd Font Mono 13'
+default-size-rows=26
+cjk-utf8-ambiguous-width='narrow'
+use-system-font=false
+palette=['rgb(28,28,28)', 'rgb(175,95,95)', 'rgb(95,135,95)', 'rgb(135,135,95)', 'rgb(95,135,175)', 'rgb(95,95,135)', 'rgb(95,135,135)', 'rgb(108,108,108)', 'rgb(68,68,68)', 'rgb(255,135,0)', 'rgb(135,175,135)', 'rgb(255,255,175)', 'rgb(143,175,215)', 'rgb(135,135,175)', 'rgb(95,175,175)', 'rgb(255,255,255)']
+foreground-color='rgb(188,188,188)'
+bold-is-bright=true
+cursor-blink-mode='off'
+audible-bell=false
 
 [legacy/profiles:/:efaab63f-0da0-4593-84c7-69aae156d9a1]
 use-theme-transparency=false
@@ -90,6 +90,28 @@ palette=['rgb(0,0,0)', 'rgb(255,108,96)', 'rgb(168,255,96)', 'rgb(255,255,182)',
 foreground-color='rgb(181,179,170)'
 cursor-blink-mode='off'
 audible-bell=false
+
+[legacy/profiles:/:12c13488-f309-42b1-8215-3dedca9295ae]
+use-theme-transparency=false
+use-custom-command=false
+text-blink-mode='never'
+bold-color-same-as-fg=true
+login-shell=true
+background-color='rgb(32,42,49)'
+cursor-shape='underline'
+cursor-colors-set=false
+default-size-columns=80
+use-theme-colors=false
+font='DejaVuSansMono Nerd Font Mono 13'
+default-size-rows=26
+cjk-utf8-ambiguous-width='narrow'
+use-system-font=false
+palette=['rgb(32,42,49)', 'rgb(193,123,141)', 'rgb(125,151,97)', 'rgb(178,135,97)', 'rgb(84,150,189)', 'rgb(155,133,187)', 'rgb(69,157,144)', 'rgb(171,176,192)', 'rgb(137,143,158)', 'rgb(193,123,141)', 'rgb(125,151,97)', 'rgb(178,135,97)', 'rgb(84,150,189)', 'rgb(155,133,187)', 'rgb(69,157,144)', 'rgb(197,203,219)']
+visible-name='cosmic_latte-dark'
+foreground-color='rgb(171,176,192)'
+bold-is-bright=true
+audible-bell=false
+cursor-blink-mode='off'
 
 [legacy/profiles:/:e38213b0-26e4-4f04-898a-c14f65a7dace]
 use-theme-transparency=false
@@ -135,6 +157,27 @@ foreground-color='rgb(188,190,192)'
 bold-is-bright=true
 audible-bell=false
 cursor-blink-mode='off'
+
+[legacy/profiles:/:68a3e96b-7728-424d-a0f0-d23f54b02486]
+use-theme-transparency=false
+use-custom-command=false
+text-blink-mode='never'
+bold-color-same-as-fg=true
+login-shell=true
+background-color='rgb(255,248,231)'
+cursor-shape='underline'
+visible-name='cosmic_latte-light'
+default-size-columns=80
+use-theme-colors=false
+font='DejaVuSansMono Nerd Font Mono 13'
+default-size-rows=26
+cjk-utf8-ambiguous-width='narrow'
+use-system-font=false
+palette=['rgb(255,248,231)', 'rgb(196,71,86)', 'rgb(31,131,50)', 'rgb(145,109,3)', 'rgb(0,127,138)', 'rgb(161,84,174)', 'rgb(0,117,201)', 'rgb(72,90,98)', 'rgb(99,117,126)', 'rgb(196,71,86)', 'rgb(31,131,50)', 'rgb(145,109,3)', 'rgb(0,117,201)', 'rgb(161,84,174)', 'rgb(0,127,138)', 'rgb(54,72,80)']
+foreground-color='rgb(72,90,98)'
+bold-is-bright=true
+cursor-blink-mode='off'
+audible-bell=false
 
 [legacy/profiles:/:0bda6551-909b-422f-8bc0-1b310bb37a13]
 use-theme-transparency=false
