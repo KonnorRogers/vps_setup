@@ -221,6 +221,8 @@ to </path/to/vps_setup/[dotfiles, misc_files]>
 vps-cli pull
 ```
 
+* For additional commands, you can simply run vps-cli
+
 * This is still a work in progress. More commands and flags will be added
 
 # Contents of credentials.yaml
