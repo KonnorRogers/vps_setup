@@ -28,6 +28,7 @@
 ```
 
 # Prerequisites
+* apt based package manager
 * have git installed
 
 ```bash
