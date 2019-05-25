@@ -121,9 +121,6 @@ set diffopt+=vertical
 " " Hit '%' on 'if' to jump to 'else'.
 runtime macros/matchit.vim 
 
-" Turn on omnicompletion
-set omnifunc=syntaxcomplete#Complete
-
 " Tags searching
 set tags=./tags
 
@@ -265,13 +262,20 @@ map <Leader>bl :set background=light<CR>
 map <Leader>bd :set background=dark<CR>
 
 
+" implement additional language servers below
 let g:LanguageClient_serverCommands = {
     \ 'ruby': ['solargraph', 'stdio'],
-    " implement additional language servers below
     \ }
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-" Or map each action separately
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+function LC_maps()
+  if has_key(g:LanguageClient_serverCommands, &filetype)
+    nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
+    nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+  endif
+endfunction
+
+autocmd FileType * call LC_maps()
+
+set completefunc=LanguageClient#complete
+
