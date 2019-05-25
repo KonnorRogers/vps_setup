@@ -41,14 +41,25 @@ call plug#begin("~/.vim/plugged")
   " Snippets are separated from the engine. Add this if you want them:
   " Track the engine.
   Plug 'SirVer/ultisnips'
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
   if has('nvim')
     "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     "linting
     Plug 'w0rp/ale'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
   endif
 call plug#end()
+
+let g:deoplete#enable_at_startup = 1
 
 let mapleader = " " "space is now \
 
@@ -252,3 +263,15 @@ map <Leader>n :call Touch()<CR>
 
 map <Leader>bl :set background=light<CR>
 map <Leader>bd :set background=dark<CR>
+
+
+let g:LanguageClient_serverCommands = {
+    \ 'ruby': ['solargraph', 'stdio'],
+    " implement additional language servers below
+    \ }
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
