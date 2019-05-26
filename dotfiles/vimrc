@@ -172,6 +172,12 @@ set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 " Using splits
 map <Leader>s :split<CR>
 
+" better window movement
+map <C-w>h <C-h>
+map <C-w>l <C-l>
+map <C-w>k <C-k>
+map <C-w>j <C-j>
+
 " netrw explore
 map <C-e> :Lexplore<CR>
 map <Leader>e :Lexplore<CR>
