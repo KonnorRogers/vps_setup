@@ -41,6 +41,8 @@ call plug#begin("~/.vim/plugged")
   " Snippets are separated from the engine. Add this if you want them:
   " Track the engine.
   Plug 'SirVer/ultisnips'
+
+  " Add language server protocol support
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',

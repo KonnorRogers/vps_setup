@@ -53,3 +53,13 @@ alias rgmi='rails generate migration'
 
 # misc
 alias tag-gen="ctags -R --tag-relative -f .git/tags"
+
+# vps-cli
+alias v='vps-cli'
+alias vgp='vps-cli git_pull'
+alias vpp='vps-cli pull && vps-cli git_push'
+alias vc='vps-cli copy'
+alias vu='vps-cli update'
+alias vfi='vps-cli fresh_install'
+alias vl='vps-cli login'
+
