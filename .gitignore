@@ -4,7 +4,6 @@ tests/logs
 
 # Bundler files
 \.bundle
-Gemfile.lock
 
 # Temp files
 /.tmp
