@@ -261,6 +261,7 @@ map <Leader>bd :set background=dark<CR>
 
 " implement additional language servers below
 " currently implements bash, css, html, ruby, and javascript
+let g:LanguageClient_autoStop = 0
 let g:LanguageClient_serverCommands = {
     \ 'ruby': ['solargraph', 'stdio'],
     \ 'html': ['html-language-server', '--stdio'],
