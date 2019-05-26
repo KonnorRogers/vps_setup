@@ -158,15 +158,9 @@ autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 let g:quantum_black=1
 
-" Between 7am & 8pm use a light colorscheme
-if strftime("%H") > 7 && strftime("%H") < 20
-  set background=light
-" from 8pm to 7am use a dark colorscheme
-else
-  set background=dark
-endif
+set background=dark
 
-colorscheme cosmic_latte
+colorscheme apprentice
 
 " use default
 set laststatus=2
@@ -177,7 +171,6 @@ set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 map <Leader>s :split<CR>
 
 " netrw explore
-let g:netrw_winsize=30
 map <C-e> :Lexplore<CR>
 map <Leader>e :Lexplore<CR>
 
@@ -192,8 +185,12 @@ map <Leader>wq :wq!<CR>
 " quit
 map <Leader>qq :q!<CR>
 
-"fzf mapping
+"fzf config
 map <Leader>f :FZF <Esc>
+autocmd! FileType fzf
+autocmd  FileType fzf set laststatus=0 noshowmode noruler
+      \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+" end fzf config
 
 " rubocop mapping
 nmap <Leader>rr :RuboCop<CR>
@@ -263,19 +260,32 @@ map <Leader>bd :set background=dark<CR>
 
 
 " implement additional language servers below
+" currently implements bash, css, html, ruby, and javascript
 let g:LanguageClient_serverCommands = {
     \ 'ruby': ['solargraph', 'stdio'],
+    \ 'html': ['html-language-server', '--stdio'],
+    \ 'css': ['css-language-server', '--stdio'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'bash': ['bash-language-server', 'start'],
     \ }
 
-function LC_maps()
+" auto loads language server commands
+function! LC_maps()
   if has_key(g:LanguageClient_serverCommands, &filetype)
-    nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
-    nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-    nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+    nnoremap <buffer> <silent> <Leader>lh :call LanguageClient#textDocument_hover()<cr>
+    nnoremap <buffer> <silent> <Leader>ld :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <buffer> <silent> <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+
+    " finds a string in a file using fzf
+    nnoremap <buffer> <silent> <Leader>lf :call LanguageClienttextDocument_documentSymbol()
   endif
 endfunction
 
+" Automaps language client if the filetype has a language server
 autocmd FileType * call LC_maps()
 
 set completefunc=LanguageClient#complete
+
+" uses language server with vims formatting operator
+set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
