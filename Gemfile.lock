@@ -2,7 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     thor (0.20.3)
-    vps_cli (0.1.13)
+    vps_cli (0.1.16)
       thor (~> 0.20)
 
 PLATFORMS
