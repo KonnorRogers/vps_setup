@@ -173,10 +173,10 @@ set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 map <Leader>s :split<CR>
 
 " better window movement
-map <C-w>h <C-h>
-map <C-w>l <C-l>
-map <C-w>k <C-k>
-map <C-w>j <C-j>
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
 
 " netrw explore
 map <C-e> :Lexplore<CR>
@@ -297,8 +297,8 @@ endfunction
 " Automaps language client if the filetype has a language server
 autocmd FileType * call LC_maps()
 
-set completefunc=LanguageClient#complete
-set omnifunc=LanguageClient#complete
+set completefunc+=LanguageClient#complete
+set omnifunc+=LanguageClient#complete
 
 " uses language server with vims formatting operator
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
