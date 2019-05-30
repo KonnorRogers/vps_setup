@@ -66,6 +66,7 @@ alias vl='vps-cli login'
 
 # docker
 alias d='docker'
+alias db='docker build'
 alias dc='docker container'
 alias d-c='docker-compose'
 alias di='docker image'
