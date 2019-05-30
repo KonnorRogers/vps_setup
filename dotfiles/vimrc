@@ -279,6 +279,7 @@ let g:LanguageClient_serverCommands = {
     \ 'css': ['css-language-server', '--stdio'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'bash': ['bash-language-server', 'start'],
+    \ 'dockerfile': ['docker-langserver', '--stdio'],
     \ }
 
 " auto loads language server commands
@@ -297,6 +298,7 @@ endfunction
 autocmd FileType * call LC_maps()
 
 set completefunc=LanguageClient#complete
+set omnifunc=LanguageClient#complete
 
 " uses language server with vims formatting operator
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
