@@ -305,3 +305,5 @@ set omnifunc+=LanguageClient#complete
 " uses language server with vims formatting operator
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
+" map nerdtree to ctrl-n
+map <C-n> :NERDTreeToggle<CR>
