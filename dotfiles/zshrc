@@ -72,12 +72,10 @@ plugins=(
  tmux
  zsh-autosuggestions
  zsh-syntax-highlighting
- zsh-completions
  docker
  docker-compose
 )
 
-autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -140,3 +138,6 @@ source "$DOT_ZSH/aliases"
 for function in $DOT_ZSH/functions/*; do
   source $function
 done
+
+autoload -Uz compinit 
+compinit
