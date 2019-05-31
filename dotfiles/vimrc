@@ -34,6 +34,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'tpope/vim-ragtag'
 
   Plug 'ngmy/vim-rubocop'
+  Plug 'scrooloose/nerdtree'
 
   " runs your testing suite
   Plug 'janko-m/vim-test'
