@@ -72,6 +72,9 @@ plugins=(
  tmux
  zsh-autosuggestions
  zsh-syntax-highlighting
+ docker
+ docker-compose
+ docker-machine
 )
 
 source $ZSH/oh-my-zsh.sh
