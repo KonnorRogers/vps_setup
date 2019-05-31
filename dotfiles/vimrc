@@ -110,6 +110,7 @@ set relativenumber "if on line 5, line 4 will be 1 and line 6 will be 1 etc
 set guifont=DejavuSansMono\ Nerd\ Font\ 12
 set clipboard=unnamed "stupid clipboard crap
 set cursorline
+set cursorcolumn
 set linespace=3
 
 "Fixing splits to be more natural
