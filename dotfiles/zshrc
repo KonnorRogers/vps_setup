@@ -72,11 +72,12 @@ plugins=(
  tmux
  zsh-autosuggestions
  zsh-syntax-highlighting
+ zsh-completions
  docker
  docker-compose
- docker-machine
 )
 
+autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
