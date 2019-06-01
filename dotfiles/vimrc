@@ -298,9 +298,6 @@ endfunction
 " Automaps language client if the filetype has a language server
 autocmd FileType * call LC_maps()
 
-set completefunc+=LanguageClient#complete
-set omnifunc+=LanguageClient#complete
-
 " uses language server with vims formatting operator
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
