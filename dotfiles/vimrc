@@ -180,8 +180,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
 
 " netrw explore
-map <C-e> :Lexplore<CR>
-map <Leader>e :Lexplore<CR>
+map <C-e> :Explore<CR>
+map <Leader>e :Explore<CR>
 
 " editing vim
 map <Leader>ev :split $HOME/.vimrc<CR>
