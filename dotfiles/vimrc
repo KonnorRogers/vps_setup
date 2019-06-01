@@ -18,7 +18,6 @@ call plug#begin("~/.vim/plugged")
   Plug 'romainl/Apprentice'
   Plug 'tyrannicaltoucan/vim-quantum'
   Plug 'arcticicestudio/nord-vim'
-  Plug 'twerth/ir_black'
   Plug 'nlknguyen/papercolor-theme'
   Plug 'whatyouhide/vim-gotham'
   Plug 'nightsense/cosmic_latte'
