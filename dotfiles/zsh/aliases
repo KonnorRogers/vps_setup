@@ -59,6 +59,7 @@ alias tag-gen="ctags -R --tag-relative -f .git/tags"
 alias v='vps-cli'
 alias vgp='vps-cli git_pull'
 alias vpp='vps-cli pull && vps-cli git_push'
+alias vgpc='vps-cli git_pull && vps-cli copy'
 alias vc='vps-cli copy'
 alias vu='vps-cli update'
 alias vfi='vps-cli fresh_install'
