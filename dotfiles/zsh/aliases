@@ -54,6 +54,7 @@ alias rgmi='rails generate migration'
 
 # misc
 alias tag-gen="ctags -R --tag-relative -f .git/tags"
+alias ownthis='sudo chown -R $USER:$USER .'
 
 # vps-cli
 alias v='vps-cli'
