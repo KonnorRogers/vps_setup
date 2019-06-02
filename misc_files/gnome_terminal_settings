@@ -7,8 +7,30 @@ theme-variant='dark'
 new-tab='<Primary><Shift><Alt>t'
 
 [legacy/profiles:]
-list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae']
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae', 'f721a9d8-f316-419c-8bb0-430c256bb665']
 default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+
+[legacy/profiles:/:f721a9d8-f316-419c-8bb0-430c256bb665]
+use-theme-transparency=false
+use-custom-command=false
+bold-color='#6E46A4'
+bold-color-same-as-fg=false
+login-shell=true
+text-blink-mode='never'
+background-color='#282A36'
+cursor-shape='underline'
+visible-name='dracula'
+default-size-columns=80
+use-theme-colors=false
+font='DejaVuSansMono Nerd Font Mono 14'
+default-size-rows=26
+cjk-utf8-ambiguous-width='narrow'
+use-system-font=false
+palette=['#262626', '#E356A7', '#42E66C', '#E4F34A', '#9B6BDF', '#E64747', '#75D7EC', '#EFA554', '#7A7A7A', '#FF79C6', '#50FA7B', '#F1FA8C', '#BD93F9', '#FF5555', '#8BE9FD', '#FFB86C']
+foreground-color='#F8F8F2'
+bold-is-bright=true
+cursor-blink-mode='off'
+audible-bell=false
 
 [legacy/profiles:/:ab4797fe-4f5a-41dc-b3e9-f79dc2593f69]
 use-theme-transparency=false
