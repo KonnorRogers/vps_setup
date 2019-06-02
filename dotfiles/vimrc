@@ -16,12 +16,7 @@ endif
 call plug#begin("~/.vim/plugged")
   " Colorschemes
   Plug 'romainl/Apprentice'
-  Plug 'tyrannicaltoucan/vim-quantum'
-  Plug 'arcticicestudio/nord-vim'
-  Plug 'nlknguyen/papercolor-theme'
-  Plug 'whatyouhide/vim-gotham'
   Plug 'nightsense/cosmic_latte'
-  Plug 'dracula/vim'
 
   "tpope plugins
   Plug 'vim-ruby/vim-ruby'
@@ -161,7 +156,7 @@ let g:quantum_black=1
 
 set background=dark
 
-colorscheme dracula
+colorscheme apprentice
 
 " use default
 set laststatus=2
@@ -296,7 +291,7 @@ autocmd FileType * call LC_maps()
 " uses language server with vims formatting operator
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
 
-nnoremap j gjzz
-nnoremap k gkzz
+nnoremap j gj
+nnoremap k gk
 
 map <C-n> :NERDTreeToggle<CR>
