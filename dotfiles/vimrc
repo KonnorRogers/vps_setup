@@ -17,8 +17,8 @@ call plug#begin("~/.vim/plugged")
   " Colorschemes
   Plug 'romainl/Apprentice'
   Plug 'nightsense/cosmic_latte'
+  Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 
-  "tpope plugins
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-bundler'
@@ -31,12 +31,8 @@ call plug#begin("~/.vim/plugged")
   Plug 'scrooloose/nerdtree'
   Plug 'ngmy/vim-rubocop'
   Plug 'ap/vim-css-color'
-  " runs your testing suite
   Plug 'janko-m/vim-test'
-  " Snippets are separated from the engine. Add this if you want them:
-  " Track the engine.
   Plug 'SirVer/ultisnips'
-  " Add language server protocol support
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
@@ -44,7 +40,6 @@ call plug#begin("~/.vim/plugged")
   if has('nvim')
     "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    "linting
     Plug 'w0rp/ale'
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   else
@@ -87,6 +82,7 @@ set nohls           "don't highlight the previous search term
 set number          "turn on line numbering
 set wrap            "turn on visual word wrapping
 set linebreak       "only break lines on 'breakat' characters
+set foldmethod=indent
 set nofoldenable
 syntax on           "turn on syntax highlighting
 set nobackup        "no backups
@@ -156,7 +152,7 @@ let g:quantum_black=1
 
 set background=dark
 
-colorscheme apprentice
+colorscheme challenger_deep
 
 " use default
 set laststatus=2
