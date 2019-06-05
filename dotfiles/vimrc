@@ -31,22 +31,14 @@ call plug#begin("~/.vim/plugged")
   Plug 'scrooloose/nerdtree'
   Plug 'ngmy/vim-rubocop'
   Plug 'ap/vim-css-color'
-  Plug 'janko-m/vim-test'
   Plug 'SirVer/ultisnips'
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-  if has('nvim')
-    "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'w0rp/ale'
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
+  "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'w0rp/ale'
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
@@ -286,6 +278,7 @@ autocmd FileType * call LC_maps()
 
 " uses language server with vims formatting operator
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
+set omnifunc=LanguageClient#Complete
 
 nnoremap j gj
 nnoremap k gk
