@@ -144,7 +144,7 @@ let g:quantum_black=1
 
 set background=dark
 
-colorscheme challenger_deep
+colorscheme cosmic_latte
 
 " use default
 set laststatus=2
@@ -278,7 +278,8 @@ autocmd FileType * call LC_maps()
 
 " uses language server with vims formatting operator
 set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
-set omnifunc=LanguageClient#Complete
+set omnifunc=syntaxcomplete#Complete
+set completefunc=LanguageClient#complete
 
 nnoremap j gj
 nnoremap k gk
