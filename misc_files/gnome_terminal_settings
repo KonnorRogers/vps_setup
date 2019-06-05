@@ -7,7 +7,7 @@ theme-variant='dark'
 new-tab='<Primary><Shift><Alt>t'
 
 [legacy/profiles:]
-list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae', 'f721a9d8-f316-419c-8bb0-430c256bb665']
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae', 'f721a9d8-f316-419c-8bb0-430c256bb665', '35ab3b6d-1ef8-4b87-b5c6-963c5d458c19']
 default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
 
 [legacy/profiles:/:f721a9d8-f316-419c-8bb0-430c256bb665]
@@ -202,6 +202,29 @@ foreground-color='rgb(72,90,98)'
 bold-is-bright=true
 cursor-blink-mode='off'
 audible-bell=false
+
+[legacy/profiles:/:35ab3b6d-1ef8-4b87-b5c6-963c5d458c19]
+use-theme-transparency=false
+use-custom-command=false
+text-blink-mode='never'
+bold-color-same-as-fg=true
+cursor-foreground-color='rgb(251,252,252)'
+login-shell=true
+background-color='rgb(30,28,49)'
+cursor-shape='underline'
+cursor-colors-set=true
+default-size-columns=80
+use-theme-colors=false
+font='DejaVuSansMono Nerd Font Mono 14'
+default-size-rows=26
+cjk-utf8-ambiguous-width='narrow'
+use-system-font=false
+palette=['rgb(86,85,117)', 'rgb(255,128,128)', 'rgb(146,255,164)', 'rgb(255,233,170)', 'rgb(145,221,255)', 'rgb(201,145,225)', 'rgb(170,255,228)', 'rgb(203,227,231)', 'rgb(16,14,35)', 'rgb(255,84,88)', 'rgb(98,209,150)', 'rgb(255,179,120)', 'rgb(101,178,255)', 'rgb(144,108,255)', 'rgb(99,242,241)', 'rgb(166,179,204)']
+visible-name='challenger_deep'
+foreground-color='rgb(203,227,231)'
+bold-is-bright=true
+audible-bell=false
+cursor-blink-mode='off'
 
 [legacy/profiles:/:0bda6551-909b-422f-8bc0-1b310bb37a13]
 use-theme-transparency=false
