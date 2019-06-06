@@ -17,7 +17,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'romainl/Apprentice'
   Plug 'nightsense/cosmic_latte'
   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-  Plug 'trevordmiller/nova-vim'
+  Plug 'dracula/vim'
 
   " Syntax highlighting
   Plug 'sheerun/vim-polyglot'
