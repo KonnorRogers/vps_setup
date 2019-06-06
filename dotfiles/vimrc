@@ -12,12 +12,15 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-    
 call plug#begin("~/.vim/plugged")
   " Colorschemes
   Plug 'romainl/Apprentice'
   Plug 'nightsense/cosmic_latte'
   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+  Plug 'trevordmiller/nova-vim'
+
+  " Syntax highlighting
+  Plug 'sheerun/vim-polyglot'
 
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-fugitive'
@@ -67,7 +70,7 @@ set numberwidth=5
 
 "Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
-
+  
 set showmatch       "show matching brackets
 set ruler           "show cursor position at all times
 set nohls           "don't highlight the previous search term
@@ -80,18 +83,17 @@ syntax on           "turn on syntax highlighting
 set nobackup        "no backups
 set nowritebackup   "no backup file while editing
 set noswapfile      "no creation of swap files
-set noundofile      "prevents extra files from being created
 filetype plugin indent on
 set backspace=indent,eol,start "fixes backspace in vim
 set wildmenu
+set showcmd
+set history=50
 set incsearch "incremental searching
 set hidden
 set lazyredraw "Fixes files at the end of macros
 set relativenumber "if on line 5, line 4 will be 1 and line 6 will be 1 etc
-set guifont=DejavuSansMono\ Nerd\ Font\ 12
+set guifont=DejavuSansMono\ Nerd\ Font\ 14
 set clipboard=unnamed "stupid clipboard crap
-set cursorline
-set cursorcolumn
 set linespace=3
 
 "Fixing splits to be more natural
@@ -140,11 +142,8 @@ autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
-let g:quantum_black=1
-
 set background=dark
-
-colorscheme cosmic_latte
+colorscheme challenger_deep
 
 " use default
 set laststatus=2
@@ -155,10 +154,10 @@ set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 map <Leader>s :split<CR>
 
 " better window movement
-nnoremap <Leader>h <C-w>h
-nnoremap <Leader>l <C-w>l
-nnoremap <Leader>k <C-w>k
-nnoremap <Leader>j <C-w>j
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
 
 " editing vim
 map <Leader>ev :split $HOME/.vimrc<CR>
