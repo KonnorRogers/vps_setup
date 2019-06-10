@@ -142,7 +142,7 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
-colorscheme challenger_deep
+colorscheme dracula
 
 " use default
 set laststatus=2
