@@ -19,9 +19,6 @@ call plug#begin("~/.vim/plugged")
   Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
   Plug 'dracula/vim'
 
-  " Syntax highlighting
-  Plug 'sheerun/vim-polyglot'
-
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-bundler'
@@ -142,7 +139,7 @@ autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
-colorscheme dracula
+colorscheme apprentice
 
 " use default
 set laststatus=2
