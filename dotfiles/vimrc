@@ -13,9 +13,13 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin("~/.vim/plugged")
-  " Colorschemes
-  Plug 'romainl/Apprentice'
-  Plug 'nightsense/cosmic_latte'
+  if has('nvim')
+    Plug 'romainl/Apprentice', { 'branch': 'fancylines-and-neovim' }
+  else
+    Plug 'romainl/Apprentice'
+  endif
+
+  Plug 'dracula/vim'
 
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-fugitive'
