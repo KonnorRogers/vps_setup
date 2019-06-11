@@ -16,8 +16,6 @@ call plug#begin("~/.vim/plugged")
   " Colorschemes
   Plug 'romainl/Apprentice'
   Plug 'nightsense/cosmic_latte'
-  Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-  Plug 'dracula/vim'
 
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-fugitive'
