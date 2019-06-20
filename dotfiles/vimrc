@@ -36,8 +36,16 @@ call plug#begin("~/.vim/plugged")
   "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'w0rp/ale'
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
 call plug#end()
 
+let g:deoplete#enable_at_startup = 1
 let mapleader = " " "space is now \
 
 set autowrite
@@ -105,6 +113,7 @@ set tags=./tags
 
 if has('nvim') || has('termguicolors')
   set termguicolors
+  set t_Co=256
 endif
 
 if has("autocmd")
