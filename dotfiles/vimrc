@@ -146,7 +146,7 @@ autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
 let g:quantum_black = 1
-colorscheme quantum
+colorscheme railscasts
 
 " use default
 set laststatus=2
