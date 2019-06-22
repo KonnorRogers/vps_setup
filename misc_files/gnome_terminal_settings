@@ -71,8 +71,8 @@ cursor-blink-mode='off'
 audible-bell=false
 
 [legacy/profiles:]
-default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
-list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae', 'f721a9d8-f316-419c-8bb0-430c256bb665', '35ab3b6d-1ef8-4b87-b5c6-963c5d458c19', '278ec1e0-17d6-4abe-90e3-b520282256fd']
+default='5bed956d-581c-4f43-b993-8c6ea50f19bd'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae', 'f721a9d8-f316-419c-8bb0-430c256bb665', '35ab3b6d-1ef8-4b87-b5c6-963c5d458c19', '278ec1e0-17d6-4abe-90e3-b520282256fd', '5bed956d-581c-4f43-b993-8c6ea50f19bd']
 
 [legacy/profiles:/:7f232c7e-e785-4e40-88aa-a9e585ee1f27]
 text-blink-mode='never'
@@ -134,13 +134,6 @@ bold-is-bright=true
 cursor-blink-mode='off'
 audible-bell=false
 
-[legacy/profiles:/nova]
-background-color='#3C3C4C4C5555'
-foreground-color='#C5C5D4D4DDDD'
-use-theme-colors=false
-bold-color-same-as-fg=true
-palette=['rgb(60, 76, 85)', 'rgb(223, 140, 140)', 'rgb(168, 206, 147)', 'rgb(218, 218, 147)', 'rgb(131, 175, 229)', 'rgb(154, 147, 225)', 'rgb(127, 193, 202)', 'rgb(197, 212, 221)', 'rgb(137, 155, 166)', 'rgb(242, 195, 143)', 'rgb(168, 206, 147)', 'rgb(218, 218, 147)', 'rgb(131, 175, 229)', 'rgb(209, 142, 194)', 'rgb(127, 193, 202)', 'rgb(230, 238, 243)']
-
 [legacy/profiles:/:ab4797fe-4f5a-41dc-b3e9-f79dc2593f69]
 use-theme-transparency=false
 use-custom-command=false
@@ -162,6 +155,32 @@ foreground-color='rgb(152,209,206)'
 bold-is-bright=true
 audible-bell=false
 cursor-blink-mode='off'
+
+[legacy/profiles:/:5bed956d-581c-4f43-b993-8c6ea50f19bd]
+use-theme-transparency=false
+use-custom-command=false
+bold-color='#e6e1dc'
+bold-color-same-as-fg=true
+cursor-foreground-color='#2b2b2b'
+login-shell=true
+visible-name='Base 16 Railscasts 256'
+text-blink-mode='never'
+background-color='rgb(18,18,18)'
+cursor-shape='underline'
+cursor-colors-set=true
+default-size-columns=80
+use-theme-background=false
+font='DejaVuSansMono Nerd Font Mono 14'
+use-theme-colors=false
+default-size-rows=26
+cjk-utf8-ambiguous-width='narrow'
+cursor-background-color='#e6e1dc'
+palette=['#2b2b2b', '#da4939', '#a5c261', '#ffc66d', '#6d9cbe', '#b6b3eb', '#519f50', '#e6e1dc', '#5a647e', '#da4939', '#a5c261', '#ffc66d', '#6d9cbe', '#b6b3eb', '#519f50', '#f9f7f3']
+use-system-font=false
+foreground-color='#e6e1dc'
+bold-is-bright=true
+cursor-blink-mode='off'
+audible-bell=false
 
 [legacy/profiles:/:278ec1e0-17d6-4abe-90e3-b520282256fd]
 text-blink-mode='never'
@@ -278,3 +297,10 @@ bold-is-bright=true
 highlight-colors-set=true
 cursor-blink-mode='off'
 audible-bell=false
+
+[legacy/profiles:/nova]
+background-color='#3C3C4C4C5555'
+foreground-color='#C5C5D4D4DDDD'
+use-theme-colors=false
+bold-color-same-as-fg=true
+palette=['rgb(60, 76, 85)', 'rgb(223, 140, 140)', 'rgb(168, 206, 147)', 'rgb(218, 218, 147)', 'rgb(131, 175, 229)', 'rgb(154, 147, 225)', 'rgb(127, 193, 202)', 'rgb(197, 212, 221)', 'rgb(137, 155, 166)', 'rgb(242, 195, 143)', 'rgb(168, 206, 147)', 'rgb(218, 218, 147)', 'rgb(131, 175, 229)', 'rgb(209, 142, 194)', 'rgb(127, 193, 202)', 'rgb(230, 238, 243)']
