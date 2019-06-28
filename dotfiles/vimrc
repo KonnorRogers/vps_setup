@@ -37,6 +37,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'w0rp/ale'
   Plug 'kchmck/vim-coffee-script'
+  Plug 'jiangmiao/auto-pairs'
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   else
