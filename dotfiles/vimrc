@@ -142,13 +142,11 @@ autocmd BufWritePre *.rb :%s/\s\+$//e
 :set bs=2 "fix backspace on some consoles
 
 " set spacing on ruby files
-autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
-autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
-autocmd FileType yaml setlocal expandtab shiftwidth=2 tabstop=2
+autocmd FileType ruby,eruby,yaml setlocal expandtab shiftwidth=2 tabstop=2
 
-set background=dark
+set background=light
 let g:quantum_black = 1
-colorscheme railscasts
+colorscheme PaperColor
 
 " use default
 set laststatus=2
