@@ -13,10 +13,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin("~/.vim/plugged")
+  "Colorscheme
   Plug 'flazz/vim-colorschemes'
   Plug 'drewtempelmeyer/palenight.vim'
 
-  Plug 'vim-ruby/vim-ruby'
+  "Tpope plugins
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-bundler'
   Plug 'tpope/vim-endwise'
@@ -24,19 +25,36 @@ call plug#begin("~/.vim/plugged")
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-ragtag'
-  Plug 'mattn/emmet-vim'
-  Plug 'scrooloose/nerdtree'
+
+  "ruby
+  Plug 'vim-ruby/vim-ruby'
   Plug 'ngmy/vim-rubocop'
+
+  "html / css
+  Plug 'mattn/emmet-vim'
   Plug 'ap/vim-css-color'
-  Plug 'SirVer/ultisnips'
+  Plug 'prettier/vim-prettier'
+
+  "javascript
+  Plug 'dgraham/vim-eslint'
+
+  "file exploration
+  Plug 'scrooloose/nerdtree'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+  " Language servers / linting
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-  "PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'w0rp/ale'
+  Plug 'SirVer/ultisnips'
   Plug 'kchmck/vim-coffee-script'
+
+  "Git diff
+  Plug 'airblade/vim-gitgutter'
+
+  "Autocompletion
   Plug 'jiangmiao/auto-pairs'
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -144,9 +162,9 @@ autocmd BufWritePre *.rb :%s/\s\+$//e
 " set spacing on ruby files
 autocmd FileType ruby,eruby,yaml setlocal expandtab shiftwidth=2 tabstop=2
 
-set background=light
+set background=dark
 let g:quantum_black = 1
-colorscheme PaperColor
+colorscheme railscasts
 
 " use default
 set laststatus=2
