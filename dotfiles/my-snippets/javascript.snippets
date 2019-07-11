@@ -6,7 +6,7 @@ endsnippet
 
 snippet => "function with fat arrow" i
 ($1) => {
-
+	$2
 };
 endsnippet
 
@@ -25,4 +25,10 @@ endsnippet
 
 snippet qsa "query selector all" i
 document.querySelectorAll("${1:${VISUAL}}");
+endsnippet
+
+snippet () "method ()"
+$1($2) {
+	$3
+};
 endsnippet

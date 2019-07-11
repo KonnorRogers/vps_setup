@@ -35,9 +35,6 @@ call plug#begin("~/.vim/plugged")
   Plug 'ap/vim-css-color'
   Plug 'prettier/vim-prettier'
 
-  "javascript
-  Plug 'dgraham/vim-eslint'
-
   "file exploration
   Plug 'scrooloose/nerdtree'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
