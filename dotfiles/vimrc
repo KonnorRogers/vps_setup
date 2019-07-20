@@ -15,7 +15,6 @@ endif
 call plug#begin("~/.vim/plugged")
   "Colorscheme
   Plug 'flazz/vim-colorschemes'
-  Plug 'drewtempelmeyer/palenight.vim'
 
   "Tpope plugins
   Plug 'tpope/vim-fugitive'
