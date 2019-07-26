@@ -74,6 +74,7 @@ plugins=(
  zsh-autosuggestions
  zsh-syntax-highlighting
  yarn
+ npm
  docker
  docker-compose
  docker-machine
