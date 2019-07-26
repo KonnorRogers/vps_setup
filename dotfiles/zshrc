@@ -67,11 +67,13 @@ plugins=(
  vi-mode
  git
  chruby
+ bundler
  rails
  mosh
  tmux
  zsh-autosuggestions
  zsh-syntax-highlighting
+ yarn
  docker
  docker-compose
  docker-machine
