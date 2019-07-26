@@ -32,7 +32,7 @@ call plug#begin("~/.vim/plugged")
   "html / css
   Plug 'mattn/emmet-vim'
   Plug 'ap/vim-css-color'
-  Plug 'prettier/vim-prettier'
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
   "file exploration
   Plug 'scrooloose/nerdtree'
@@ -147,7 +147,7 @@ autocmd FileType ruby,eruby,yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
 let g:quantum_black = 1
-colorscheme railscasts
+colorscheme apprentice
 
 " use default
 set laststatus=2
