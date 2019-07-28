@@ -77,3 +77,16 @@ alias dr='docker run'
 alias d-cr='docker-compose run'
 alias dra-images='docker image rm $(docker image ls -a -q) --force'
 alias ddebug='docker-compose run --service-ports'
+
+# npm
+alias n='npm'
+alias nr='npm run'
+alias ni='npm install'
+alias nid='npm install --save-dev'
+
+# yarn
+alias y='yarn'
+alias yr='yarn run'
+alias ya='yarn add'
+alias yad='yard add -D'
+alias yag='yarn add global'
