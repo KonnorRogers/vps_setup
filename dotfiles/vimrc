@@ -14,6 +14,7 @@ endif
 
 call plug#begin("~/.vim/plugged")
   "Colorscheme
+  Plug 'arcticicestudio/nord-vim'
   Plug 'flazz/vim-colorschemes'
 
   "Tpope plugins
@@ -38,17 +39,23 @@ call plug#begin("~/.vim/plugged")
   Plug 'scrooloose/nerdtree'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
+  " Autocompletion
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
   " Language servers / linting
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
   Plug 'w0rp/ale'
+
+  " Snippets
   Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
+
   Plug 'kchmck/vim-coffee-script'
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
 let mapleader = " " "space is now \
 
 set autowrite
@@ -147,7 +154,8 @@ autocmd FileType ruby,eruby,yaml setlocal expandtab shiftwidth=2 tabstop=2
 
 set background=dark
 let g:quantum_black = 1
-colorscheme apprentice
+let g:nord_uniform_status_lines = 1
+colorscheme nord
 
 " use default
 set laststatus=2
@@ -288,3 +296,5 @@ nnoremap j gj
 nnoremap k gk
 
 map <C-n> :NERDTreeToggle<CR>
+
+let g:ale_lint_delay = 500
