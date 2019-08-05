@@ -9,7 +9,8 @@ export ZSH=$HOME/.oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="superjarin"
-# ZSH_THEME="spaceship-prompt"
+# ZSH_THEME="agnoster"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 ZSH_THEME="robbyrussell"
 # # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -117,6 +118,11 @@ alias tag-gen="ctags -R --tag-relative -f .git/tags"
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
 
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -143,6 +149,3 @@ for function in $DOT_ZSH/functions/*; do
   source $function
 done
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
