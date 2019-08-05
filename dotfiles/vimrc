@@ -39,21 +39,10 @@ call plug#begin("~/.vim/plugged")
   Plug 'scrooloose/nerdtree'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
-  " Autocompletion
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-  " Language servers / linting
-  Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
   Plug 'w0rp/ale'
 
   " Snippets
   Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
-
-  Plug 'kchmck/vim-coffee-script'
 call plug#end()
 
 let mapleader = " " "space is now \
@@ -217,13 +206,6 @@ map <Leader>pu :PlugUpdate<CR>
 map <Leader>pru :UpdateRemotePlugins<CR>
 map <Leader>pc :PlugClean<CR>
 
-" vim-test mappings
-nnoremap <silent> <Leader>tf :TestFile<CR>
-nnoremap <silent> <Leader>tn :TestNearest<CR>
-nnoremap <silent> <Leader>tl :TestLast<CR>
-nnoremap <silent> <Leader>ts :TestSuite<CR>
-nnoremap <silent> <Leader>tv :TestVisit<CR>
-
 " Ultisnips config
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
 
@@ -258,39 +240,6 @@ map <Leader>n :call Touch()<CR>
 map <Leader>bl :set background=light<CR>
 map <Leader>bd :set background=dark<CR>
 
-
-" implement additional language servers below
-" currently implements bash, css, html, ruby, and javascript
-let g:LanguageClient_autoStop = 0
-let g:LanguageClient_serverCommands = {
-    \ 'ruby': ['solargraph', 'stdio'],
-    \ 'html': ['html-language-server', '--stdio'],
-    \ 'css': ['css-language-server', '--stdio'],
-    \ 'scss': ['css-language-server', '--stdio'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'bash': ['bash-language-server', 'start'],
-    \ 'dockerfile': ['docker-langserver', '--stdio'],
-    \ }
-
-" auto loads language server commands
-function! LC_maps()
-  if has_key(g:LanguageClient_serverCommands, &filetype)
-    nnoremap <buffer> <silent> <Leader>lh :call LanguageClient#textDocument_hover()<cr>
-    nnoremap <buffer> <silent> <Leader>ld :call LanguageClient#textDocument_definition()<CR>
-    nnoremap <buffer> <silent> <Leader>lr :call LanguageClient#textDocument_rename()<CR>
-
-    " finds a string in a file using fzf
-    nnoremap <buffer> <silent> <Leader>lf :call LanguageClienttextDocument_documentSymbol()
-  endif
-endfunction
-
-" Automaps language client if the filetype has a language server
-autocmd FileType * call LC_maps()
-
-" uses language server with vims formatting operator
-set formatexpr=LanguageClient#textDocument_rangeFormatting_sync()
-set omnifunc=syntaxcomplete#Complete
-set completefunc=LanguageClient#complete
 
 nnoremap j gj
 nnoremap k gk
