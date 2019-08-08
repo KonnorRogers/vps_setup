@@ -42,10 +42,22 @@ call plug#begin("~/.vim/plugged")
   " Linting
   Plug 'w0rp/ale'
 
+  "Completion
+
   " Snippets
-  Plug 'SirVer/ultisnips'
+  Plug 'Shougo/neosnippet-snippets'
+  Plug 'Shougo/neosnippet.vim'
+
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
 call plug#end()
 
+let g:deoplete#enable_at_startup = 1 
 let mapleader = " " "space is now \
 
 set autowrite
@@ -210,12 +222,13 @@ map <Leader>pc :PlugClean<CR>
 " Ultisnips config
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets']
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsEditSplit='horizontal'
-map <Leader>us :UltiSnipsEdit <ESC>
+" Overriden by coc.nvim
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsListSnippets="<c-tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsEditSplit='horizontal'
+" map <Leader>us :UltiSnipsEdit <ESC>
 
 function! RenameFile()
   let old_name = expand('%')
@@ -248,3 +261,27 @@ nnoremap k gk
 map <C-n> :NERDTreeToggle<CR>
 
 let g:ale_lint_delay = 500
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <expr><TAB>
+"  \ pumvisible() ? "\<C-n>" :
+"  \ neosnippet#expandable_or_jumpable() ?
+"  \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.my-snippets'
