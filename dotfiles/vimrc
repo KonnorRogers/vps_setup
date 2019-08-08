@@ -39,6 +39,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'scrooloose/nerdtree'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
+  " Linting
   Plug 'w0rp/ale'
 
   " Snippets
