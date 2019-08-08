@@ -60,8 +60,8 @@ set shiftwidth=2 " On pressing tab, insert 4 spaces
 set shiftround
 
 "Make it obvious where 80 characters is
-set textwidth=80
-set colorcolumn=+1
+" set textwidth=80
+set colorcolumn=81
 
 "Numbers
 set number
