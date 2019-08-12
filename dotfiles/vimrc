@@ -287,7 +287,7 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 " let g:neosnippet#snippets_directory=$HOME.'my-snippets'
 
 
-For conceal markers.
+" For conceal markers.
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
