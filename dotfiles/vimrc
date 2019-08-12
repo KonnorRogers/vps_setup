@@ -263,7 +263,7 @@ map <C-n> :NERDTreeToggle<CR>
 let g:ale_lint_delay = 500
 
 " Dont let it override <C-y>
-let g:user_emmet_leader_key = '<C-m>'
+let g:user_emmet_leader_key = '<C-e>'
 
 " Deoplete settings
 let g:deoplete#enable_at_startup = 1
@@ -274,19 +274,19 @@ call deoplete#custom#option({
 
 
 " Expands snippets with <C-e>
-imap <expr><C-e>
+imap <expr><C-k>
       \ (pumvisible() && neosnippet#expandable()) ?
       \ "\<Plug>(neosnippet_expand)" : "\<CR>"
 
 " Expand snippets in dropdown with <C-e>
-xmap <expr><C-e>
+xmap <expr><C-k>
       \ (pumvisible() && neosnippet#expandable()) ?
       \ "\<Plug>(neosnippet_expand_target)" : "\<CR>"
 
 " Neosnippets
-imap <C-e>     <Plug>(neosnippet_expand_or_jump)
-smap <C-e>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-e>     <Plug>(neosnippet_expand_target)
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.my-snippets'
