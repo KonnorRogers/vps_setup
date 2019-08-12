@@ -20,7 +20,7 @@ call plug#begin("~/.vim/plugged")
   "Tpope plugins
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-bundler'
-  Plug 'tpope/vim-endwise'
+  " Plug 'tpope/vim-endwise'
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-surround'
@@ -43,11 +43,14 @@ call plug#begin("~/.vim/plugged")
   Plug 'w0rp/ale'
 
   " Snippets
-  Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
-
+  Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/neosnippet-snippets'
 
   " Autocompletion
+  Plug 'Shougo/neco-vim'
+  Plug 'Konfekt/FastFold'
+  Plug 'Shougo/neoinclude.vim'
+  Plug 'Shougo/context_filetype.vim'
   Plug 'deoplete-plugins/deoplete-tag'
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -221,16 +224,6 @@ map <Leader>pu :PlugUpdate<CR>
 map <Leader>pru :UpdateRemotePlugins<CR>
 map <Leader>pc :PlugClean<CR>
 
-" Ultisnips config
-" let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets', 'UltiSnips']
-
-let g:UltiSnipsExpandTrigger="<Tab>"
-let g:UltiSnipsListSnippets="<c-s>"
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-let g:UltiSnipsEditSplit='horizontal'
-map <Leader>us :UltiSnipsEdit <ESC>
-
 function! RenameFile()
   let old_name = expand('%')
   let new_name = input('New file name: ', expand('%'), 'file')
@@ -255,25 +248,49 @@ map <Leader>n :call Touch()<CR>
 map <Leader>bl :set background=light<CR>
 map <Leader>bd :set background=dark<CR>
 
-
+" Jump down sensibly
 nnoremap j gj
 nnoremap k gk
 
+" Toggle file explorer
 map <C-n> :NERDTreeToggle<CR>
 
 let g:ale_lint_delay = 500
 
+" Dont let it override <C-y>
+let g:user_emmet_leader_key = '<C-e>'
+
+" Deoplete settings
 let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option({
-      \ 'auto_complete_delay': 200,
+      \ 'auto_complete_delay': 10,
       \ 'smart_case': v:true,
       \ })
 
-" <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function() abort
-"   return deoplete#close_popup() . "\<CR>"
-" endfunction
+
+" Expands snippets with <TAB>
+imap <expr><TAB>
+      \ (neosnippet#expandable()) ?
+      \ "\<Plug>(neosnippet_expand)" : "\<CR>"
+
+" Expand snippets in dropdown with <TAB>
+xmap <expr><TAB>
+      \ (pumvisible() && neosnippet#expandable()) ?
+      \ "\<Plug>(neosnippet_expand_target)" : "\<CR>"
+
+" Neosnippets
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" Tell Neosnippet about the other snippets
+" let g:neosnippet#snippets_directory=$HOME.'my-snippets'
+
+
+For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 
 " highlight Pmenu ctermbg=8 guibg=#606060
 " highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
