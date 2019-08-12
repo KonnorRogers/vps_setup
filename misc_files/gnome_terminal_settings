@@ -6,6 +6,26 @@ theme-variant='dark'
 [legacy/keybindings]
 new-tab='<Primary><Shift><Alt>t'
 
+[legacy/profiles:/:efaab63f-0da0-4593-84c7-69aae156d9a1]
+foreground-color='rgb(77,77,76)'
+cjk-utf8-ambiguous-width='narrow'
+visible-name='paper-color'
+login-shell=true
+palette=['rgb(237,237,237)', 'rgb(215,0,95)', 'rgb(113,140,0)', 'rgb(215,95,0)', 'rgb(66,113,174)', 'rgb(137,89,168)', 'rgb(62,153,159)', 'rgb(77,77,76)', 'rgb(150,150,148)', 'rgb(215,0,95)', 'rgb(113,140,0)', 'rgb(215,95,0)', 'rgb(66,113,174)', 'rgb(137,89,168)', 'rgb(62,153,159)', 'rgb(245,245,245)']
+default-size-rows=26
+default-size-columns=80
+cursor-shape='underline'
+use-custom-command=false
+use-theme-colors=false
+use-system-font=false
+font='DejaVuSansMono Nerd Font Mono 14'
+use-theme-transparency=false
+bold-color-same-as-fg=true
+cursor-blink-mode='off'
+background-color='rgb(238,238,238)'
+audible-bell=false
+text-blink-mode='never'
+
 [legacy/profiles:/Nova]
 background-color='#3C3C4C4C5555'
 use-theme-colors=false
@@ -58,26 +78,32 @@ audible-bell=false
 bold-color='#D8DEE9'
 highlight-foreground-color='rgb(46,52,64)'
 
-[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
-foreground-color='rgb(188,188,188)'
-cjk-utf8-ambiguous-width='narrow'
-visible-name='apprentice'
+[legacy/profiles:/:9820bbaa-8d5f-4c6f-9179-f7d870336fa2]
+foreground-color='#abb2bf'
+highlight-background-color='rgb(136,192,208)'
+visible-name='Base 16 OneDark 256'
+nord-gnome-terminal-version='0.1.0'
 login-shell=true
-palette=['rgb(28,28,28)', 'rgb(175,95,95)', 'rgb(95,135,95)', 'rgb(135,135,95)', 'rgb(95,135,175)', 'rgb(95,95,135)', 'rgb(95,135,135)', 'rgb(108,108,108)', 'rgb(68,68,68)', 'rgb(255,135,0)', 'rgb(135,175,135)', 'rgb(255,255,175)', 'rgb(143,175,215)', 'rgb(135,135,175)', 'rgb(95,175,175)', 'rgb(255,255,255)']
+palette=['#282c34', '#e06c75', '#98c379', '#e5c07b', '#61afef', '#c678dd', '#56b6c2', '#abb2bf', '#545862', '#e06c75', '#98c379', '#e5c07b', '#61afef', '#c678dd', '#56b6c2', '#c8ccd4']
 bold-is-bright=true
-default-size-columns=80
-default-size-rows=26
+text-blink-mode='never'
+cursor-background-color='#abb2bf'
 cursor-shape='underline'
-use-custom-command=false
-use-theme-colors=false
+cursor-colors-set=true
+highlight-colors-set=true
 use-system-font=false
+use-transparent-background=false
+use-theme-colors=false
+cursor-foreground-color='#282c34'
 font='DejaVuSansMono Nerd Font Mono 14'
 use-theme-transparency=false
+use-theme-background=false
 bold-color-same-as-fg=true
 cursor-blink-mode='off'
-background-color='rgb(38,38,38)'
+background-color='#282c34'
 audible-bell=false
-text-blink-mode='never'
+bold-color='#abb2bf'
+highlight-foreground-color='rgb(46,52,64)'
 
 [legacy/profiles:/:278ec1e0-17d6-4abe-90e3-b520282256fd]
 foreground-color='rgb(188,190,192)'
@@ -123,6 +149,27 @@ background-color='#2E3440'
 audible-bell=false
 bold-color='#D8DEE9'
 highlight-foreground-color='rgb(46,52,64)'
+
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+foreground-color='rgb(188,188,188)'
+cjk-utf8-ambiguous-width='narrow'
+visible-name='apprentice'
+login-shell=true
+palette=['rgb(28,28,28)', 'rgb(175,95,95)', 'rgb(95,135,95)', 'rgb(135,135,95)', 'rgb(95,135,175)', 'rgb(95,95,135)', 'rgb(95,135,135)', 'rgb(108,108,108)', 'rgb(68,68,68)', 'rgb(255,135,0)', 'rgb(135,175,135)', 'rgb(255,255,175)', 'rgb(143,175,215)', 'rgb(135,135,175)', 'rgb(95,175,175)', 'rgb(255,255,255)']
+bold-is-bright=true
+default-size-columns=80
+default-size-rows=26
+cursor-shape='underline'
+use-custom-command=false
+use-theme-colors=false
+use-system-font=false
+font='DejaVuSansMono Nerd Font Mono 14'
+use-theme-transparency=false
+bold-color-same-as-fg=true
+cursor-blink-mode='off'
+background-color='rgb(38,38,38)'
+audible-bell=false
+text-blink-mode='never'
 
 [legacy/profiles:/:f721a9d8-f316-419c-8bb0-430c256bb665]
 foreground-color='#F8F8F2'
@@ -239,7 +286,7 @@ audible-bell=false
 text-blink-mode='never'
 
 [legacy/profiles:]
-list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae', 'f721a9d8-f316-419c-8bb0-430c256bb665', '35ab3b6d-1ef8-4b87-b5c6-963c5d458c19', '278ec1e0-17d6-4abe-90e3-b520282256fd', '5bed956d-581c-4f43-b993-8c6ea50f19bd', '34223da2-a70a-41e2-90c0-66222e403383']
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '7f232c7e-e785-4e40-88aa-a9e585ee1f27', 'e38213b0-26e4-4f04-898a-c14f65a7dace', 'ef99b5e1-e056-4237-acb8-b3868255d9f2', '0bda6551-909b-422f-8bc0-1b310bb37a13', 'efaab63f-0da0-4593-84c7-69aae156d9a1', 'ab4797fe-4f5a-41dc-b3e9-f79dc2593f69', '68a3e96b-7728-424d-a0f0-d23f54b02486', '12c13488-f309-42b1-8215-3dedca9295ae', 'f721a9d8-f316-419c-8bb0-430c256bb665', '35ab3b6d-1ef8-4b87-b5c6-963c5d458c19', '278ec1e0-17d6-4abe-90e3-b520282256fd', '5bed956d-581c-4f43-b993-8c6ea50f19bd', '34223da2-a70a-41e2-90c0-66222e403383', '4144b001-4618-4c52-89f7-184ded707364', '9820bbaa-8d5f-4c6f-9179-f7d870336fa2']
 default='e38213b0-26e4-4f04-898a-c14f65a7dace'
 
 [legacy/profiles:/nova]
@@ -248,6 +295,33 @@ use-theme-colors=false
 palette=['rgb(60, 76, 85)', 'rgb(223, 140, 140)', 'rgb(168, 206, 147)', 'rgb(218, 218, 147)', 'rgb(131, 175, 229)', 'rgb(154, 147, 225)', 'rgb(127, 193, 202)', 'rgb(197, 212, 221)', 'rgb(137, 155, 166)', 'rgb(242, 195, 143)', 'rgb(168, 206, 147)', 'rgb(218, 218, 147)', 'rgb(131, 175, 229)', 'rgb(209, 142, 194)', 'rgb(127, 193, 202)', 'rgb(230, 238, 243)']
 bold-color-same-as-fg=true
 foreground-color='#C5C5D4D4DDDD'
+
+[legacy/profiles:/:4144b001-4618-4c52-89f7-184ded707364]
+foreground-color='#abb2bf'
+highlight-background-color='rgb(136,192,208)'
+visible-name='Base 16 OneDark 256'
+nord-gnome-terminal-version='0.1.0'
+login-shell=true
+palette=['#282c34', '#e06c75', '#98c379', '#e5c07b', '#61afef', '#c678dd', '#56b6c2', '#abb2bf', '#545862', '#e06c75', '#98c379', '#e5c07b', '#61afef', '#c678dd', '#56b6c2', '#c8ccd4']
+bold-is-bright=true
+text-blink-mode='never'
+cursor-background-color='#abb2bf'
+cursor-shape='underline'
+cursor-colors-set=true
+highlight-colors-set=true
+use-system-font=false
+use-transparent-background=false
+use-theme-colors=false
+cursor-foreground-color='#282c34'
+font='DejaVuSansMono Nerd Font Mono 14'
+use-theme-transparency=false
+use-theme-background=false
+bold-color-same-as-fg=true
+cursor-blink-mode='off'
+background-color='#282c34'
+audible-bell=false
+bold-color='#abb2bf'
+highlight-foreground-color='rgb(46,52,64)'
 
 [legacy/profiles:/:68a3e96b-7728-424d-a0f0-d23f54b02486]
 foreground-color='rgb(72,90,98)'
@@ -307,25 +381,5 @@ cursor-foreground-color='rgb(208,210,211)'
 font='DejaVuSansMono Nerd Font Mono 14'
 cursor-blink-mode='off'
 background-color='rgb(33,33,33)'
-audible-bell=false
-text-blink-mode='never'
-
-[legacy/profiles:/:efaab63f-0da0-4593-84c7-69aae156d9a1]
-foreground-color='rgb(77,77,76)'
-cjk-utf8-ambiguous-width='narrow'
-visible-name='paper-color'
-login-shell=true
-palette=['rgb(237,237,237)', 'rgb(215,0,95)', 'rgb(113,140,0)', 'rgb(215,95,0)', 'rgb(66,113,174)', 'rgb(137,89,168)', 'rgb(62,153,159)', 'rgb(77,77,76)', 'rgb(150,150,148)', 'rgb(215,0,95)', 'rgb(113,140,0)', 'rgb(215,95,0)', 'rgb(66,113,174)', 'rgb(137,89,168)', 'rgb(62,153,159)', 'rgb(245,245,245)']
-default-size-rows=26
-default-size-columns=80
-cursor-shape='underline'
-use-custom-command=false
-use-theme-colors=false
-use-system-font=false
-font='DejaVuSansMono Nerd Font Mono 14'
-use-theme-transparency=false
-bold-color-same-as-fg=true
-cursor-blink-mode='off'
-background-color='rgb(238,238,238)'
 audible-bell=false
 text-blink-mode='never'
