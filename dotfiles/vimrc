@@ -160,14 +160,16 @@ autocmd FileType ruby,eruby,yaml setlocal expandtab shiftwidth=2 tabstop=2
 set background=dark
 let g:quantum_black = 1
 let g:nord_uniform_status_lines = 1
-colorscheme nord
+colorscheme one
 " set background=light
 " colorscheme PaperColor
 
 " use default
 set laststatus=2
 set statusline=
-set statusline+=%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
+set statusline+=\ %<%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
+
+call one#highlight('StatusLine', '', '', 'reverse')
 
 " Using splits
 map <Leader>s :split<CR>
