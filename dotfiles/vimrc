@@ -45,6 +45,17 @@ call plug#begin("~/.vim/plugged")
   " Snippets
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
+
+
+  " Autocompletion
+  Plug 'deoplete-plugins/deoplete-tag'
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
 call plug#end()
 
 let mapleader = " " "space is now \
@@ -147,6 +158,8 @@ set background=dark
 let g:quantum_black = 1
 let g:nord_uniform_status_lines = 1
 colorscheme nord
+" set background=light
+" colorscheme PaperColor
 
 " use default
 set laststatus=2
@@ -209,12 +222,12 @@ map <Leader>pru :UpdateRemotePlugins<CR>
 map <Leader>pc :PlugClean<CR>
 
 " Ultisnips config
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets', 'UltiSnips']
+" let g:UltiSnipsSnippetDirectories=[$HOME.'/.my-snippets', 'UltiSnips']
 
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsListSnippets="<c-s>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:UltiSnipsEditSplit='horizontal'
 map <Leader>us :UltiSnipsEdit <ESC>
 
@@ -249,3 +262,19 @@ nnoremap k gk
 map <C-n> :NERDTreeToggle<CR>
 
 let g:ale_lint_delay = 500
+
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option({
+      \ 'auto_complete_delay': 200,
+      \ 'smart_case': v:true,
+      \ })
+
+" <CR>: close popup and save indent.
+" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+" function! s:my_cr_function() abort
+"   return deoplete#close_popup() . "\<CR>"
+" endfunction
+
+" highlight Pmenu ctermbg=8 guibg=#606060
+" highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
+" highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
