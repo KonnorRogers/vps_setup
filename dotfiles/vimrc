@@ -18,27 +18,31 @@ call plug#begin("~/.vim/plugged")
   Plug 'flazz/vim-colorschemes'
   Plug 'rakr/vim-one'
 
-  "Syntax highlight
+  "Javascript / React 
   Plug 'pangloss/vim-javascript'
   Plug 'mxw/vim-jsx'
   Plug 'elzr/vim-json'
 
   "Tpope plugins
   Plug 'tpope/vim-fugitive'
-  Plug 'tpope/vim-bundler'
-  Plug 'tpope/vim-rails'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-ragtag'
 
-  "ruby
+  "ruby / rails
   Plug 'vim-ruby/vim-ruby'
   Plug 'ngmy/vim-rubocop'
+  Plug 'tpope/vim-rails'
+  Plug 'tpope/vim-bundler'
 
   "html / css
   Plug 'mattn/emmet-vim'
   Plug 'ap/vim-css-color'
   Plug 'prettier/vim-prettier'
+
+  "Mark down previewing
+  "Ensure you have nodejs and yarn
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
   "file exploration
   Plug 'scrooloose/nerdtree'
