@@ -18,6 +18,11 @@ call plug#begin("~/.vim/plugged")
   Plug 'flazz/vim-colorschemes'
   Plug 'rakr/vim-one'
 
+  "Syntax highlight
+  Plug 'pangloss/vim-javascript'
+  Plug 'mxw/vim-jsx'
+  Plug 'elzr/vim-json'
+
   "Tpope plugins
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-bundler'
