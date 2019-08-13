@@ -169,6 +169,7 @@ set laststatus=2
 set statusline=
 set statusline+=\ %<%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 
+" Fix status line in one colorscheme
 call one#highlight('StatusLine', '', '', 'reverse')
 
 " Using splits
