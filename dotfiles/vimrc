@@ -271,6 +271,7 @@ nnoremap k gk
 " Toggle file explorer
 map <C-n> :NERDTreeToggle<CR>
 
+nmap <Leader>ad :ALEDetail<CR>
 let g:ale_lint_delay = 500
 
 " Dont let it override <C-y>
