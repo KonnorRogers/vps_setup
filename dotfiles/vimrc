@@ -122,6 +122,8 @@ set clipboard=unnamed "stupid clipboard crap
 set linespace=3
 set cursorcolumn "Makes working with yaml files easier
 
+set wildignore+=node_modules
+
 "Fixing splits to be more natural
 set splitbelow
 set splitright
@@ -211,9 +213,29 @@ autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
       \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
-" uses silver searcher for faster searches
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
-" end fzf config
+
+
+" The Silver Searcher for grep vs regular grep
+if executable('ag')
+  " uses silver searcher for faster searches
+  let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+
+function myVimGrep!()
+
+endfunction
+" " Search with silversearch
+nnoremap <Leader>gf :vimgrep //g %
+nnoremap <Leader>ga :vimgrep //g `git ls-files`
+nnoremap <Leader>gw :vimgrep 
+nnoremap <Leader>gp :vimgrep /<C-r>// %
+nnoremap <Leader>cn :cnext<CR>
+nnoremap <Leader>cp :cprevious<CR>
+nnoremap <Leader>cf :cfirst<CR>
+nnoremap <Leader>cl :clast<CR>
+
 
 " rubocop mapping
 nmap <Leader>rr :RuboCop<CR>
