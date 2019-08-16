@@ -223,14 +223,32 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
 
-function myVimGrep!()
-
-endfunction
 " " Search with silversearch
-nnoremap <Leader>gf :vimgrep //g %
-nnoremap <Leader>ga :vimgrep //g `git ls-files`
-nnoremap <Leader>gw :vimgrep 
-nnoremap <Leader>gp :vimgrep /<C-r>// %
+" bind <Leader>gc to grep word under cursor
+nnoremap <Leader>gc :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+function! MyGrep(file)
+  let pattern = input('pattern: ')
+
+  exec ':grep /' . pattern . '/g ' . file 
+endfunction
+
+" Grep  the file
+nnoremap <Leader>gf :call MyGrep(%)
+
+" Grep  the repo
+nnoremap <Leader>gg :call MyGrep(`git ls-files`)
+
+"Grep current dir
+nnoremap <Leader>gc :call MyGrep('.')
+
+" basic grep
+nnoremap <Leader>gi :grep 
+
+" Grep previous grep
+nnoremap <Leader>gp :grep /<C-r>// %
+
+" Navigation
 nnoremap <Leader>cn :cnext<CR>
 nnoremap <Leader>cp :cprevious<CR>
 nnoremap <Leader>cf :cfirst<CR>
@@ -261,6 +279,7 @@ map <Leader>pi :PlugInstall<CR>
 map <Leader>pu :PlugUpdate<CR>
 map <Leader>pru :UpdateRemotePlugins<CR>
 map <Leader>pc :PlugClean<CR>
+
 
 function! RenameFile()
   let old_name = expand('%')
