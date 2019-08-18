@@ -12,10 +12,8 @@ main(){
     source "scripts/install_sops.bash"
   fi
 
+  cd "scripts/version-managers" || echo "unable to cd to scripts/version-managers" 1>&2 && exit 1
 
-  # cd "scripts/version-managers" || echo "unable to cd to scripts/version-managers" 1>&2 && exit 1
-
-  cd "scripts/version-managers"
   for i in *.bash; do
     source "$i"
   done
@@ -25,6 +23,7 @@ main(){
   source "scripts/restart_shell.bash"
   gem install bundler
   bundle install
+  bundle update
 }
 
 check_if_root(){
