@@ -73,6 +73,7 @@ call plug#end()
 
 let mapleader = " " "space is now \
 
+" Autosave
 set autowrite
 
 "indentations
@@ -86,7 +87,6 @@ set shiftwidth=2 " On pressing tab, insert 4 spaces
 set shiftround
 
 "Make it obvious where 80 characters is
-" set textwidth=80
 set colorcolumn=81
 
 "Numbers
@@ -172,7 +172,7 @@ autocmd FileType ruby,eruby,yaml setlocal expandtab shiftwidth=2 tabstop=2
 set background=dark
 let g:quantum_black = 1
 let g:nord_uniform_status_lines = 1
-colorscheme one
+colorscheme apprentice
 " set background=light
 " colorscheme PaperColor
 
@@ -182,7 +182,9 @@ set statusline=
 set statusline+=\ %<%F\ %m\ %r\ %h\ %=%=%=%y\ [%c]%=
 
 " Fix status line in one colorscheme
-call one#highlight('StatusLine', '', '', 'reverse')
+" call one#highlight('StatusLine', '', '', 'reverse')
+" Black background for my crappy glossy laptop
+highlight Normal guibg=black ctermbg=black
 
 " Using splits
 map <Leader>s :split<CR>
