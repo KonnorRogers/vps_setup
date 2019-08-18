@@ -39,7 +39,7 @@ call plug#begin("~/.vim/plugged")
   Plug 'mattn/emmet-vim'
   Plug 'ap/vim-css-color'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-
+  
   "Mark down previewing
   "Ensure you have nodejs and yarn
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }

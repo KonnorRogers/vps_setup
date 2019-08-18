@@ -1,12 +1,19 @@
-snippet php open
-alias po
+`delete php`
+
+snippet phptag
+alias pt
 options head
   <?php
   ${0:TARGET}
 
-snippet php open close
+snippet php open and close tag
 alias pc
 options word
   <? php
   ${0:TARGET}
   ?>
+
+snippet php echo
+alias =
+options word
+  <?= ${0:TARGET} ?>
