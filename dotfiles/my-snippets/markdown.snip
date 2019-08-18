@@ -4,3 +4,13 @@ options head
   \`\`\`${1}
   ${2:TARGET}
   \`\`\`$0
+
+snippet metadata
+alias -
+options head
+  ---
+  title: ${1}
+  date: "`strftime("%Y-%m-%dT%H:%M:%S")`"
+  description: "${2}"
+  ---
+  ${0}
