@@ -228,7 +228,7 @@ endif
 " " Search with silversearch
 
 ":Ag to grep shortcut
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
 " Bind \ to :Ag
 nnoremap \ :Ag<SPACE>
