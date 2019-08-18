@@ -282,3 +282,19 @@ my efforts furthering learning ruby-on-rails
 ```
 
 * This is because the script is run via bash instead of ZSH, this should not affect anything
+
+# Testing
+
+To test everything works as intended I have been doing it manually via docker
+
+```bash
+docker build --tag=vps-setup .
+docker run -ti vps-setup
+# docker will then drop you in a bash prompt
+
+./setup.bash
+
+# This will prompt for a password
+# the password is 'docker'
+```
+

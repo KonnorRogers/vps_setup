@@ -1,7 +1,7 @@
 #!/bin/bash
 main(){
   # will error if running as root
-  check_if_root
+  # check_if_root
 
   # runs through the varios sudo apt installs required prior to
   # installs
