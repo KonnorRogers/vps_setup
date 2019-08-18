@@ -38,7 +38,7 @@ call plug#begin("~/.vim/plugged")
   "html / css
   Plug 'mattn/emmet-vim'
   Plug 'ap/vim-css-color'
-  Plug 'prettier/vim-prettier'
+  Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 
   "Mark down previewing
   "Ensure you have nodejs and yarn
