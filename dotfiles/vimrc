@@ -226,27 +226,14 @@ if executable('ag')
 endif
 
 " " Search with silversearch
+
+":Ag to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+" Bind \ to :Ag
+nnoremap \ :Ag<SPACE>
 " bind <Leader>gc to grep word under cursor
 nnoremap <Leader>gc :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
-function! MyGrep(file)
-  let pattern = input('pattern: ')
-
-  exec ':grep /' . pattern . '/g ' . a:file
-endfunction
-
-" Grep  the file
-nnoremap <Leader>gf :call MyGrep('%')<CR>
-
-" Grep  the repo
-nnoremap <Leader>gg :call MyGrep(`git ls-files`)<CR>
-
-"Grep current dir
-nnoremap <Leader>gc :call MyGrep('.')<CR>
-
-" basic grep
-nnoremap <Leader>gi :grep 
-
 " Grep previous grep
 nnoremap <Leader>gp :grep /<C-r>// %<CR>
 
