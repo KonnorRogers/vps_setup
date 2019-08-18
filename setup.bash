@@ -44,7 +44,7 @@ apt_setup(){
 
   libs='software-properties-common gnupg2 less ufw ack-grep libfuse2
   apt-transport-https ca-certificates build-essential bison zlib1g-dev 
-  libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse
+  libyaml-dev libcurl4-openssl-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse
   make gcc ruby ruby-dev golang php'
   sudo apt-get install $libs -y
 
