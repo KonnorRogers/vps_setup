@@ -1,3 +1,5 @@
+#!/bin/bash
+
 NODE_VERSION="11.15.0"
 main(){
   # If the user already has an $NVM_DIR set but nvm not installed, create .nvm
@@ -12,3 +14,5 @@ main(){
   nvm install "$NODE_VERSION"
   nvm use "$NODE_VERSION"
 }
+
+main

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 RUBY_VERSION="2.6.2"
 
 main(){

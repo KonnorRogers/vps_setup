@@ -1,3 +1,5 @@
+#!/bin/bash
+
 main(){
   if [[ "$SHELL" == *"bash" ]]; then
     BASH_RC="$HOME/.bashrc"

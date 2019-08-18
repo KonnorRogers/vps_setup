@@ -7,13 +7,22 @@ main(){
   # installs
   apt_setup
   
-  source "scripts/install_sops.bash"
+  # Only install sops if no executable found
+  if ! [[ -x "$(command -v sops)" ]]; then
+    source "scripts/install_sops.bash"
+  fi
 
-  for i in scripts/version-managers/*.bash; do
+
+  # cd "scripts/version-managers" || echo "unable to cd to scripts/version-managers" 1>&2 && exit 1
+
+  cd "scripts/version-managers"
+  for i in *.bash; do
     source "$i"
   done
 
-  source scripts/restart_shell.bash
+  cd "../../" || echo "Unable to return to base directory" 1>&2 && exit 1
+
+  source "scripts/restart_shell.bash"
   gem install bundler
   bundle install
 }
@@ -33,16 +42,12 @@ check_if_root(){
 apt_setup(){
   sudo apt-get update
   sudo apt-get upgrade -y
-  yes "\\n" | sudo apt-get dist-upgrade -y
 
-  libs="software-properties-common gnupg2 less ufw ack-grep libfuse2
-  apt-transport-https ca-certificates build-essential bison zlib1g-dev
-  libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse make gcc
-  ruby ruby-dev golang php"
-
-  for lib in $libs; do
-    sudo apt-get install "$lib" -y
-  done
+  libs='software-properties-common gnupg2 less ufw ack-grep libfuse2
+  apt-transport-https ca-certificates build-essential bison zlib1g-dev 
+  libyaml-dev libssl-dev libgdbm-dev libreadline-dev libffi-dev fuse
+  make gcc ruby ruby-dev golang php'
+  sudo apt-get install $libs -y
 
   sudo apt-get update
   sudo apt-get autoremove -y

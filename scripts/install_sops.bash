@@ -1,3 +1,5 @@
+#!/bin/bash
+
 main(){
   # installs sops via go get -u 'sops'
   SOPS="\\n\\nNow installing SOPS. This may take a bit, please wait\\n"

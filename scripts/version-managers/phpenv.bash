@@ -1,3 +1,5 @@
+#!/bin/bash
+
 PHP_VERSION="7.3.8"
 
 main(){
@@ -9,8 +11,12 @@ main(){
     eval "$(phpenv init -)"
   fi
 
+  echo "$CWD"
+  echo "$PWD"
   source "../restart_shell.bash"
 
   phpenv install --skip-existing "$PHP_VERSION"
   phpenv global "$PHP_VERSION"
 }
+
+main
