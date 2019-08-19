@@ -1,4 +1,4 @@
-`delete php`
+extends html
 
 snippet phptag
 alias pt
@@ -7,14 +7,14 @@ options head
 
   ${0:TARGET}
 
-snippet php open and close tag
+snippet phpOpenCloseMultiline
 alias pcm
 options word
   <?php
     ${0:TARGET}
   ?>
 
-snippet php open close inline
+snippet phpOpenCloseInline
 alias pci
 options word
   <?php ${0:TARGET} ?>
@@ -22,28 +22,28 @@ options word
 snippet php echo
 alias =
 options word
-  <?= ${0:TARGET} ?>
+  <?= ${1:TARGET} ?>${0}
 
-snippet key value pair
+snippet keyValuePair
 alias kv
 options word
   ${1} => ${2}${3:,}${0}
 
-snippet foreach
-alias fe
+snippet myForeach
+alias fea
 options word
-  <?php foreach ($${1:#:array} as $${2:#:item}) : ?>
+  <?php foreach ($${1:#:array} as $${2:item}) : ?>
     ${3:TARGET}
   <?php endforeach; ?>${0}
 
-snippet foreach key value
+snippet foreachKeyValue
 alias fekv
 options word
-  <?php foreach ($${1:#:array} as $${2:#:key} => $${3:#:value}) : ?>
+  <?php foreach ($${1:#:array} as $${2:key} => $${3:value}) : ?>
     ${4:TARGET}
   <?php endforeach; ?>${0}
 
-snippet php enter exit
+snippet phpEnterwxit
 alias pee
   <?php ${1} ?>
     ${3:TARGET}

@@ -35,10 +35,6 @@ call plug#begin("~/.vim/plugged")
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-bundler'
 
-  "PHP
-  Plug 'StanAngeloff/php.vim'
-  Plug 'rayburgemeestre/phpfolding.vim'
-
   "html / css
   Plug 'mattn/emmet-vim'
   Plug 'ap/vim-css-color'
@@ -81,8 +77,10 @@ let mapleader = " " "space is now \
 set autowrite
 
 "indentations
-set autoindent      "auto-indent new lines
-set smartindent     "return ending brackets to proper locations
+set smartindent
+set autoindent
+set preserveindent
+set copyindent
 
 "tabs
 set expandtab       "expand tabs into spaces
@@ -291,7 +289,7 @@ function! Touch()
   exec ':e ' . file_name
 endfunction
 
-map <Leader>n :call Touch()<CR>
+map <Leader>nf :call Touch()<CR>
 
 map <Leader>bl :set background=light<CR>
 map <Leader>bd :set background=dark<CR>
