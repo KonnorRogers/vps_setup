@@ -1,12 +1,12 @@
 snippet syntax
-alias `
+alias hi!
 options head
   \`\`\`${1}
   ${2:TARGET}
   \`\`\`$0
 
 snippet metadata
-alias -
+alias meta
 options head
   ---
   title: ${1}
@@ -16,5 +16,6 @@ options head
   ${0}
 
 snippet link
+alias ln
 options word
   [${1:#:text}](${2:#:link})${0}
