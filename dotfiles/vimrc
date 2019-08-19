@@ -35,6 +35,10 @@ call plug#begin("~/.vim/plugged")
   Plug 'tpope/vim-rails'
   Plug 'tpope/vim-bundler'
 
+  "PHP
+  Plug 'StanAngeloff/php.vim'
+  Plug 'rayburgemeestre/phpfolding.vim'
+
   "html / css
   Plug 'mattn/emmet-vim'
   Plug 'ap/vim-css-color'
@@ -163,7 +167,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 " set spacing on files
 autocmd FileType * setlocal expandtab shiftwidth=2 tabstop=2
-autocmd BufEnter,BufRead *.php :set filetype=html
+
 "removes auto-commenting when hitting <CR>
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 

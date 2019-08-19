@@ -1,16 +1,17 @@
-delete php
+`delete php`
 
 snippet phptag
 alias pt
 options head
   <?php
+
   ${0:TARGET}
 
 snippet php open and close tag
 alias pcm
 options word
   <?php
-  ${0:TARGET}
+    ${0:TARGET}
   ?>
 
 snippet php open close inline
@@ -31,17 +32,16 @@ options word
 snippet foreach
 alias fe
 options word
-  foreach (${1:#:array} as ${2:#:item}) :
+  <?php foreach ($${1:#:array} as $${2:#:item}) : ?>
+    ${3:TARGET}
+  <?php endforeach; ?>${0}
 
 snippet foreach key value
 alias fekv
 options word
-  foreach (${1:#:array} as ${2:#:key} => ${3:#:value}) :
-
-snippet endforeach
-alias efe
-options word
-  endforeach;
+  <?php foreach ($${1:#:array} as $${2:#:key} => $${3:#:value}) : ?>
+    ${4:TARGET}
+  <?php endforeach; ?>${0}
 
 snippet php enter exit
 alias pee
